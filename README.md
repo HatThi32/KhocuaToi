@@ -1,1 +1,37 @@
 # KhocuaToi
+
+## Xáo Đề THPT (`xao-de/`)
+
+Phần mềm xáo đề thi chạy trực tiếp trên trình duyệt, dùng cho **tất cả các môn THPT**
+(Toán, Ngữ văn, Tiếng Anh, Vật lí, Hóa học, Sinh học, Lịch sử, Địa lí, GD KT&PL, Tin học, Công nghệ, ngoại ngữ khác…).
+
+**Dùng ngay trên trình duyệt:** https://hatthi32.github.io/KhocuaToi/xao-de/
+
+**Tải về dùng không cần mạng:** https://github.com/HatThi32/KhocuaToi/archive/main.zip
+— giải nén rồi mở file `xao-de/index.html` bằng trình duyệt (Chrome, Edge, Firefox…), không cần cài đặt.
+
+Mọi dữ liệu đề thi chỉ xử lý ngay trên máy người dùng, không gửi lên máy chủ nào.
+
+Tính năng:
+- Hỗ trợ cấu trúc đề thi THPT từ 2025: Phần I (nhiều lựa chọn), Phần II (đúng/sai), Phần III (trả lời ngắn), và tự luận.
+- Tạo nhiều mã đề: xáo thứ tự câu hỏi, xáo phương án A–D, xáo ý a–d của câu đúng/sai.
+- Nhóm câu (bài đọc, tư liệu) luôn đi liền nhau; tự giữ nguyên phương án kiểu "Cả A và B", "All of the above".
+- Mở đề gốc từ file Word (.docx) không cần mạng; tự điền Sở, Trường, Kỳ thi, Năm học, Môn, Thời gian từ đầu đề.
+- Đọc công thức **MathType** và **Microsoft Equation 3.0** trong file Word, chuyển thành công thức Word (Equation).
+- Mở đề **PDF**: cắt từng câu hỏi/phương án thành ảnh (giữ nguyên công thức, đồ thị, bảng biến thiên), vẽ lại số câu
+  và chữ cái theo mã đề; lấy đáp án từ lời giải ("Chọn A", "a) Đúng", "Đáp số: …"), bảng đáp án, hoặc chữ cái tô màu /
+  gạch chân / in đậm trên trang. Chịu được PDF lỗi font tiếng Việt và đề gõ không dấu.
+- Nhận đáp án đúng theo nhiều cách: dấu `*` trước chữ cái, **gạch chân** chữ cái A/B/C/D (a/b/c/d với câu đúng/sai),
+  dòng `Đáp án: B`, hoặc **bảng đáp án cuối đề** (bảng ngang, bảng dọc, bảng Đúng/Sai theo ý, dòng `1.A 2.C`…);
+  báo lỗi nếu các nguồn đáp án mâu thuẫn nhau.
+- Công thức LaTeX `$...$`, hình ảnh.
+- Xuất **file Word .docx chuẩn**: A4, Times New Roman, lề / cỡ chữ / giãn dòng tùy chỉnh; tiêu đề 2 cột, khung
+  "ĐỀ CHÍNH THỨC" và "Mã đề thi"; phương án tự xếp 4 / 2 / 1 cột thẳng hàng; chân trang "Trang x/y – Mã đề thi …";
+  câu hỏi không bị tách khỏi phương án khi sang trang; công thức LaTeX chuyển thành công thức Word (Equation).
+- Tải tất cả mã đề thành file .zip (mỗi mã một file Word + đáp án), hoặc gộp 1 file; in / lưu PDF.
+- Bảng đáp án **Excel (.xlsx)** và Word gồm đề gốc cùng tất cả mã đề, kèm sheet đối chiếu câu với đề gốc.
+- **Điền đáp án vào file Excel mẫu** của phần mềm chấm thi (hàng tiêu đề `Đề/Câu | 1 | 2 | … | 1a | 1b …`):
+  thay dữ liệu cũ, giữ nguyên định dạng, tự hiện cột ẩn khi có dữ liệu, tự kiểm tra lại từng ô; mẫu được nhớ cho lần sau.
+- Tự kiểm tra lỗi trước khi xuất (thiếu đáp án, phương án trống/trùng, thiếu dấu $, công thức/ảnh lỗi, đánh số câu
+  nhảy cóc…) và tự kiểm chứng mỗi mã đề có đủ câu, đáp án đúng vị trí.
+- Dùng "hạt giống xáo" để xáo lại ra đúng kết quả cũ. Dữ liệu chỉ lưu trên máy bạn.

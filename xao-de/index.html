@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xáo Đề THPT</title>
+  <meta name="description" content="Phần mềm xáo đề thi trắc nghiệm cho tất cả các môn THPT: tạo nhiều mã đề, xáo câu hỏi và phương án, xuất Word, in đề và bảng đáp án.">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      startup: { typeset: false }
+    };
+  </script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">⇄</span>
+      <div>
+        <h1>Xáo Đề THPT</h1>
+        <p>Tạo nhiều mã đề từ một đề gốc — cho tất cả các môn thi</p>
+      </div>
+    </div>
+    <nav>
+      <button type="button" class="link" data-open="guide">Hướng dẫn</button>
+      <a class="link" href="https://github.com/HatThi32/KhocuaToi/archive/main.zip"
+        title="Tải toàn bộ phần mềm về máy để dùng cả khi không có mạng (giải nén rồi mở xao-de/index.html)">Tải về máy</a>
+      <a class="link" href="../">Trang chủ</a>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <!-- CỘT TRÁI: thông tin & tùy chọn -->
+    <aside class="panel settings">
+      <h2>1. Thông tin đề thi</h2>
+      <label>Môn thi
+        <select id="subject"></select>
+      </label>
+      <label>Tên môn ghi trên đề (nếu khác, VD: TIN HỌC 10)
+        <input id="subjectLabel" type="text" placeholder="Để trống = theo môn đã chọn">
+      </label>
+      <label>Sở / Phòng GD&amp;ĐT
+        <input id="dept" type="text" placeholder="SỞ GD&ĐT ...">
+      </label>
+      <label>Trường
+        <input id="school" type="text" placeholder="TRƯỜNG THPT ...">
+      </label>
+      <label>Loại đề (ô có khung ở góc trái)
+        <select id="docType">
+          <option value="ĐỀ CHÍNH THỨC">ĐỀ CHÍNH THỨC</option>
+          <option value="ĐỀ KIỂM TRA">ĐỀ KIỂM TRA</option>
+          <option value="ĐỀ THI THỬ">ĐỀ THI THỬ</option>
+          <option value="ĐỀ MINH HỌA">ĐỀ MINH HỌA</option>
+          <option value="ĐỀ ĐỀ XUẤT">ĐỀ ĐỀ XUẤT</option>
+          <option value="">(Không ghi)</option>
+        </select>
+      </label>
+      <label>Tên kỳ thi
+        <input id="examName" type="text" placeholder="KIỂM TRA CUỐI HỌC KÌ I">
+      </label>
+      <div class="row2">
+        <label>Năm học
+          <input id="year" type="text" placeholder="2026 – 2027">
+        </label>
+        <label>Thời gian (phút)
+          <input id="time" type="number" min="1" value="90">
+        </label>
+      </div>
+
+      <h2>2. Mã đề</h2>
+      <div class="row2">
+        <label>Số mã đề
+          <input id="count" type="number" min="1" max="99" value="4">
+        </label>
+        <label>Mã đề đầu tiên
+          <input id="startCode" type="number" min="0" value="101">
+        </label>
+      </div>
+      <label>Hoặc nhập danh sách mã đề (cách nhau bởi dấu phẩy)
+        <input id="codeList" type="text" placeholder="VD: 132, 209, 357, 485">
+      </label>
+      <label>Hạt giống xáo (giữ nguyên để xáo lại ra đúng kết quả cũ)
+        <div class="inline">
+          <input id="seed" type="text">
+          <button type="button" id="newSeed" class="btn small ghost" title="Tạo hạt giống mới">↻</button>
+        </div>
+      </label>
+
+      <h2>3. Cách xáo</h2>
+      <label class="check"><input type="checkbox" id="optQuestions" checked> Xáo thứ tự câu hỏi (trong từng phần)</label>
+      <label class="check"><input type="checkbox" id="optOptions" checked> Xáo phương án A, B, C, D</label>
+      <label class="check"><input type="checkbox" id="optTf" checked> Xáo các ý a), b), c), d) của câu đúng/sai</label>
+      <label class="check"><input type="checkbox" id="optInGroup"> Xáo câu bên trong nhóm (bài đọc, tư liệu…)</label>
+      <label class="check"><input type="checkbox" id="optEssay"> Xáo cả câu tự luận</label>
+      <label class="check"><input type="checkbox" id="optOriginal" checked> Kèm đề gốc khi tải tất cả mã đề</label>
+
+      <h2>4. Trình bày khi xuất file</h2>
+      <label class="check"><input type="checkbox" id="optBo" checked> Trình bày theo mẫu đề thi của Bộ GD&amp;ĐT
+        (in đậm "Câu n." và "A. B. C. D.", tiêu đề "PHẦN I." kèm hướng dẫn chuẩn tự đếm số câu, "(Đề thi có … trang)")</label>
+      <div class="row2">
+        <label>Cỡ chữ
+          <select id="fontPt">
+            <option value="12">12 pt (chuẩn đề thi)</option>
+            <option value="13">13 pt</option>
+            <option value="14">14 pt</option>
+          </select>
+        </label>
+        <label>Giãn dòng
+          <select id="lineSp">
+            <option value="1">1,0 (đơn)</option>
+            <option value="1.15">1,15</option>
+            <option value="1.3">1,3</option>
+            <option value="1.5">1,5</option>
+          </select>
+        </label>
+      </div>
+      <p class="sub">Lề trang giấy A4 (cm)</p>
+      <div class="row4">
+        <label>Trên <input id="mTop" type="number" step="0.1" min="0.5" max="5" value="1.5"></label>
+        <label>Dưới <input id="mBottom" type="number" step="0.1" min="0.5" max="5" value="1.5"></label>
+        <label>Trái <input id="mLeft" type="number" step="0.1" min="0.5" max="5" value="2"></label>
+        <label>Phải <input id="mRight" type="number" step="0.1" min="0.5" max="5" value="1.5"></label>
+      </div>
+      <label>Ghi chú cuối đề (mỗi dòng một ý)
+        <textarea id="notes" rows="3">- Thí sinh không được sử dụng tài liệu.
+- Cán bộ coi thi không giải thích gì thêm.</textarea>
+      </label>
+      <button type="button" class="btn small ghost" id="resetLayout">Khôi phục trình bày mặc định</button>
+
+      <h2>Mẫu Excel đáp án (tùy chọn)</h2>
+      <p class="sub">Chọn file Excel mẫu của phần mềm chấm thi (hàng tiêu đề dạng <code>Đề/Câu | 1 | 2 | … | 1a | 1b …</code>).
+        Khi xuất, đáp án các mã đề sẽ được điền vào mẫu, thay cho dữ liệu cũ, giữ nguyên định dạng.</p>
+      <div class="tools">
+        <label class="btn small ghost file">Chọn file mẫu .xlsx
+          <input type="file" id="tplInput" accept=".xlsx">
+        </label>
+        <button type="button" class="btn small ghost" id="tplClear" hidden>Bỏ mẫu</button>
+      </div>
+      <p id="tplStatus" class="sub">Chưa có mẫu — dùng bảng đáp án mặc định.</p>
+    </aside>
+
+    <!-- CỘT GIỮA: soạn đề gốc -->
+    <section class="panel editor">
+      <div class="panel-head">
+        <h2>5. Đề gốc</h2>
+        <div class="tools">
+          <button type="button" class="btn small ghost" id="loadSample">Nạp đề mẫu</button>
+          <label class="btn small ghost file">Mở file Word / PDF
+            <input type="file" id="fileInput" accept=".docx,.pdf,.txt,.md">
+          </label>
+          <button type="button" class="btn small ghost" id="clearText">Xóa</button>
+        </div>
+      </div>
+      <p class="hint">Mỗi câu bắt đầu bằng <code>Câu 1.</code> hoặc <code>Câu 1:</code>. Đáp án đúng nhận theo nhiều cách: dấu <code>*</code> trước chữ cái
+        (<code>*B.</code>), <u>gạch chân</u> chữ cái trong file Word, dòng <code>Đáp án: B</code>, hoặc <b>bảng đáp án ở cuối đề</b> (sau dòng HẾT).
+        Xem <button type="button" class="link inline-link" data-open="guide">hướng dẫn</button>.</p>
+      <textarea id="source" spellcheck="false" placeholder="Dán hoặc gõ đề gốc vào đây…"></textarea>
+      <div id="stats" class="stats"></div>
+      <ul id="warnings" class="warnings" aria-live="polite"></ul>
+      <button type="button" class="btn primary big" id="run">Xáo đề</button>
+    </section>
+
+    <!-- KẾT QUẢ -->
+    <section class="panel result" id="result" hidden>
+      <div class="panel-head">
+        <h2>6. Kết quả</h2>
+        <div class="tabs" role="tablist">
+          <button type="button" role="tab" class="tab active" data-tab="preview">Xem đề</button>
+          <button type="button" role="tab" class="tab" data-tab="keys">Bảng đáp án</button>
+        </div>
+      </div>
+
+      <div class="export-bar">
+        <label>Mã đề
+          <select id="versionSelect"></select>
+        </label>
+        <button type="button" class="btn small" id="dlOne">Tải Word mã này</button>
+        <button type="button" class="btn small" id="dlZip" title="Mỗi mã đề một file Word + đáp án, nén trong 1 file .zip">Tải tất cả (.zip)</button>
+        <button type="button" class="btn small ghost" id="dlAll" title="Tất cả mã đề trong một file Word, mỗi mã đề bắt đầu ở trang mới">Word gộp 1 file</button>
+        <button type="button" class="btn small ghost" id="printOne">In / PDF mã này</button>
+        <button type="button" class="btn small ghost" id="printAll">In tất cả</button>
+        <button type="button" class="btn small ghost" id="dlKeysWord">Đáp án (Word)</button>
+        <button type="button" class="btn small ghost" id="dlKeysXlsx">Đáp án (Excel)</button>
+        <button type="button" class="btn small" id="dlKeysTpl" hidden>Đáp án Excel theo mẫu</button>
+      </div>
+
+      <div id="tab-preview" class="tab-body">
+        <div class="paper" id="paper"></div>
+      </div>
+      <div id="tab-keys" class="tab-body" hidden>
+        <div id="keys"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- HƯỚNG DẪN -->
+  <dialog id="guide">
+    <form method="dialog" class="dialog-head">
+      <h2>Hướng dẫn soạn đề gốc</h2>
+      <button class="btn small ghost" aria-label="Đóng">✕</button>
+    </form>
+    <div class="dialog-body">
+      <h3>Chia phần</h3>
+      <p>Dùng dòng tiêu đề trong ngoặc vuông. Phần mềm tự nhận loại câu theo cấu trúc đề thi THPT:</p>
+      <ul>
+        <li><code>[PHẦN I]</code> — trắc nghiệm nhiều lựa chọn (A, B, C, D)</li>
+        <li><code>[PHẦN II]</code> — trắc nghiệm đúng/sai (ý a, b, c, d)</li>
+        <li><code>[PHẦN III]</code> — trả lời ngắn</li>
+        <li><code>[TỰ LUẬN]</code> — câu tự luận (mặc định không xáo)</li>
+      </ul>
+      <p>Có thể viết thêm chữ sau tiêu đề, ví dụ <code>[PHẦN I. Trắc nghiệm] Thí sinh trả lời từ câu 1 đến câu 12.</code>
+        Tiêu đề có chữ "Đúng sai", "Trả lời ngắn", "Tự luận" sẽ được nhận theo chữ đó. Đề không có tiêu đề phần sẽ được coi là trắc nghiệm.</p>
+
+      <h3>Câu nhiều lựa chọn</h3>
+<pre>Câu 1. Thủ đô của Việt Nam là
+A. TP Hồ Chí Minh
+*B. Hà Nội
+C. Đà Nẵng
+D. Huế</pre>
+      <p>Các phương án có thể viết trên cùng một dòng: <code>A. 1   *B. 2   C. 3   D. 4</code>.
+        Thay cho dấu <code>*</code> có thể thêm dòng <code>Đáp án: B</code> sau câu.</p>
+
+      <h3>Câu đúng/sai</h3>
+<pre>Câu 1. Cho hàm số y = x³ − 3x.
+a) Hàm số có 2 điểm cực trị. (Đ)
+b) Hàm số đồng biến trên ℝ. (S)
+*c) Ý đúng cũng có thể đánh dấu bằng *
+d) Ý không đánh dấu được coi là Sai.</pre>
+      <p>Hoặc ghi một dòng <code>Đáp án: Đ S Đ S</code>.</p>
+
+      <h3>Câu trả lời ngắn</h3>
+<pre>Câu 1. Tính 2 + 3.
+Đáp án: 5</pre>
+
+      <h3>Đánh dấu đáp án đúng — dùng cách nào cũng được</h3>
+      <ul>
+        <li>Dấu <code>*</code> trước chữ cái: <code>*B. Hà Nội</code>; câu đúng/sai: <code>*a) …</code> hoặc ghi <code>(Đ)</code>/<code>(S)</code> cuối ý.</li>
+        <li><u>Gạch chân</u> chữ cái A, B, C, D (hoặc a, b, c, d của câu đúng/sai) trong file Word, kể cả khi nhiều phương án nằm trên một dòng hay trong bảng.</li>
+        <li>Dòng <code>Đáp án: B</code> (đúng/sai: <code>Đáp án: Đ S Đ S</code>; trả lời ngắn: <code>Đáp án: 12,5</code>) ngay sau câu.</li>
+        <li><b>Bảng đáp án ở cuối đề</b>, sau dòng <code>HẾT</code> hoặc tiêu đề <code>ĐÁP ÁN</code>. Đọc được các kiểu:
+          bảng ngang <code>Câu | 1 | 2 | 3</code> / <code>Đáp án | A | C | D</code>;
+          bảng dọc <code>Câu | Đáp án | Câu | Đáp án</code>;
+          bảng đúng/sai <code>Lệnh/Ý | Câu 1 | Câu 2</code> với các hàng <code>a) | Đúng | Sai</code>;
+          hoặc dòng chữ <code>1.A 2.C 3.D</code>, <code>Câu 1: Đ S Đ S</code>, <code>Câu 1: 12,5</code>.
+          Ghi <code>PHẦN I</code>, <code>PHẦN II</code>… trước mỗi bảng để phần mềm biết bảng thuộc phần nào.</li>
+      </ul>
+      <p>Nếu bảng đáp án <b>mâu thuẫn</b> với dấu gạch chân/dấu * trong đề, phần mềm báo lỗi đỏ để bạn kiểm tra.</p>
+
+      <h3>Nhóm câu (bài đọc, tư liệu, bảng số liệu…)</h3>
+<pre>[NHÓM: Bài đọc 1]
+Read the passage and answer the questions from {từ} to {đến}.
+(đoạn văn…)
+Câu 1. …
+Câu 2. …
+[HẾT NHÓM]</pre>
+      <p>Các câu trong nhóm luôn đi liền nhau cùng đoạn dẫn. <code>{từ}</code> và <code>{đến}</code> được tự thay bằng số câu thực tế trong từng mã đề.</p>
+
+      <h3>Giữ nguyên thứ tự phương án</h3>
+      <p>Thêm <code>[CỐ ĐỊNH]</code> vào câu hỏi để không xáo phương án của câu đó. Phần mềm cũng <b>tự động</b> giữ nguyên các câu có phương án như
+        "Cả A và B", "Tất cả các phương án trên", "đều đúng", "All of the above"…</p>
+
+      <h3>Công thức, hình ảnh</h3>
+      <ul>
+        <li>Công thức toán: viết LaTeX trong <code>$...$</code>, ví dụ <code>$\dfrac{1}{2}$</code> (hiển thị đẹp khi xem và in;
+          trong file Word sẽ giữ nguyên dạng chữ LaTeX).</li>
+        <li>Hình ảnh: <code>![](đường-dẫn-ảnh)</code>. Khi mở file Word, ảnh trong file được giữ lại tự động.</li>
+        <li><code>**chữ đậm**</code> và <code>__gạch chân__</code>.</li>
+      </ul>
+
+      <h3>Mở file Word (.docx)</h3>
+      <p>Phần mềm đọc trực tiếp file (không cần mạng): chữ, chữ đậm, chỉ số trên/dưới (H₂O, x²), hình ảnh, công thức Equation của Word,
+        bảng số liệu, phương án đặt trong bảng, dấu gạch chân đáp án và bảng đáp án cuối đề. Thông tin đầu đề (Sở, Trường, Kỳ thi, Năm học, Môn,
+        Thời gian) được tự điền vào mục 1. Công thức <b>MathType</b> và <b>Microsoft Equation 3.0</b> cũng được đọc và chuyển thành công thức Word (nên xem lại một lượt).
+        File .doc cũ cần lưu lại thành .docx.</p>
+
+      <h3>Mở file PDF</h3>
+      <p>Chữ trong PDF không giữ được công thức, nên phần mềm <b>cắt từng câu hỏi và từng phương án thành hình ảnh</b> ngay từ trang PDF
+        (giữ nguyên 100% công thức, đồ thị, bảng biến thiên), rồi khi xáo đề sẽ <b>vẽ lại số câu và chữ cái A, B, C, D</b> theo mã đề.
+        Đáp án lấy từ phần sau dòng HẾT (lời giải "Chọn A", "a) Đúng", "Đáp số: 5", bảng đáp án) hoặc từ chữ cái được
+        <b>tô màu / gạch chân / in đậm</b> trên trang. Lưu ý: nội dung câu hỏi trong file Word xuất ra là hình ảnh nên không sửa chữ được;
+        PDF dạng ảnh chụp/scan chưa đọc được.</p>
+
+      <h3>Gõ không dấu</h3>
+      <p>Phần mềm vẫn nhận <code>Cau 1.</code>, <code>Phan II</code>, <code>PHÂN I</code>… như bình thường.</p>
+
+      <h3>Kết quả</h3>
+      <ul>
+        <li><b>Tải Word</b>: file .docx chuẩn (A4, Times New Roman, lề theo cài đặt), công thức được chuyển thành công thức Word (Equation) — sửa tiếp được bằng Microsoft Word, WPS, LibreOffice.</li>
+        <li>Chân trang ghi "Trang x/y – Mã đề thi …". Câu hỏi không bị tách khỏi các phương án khi sang trang.</li>
+        <li><b>Tải tất cả (.zip)</b>: mỗi mã đề một file Word riêng, kèm file đáp án Word và Excel.</li>
+        <li><b>Đáp án Excel theo mẫu</b>: nếu đã chọn file mẫu ở mục 4, đáp án từng mã đề được điền vào đúng các cột của mẫu (câu 1, 2… và 1a, 1b…),
+          thay dữ liệu cũ và giữ nguyên định dạng; cột bị ẩn sẽ hiện ra nếu có dữ liệu. Mẫu được nhớ cho những lần sau.</li>
+        <li><b>Đáp án (Excel)</b>: file .xlsx gồm sheet "Bảng đáp án" (cột Đề gốc và từng mã đề) và sheet "Đối chiếu câu" (câu của mã đề ứng với câu nào ở đề gốc).</li>
+        <li><b>Word gộp 1 file</b>: mọi mã đề trong một file, mỗi mã đề bắt đầu ở trang mới và đánh số trang lại từ 1.</li>
+        <li><b>In / PDF</b>: chọn máy in hoặc "Lưu dưới dạng PDF".</li>
+        <li>Trước khi xuất, phần mềm <b>tự kiểm tra lỗi</b>: thiếu đáp án, phương án trống hoặc trùng nhau, thiếu dấu $, công thức không đọc được, ảnh lỗi, đánh số câu nhảy cóc… và tự kiểm chứng mỗi mã đề có đủ câu, đáp án đúng vị trí.</li>
+      </ul>
+      <p>Đề của bạn được tự lưu trên trình duyệt này, không gửi đi đâu cả.</p>
+    </div>
+  </dialog>
+
+  <!-- KIỂM TRA TRƯỚC KHI XUẤT -->
+  <dialog id="checkDlg">
+    <div class="dialog-head">
+      <h2 id="checkTitle">Kiểm tra đề trước khi xuất</h2>
+    </div>
+    <div class="dialog-body">
+      <p id="checkSummary"></p>
+      <ul id="checkList" class="warnings"></ul>
+    </div>
+    <div class="dialog-foot">
+      <button type="button" class="btn small ghost" id="checkBack">Quay lại sửa</button>
+      <button type="button" class="btn small" id="checkGo">Vẫn tải file</button>
+    </div>
+  </dialog>
+
+  <script src="core.js"></script>
+  <script src="word.js"></script>
+  <script src="mathtype.js"></script>
+  <script src="docx-reader.js"></script>
+  <script src="pdf-import.js"></script>
+  <script src="xlsx.js"></script>
+  <script src="xlsx-template.js"></script>
+  <script src="samples.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
