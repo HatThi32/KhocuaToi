@@ -213,6 +213,22 @@
         .forEach((r) => rels.set(r.attrs.Id, r.attrs.Target));
     }
     const imgCache = new Map();
+    // Đọc công thức MathType từ file OLE nhúng
+    let eqCount = 0, eqFail = 0;
+    async function equation(rid) {
+      const target = rels.get(rid);
+      if (!target) return null;
+      const path = target.startsWith('/') ? target.slice(1) : 'word/' + target.replace(/^\.\//, '');
+      try {
+        const MT = root.XaoDeMathType || (typeof require !== 'undefined' ? require('./mathtype.js') : null);
+        const by = await zip.bytes(path);
+        const r = by && MT && MT.oleToLatex(by);
+        if (r && r.latex) { eqCount++; return '$' + r.latex + '$'; }
+      } catch (e) { /* để đọc ảnh xem trước bên dưới */ }
+      eqFail++;
+      return null;
+    }
+
     async function image(rid, extent) {
       const target = rels.get(rid);
       if (!target) return null;
@@ -287,6 +303,10 @@
             const s = blip && (await image(blip.attrs['r:embed'], ext && { cx: +ext.attrs.cx, cy: +ext.attrs.cy }));
             if (s) add(s, {});
           } else if (c.name === 'w:object' || c.name === 'w:pict') {
+            // Công thức MathType / Equation 3.0 nhúng dạng OLE => LaTeX
+            const ole = find(c, 'o:OLEObject');
+            const eq = ole && /^Equation/i.test(ole.attrs.ProgID || '') ? await equation(ole.attrs['r:id']) : null;
+            if (eq != null) { add(eq, {}); continue; }
             const im = find(c, 'v:imagedata');
             const s = im && (await image(im.attrs['r:id']));
             if (s) add(s, {});
@@ -387,6 +407,8 @@
     }
     const docRoot = parseXml(docXml);
     await body(find(docRoot, 'w:body'));
+    if (eqCount) warnings.unshift(`Đã đọc ${eqCount} công thức MathType/Equation và chuyển thành công thức Word — hãy xem lại một lượt.`);
+    if (eqFail) warnings.push(`Có ${eqFail} công thức MathType không đọc được.`);
     return { blocks, warnings: [...new Set(warnings)] };
   }
 

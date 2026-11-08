@@ -55,7 +55,7 @@
   const FUNCS = new Set(['sin', 'cos', 'tan', 'cot', 'tg', 'cotg', 'sec', 'csc', 'arcsin', 'arccos', 'arctan',
     'arccot', 'sinh', 'cosh', 'tanh', 'coth', 'log', 'ln', 'lg', 'exp', 'det', 'gcd', 'deg', 'dim', 'ker', 'arg', 'sgn', 'Pr', 'hom']);
   const LIMFUNCS = new Set(['lim', 'max', 'min', 'sup', 'inf', 'limsup', 'liminf']);
-  const NARY = { int: '∫', iint: '∬', iiint: '∭', oint: '∮', sum: '∑', prod: '∏', coprod: '∐', bigcup: '⋃', bigcap: '⋂' };
+  const NARY = { int: '∫', iint: '∬', iiint: '∭', oint: '∮', oiint: '∯', oiiint: '∰', sum: '∑', prod: '∏', coprod: '∐', bigcup: '⋃', bigcap: '⋂' };
   const ACC = { vec: '⃗', overrightarrow: '⃗', overleftarrow: '⃖', hat: '̂', widehat: '̂',
     tilde: '̃', widetilde: '̃', bar: '̅', dot: '̇', ddot: '̈', check: '̌',
     breve: '̆', acute: '́', grave: '̀' };
@@ -217,11 +217,36 @@
         continue;
       }
       const b = this.xml([base]);
+      if (!b && this.peek() && !stop(this.peek()) && !this.isCh(this.peek(), '}')) {
+        // {}_{92}^{235}U : chỉ số đứng trước ký hiệu phía sau
+        let nxt = this.atom(stop);
+        if (nxt != null && !nxt.nary && !nxt.lim) {
+          const nb = this.xml(Array.isArray(nxt) ? nxt : [nxt]);
+          items.push({ x: `<m:sPre><m:sub>${sc.sub || ''}</m:sub><m:sup>${sc.sup || ''}</m:sup><m:e>${nb}</m:e></m:sPre>` });
+          continue;
+        }
+      }
       let xml;
       if (sc.sub != null && sc.sup != null) xml = `<m:sSubSup><m:e>${b}</m:e><m:sub>${sc.sub}</m:sub><m:sup>${sc.sup}</m:sup></m:sSubSup>`;
       else if (sc.sup != null) xml = `<m:sSup><m:e>${b}</m:e><m:sup>${sc.sup}</m:sup></m:sSup>`;
       else xml = `<m:sSub><m:e>${b}</m:e><m:sub>${sc.sub}</m:sub></m:sSub>`;
       items.push({ x: xml });
+    }
+    // Ngoặc lẻ không có cặp: dùng khối ngoặc một phía (hiển thị đúng trên Word, WPS, LibreOffice)
+    for (let k = items.length - 1; k >= 0; k--) {
+      const it = items[k];
+      if (it.r && it.mode === 'math' && it.open) {
+        const inner = items.splice(k + 1);
+        items[k] = { x: this.dXml(it.text, '', this.xml(inner)) };
+      }
+    }
+    for (let k = 0; k < items.length; k++) {
+      const it = items[k];
+      if (it.r && it.mode === 'math' && /^[)\]]$/.test(it.text)) {
+        const inner = items.splice(0, k);
+        items[0] = { x: this.dXml('', it.text, this.xml(inner)) };
+        k = 0;
+      }
     }
     return items;
   };
@@ -297,11 +322,22 @@
   };
 
   MathConverter.prototype.dXml = function (beg, end, inner) {
+    // Ngoặc ngược kiểu ]a; b[ : nhiều phần mềm không dựng được khối ngoặc này => ghi dấu ngoặc dạng chữ
+    if (/^[)\]}⟩]$/.test(beg) || /^[([{⟨]$/.test(end)) {
+      const t = (c) => (c ? `<m:r><m:rPr><m:nor/></m:rPr><w:rPr><w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math"/></w:rPr><m:t>${x(c)}</m:t></m:r>` : '');
+      return t(beg) + inner + t(end);
+    }
     return `<m:d><m:dPr><m:begChr m:val="${x(beg)}"/><m:endChr m:val="${x(end)}"/></m:dPr><m:e>${inner}</m:e></m:d>`;
   };
 
   MathConverter.prototype.nary = function (chr, sub, sup, body) {
-    const loc = chr === '∫' || chr === '∬' || chr === '∭' || chr === '∮' ? 'subSup' : 'undOvr';
+    if (!'∑∏∐∫∬∭∮∯∰'.includes(chr)) {
+      let op = this.runXml(chr, 'math');
+      if (sub != null) op = `<m:limLow><m:e>${op}</m:e><m:lim>${sub}</m:lim></m:limLow>`;
+      if (sup != null) op = `<m:limUpp><m:e>${op}</m:e><m:lim>${sup}</m:lim></m:limUpp>`;
+      return op + body;
+    }
+    const loc = '∫∬∭∮∯∰'.includes(chr) ? 'subSup' : 'undOvr';
     return `<m:nary><m:naryPr><m:chr m:val="${chr}"/><m:limLoc m:val="${loc}"/>` +
       (sub == null ? '<m:subHide m:val="1"/>' : '') + (sup == null ? '<m:supHide m:val="1"/>' : '') +
       `</m:naryPr><m:sub>${sub || ''}</m:sub><m:sup>${sup || ''}</m:sup><m:e>${body}</m:e></m:nary>`;
@@ -413,10 +449,16 @@
       return { x: `<m:${tag}><m:e>${b.xml}</m:e><m:lim>${a.xml}</m:lim></m:${tag}>` };
     }
     if (v === 'xrightarrow' || v === 'xleftarrow' || v === 'xRightarrow') {
-      if (this.isCh(this.peek(), '[')) { while (this.peek() && !this.isCh(this.next(), ']')); }
+      let below = '';
+      if (this.isCh(this.peek(), '[')) {
+        this.i++;
+        below = this.xml(this.seq((t) => this.isCh(t, ']'), false));
+        if (this.isCh(this.peek(), ']')) this.i++;
+      }
       const a = this.arg();
-      const arrow = this.runXml(v === 'xleftarrow' ? '⟵' : v === 'xRightarrow' ? '⟹' : '⟶', 'math');
-      return { x: `<m:limUpp><m:e>${arrow}</m:e><m:lim>${a.xml}</m:lim></m:limUpp>` };
+      let arrow = this.runXml(v === 'xleftarrow' ? '⟵' : v === 'xRightarrow' ? '⟹' : '⟶', 'math');
+      if (below) arrow = `<m:limLow><m:e>${arrow}</m:e><m:lim>${below}</m:lim></m:limLow>`;
+      return { x: a.xml ? `<m:limUpp><m:e>${arrow}</m:e><m:lim>${a.xml}</m:lim></m:limUpp>` : arrow };
     }
     if (v === 'boxed' || v === 'fbox') return { x: `<m:borderBox><m:e>${this.arg().xml}</m:e></m:borderBox>` };
     if (v === 'phantom' || v === 'hphantom' || v === 'vphantom' || v === 'label' || v === 'tag') { this.arg(); return null; }
