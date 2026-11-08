@@ -112,6 +112,7 @@
       bottom: num('mBottom', 1.5, 0.5, 5),
       left: num('mLeft', 2, 0.5, 5),
       right: num('mRight', 1.5, 0.5, 5),
+      bo: $('optBo').checked,
     };
   }
   function shuffleOpts() {
@@ -191,9 +192,10 @@
   function renderVersion(v, m, isOriginal, L) {
     let h = `<div class="ex" style="--ex-fs:${L.fontPt}pt;--ex-lh:${L.line};--ex-lab:${(L.fontPt * 0.035 + 0.25).toFixed(2)}cm">` +
       renderHeader(m, v.code, isOriginal);
-    v.sections.forEach((sec) => {
-      const title = sectionTitle(sec);
-      if (title || sec.intro) h += paras(sec.intro, 'ex-sec', title ? `<b>${fmt(title.replace(/\.\s*$/, ''))}.</b> ` : '');
+    v.sections.forEach((sec, si) => {
+      const hd = W.sectionHeading(sec, X.SECTION_TYPES, si, L.bo);
+      const title = hd.title;
+      if (title || hd.intro) h += paras(hd.intro, 'ex-sec', title ? `<b>${fmt(title.replace(/\.\s*$/, ''))}.</b> ` : '');
       sec.items.forEach((it) => {
         if (it.kind === 'group') {
           const vars = { 'từ': it.from, 'đến': it.to, tu: it.from, den: it.to };
@@ -360,10 +362,10 @@
   function hasPdfImages(v) {
     return v.sections.some((sec) => X.flatQuestions(sec).some((x) => RE_PDFIMG.test(x.q.stem) || x.q.options.some((o) => RE_PDFIMG.test(o.text))));
   }
-  async function bakeText(text, label) {
+  async function bakeText(text, label, bold) {
     const m = RE_PDFIMG.exec(text || '');
     if (!m || !window.XaoDePdf) return text;
-    const src = await window.XaoDePdf.bakeLabel(m[2], m[1], label);
+    const src = await window.XaoDePdf.bakeLabel(m[2], m[1], label, bold);
     const alt = m[1].replace(/\|(q|o)\|.*$/, '|$1b');
     return text.replace(m[0], `![${alt}](${src})`);
   }
@@ -377,10 +379,11 @@
     for (const sec of c.sections) {
       for (const x of X.flatQuestions(sec)) {
         const q = x.q;
-        q.stem = await bakeText(q.stem, `${q.word || 'Câu'} ${x.no}.`);
+        const bo = state.layout && state.layout.bo;
+        q.stem = await bakeText(q.stem, `${q.word || 'Câu'} ${x.no}.`, bo || null);
         for (let i = 0; i < q.options.length; i++) {
           const lab = q.type === 'tf' ? `${String.fromCharCode(97 + i)})` : `${String.fromCharCode(65 + i)}.`;
-          q.options[i].text = await bakeText(q.options[i].text, lab);
+          q.options[i].text = await bakeText(q.options[i].text, lab, bo && q.type === 'mcq' ? true : null);
         }
       }
     }
@@ -694,7 +697,7 @@
   // ---------- Lưu tự động ----------
   const FIELDS = ['subject', 'subjectLabel', 'dept', 'school', 'examName', 'year', 'time', 'docType', 'count', 'startCode', 'codeList', 'seed',
     'fontPt', 'lineSp', 'mTop', 'mBottom', 'mLeft', 'mRight', 'notes', 'source'];
-  const CHECKS = ['optQuestions', 'optOptions', 'optTf', 'optInGroup', 'optEssay', 'optOriginal'];
+  const CHECKS = ['optQuestions', 'optOptions', 'optTf', 'optInGroup', 'optEssay', 'optOriginal', 'optBo'];
   let saveFailed = false;
   function save() {
     try {
@@ -778,7 +781,7 @@
     clearTimeout(timer);
     timer = setTimeout(() => { parseAndShow(); save(); }, 400);
   });
-  const META_IDS = ['subject', 'subjectLabel', 'dept', 'school', 'examName', 'year', 'time', 'docType', 'notes', ...Object.keys(DEFAULT_LAYOUT)];
+  const META_IDS = ['optBo', 'subject', 'subjectLabel', 'dept', 'school', 'examName', 'year', 'time', 'docType', 'notes', ...Object.keys(DEFAULT_LAYOUT)];
   document.querySelectorAll('.settings input, .settings select, .settings textarea').forEach((el) =>
     el.addEventListener('change', () => {
       save();

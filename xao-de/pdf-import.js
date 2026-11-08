@@ -464,12 +464,13 @@
     return new Promise((resolve, reject) => { const im = new Image(); im.onload = () => resolve(im); im.onerror = reject; im.src = src; });
   }
   /** alt "WxHcm|q|x,y,w,h,base,size,bold" + nhãn mới => ảnh mới (data URI) với nhãn đã thay */
-  async function bakeLabel(src, alt, text) {
-    const key = text + '|' + alt + '|' + src.length + src.slice(-40);
+  async function bakeLabel(src, alt, text, forceBold) {
+    const key = text + '|' + forceBold + '|' + alt + '|' + src.length + src.slice(-40);
     if (bakeCache.has(key)) return bakeCache.get(key);
     const m = /\|(q|o)\|(-?\d+),(-?\d+),(\d+),(\d+),(-?\d+),(\d+),(\d)/.exec(alt);
     if (!m) return src;
-    const [, , lx, ly, lw, lh, bl, fs, bold] = m.map((v, i) => (i > 1 ? +v : v));
+    const [, , lx, ly, lw, lh, bl, fs, bold0] = m.map((v, i) => (i > 1 ? +v : v));
+    const bold = forceBold == null ? bold0 : forceBold ? 1 : 0;
     const im = await loadImg(src);
     const c = document.createElement('canvas');
     c.width = im.naturalWidth; c.height = im.naturalHeight;

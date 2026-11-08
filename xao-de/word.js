@@ -576,6 +576,30 @@
     return String(l).trim().slice(1, -1).split('|').map((c) => c.trim());
   }
 
+  // Tiêu đề phần theo mẫu đề thi tốt nghiệp THPT của Bộ GD&ĐT:
+  // "PHẦN I. Thí sinh trả lời từ câu 1 đến câu 12. Mỗi câu hỏi thí sinh chỉ chọn một phương án."
+  const ROMAN_OUT = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+  function sectionHeading(sec, types, index, bo) {
+    if (!bo) return { title: sectionTitle(sec, types), intro: sec.intro };
+    const n = (sec.items || []).reduce((a, it) => a + (it.kind === 'group' ? it.questions.length : 1), 0);
+    const range = n === 1 ? 'câu 1' : `từ câu 1 đến câu ${n}`;
+    const std = {
+      mcq: `Thí sinh trả lời ${range}. Mỗi câu hỏi thí sinh chỉ chọn một phương án.`,
+      tf: `Thí sinh trả lời ${range}. Trong mỗi ý a), b), c), d) ở mỗi câu, thí sinh chọn đúng hoặc sai.`,
+      short: `Thí sinh trả lời ${range}.`,
+    }[sec.type];
+    const m = /PH[ẦẤÂAẢ]N\s+(III|II|IV|I|\d+)/i.exec(sec.label || '');
+    const roman = m ? (/^\d+$/.test(m[1]) ? ROMAN_OUT[+m[1] - 1] || m[1] : m[1].toUpperCase()) : ROMAN_OUT[index] || String(index + 1);
+    if (!std) return { title: sec.label ? sectionTitle(sec, types) : `PHẦN ${roman}. TỰ LUẬN`, intro: sec.intro };
+    // giữ lời dẫn riêng của giáo viên (VD đoạn văn), bỏ câu hướng dẫn cũ vì đã thay bằng câu chuẩn
+    const keep = String(sec.intro || '').split('\n').filter((l) => l.trim()
+      && !/thí sinh\s+(trả lời|chọn)|mỗi câu hỏi thí sinh|trong mỗi ý/i.test(l)
+      // dòng mô tả loại câu / điểm của phần: "Câu trắc nghiệm nhiều phương án lựa chọn (3,0 điểm)"
+      && !/^\s*(câu\s+)?(hỏi\s+)?(trắc\s*nghiệm|trả\s*lời\s*ngắn|đúng\s*\/?\s*sai|nhiều\s*(phương\s*án|lựa\s*chọn))[^.]*?(\(\s*[\d.,]+\s*điểm\s*\))?\s*\.?\s*$/i.test(l)
+      && !/^\s*\(\s*[\d.,]+\s*điểm\s*\)\s*\.?\s*$/i.test(l));
+    return { title: `PHẦN ${roman}`, intro: [std, ...keep].join('\n') };
+  }
+
   function sectionTitle(sec, types) {
     if (!sec.label) return '';
     if (/^PH[ẦA]N\s+[IVX\d]+\.?$/.test(sec.label)) {
@@ -703,7 +727,7 @@
     'xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"';
 
   function Builder(layout, images) {
-    const L = Object.assign({ fontPt: 12, line: 1.15, top: 1.5, bottom: 1.5, left: 2, right: 1.5 }, layout || {});
+    const L = Object.assign({ fontPt: 12, line: 1.15, top: 1.5, bottom: 1.5, left: 2, right: 1.5, bo: false }, layout || {});
     this.L = L;
     this.sz = Math.round(L.fontPt * 2);
     this.mar = {
@@ -916,7 +940,7 @@
   };
 
   // ---- Đầu đề ----
-  Builder.prototype.header = function (meta, code, isOriginal) {
+  Builder.prototype.header = function (meta, code, isOriginal, single) {
     const wL = Math.round(this.textW * 0.45);
     const wR = this.textW - wL;
     const c = { jc: 'center', line: 240 };
@@ -934,6 +958,10 @@
     if (tag) {
       left += this.box(this.r(tag.toUpperCase(), { b: true }), Array.from(tag).length, 'center');
       left += this.spacer(1);
+    }
+    if (single && this.L.bo) {
+      const o = { i: true };
+      left += this.p(this.r('(Đề thi có ', o) + this.fld('NUMPAGES \\# "00"', '01', o) + this.r(' trang)', o), { jc: 'center', line: 240, before: 20 });
     }
     if (!left) left = '<w:p/>';
     let right = '';
@@ -1010,13 +1038,14 @@
     return this.table(rows, widths, { indent });
   };
 
-  Builder.prototype.version = function (v, meta, isOriginal, types, sectPr) {
-    let s = this.header(meta, v.code, isOriginal);
-    v.sections.forEach((sec) => {
-      const title = sectionTitle(sec, types);
-      if (title || sec.intro) {
-        const prefix = title ? this.r(title.replace(/\.\s*$/, '') + '.', { b: true }) + (sec.intro ? this.r(' ') : '') : '';
-        const ps = this.paras(sec.intro, { jc: 'both', before: 160, after: 40 }, prefix);
+  Builder.prototype.version = function (v, meta, isOriginal, types, sectPr, single) {
+    let s = this.header(meta, v.code, isOriginal, single);
+    v.sections.forEach((sec, si) => {
+      const hd = sectionHeading(sec, types, si, this.L.bo);
+      const title = hd.title;
+      if (title || hd.intro) {
+        const prefix = title ? this.r(title.replace(/\.\s*$/, '') + '.', { b: true }) + (hd.intro ? this.r(' ') : '') : '';
+        const ps = this.paras(hd.intro, { jc: 'both', before: 160, after: 40 }, prefix);
         ps.forEach((p, i) => { if (i > 0) { p.o.before = 0; } });
         s += this.emit(ps, true);
       }
@@ -1122,7 +1151,7 @@
       const label = it.isOriginal ? 'Đề gốc' : 'Mã đề thi ' + it.version.code;
       const f = b.footer(label, list.length === 1);
       const last = i === list.length - 1;
-      body += b.version(it.version, meta, it.isOriginal, types, last ? null : b.sectPr(f));
+      body += b.version(it.version, meta, it.isOriginal, types, last ? null : b.sectPr(f), list.length === 1);
       if (last) body += b.sectPr(f);
     });
     if (b.unknownTex.size) b.issues.push('Lệnh công thức chưa hỗ trợ (đã giữ dạng chữ): ' + [...b.unknownTex].join(', '));
@@ -1160,7 +1189,7 @@
   }
 
   const api = {
-    latexToOmml, splitInline, estimateWidthCm, chooseColumns, sectionTitle, isTableLine, splitTableLine,
+    latexToOmml, splitInline, estimateWidthCm, chooseColumns, sectionTitle, sectionHeading, isTableLine, splitTableLine,
     imageInfo, dataUriToBytes, collectImageSources, buildExamDocx, buildKeysDocx, zip, crc32,
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
