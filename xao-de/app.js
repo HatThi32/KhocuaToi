@@ -520,6 +520,7 @@
     return d;
   }
   async function keysFromTemplate() {
+    if (!tpl) throw new Error('Chưa chọn file Excel mẫu. Hãy bấm "Chọn file mẫu .xlsx" ở mục "Mẫu Excel đáp án" (cột bên trái).');
     const r = await window.XaoDeXlsxTemplate.fillTemplate(tpl.bytes, state.versions.map(versionData));
     if (r.warnings.length) alert(r.warnings.join('\n'));
     return r.bytes;
@@ -775,8 +776,13 @@
   }));
   $('dlKeysWord').addEventListener('click', (e) => withBusy(e.currentTarget, async () =>
     download(`Dap_an_${subj()}.docx`, keysDocx(), DOCX_MIME)));
-  $('dlKeysTpl').addEventListener('click', (e) => withBusy(e.currentTarget, async () =>
-    download(tplFileName(), await keysFromTemplate(), XLSX_MIME)));
+  $('dlKeysTpl').addEventListener('click', (e) => withBusy(e.currentTarget, async () => {
+    if (!tpl) {
+      if (confirm('Bạn chưa chọn file Excel mẫu. Chọn file mẫu ngay bây giờ?')) $('tplInput').click();
+      return;
+    }
+    download(tplFileName(), await keysFromTemplate(), XLSX_MIME);
+  }));
   $('tplInput').addEventListener('change', async (e) => {
     const f = e.target.files[0];
     e.target.value = '';

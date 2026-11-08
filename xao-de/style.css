@@ -53,6 +53,9 @@
 
 * { box-sizing: border-box; }
 
+/* Phần tử có thuộc tính hidden luôn bị ẩn (kể cả nút có display riêng) */
+[hidden] { display: none !important; }
+
 body {
   margin: 0;
   background: var(--bg);
