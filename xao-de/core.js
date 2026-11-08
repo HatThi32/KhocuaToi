@@ -46,16 +46,22 @@
   };
 
   const RE_SECTION = /^\s*\[\s*(PH[ẦA]N\s+[^\]]*|T[ỰU]\s*LU[ẬA]N[^\]]*|TR[ẮA]C\s*NGHI[ỆE]M[^\]]*)\]\s*(.*)$/i;
+  // "PHẦN I. CÂU TRẮC NGHIỆM ... (3.0 điểm) Thí sinh trả lời ..." (không có ngoặc vuông)
+  const RE_SECTION_PLAIN = /^\s*(PH[ẦA]N\s+(?:III|II|IV|I|\d+))\b\s*([.:\-–]?)\s*(.*)$/i;
   const RE_GROUP_START = /^\s*\[\s*NH[ÓO]M\s*(?::\s*([^\]]*))?\]\s*$/i;
   const RE_GROUP_END = /^\s*\[\s*H[ẾE]T\s+NH[ÓO]M\s*\]\s*$/i;
-  const RE_QUESTION = /^\s*(C[âa]u|Question)\s*(\d+)\s*[.:)]?\s*(.*)$/i;
+  const RE_QUESTION = /^\s*(C[âa]u|Question)\s*(\d+)\s*(\([^)]{0,40}\))?\s*[.:)]?\s*(.*)$/i;
   const RE_MCQ_OPT = /^\s*(\*)?\s*([A-D])\s*[.)]\s*(.*)$/;
   const RE_TF_OPT = /^\s*(\*)?\s*([a-d])\s*[.)]\s*(.*)$/;
   const RE_ANSWER = /^\s*(?:Đ[áa]p\s*[áa]n|ĐA|Answer)\s*[:：]\s*(.*)$/i;
   const RE_LOCK = /\[\s*C[ỐO]\s*Đ[ỊI]NH\s*\]/i;
+  // Dòng "HẾT" kết thúc đề; tiêu đề phần đáp án
+  const RE_END = /^\s*[-–—_=.*\s]*H[ẾE]T\s*[-–—_=.*\s]*$/i;
+  const RE_KEY_HEAD = /^\s*\[?\s*(?:(?:BẢNG|PHẦN)\s+)?(?:ĐÁP\s*ÁN|HƯỚNG\s+DẪN\s+CHẤM|DAP\s*AN)(?!\s*[:：])(?:\s|\]|$)/i;
   // Phương án nhắc tới phương án khác => không nên xáo phương án của câu đó
   const RE_REFERS_OTHER =
     /(^|[\s,(])(cả\s+(A|B|C|D|hai|ba|bốn|3|4)([\s,.;]|$)|tất\s+cả|các\s+(phương\s+)?án\s+trên|đều\s+(đúng|sai)|[A-D]\s+và\s+[A-D]([\s,.;]|$)|all of the above|none of the above|both\s+[A-D]\s+and\s+[A-D]|neither)/i;
+  const ROMAN = { I: 1, II: 2, III: 3, IV: 4 };
 
   function detectSectionType(label, index) {
     const s = label.toUpperCase();
@@ -65,10 +71,41 @@
     if (/NHIỀU\s*LỰA\s*CHỌN|TRẮC\s*NGHIỆM/.test(s)) return 'mcq';
     const m = s.match(/PH[ẦA]N\s+(III|II|IV|I|\d+)/);
     if (m) {
-      const n = { I: 1, II: 2, III: 3, IV: 4 }[m[1]] || parseInt(m[1], 10);
+      const n = ROMAN[m[1]] || parseInt(m[1], 10);
       return ['mcq', 'tf', 'short', 'essay'][n - 1] || 'mcq';
     }
     return ['mcq', 'tf', 'short', 'essay'][index] || 'mcq';
+  }
+
+  // Số thứ tự của một phần: "PHẦN II ..." -> 2
+  function sectionNumber(label) {
+    const m = String(label || '').toUpperCase().match(/PH[ẦA]N\s+(III|II|IV|I|\d+)/);
+    return m ? ROMAN[m[1]] || parseInt(m[1], 10) : null;
+  }
+
+  // Tiêu đề phần viết hoa, giữ nguyên phần trong ngoặc: "(3,0 điểm)"
+  function upperLabel(t) {
+    return String(t).split(/(\([^)]*\))/).map((p, i) => (i % 2 ? p : p.toUpperCase())).join('');
+  }
+
+  // Tách "PHẦN I. CÂU TRẮC NGHIỆM (3.0 điểm) Thí sinh trả lời..." thành tiêu đề + lời dẫn
+  function splitPlainSection(head, rest) {
+    const words = rest.split(/(\s+)/);
+    let label = head, i = 0;
+    for (; i < words.length; i++) {
+      const w = words[i];
+      if (!w.trim()) { label += w; continue; }
+      if (w.startsWith('(')) {
+        // nhóm trong ngoặc ngay sau tiêu đề, ví dụ (3.0 điểm)
+        let grp = '';
+        while (i < words.length) { grp += words[i]; if (words[i].includes(')')) break; i++; }
+        label += grp; i++;
+        break;
+      }
+      if (/[a-zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/.test(w)) break;
+      label += w;
+    }
+    return { label: label.trim().replace(/[.:]\s*$/, ''), intro: words.slice(i).join('').trim() };
   }
 
   // Tách dòng có nhiều phương án: "A. 1   B. 2   C. 3   D. 4"
@@ -79,8 +116,8 @@
   }
 
   function parseTfAnswer(text) {
-    // "Đ S Đ S" / "ĐSĐS" / "a) Đ, b) S..." / "D S D S"
-    const t = text.toUpperCase().replace(/[A-D]\s*[.)]/g, ' ');
+    // "Đ S Đ S" / "ĐSĐS" / "a) Đúng, b) Sai..." / "D S D S"
+    const t = text.toUpperCase().replace(/[A-D]\s*[.)]/g, ' ').replace(/ĐÚNG|DUNG|TRUE/g, 'Đ').replace(/SAI|FALSE/g, 'S');
     const out = [];
     for (const ch of t) {
       if (ch === 'Đ' || ch === 'D' || ch === 'T') out.push(true);
@@ -89,17 +126,120 @@
     return out;
   }
 
+  // ---------- Đọc bảng đáp án (sau dòng HẾT hoặc tiêu đề ĐÁP ÁN) ----------
+  const RE_TF_VAL = /^(Đ|S|Đúng|Sai|D|Dung|T|F|True|False)$/i;
+  function tfVal(v) {
+    const k = v.toUpperCase();
+    return k.startsWith('Đ') || k === 'D' || k === 'DUNG' || k === 'T' || k === 'TRUE';
+  }
+  function qNo(c) {
+    const m = String(c).trim().match(/^(?:câu|question|c)?\s*(\d{1,3})\s*[.:)]?$/i);
+    return m ? parseInt(m[1], 10) : null;
+  }
+  function isTfSeq(v) {
+    const t = v.replace(/[\s,;\-–/]+/g, '').toUpperCase();
+    return /^[ĐDS]{2,4}$/.test(t) || /^((ĐÚNG|SAI)){2,4}$/.test(t);
+  }
+
+  /** Trả về [{ secNo, no, kind: 'mcq'|'tf'|'tfItem'|'value', value, item }] */
+  function parseAnswerKey(lines) {
+    const out = [];
+    let ctx = null; // số phần đang đọc (PHẦN I => 1)
+    let grid = [];
+    const push = (no, raw, item) => {
+      const v = String(raw).trim().replace(/^\*/, '');
+      if (!v) return;
+      if (item != null) return out.push({ secNo: ctx, no, kind: 'tfItem', item, value: tfVal(v) });
+      if (/^[A-Da-d]\.?$/.test(v)) out.push({ secNo: ctx, no, kind: 'mcq', value: v[0].toUpperCase() });
+      else if (isTfSeq(v)) out.push({ secNo: ctx, no, kind: 'tf', value: parseTfAnswer(v) });
+      else if (RE_TF_VAL.test(v)) out.push({ secNo: ctx, no, kind: 'tfOne', value: tfVal(v) });
+      else if (v.length <= 12 && !/\s{2,}/.test(v)) out.push({ secNo: ctx, no, kind: 'value', value: v });
+    };
+    function flushGrid() {
+      const rows = grid.filter((r) => r.some((c) => c));
+      grid = [];
+      if (!rows.length) return;
+      let header = null; // {col -> câu}
+      let lastNo = null;
+      rows.forEach((r) => {
+        const nums = r.map(qNo);
+        const numCount = nums.slice(1).filter((n) => n != null).length;
+        // Hàng tiêu đề số câu: "Câu | 1 | 2 | 3 ..." hoặc "Lệnh/Ý | Câu 1 | Câu 2 ..."
+        if (numCount >= 2 && r.slice(1).every((c, i) => !c || nums[i + 1] != null)) {
+          header = nums;
+          return;
+        }
+        const first = r[0].trim();
+        if (header) {
+          const item = /^([a-d])\s*\)?$/.exec(first) || /^([a-dA-D])\s*\)$/.exec(first);
+          r.forEach((c, i) => {
+            if (i === 0 || header[i] == null) return;
+            push(header[i], c, item ? item[1].toLowerCase().charCodeAt(0) - 97 : null);
+          });
+          return;
+        }
+        // Dạng dọc: "1 | A" , "1 | A | 2 | C ...", "1 | a) | Đúng", "  | b) | Sai", "Câu 1 | Đ | S | Đ | S"
+        let no = nums[0];
+        if (no == null && !first && lastNo != null) no = lastNo;
+        if (no == null) return;
+        lastNo = no;
+        const rest = r.slice(1).map((c) => c.trim());
+        const item = rest.length >= 2 ? /^([a-d])\s*\)?$/.exec(rest[0]) || /^([a-dA-D])\s*\)$/.exec(rest[0]) : null;
+        if (item) return push(no, rest[1], item[1].toLowerCase().charCodeAt(0) - 97);
+        if (rest.length >= 2 && rest.every((c) => RE_TF_VAL.test(c))) return push(no, rest.join(' '));
+        // các cặp (câu, đáp án)
+        for (let i = 0; i < r.length - 1; i += 2) {
+          const n = qNo(r[i]);
+          if (n != null) push(n, r[i + 1]);
+        }
+      });
+    }
+    lines.forEach((raw) => {
+      const line = raw.trim();
+      if (/\|/.test(line) && line.split('|').length >= 3) {
+        grid.push(line.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim()));
+        return;
+      }
+      flushGrid();
+      if (!line) return;
+      const sm = line.match(/^\[?\s*PH[ẦA]N\s+(III|II|IV|I|\d+)\b/i);
+      if (sm) { ctx = ROMAN[sm[1].toUpperCase()] || parseInt(sm[1], 10); return; }
+      // "Câu 1: Đ S Đ S" / "1. a) Đúng b) Sai ..."
+      const tm = line.match(/^(?:câu\s*)?(\d{1,3})\s*[.:)\-–]\s*(.+)$/i);
+      if (tm && /^[\s,;.\-–a-dĐđSs()]*$/.test(tm[2].replace(/đúng|sai/gi, 'Đ')) && parseTfAnswer(tm[2]).length >= 2) {
+        out.push({ secNo: ctx, no: parseInt(tm[1], 10), kind: 'tf', value: parseTfAnswer(tm[2]) });
+        return;
+      }
+      // "1.A 2.C 3-D", "Câu 1: B"
+      const pairs = [...line.matchAll(/(?:^|[\s,;])(?:câu\s*)?(\d{1,3})\s*[.:)\-–]?\s*([A-D])(?=$|[\s,;.])/gi)];
+      const leftover = line.replace(/(?:^|[\s,;])(?:câu\s*)?(\d{1,3})\s*[.:)\-–]?\s*([A-D])(?=$|[\s,;.])/gi, '').replace(/[\s,;.]/g, '');
+      if (pairs.length && leftover.length <= 3) {
+        pairs.forEach((p) => out.push({ secNo: ctx, no: parseInt(p[1], 10), kind: 'mcq', value: p[2].toUpperCase() }));
+        return;
+      }
+      // "Câu 1: 12,5" (trả lời ngắn)
+      const vm = line.match(/^câu\s*(\d{1,3})\s*[.:)\-–]\s*(\S{1,12})$/i);
+      if (vm) out.push({ secNo: ctx, no: parseInt(vm[1], 10), kind: 'value', value: vm[2] });
+    });
+    flushGrid();
+    return out;
+  }
+
   /**
    * Phân tích văn bản đề gốc.
-   * Trả về { sections: [...], warnings: [...] }
+   * Trả về { sections, warnings, errors, preamble, keyCount }
    * section = { label, type, intro, units: [unit] }
    * unit = { kind: 'q', question } | { kind: 'group', title, passage, questions: [] }
-   * question = { origNo, stem, options: [{text, correct}], answer, lock, type }
+   * question = { id, origNo, stem, points, options: [{text, correct}], answer, lock, type, marks }
    */
   function parseExam(text) {
     const lines = String(text || '').replace(/\r\n?/g, '\n').split('\n');
     const sections = [];
     const warnings = [];
+    const errors = [];
+    const preamble = [];
+    const keyLines = [];
+    let inKey = false;
     let sec = null;
     let group = null;
     let q = null;
@@ -123,45 +263,43 @@
         q.stem = q.stem.replace(RE_LOCK, '').trim();
       }
       if (q.type === 'mcq' && q.options.some((o) => RE_REFERS_OTHER.test(o.text))) q.lock = true;
-      validateQuestion(q);
       q = null;
       lastTarget = null;
     }
 
-    function validateQuestion(qq) {
-      const where = `${sec.label || 'Phần'} – Câu ${qq.origNo}`;
-      if (qq.type === 'mcq') {
-        if (qq.options.length < 2) warnings.push(`${where}: chỉ có ${qq.options.length} phương án.`);
-        const nc = qq.options.filter((o) => o.correct).length;
-        if (nc === 0) warnings.push(`${where}: chưa đánh dấu đáp án đúng (thêm * trước chữ cái hoặc dòng "Đáp án: B").`);
-        if (nc > 1) warnings.push(`${where}: có ${nc} đáp án đúng.`);
-      } else if (qq.type === 'tf') {
-        if (qq.options.length !== 4) warnings.push(`${where}: câu đúng/sai thường có 4 ý a, b, c, d (đang có ${qq.options.length}).`);
-        if (qq.options.length && qq.options.every((o) => o.correct === null))
-          warnings.push(`${where}: chưa đánh dấu ý nào là Đúng — tất cả sẽ được coi là Sai.`);
-      } else if (qq.type === 'short') {
-        if (!qq.answer) warnings.push(`${where}: chưa có "Đáp án: ...".`);
+    function openSection(label, intro) {
+      finishQuestion();
+      if (group) {
+        warnings.push(`Nhóm "${group.title || ''}" chưa có [HẾT NHÓM] — đã tự đóng.`);
+        group = null;
       }
+      sec = { label: upperLabel(label), type: detectSectionType(label, sections.length), intro: intro || '', units: [] };
+      sections.push(sec);
+      lastTarget = { obj: sec, key: 'intro' };
     }
 
-    for (let raw of lines) {
+    for (const raw of lines) {
       const line = raw.replace(/\s+$/, '');
+      if (inKey) { keyLines.push(line); continue; }
       if (!line.trim()) {
         if (lastTarget) lastTarget.obj[lastTarget.key] += '\n';
         continue;
       }
 
       let m;
-      if ((m = line.match(RE_SECTION))) {
+      if (RE_END.test(line) || (sections.length && RE_KEY_HEAD.test(line))) {
         finishQuestion();
-        if (group) {
-          warnings.push(`Nhóm "${group.title || ''}" chưa có [HẾT NHÓM] — đã tự đóng.`);
-          group = null;
-        }
-        const label = m[1].trim();
-        sec = { label: label.toUpperCase(), type: detectSectionType(label, sections.length), intro: m[2] || '', units: [] };
-        sections.push(sec);
-        lastTarget = { obj: sec, key: 'intro' };
+        group = null;
+        inKey = true;
+        continue;
+      }
+      if ((m = line.match(RE_SECTION))) {
+        openSection(m[1].trim(), m[2]);
+        continue;
+      }
+      if ((m = line.match(RE_SECTION_PLAIN))) {
+        const sp = splitPlainSection(m[1] + (m[2] ? m[2] + ' ' : ' '), m[3]);
+        openSection(sp.label, sp.intro);
         continue;
       }
       if ((m = line.match(RE_GROUP_START))) {
@@ -182,7 +320,10 @@
       if ((m = line.match(RE_QUESTION))) {
         finishQuestion();
         ensureSection();
-        q = { id: ++nextId, sectionIndex: sections.length - 1, word: /^q/i.test(m[1]) ? 'Question' : 'Câu', origNo: parseInt(m[2], 10), stem: m[3] || '', options: [], answer: '', lock: false, type: sec.type };
+        q = {
+          id: ++nextId, word: /^q/i.test(m[1]) ? 'Question' : 'Câu', origNo: parseInt(m[2], 10),
+          points: (m[3] || '').trim(), stem: m[4] || '', options: [], answer: '', lock: false, type: sec.type, marks: false,
+        };
         if (group) group.questions.push(q);
         else sec.units.push({ kind: 'q', question: q });
         lastTarget = { obj: q, key: 'stem' };
@@ -192,11 +333,11 @@
         const ans = m[1].trim();
         if (q.type === 'mcq') {
           const L = ans.toUpperCase().match(/[A-D]/);
-          if (L) q.options.forEach((o, i) => (o.correct = String.fromCharCode(65 + i) === L[0]));
+          if (L) { q.options.forEach((o, i) => (o.correct = String.fromCharCode(65 + i) === L[0])); q.marks = true; }
         } else if (q.type === 'tf') {
           const vals = parseTfAnswer(ans);
           q.options.forEach((o, i) => {
-            if (i < vals.length) o.correct = vals[i];
+            if (i < vals.length) { o.correct = vals[i]; q.marks = true; }
           });
         } else {
           q.answer = ans;
@@ -209,6 +350,7 @@
           const om = part.match(RE_MCQ_OPT);
           if (!om) continue;
           const opt = { text: om[3], correct: !!om[1] };
+          if (om[1]) q.marks = true;
           q.options.push(opt);
           lastTarget = { obj: opt, key: 'text' };
         }
@@ -222,10 +364,10 @@
           let correct = om[1] ? true : null;
           const mark = text.match(/\s*\(\s*(Đ|S|Đúng|Sai|D|T|F)\s*\)\s*$/i);
           if (mark) {
-            const k = mark[1].toUpperCase();
-            correct = k.startsWith('Đ') || k === 'D' || k === 'T';
+            correct = tfVal(mark[1]);
             text = text.slice(0, mark.index);
           }
+          if (correct !== null) q.marks = true;
           const opt = { text, correct };
           q.options.push(opt);
           lastTarget = { obj: opt, key: 'text' };
@@ -237,6 +379,9 @@
       if (lastTarget) {
         const cur = lastTarget.obj[lastTarget.key];
         lastTarget.obj[lastTarget.key] = cur && !cur.endsWith('\n') ? cur + '\n' + line : cur + line;
+      } else if (!sections.length) {
+        // Phần đầu đề (tên trường, họ tên thí sinh…) trước phần/câu đầu tiên: không đưa vào đề
+        preamble.push(line.trim());
       } else {
         const s = ensureSection();
         s.intro += (s.intro ? '\n' : '') + line;
@@ -246,18 +391,94 @@
     finishQuestion();
     if (group) warnings.push(`Nhóm "${group.title || ''}" chưa có [HẾT NHÓM] — đã tự đóng.`);
 
-    // Câu đúng/sai chưa đánh dấu ý nào là đúng => coi là sai
-    sections.forEach((s) => {
+    const kept = sections.filter((s) => s.units.length || s.intro);
+    kept.forEach((s, si) => {
       s.intro = s.intro.trim();
       s.units.forEach((u) => {
         if (u.kind === 'group') u.passage = u.passage.trim();
-        unitQuestions(u).forEach((qq) => {
-          if (qq.type === 'tf') qq.options.forEach((o) => { if (o.correct === null) o.correct = false; });
-        });
+        unitQuestions(u).forEach((qq) => (qq.sectionIndex = si));
       });
     });
 
-    return { sections: sections.filter((s) => s.units.length || s.intro), warnings };
+    // Áp dụng bảng đáp án ở cuối đề
+    const key = parseAnswerKey(keyLines);
+    applyKey(kept, key, warnings, errors);
+
+    // Kiểm tra từng câu (sau khi đã có đáp án từ mọi nguồn)
+    kept.forEach((s) => s.units.forEach((u) => unitQuestions(u).forEach((qq) => {
+      const where = `${s.label || 'Phần'} – Câu ${qq.origNo}`;
+      if (qq.type === 'mcq') {
+        if (qq.options.length < 2) warnings.push(`${where}: chỉ có ${qq.options.length} phương án.`);
+        const nc = qq.options.filter((o) => o.correct).length;
+        if (nc === 0) warnings.push(`${where}: chưa đánh dấu đáp án đúng (thêm * trước chữ cái, gạch chân chữ cái, dòng "Đáp án: B" hoặc bảng đáp án cuối đề).`);
+        if (nc > 1) warnings.push(`${where}: có ${nc} đáp án đúng.`);
+      } else if (qq.type === 'tf') {
+        if (qq.options.length !== 4) warnings.push(`${where}: câu đúng/sai thường có 4 ý a, b, c, d (đang có ${qq.options.length}).`);
+        if (qq.options.length && qq.options.every((o) => o.correct === null))
+          warnings.push(`${where}: chưa có đáp án Đúng/Sai cho các ý.`);
+        qq.options.forEach((o) => { if (o.correct === null) o.correct = false; });
+      } else if (qq.type === 'short') {
+        if (!qq.answer) warnings.push(`${where}: chưa có "Đáp án: ...".`);
+      }
+    })));
+
+    return { sections: kept, warnings, errors, preamble, keyCount: key.length };
+  }
+
+  function applyKey(sections, key, warnings, errors) {
+    if (!key.length) return;
+    const findSec = (entry) => {
+      if (entry.secNo != null) {
+        const byLabel = sections.find((s) => sectionNumber(s.label) === entry.secNo);
+        return byLabel || sections[entry.secNo - 1] || null;
+      }
+      const want = entry.kind === 'mcq' ? ['mcq'] : entry.kind === 'value' ? ['short'] : ['tf'];
+      return sections.find((s) => want.includes(s.type) && s.units.some((u) => unitQuestions(u).some((q) => q.origNo === entry.no))) || null;
+    };
+    const fromKey = new Map(); // q -> giá trị từ bảng
+    key.forEach((e) => {
+      const s = findSec(e);
+      if (!s || s.type === 'essay') return;
+      const name = s.label || 'Phần ' + SECTION_TYPES[s.type].toLowerCase();
+      let q = null;
+      s.units.forEach((u) => unitQuestions(u).forEach((x) => { if (x.origNo === e.no) q = x; }));
+      if (!q) { warnings.push(`Bảng đáp án có Câu ${e.no} (${name}) nhưng trong đề không có câu này.`); return; }
+      const where = `${name} – Câu ${e.no}`;
+      if (!fromKey.has(q)) fromKey.set(q, { mcq: null, tf: [] });
+      const rec = fromKey.get(q);
+      if (q.type === 'mcq' && e.kind === 'mcq') rec.mcq = e.value;
+      else if (q.type === 'tf' && e.kind === 'tf') e.value.forEach((v, i) => (rec.tf[i] = v));
+      else if (q.type === 'tf' && e.kind === 'tfItem') rec.tf[e.item] = e.value;
+      else if (q.type === 'short' && (e.kind === 'value' || e.kind === 'mcq')) rec.short = String(e.value);
+      else warnings.push(`${where}: đáp án "${Array.isArray(e.value) ? e.value.map((v) => (v ? 'Đ' : 'S')).join('') : e.value}" trong bảng không khớp loại câu hỏi.`);
+    });
+    fromKey.forEach((rec, q) => {
+      const s = sections[q.sectionIndex];
+      const where = `${s.label || 'Phần'} – Câu ${q.origNo}`;
+      if (q.type === 'mcq' && rec.mcq) {
+        const idx = rec.mcq.charCodeAt(0) - 65;
+        if (idx >= q.options.length) { errors.push(`${where}: bảng đáp án ghi ${rec.mcq} nhưng câu chỉ có ${q.options.length} phương án.`); return; }
+        const marked = q.options.findIndex((o) => o.correct);
+        if (q.marks && marked >= 0 && marked !== idx)
+          errors.push(`${where}: bảng đáp án ghi ${rec.mcq} nhưng trong đề lại đánh dấu ${String.fromCharCode(65 + marked)} — hãy kiểm tra lại.`);
+        q.options.forEach((o, i) => (o.correct = i === idx));
+      }
+      if (q.type === 'tf' && rec.tf.length) {
+        rec.tf.forEach((v, i) => {
+          if (v === undefined || i >= q.options.length) return;
+          const o = q.options[i];
+          if (q.marks && o.correct !== null && o.correct !== v)
+            errors.push(`${where}: ý ${String.fromCharCode(97 + i)}) bảng đáp án ghi ${v ? 'Đúng' : 'Sai'} nhưng trong đề đánh dấu ${o.correct ? 'Đúng' : 'Sai'}.`);
+          o.correct = v;
+        });
+        if (rec.tf.length > q.options.length) errors.push(`${where}: bảng đáp án có ${rec.tf.length} ý nhưng câu chỉ có ${q.options.length} ý.`);
+      }
+      if (q.type === 'short' && rec.short) {
+        if (q.answer && q.answer.replace(/\s/g, '') !== rec.short.replace(/\s/g, ''))
+          errors.push(`${where}: bảng đáp án ghi "${rec.short}" nhưng trong đề ghi "${q.answer}".`);
+        q.answer = rec.short;
+      }
+    });
   }
 
   function unitQuestions(u) {
@@ -303,6 +524,7 @@
         origNo: q.origNo,
         word: q.word,
         stem: q.stem,
+        points: q.points,
         type: q.type,
         answer: q.answer,
         options: idx.map((i) => ({ text: q.options[i].text, correct: q.options[i].correct, origIndex: i })),
@@ -366,8 +588,9 @@
     const out = [];
     const err = (msg) => out.push({ level: 'error', msg });
     const warn = (msg) => out.push({ level: 'warn', msg });
+    (parsed.errors || []).forEach((e) => out.push({ level: 'error', msg: e }));
     parsed.warnings.forEach((w) => {
-      const isErr = /chưa đánh dấu đáp án|đáp án đúng\.|chỉ có \d+ phương án|chưa có "Đáp án/.test(w);
+      const isErr = /chưa đánh dấu đáp án|đáp án đúng\.|chỉ có \d+ phương án|chưa có "Đáp án|chưa có đáp án Đúng\/Sai/.test(w);
       out.push({ level: isErr ? 'error' : 'warn', msg: w });
     });
     parsed.sections.forEach((s) => {
@@ -450,7 +673,7 @@
 
   const api = {
     makeRng, shuffle, parseExam, makeVersion, makeVersions, flatQuestions,
-    answerOf, countQuestions, unitQuestions, SECTION_TYPES, checkExam, verifyVersions,
+    answerOf, countQuestions, unitQuestions, SECTION_TYPES, checkExam, verifyVersions, parseAnswerKey, sectionNumber, upperLabel,
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.XaoDe = api;

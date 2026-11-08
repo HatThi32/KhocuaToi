@@ -39,6 +39,8 @@
     .ex-end { text-align: center; font-weight: bold; margin-top: 12pt !important; margin-bottom: 3pt !important; }
     .ex-note { font-style: italic; font-size: calc(var(--ex-fs, 12pt) - 1pt); }
     .ex img { max-width: 100%; vertical-align: middle; }
+    .ex table.ex-data { width: auto; min-width: 60%; margin: 3pt auto 4pt; border-collapse: collapse; }
+    .ex-data td { border: 1px solid #000; padding: 1pt 5pt; text-align: center; vertical-align: middle; }
   `;
   const styleEl = document.createElement('style');
   styleEl.textContent = EXAM_CSS;
@@ -53,16 +55,31 @@
     if (vars) Object.keys(vars).forEach((k) => (s = s.split('{' + k + '}').join(vars[k])));
     s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (m, alt, src) => {
       if (!/^(https?:|data:image\/|\.{0,2}\/|[\w-]+\.)/i.test(src)) return m;
-      return `<img src="${src}" alt="${alt}">`;
+      const z = /^(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)cm$/.exec(alt);
+      return `<img src="${src}" alt=""${z ? ` style="width:${z[1]}cm;height:auto"` : ''}>`;
     });
     s = s.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/(^|[^_])__([^_\n]+?)__(?!_)/g, '$1<u>$2</u>');
     return s;
   }
   // Mỗi dòng một đoạn (giống file Word)
   function paras(text, cls, prefix, vars) {
-    const lines = String(text || '').split('\n').filter((l) => l.trim());
-    if (!lines.length) lines.push('');
+    const all = String(text || '').split('\n').filter((l) => l.trim());
+    if (!all.length) all.push('');
+    // Bảng số liệu: các dòng "| ô | ô |" liên tiếp
+    const lines = [];
+    all.forEach((l) => {
+      if (W.isTableLine(l)) {
+        const last = lines[lines.length - 1];
+        if (last && last.rows) last.rows.push(W.splitTableLine(l)); else lines.push({ rows: [W.splitTableLine(l)] });
+      } else lines.push(l);
+    });
+    if (prefix && lines[0].rows) lines.unshift('');
     return lines.map((l, i) => {
+      if (l.rows) {
+        const n = Math.max(...l.rows.map((r) => r.length));
+        return '<table class="ex-data">' + l.rows.map((r) => '<tr>' +
+          Array.from({ length: n }, (_, c) => `<td>${fmt(r[c] || '', vars)}</td>`).join('') + '</tr>').join('') + '</table>';
+      }
       const t = l.trim();
       const center = /^\$\$[\s\S]*\$\$$/.test(t) || /^!\[[^\]]*\]\([^)]*\)$/.test(t);
       return `<p class="${cls}${center && !(i === 0 && prefix) ? ' center' : ''}">${i === 0 && prefix ? prefix : ''}${fmt(t, vars)}</p>`;
@@ -73,7 +90,7 @@
   function meta() {
     const sub = SUBJECTS.find((s) => s.id === $('subject').value) || SUBJECTS[0];
     return {
-      subject: sub.name,
+      subject: $('subjectLabel').value.trim() || sub.name,
       dept: $('dept').value.trim(),
       school: $('school').value.trim(),
       examName: $('examName').value.trim(),
@@ -135,7 +152,8 @@
   }
 
   function renderQuestion(no, q, L) {
-    let h = paras(q.stem, 'ex-q', `<b>${q.word || 'Câu'} ${no}.</b> `);
+    const label = q.points ? `<b>${q.word || 'Câu'} ${no}</b> ${esc(q.points)}<b>.</b> ` : `<b>${q.word || 'Câu'} ${no}.</b> `;
+    let h = paras(q.stem, 'ex-q', label);
     if (q.type === 'mcq' && q.options.length) h += renderOptionsMcq(q, L);
     if (q.type === 'tf') {
       q.options.forEach((o, i) => {
@@ -210,10 +228,16 @@
     return rows;
   }
 
-  function renderKeysTable(versions) {
+  // Các cột của bảng đáp án: đề gốc rồi tới từng mã đề
+  function keyColumns() {
+    return [{ label: 'Đề gốc', version: state.original }].concat(state.versions.map((v) => ({ label: v.code, version: v })));
+  }
+
+  function renderKeysTable(cols) {
+    const versions = cols.map((c) => c.version);
     const rows = keyRows(versions);
     if (!rows.length) return '<p>Đề không có câu trắc nghiệm nên không có bảng đáp án.</p>';
-    let h = `<table class="keys"><thead><tr><th>Câu</th>${versions.map((v) => `<th>${esc(v.code)}</th>`).join('')}</tr></thead><tbody>`;
+    let h = `<table class="keys"><thead><tr><th>Câu</th>${cols.map((c) => `<th>${esc(c.label)}</th>`).join('')}</tr></thead><tbody>`;
     rows.forEach((r) => {
       if (r.section) h += `<tr><td class="sec" colspan="${versions.length + 1}">${esc(r.section)}</td></tr>`;
       else h += `<tr><td>${r.no}</td>${r.cells.map((c) => `<td title="Câu ${c.orig} ở đề gốc">${esc(c.ans)}</td>`).join('')}</tr>`;
@@ -272,7 +296,10 @@
     const issues = X.checkExam(parsed).concat(texIssues(parsed));
     const nErr = issues.filter((i) => i.level === 'error').length;
     $('stats').textContent = c.total
-      ? `Đã nhận ${c.total} câu: ${parts.join(', ')}.` + (issues.length ? '' : ' Không phát hiện lỗi.')
+      ? `Đã nhận ${c.total} câu: ${parts.join(', ')}.` +
+        (parsed.keyCount ? ` Đã đọc bảng đáp án cuối đề (${parsed.keyCount} mục).` : '') +
+        (parsed.preamble.length ? ` Bỏ qua ${parsed.preamble.length} dòng trước câu đầu tiên.` : '') +
+        (issues.length ? '' : ' Không phát hiện lỗi.')
       : '';
     $('stats').style.color = nErr ? 'var(--err-ink)' : '';
     showIssues(issues, $('warnings'));
@@ -305,7 +332,7 @@
     $('keys').innerHTML =
       `<h3>Bảng đáp án ${esc(state.meta.subject)} — ${state.versions.length} mã đề</h3>
        <p class="note">Đúng/sai ghi theo thứ tự ý a, b, c, d (Đ = Đúng, S = Sai). Rê chuột lên đáp án để xem câu tương ứng ở đề gốc.</p>
-       <div class="key-wrap">${renderKeysTable(state.versions)}</div>`;
+       <div class="key-wrap">${renderKeysTable(keyColumns())}</div>`;
     save();
     $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -428,21 +455,24 @@
     return r.bytes;
   }
   function keysDocx() {
-    return W.buildKeysDocx(keyRows(state.versions), state.versions.map((v) => v.code), state.meta, state.layout);
+    const cols = keyColumns();
+    return W.buildKeysDocx(keyRows(cols.map((c) => c.version)), cols.map((c) => c.label), state.meta, state.layout);
   }
 
-  function keysCsv() {
-    const lines = [['Mã đề', 'Phần', 'Câu', 'Đáp án', 'Câu ở đề gốc']];
+  // Excel: bảng đáp án của đề gốc + tất cả mã đề, và bảng đối chiếu câu
+  function keysXlsx() {
+    const cols = keyColumns();
+    const map = [];
     state.versions.forEach((v) => {
       v.sections.forEach((sec) => {
         if (sec.type === 'essay') return;
         X.flatQuestions(sec).forEach((x) =>
-          lines.push([v.code, sectionTitle(sec) || X.SECTION_TYPES[sec.type], x.no, X.answerOf(x.q), x.q.origNo])
-        );
+          map.push([v.code, sectionTitle(sec) || X.SECTION_TYPES[sec.type], x.no, X.answerOf(x.q), x.q.origNo]));
       });
     });
-    return '﻿' + lines.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+    return window.XaoDeXlsx.buildKeysXlsx(cols, keyRows(cols.map((c) => c.version)), map, state.meta);
   }
+  const XLSX_MIME = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
   async function withBusy(btn, fn) {
     if (!state.versions.length) return;
@@ -488,70 +518,67 @@
   }
 
   // ---------- Mở file ----------
-  function htmlToSourceText(html) {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    // Chữ cái phương án được gạch chân => đáp án đúng
-    doc.querySelectorAll('u').forEach((u) => {
-      const t = u.textContent;
-      if (/^\s*[A-Da-d]\s*[.)]?\s*/.test(t) && (/^\s*[A-Da-d]\s*[.)]?\s*$/.test(t) || /^\s*[A-Da-d]\s*[.)]\s/.test(t))) {
-        u.textContent = t.replace(/^(\s*)/, '$1*');
-      }
-    });
-    function walk(node) {
-      let s = '';
-      node.childNodes.forEach((n) => {
-        if (n.nodeType === 3) s += n.nodeValue;
-        else if (n.nodeName === 'BR') s += '\n';
-        else if (n.nodeName === 'IMG') s += `![](${n.getAttribute('src') || ''})`;
-        else s += walk(n);
-      });
-      return s;
+  function norm(t) {
+    return String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+  // Điền thông tin đầu đề lấy từ file Word
+  function applyMeta(m) {
+    const filled = [];
+    const set = (id, v, name) => { if (v && $(id).value.trim() !== v) { $(id).value = v; filled.push(name); } };
+    // File có đầu đề riêng: xóa thông tin cũ của đề trước để không lẫn
+    if (m.school || m.examName || m.dept) ['dept', 'school', 'examName', 'year'].forEach((id) => ($(id).value = ''));
+    set('dept', m.dept, 'Sở/Phòng');
+    set('school', m.school, 'Trường');
+    set('examName', m.examName, 'Kỳ thi');
+    set('year', m.year, 'Năm học');
+    set('time', m.time, 'Thời gian');
+    if (m.docType && [...$('docType').options].some((o) => o.value === m.docType)) set('docType', m.docType, 'Loại đề');
+    if (m.subjectText) {
+      const t = norm(m.subjectText);
+      const sub = SUBJECTS.slice().sort((a, b) => b.name.length - a.name.length)
+        .find((x) => t.startsWith(norm(x.name)) || t.startsWith(norm(x.name.replace(/\s*\(.*\)$/, ''))));
+      if (sub) $('subject').value = sub.id;
+      $('subjectLabel').value = sub && norm(sub.name) === t ? '' : m.subjectText.toUpperCase();
+      filled.push('Môn');
     }
-    const lines = [];
-    function block(el) {
-      if (el.nodeName === 'TABLE') {
-        el.querySelectorAll('tr').forEach((tr) => {
-          const cells = [...tr.children].map((td) => walk(td).replace(/\s+/g, ' ').trim()).filter(Boolean);
-          if (cells.length) lines.push(cells.join('   '));
-        });
-      } else if (el.nodeName === 'UL' || el.nodeName === 'OL') {
-        [...el.children].forEach(block);
-      } else {
-        const t = walk(el).replace(/[ \t ]+/g, ' ').trim();
-        if (t) lines.push(t);
-      }
-    }
-    [...doc.body.children].forEach(block);
-    // "*" có thể nằm sau khoảng trắng ở đầu ô
-    return lines.join('\n').replace(/(^|\s)\*\s+([A-Da-d][.)])/g, '$1*$2');
+    return filled;
   }
 
   async function openFile(file) {
     const name = file.name.toLowerCase();
     try {
       let text;
+      let notes = [];
       if (name.endsWith('.docx')) {
-        if (!window.mammoth) {
-          alert('Chưa tải được bộ đọc file Word (cần kết nối mạng). Bạn có thể mở file Word, chọn tất cả rồi dán vào ô đề gốc.');
-          return;
-        }
-        const buf = await file.arrayBuffer();
-        const res = await mammoth.convertToHtml({ arrayBuffer: buf }, { styleMap: ['u => u'] });
-        text = htmlToSourceText(res.value);
+        const r = await window.XaoDeDocx.docxToSource(await file.arrayBuffer());
+        if ($('source').value.trim() && !isSample($('source').value) && !confirm('Thay nội dung đề gốc hiện tại bằng nội dung file?')) return;
+        text = r.text;
+        const filled = applyMeta(r.meta);
+        if (filled.length) notes.push('Đã tự điền: ' + filled.join(', ') + ' (lấy từ đầu đề trong file).');
+        notes = notes.concat(r.warnings);
+      } else if (name.endsWith('.doc')) {
+        alert('File .doc (Word 97-2003) chưa đọc được. Hãy mở bằng Word và chọn Lưu thành (Save As) định dạng .docx.');
+        return;
       } else {
+        if ($('source').value.trim() && !isSample($('source').value) && !confirm('Thay nội dung đề gốc hiện tại bằng nội dung file?')) return;
         text = await file.text();
       }
-      if ($('source').value.trim() && !confirm('Thay nội dung đề gốc hiện tại bằng nội dung file?')) return;
       $('source').value = text;
-      parseAndShow();
+      const parsed = parseAndShow();
       save();
+      const c = X.countQuestions(parsed);
+      const errs = X.checkExam(parsed).filter((i) => i.level === 'error').length;
+      alert(`Đã mở "${file.name}": ${c.total} câu` + (parsed.keyCount ? ', có đọc bảng đáp án cuối đề' : '') + '.\n' +
+        (errs ? `Có ${errs} lỗi cần kiểm tra (xem danh sách màu đỏ dưới ô Đề gốc).\n` : 'Không phát hiện lỗi.\n') +
+        (notes.length ? '\n' + notes.join('\n') : ''));
     } catch (e) {
+      console.error(e);
       alert('Không đọc được file: ' + e.message);
     }
   }
 
   // ---------- Lưu tự động ----------
-  const FIELDS = ['subject', 'dept', 'school', 'examName', 'year', 'time', 'docType', 'count', 'startCode', 'codeList', 'seed',
+  const FIELDS = ['subject', 'subjectLabel', 'dept', 'school', 'examName', 'year', 'time', 'docType', 'count', 'startCode', 'codeList', 'seed',
     'fontPt', 'lineSp', 'mTop', 'mBottom', 'mLeft', 'mRight', 'notes', 'source'];
   const CHECKS = ['optQuestions', 'optOptions', 'optTf', 'optInGroup', 'optEssay', 'optOriginal'];
   function save() {
@@ -598,6 +625,7 @@
   $('subject').addEventListener('change', () => {
     const sub = SUBJECTS.find((s) => s.id === $('subject').value);
     if (sub) $('time').value = sub.time;
+    $('subjectLabel').value = '';
     if (isSample($('source').value)) {
       $('source').value = SAMPLES[sub.id] || SAMPLES.khac;
       parseAndShow();
@@ -634,7 +662,7 @@
     clearTimeout(timer);
     timer = setTimeout(() => { parseAndShow(); save(); }, 400);
   });
-  const META_IDS = ['subject', 'dept', 'school', 'examName', 'year', 'time', 'docType', 'notes', ...Object.keys(DEFAULT_LAYOUT)];
+  const META_IDS = ['subject', 'subjectLabel', 'dept', 'school', 'examName', 'year', 'time', 'docType', 'notes', ...Object.keys(DEFAULT_LAYOUT)];
   document.querySelectorAll('.settings input, .settings select, .settings textarea').forEach((el) =>
     el.addEventListener('change', () => {
       save();
@@ -675,7 +703,7 @@
     if (!images) return;
     const files = exportList().map((it) => ({ name: fileOf(it.version), data: examDocx([it], images) }));
     files.push({ name: `Dap_an_${subj()}.docx`, data: keysDocx() });
-    files.push({ name: `Dap_an_${subj()}.csv`, data: keysCsv() });
+    files.push({ name: `Dap_an_${subj()}.xlsx`, data: keysXlsx() });
     download(`De_${subj()}_${state.versions.length}_ma_de.zip`, W.zip(files), 'application/zip');
   }));
   $('dlAll').addEventListener('click', (e) => withBusy(e.currentTarget, async () => {
@@ -694,8 +722,8 @@
   }));
   $('dlKeysWord').addEventListener('click', (e) => withBusy(e.currentTarget, async () =>
     download(`Dap_an_${subj()}.docx`, keysDocx(), DOCX_MIME)));
-  $('dlKeysCsv').addEventListener('click', (e) => withBusy(e.currentTarget, async () =>
-    download(`Dap_an_${subj()}.csv`, keysCsv(), 'text/csv;charset=utf-8')));
+  $('dlKeysXlsx').addEventListener('click', (e) => withBusy(e.currentTarget, async () =>
+    download(`Dap_an_${subj()}.xlsx`, keysXlsx(), XLSX_MIME)));
 
   document.querySelectorAll('[data-open="guide"]').forEach((b) =>
     b.addEventListener('click', () => {

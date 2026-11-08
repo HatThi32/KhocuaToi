@@ -479,7 +479,8 @@
     parts.forEach((p, idx) => {
       if (idx % 2 === 1) {
         flush();
-        out.push({ t: 'img', src: p.replace(/^!\[[^\]]*\]\(|\)$/g, '') });
+        const im = /^!\[([^\]]*)\]\(([^)\s]+)\)$/.exec(p);
+        out.push({ t: 'img', src: im[2], alt: im[1] });
         return;
       }
       for (const c of p) {
@@ -497,7 +498,7 @@
     const charCm = (fontPt || 12) * 0.0185; // trung bình ~0,52 em một ký tự
     let w = 0;
     splitInline(String(text || '').replace(/\n/g, ' ')).forEach((tk) => {
-      if (tk.t === 'img') w += 6;
+      if (tk.t === 'img') { const z = /^(\d+(?:\.\d+)?)x/.exec(tk.alt || ''); w += z ? +z[1] : 6; }
       else if (tk.t === 'text') w += Array.from(tk.s).length * charCm * (tk.b ? 1.08 : 1);
       else {
         let t = tk.tex;
@@ -523,6 +524,14 @@
       if (texts.every((t) => !/\n/.test(t) && estimateWidthCm(t, fontPt) <= colW)) return c;
     }
     return 1;
+  }
+
+  function isTableLine(l) {
+    const t = String(l).trim();
+    return t.length > 2 && t[0] === '|' && t[t.length - 1] === '|' && t.split('|').length >= 3;
+  }
+  function splitTableLine(l) {
+    return String(l).trim().slice(1, -1).split('|').map((c) => c.trim());
   }
 
   function sectionTitle(sec, types) {
@@ -723,7 +732,7 @@
     return display ? `<m:oMathPara><m:oMathParaPr><m:jc m:val="center"/></m:oMathParaPr>${res.xml}</m:oMathPara>` : res.xml;
   };
 
-  Builder.prototype.image = function (src, maxW) {
+  Builder.prototype.image = function (src, maxW, alt) {
     let entry = this.mediaBySrc.get(src);
     if (!entry) {
       const img = this.images.get(src);
@@ -738,6 +747,8 @@
     }
     // 96 dpi → twip: 1px = 15 twip
     let wT = entry.info.w * 15, hT = entry.info.h * 15;
+    const sz = /^(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)cm$/.exec(alt || '');
+    if (sz && +sz[1] > 0 && +sz[2] > 0) { wT = +sz[1] * CM; hT = +sz[2] * CM; } // kích thước như trong file Word gốc
     const limit = Math.max(600, maxW || this.textW);
     if (wT > limit) { hT = hT * limit / wT; wT = limit; }
     const cx = Math.round(wT * EMU_PER_TWIP), cy = Math.round(hT * EMU_PER_TWIP);
@@ -758,9 +769,22 @@
    * Trả về mảng { content, o } (chưa bọc <w:p>) để người gọi gắn keepNext…
    */
   Builder.prototype.paras = function (text, o, prefix, maxW) {
-    const lines = String(text || '').split('\n').map((l) => l.replace(/\s+$/, '')).filter((l) => l.trim());
-    if (!lines.length) lines.push('');
-    return lines.map((line, idx) => {
+    const all = String(text || '').split('\n').map((l) => l.replace(/\s+$/, '')).filter((l) => l.trim());
+    if (!all.length) all.push('');
+    // Gom các dòng bảng liên tiếp thành một bảng
+    const items = [];
+    all.forEach((l) => {
+      if (isTableLine(l)) {
+        const last = items[items.length - 1];
+        const cells = splitTableLine(l);
+        if (last && last.rows) last.rows.push(cells); else items.push({ rows: [cells] });
+      } else items.push({ line: l });
+    });
+    if (prefix && items[0].rows) items.unshift({ line: '' });
+    const lines = items;
+    return lines.map((it, idx) => {
+      if (it.rows) return { table: it.rows, o: {} };
+      const line = it.line;
       const toks = splitInline(line.trim());
       const onlyDisplay = toks.length === 1 && toks[0].t === 'math' && toks[0].display && !(idx === 0 && prefix);
       const onlyImg = toks.length > 0 && toks.every((t) => t.t === 'img' || (t.t === 'text' && !t.s.trim())) && !(idx === 0 && prefix);
@@ -768,7 +792,7 @@
       toks.forEach((t) => {
         if (t.t === 'text') content += this.r(t.s, { b: t.b, u: t.u });
         else if (t.t === 'math') content += this.math(t.tex, onlyDisplay);
-        else content += this.image(t.src, maxW);
+        else content += this.image(t.src, maxW, t.alt);
       });
       const po = Object.assign({}, o);
       if (onlyDisplay || onlyImg) { po.jc = 'center'; po.left = 0; po.hanging = 0; }
@@ -777,7 +801,27 @@
     });
   };
   Builder.prototype.emit = function (list, keepAllNext) {
-    return list.map((p, i) => this.p(p.content, Object.assign({}, p.o, keepAllNext || i < list.length - 1 ? { keepNext: true } : {}))).join('');
+    return list.map((p, i) => {
+      const keep = keepAllNext || i < list.length - 1;
+      if (p.table) return this.dataTable(p.table, keep);
+      return this.p(p.content, Object.assign({}, p.o, keep ? { keepNext: true } : {}));
+    }).join('');
+  };
+
+  // Bảng số liệu có viền, các cột bằng nhau, chữ căn giữa
+  Builder.prototype.dataTable = function (rows, keepNext) {
+    const n = Math.max(...rows.map((r) => r.length));
+    const total = Math.min(this.textW, Math.max(n * 1.8 * CM, Math.round(this.textW * 0.6)));
+    const w = Math.floor(total / n);
+    const widths = Array.from({ length: n }, (_, i) => (i === n - 1 ? total - w * (n - 1) : w));
+    const trs = rows.map((r) => ({
+      cells: Array.from({ length: n }, (_, c) => {
+        const ps = this.paras(r[c] || '', { jc: 'center', line: 240 }, '', widths[c] - 120);
+        return { vAlign: 'center', xml: ps.map((p) => (p.table ? '' : this.p(p.content, Object.assign({}, p.o, { keepNext: true })))).join('') || '<w:p/>' };
+      }),
+    }));
+    return this.table(trs, widths, { borders: true, jc: 'center', cellMar: 60, cellMarV: 20 }) +
+      this.p('', { line: 120, lineRule: 'exact', keepNext: !!keepNext, rPr: '<w:sz w:val="8"/><w:szCs w:val="8"/>' });
   };
 
   // ---- Bảng ----
@@ -868,8 +912,9 @@
   // ---- Câu hỏi ----
   Builder.prototype.question = function (no, q) {
     const fontPt = this.L.fontPt;
-    const label = `${q.word || 'Câu'} ${no}.`;
-    const prefix = this.r(label, { b: true }) + this.r(' ');
+    const prefix = q.points
+      ? this.r(`${q.word || 'Câu'} ${no}`, { b: true }) + this.r(' ' + q.points) + this.r('.', { b: true }) + this.r(' ')
+      : this.r(`${q.word || 'Câu'} ${no}.`, { b: true }) + this.r(' ');
     const stemParas = this.paras(q.stem, { jc: 'both', before: 60 }, prefix);
     stemParas.forEach((p, i) => { if (i > 0) p.o.before = 0; });
     const hasMore = (q.type === 'mcq' || q.type === 'tf') && q.options.length;
@@ -1061,7 +1106,7 @@
   }
 
   const api = {
-    latexToOmml, splitInline, estimateWidthCm, chooseColumns, sectionTitle,
+    latexToOmml, splitInline, estimateWidthCm, chooseColumns, sectionTitle, isTableLine, splitTableLine,
     imageInfo, dataUriToBytes, collectImageSources, buildExamDocx, buildKeysDocx, zip, crc32,
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

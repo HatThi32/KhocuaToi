@@ -11,13 +11,16 @@ Tính năng:
 - Hỗ trợ cấu trúc đề thi THPT từ 2025: Phần I (nhiều lựa chọn), Phần II (đúng/sai), Phần III (trả lời ngắn), và tự luận.
 - Tạo nhiều mã đề: xáo thứ tự câu hỏi, xáo phương án A–D, xáo ý a–d của câu đúng/sai.
 - Nhóm câu (bài đọc, tư liệu) luôn đi liền nhau; tự giữ nguyên phương án kiểu "Cả A và B", "All of the above".
-- Mở đề gốc từ file Word (.docx) — chữ cái đáp án được gạch chân sẽ tự nhận là đáp án đúng.
+- Mở đề gốc từ file Word (.docx) không cần mạng; tự điền Sở, Trường, Kỳ thi, Năm học, Môn, Thời gian từ đầu đề.
+- Nhận đáp án đúng theo nhiều cách: dấu `*` trước chữ cái, **gạch chân** chữ cái A/B/C/D (a/b/c/d với câu đúng/sai),
+  dòng `Đáp án: B`, hoặc **bảng đáp án cuối đề** (bảng ngang, bảng dọc, bảng Đúng/Sai theo ý, dòng `1.A 2.C`…);
+  báo lỗi nếu các nguồn đáp án mâu thuẫn nhau.
 - Công thức LaTeX `$...$`, hình ảnh.
 - Xuất **file Word .docx chuẩn**: A4, Times New Roman, lề / cỡ chữ / giãn dòng tùy chỉnh; tiêu đề 2 cột, khung
   "ĐỀ CHÍNH THỨC" và "Mã đề thi"; phương án tự xếp 4 / 2 / 1 cột thẳng hàng; chân trang "Trang x/y – Mã đề thi …";
   câu hỏi không bị tách khỏi phương án khi sang trang; công thức LaTeX chuyển thành công thức Word (Equation).
 - Tải tất cả mã đề thành file .zip (mỗi mã một file Word + đáp án), hoặc gộp 1 file; in / lưu PDF.
-- Bảng đáp án (Word, Excel) kèm đối chiếu câu với đề gốc.
+- Bảng đáp án **Excel (.xlsx)** và Word gồm đề gốc cùng tất cả mã đề, kèm sheet đối chiếu câu với đề gốc.
 - Tự kiểm tra lỗi trước khi xuất (thiếu đáp án, phương án trống/trùng, thiếu dấu $, công thức/ảnh lỗi, đánh số câu
   nhảy cóc…) và tự kiểm chứng mỗi mã đề có đủ câu, đáp án đúng vị trí.
 - Dùng "hạt giống xáo" để xáo lại ra đúng kết quả cũ. Dữ liệu chỉ lưu trên máy bạn.

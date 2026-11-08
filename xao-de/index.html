@@ -15,7 +15,6 @@
     };
   </script>
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 </head>
 
 <body>
@@ -39,6 +38,9 @@
       <h2>1. Thông tin đề thi</h2>
       <label>Môn thi
         <select id="subject"></select>
+      </label>
+      <label>Tên môn ghi trên đề (nếu khác, VD: TIN HỌC 10)
+        <input id="subjectLabel" type="text" placeholder="Để trống = theo môn đã chọn">
       </label>
       <label>Sở / Phòng GD&amp;ĐT
         <input id="dept" type="text" placeholder="SỞ GD&ĐT ...">
@@ -139,8 +141,9 @@
           <button type="button" class="btn small ghost" id="clearText">Xóa</button>
         </div>
       </div>
-      <p class="hint">Mỗi câu bắt đầu bằng <code>Câu 1.</code>; đánh dấu đáp án đúng bằng dấu <code>*</code> trước chữ cái
-        (<code>*B.</code>) hoặc dòng <code>Đáp án: B</code>. Xem <button type="button" class="link inline-link" data-open="guide">hướng dẫn</button>.</p>
+      <p class="hint">Mỗi câu bắt đầu bằng <code>Câu 1.</code> hoặc <code>Câu 1:</code>. Đáp án đúng nhận theo nhiều cách: dấu <code>*</code> trước chữ cái
+        (<code>*B.</code>), <u>gạch chân</u> chữ cái trong file Word, dòng <code>Đáp án: B</code>, hoặc <b>bảng đáp án ở cuối đề</b> (sau dòng HẾT).
+        Xem <button type="button" class="link inline-link" data-open="guide">hướng dẫn</button>.</p>
       <textarea id="source" spellcheck="false" placeholder="Dán hoặc gõ đề gốc vào đây…"></textarea>
       <div id="stats" class="stats"></div>
       <ul id="warnings" class="warnings" aria-live="polite"></ul>
@@ -167,7 +170,7 @@
         <button type="button" class="btn small ghost" id="printOne">In / PDF mã này</button>
         <button type="button" class="btn small ghost" id="printAll">In tất cả</button>
         <button type="button" class="btn small ghost" id="dlKeysWord">Đáp án (Word)</button>
-        <button type="button" class="btn small ghost" id="dlKeysCsv">Đáp án (Excel)</button>
+        <button type="button" class="btn small ghost" id="dlKeysXlsx">Đáp án (Excel)</button>
       </div>
 
       <div id="tab-preview" class="tab-body">
@@ -218,6 +221,20 @@ d) Ý không đánh dấu được coi là Sai.</pre>
 <pre>Câu 1. Tính 2 + 3.
 Đáp án: 5</pre>
 
+      <h3>Đánh dấu đáp án đúng — dùng cách nào cũng được</h3>
+      <ul>
+        <li>Dấu <code>*</code> trước chữ cái: <code>*B. Hà Nội</code>; câu đúng/sai: <code>*a) …</code> hoặc ghi <code>(Đ)</code>/<code>(S)</code> cuối ý.</li>
+        <li><u>Gạch chân</u> chữ cái A, B, C, D (hoặc a, b, c, d của câu đúng/sai) trong file Word, kể cả khi nhiều phương án nằm trên một dòng hay trong bảng.</li>
+        <li>Dòng <code>Đáp án: B</code> (đúng/sai: <code>Đáp án: Đ S Đ S</code>; trả lời ngắn: <code>Đáp án: 12,5</code>) ngay sau câu.</li>
+        <li><b>Bảng đáp án ở cuối đề</b>, sau dòng <code>HẾT</code> hoặc tiêu đề <code>ĐÁP ÁN</code>. Đọc được các kiểu:
+          bảng ngang <code>Câu | 1 | 2 | 3</code> / <code>Đáp án | A | C | D</code>;
+          bảng dọc <code>Câu | Đáp án | Câu | Đáp án</code>;
+          bảng đúng/sai <code>Lệnh/Ý | Câu 1 | Câu 2</code> với các hàng <code>a) | Đúng | Sai</code>;
+          hoặc dòng chữ <code>1.A 2.C 3.D</code>, <code>Câu 1: Đ S Đ S</code>, <code>Câu 1: 12,5</code>.
+          Ghi <code>PHẦN I</code>, <code>PHẦN II</code>… trước mỗi bảng để phần mềm biết bảng thuộc phần nào.</li>
+      </ul>
+      <p>Nếu bảng đáp án <b>mâu thuẫn</b> với dấu gạch chân/dấu * trong đề, phần mềm báo lỗi đỏ để bạn kiểm tra.</p>
+
       <h3>Nhóm câu (bài đọc, tư liệu, bảng số liệu…)</h3>
 <pre>[NHÓM: Bài đọc 1]
 Read the passage and answer the questions from {từ} to {đến}.
@@ -240,14 +257,17 @@ Câu 2. …
       </ul>
 
       <h3>Mở file Word (.docx)</h3>
-      <p>Phần mềm đọc chữ và hình ảnh trong file. Nếu trong đề gốc bạn <u>gạch chân</u> chữ cái của đáp án đúng (A, B, C, D) thì phần mềm tự đánh dấu đáp án.
-        Công thức soạn bằng Equation/MathType có thể không đọc được — hãy kiểm tra lại sau khi mở.</p>
+      <p>Phần mềm đọc trực tiếp file (không cần mạng): chữ, chữ đậm, chỉ số trên/dưới (H₂O, x²), hình ảnh, công thức Equation của Word,
+        bảng số liệu, phương án đặt trong bảng, dấu gạch chân đáp án và bảng đáp án cuối đề. Thông tin đầu đề (Sở, Trường, Kỳ thi, Năm học, Môn,
+        Thời gian) được tự điền vào mục 1. Công thức <b>MathType</b> là hình ảnh nhúng nên không đọc được — phần mềm sẽ báo để bạn gõ lại dạng <code>$...$</code>.
+        File .doc cũ cần lưu lại thành .docx.</p>
 
       <h3>Kết quả</h3>
       <ul>
         <li><b>Tải Word</b>: file .docx chuẩn (A4, Times New Roman, lề theo cài đặt), công thức được chuyển thành công thức Word (Equation) — sửa tiếp được bằng Microsoft Word, WPS, LibreOffice.</li>
         <li>Chân trang ghi "Trang x/y – Mã đề thi …". Câu hỏi không bị tách khỏi các phương án khi sang trang.</li>
         <li><b>Tải tất cả (.zip)</b>: mỗi mã đề một file Word riêng, kèm file đáp án Word và Excel.</li>
+        <li><b>Đáp án (Excel)</b>: file .xlsx gồm sheet "Bảng đáp án" (cột Đề gốc và từng mã đề) và sheet "Đối chiếu câu" (câu của mã đề ứng với câu nào ở đề gốc).</li>
         <li><b>Word gộp 1 file</b>: mọi mã đề trong một file, mỗi mã đề bắt đầu ở trang mới và đánh số trang lại từ 1.</li>
         <li><b>In / PDF</b>: chọn máy in hoặc "Lưu dưới dạng PDF".</li>
         <li>Trước khi xuất, phần mềm <b>tự kiểm tra lỗi</b>: thiếu đáp án, phương án trống hoặc trùng nhau, thiếu dấu $, công thức không đọc được, ảnh lỗi, đánh số câu nhảy cóc… và tự kiểm chứng mỗi mã đề có đủ câu, đáp án đúng vị trí.</li>
@@ -273,6 +293,8 @@ Câu 2. …
 
   <script src="core.js"></script>
   <script src="word.js"></script>
+  <script src="docx-reader.js"></script>
+  <script src="xlsx.js"></script>
   <script src="samples.js"></script>
   <script src="app.js"></script>
 </body>
