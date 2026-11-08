@@ -777,7 +777,13 @@
   Builder.prototype.image = function (src, maxW, alt) {
     let entry = this.mediaBySrc.get(src);
     if (!entry) {
-      const img = this.images.get(src);
+      let img = this.images.get(src);
+      if ((!img || !img.info) && /^data:image\/(png|jpeg|gif)/i.test(src)) {
+        // ảnh tạo ra trong lúc xuất (VD ảnh câu hỏi từ PDF đã vẽ nhãn mới)
+        const bytes = dataUriToBytes(src);
+        const info = bytes && imageInfo(bytes);
+        if (info) img = { bytes, info };
+      }
       if (!img || !img.info) {
         this.issues.push(`Không chèn được ảnh: ${src.length > 60 ? src.slice(0, 60) + '…' : src}`);
         return this.r('[Hình ảnh]', { i: true });
@@ -789,7 +795,7 @@
     }
     // 96 dpi → twip: 1px = 15 twip
     let wT = entry.info.w * 15, hT = entry.info.h * 15;
-    const sz = /^(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)cm$/.exec(alt || '');
+    const sz = /^(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)cm(?:\|.*)?$/.exec(alt || '');
     if (sz && +sz[1] > 0 && +sz[2] > 0) { wT = +sz[1] * CM; hT = +sz[2] * CM; } // kích thước như trong file Word gốc
     const limit = Math.max(600, maxW || this.textW);
     if (wT > limit) { hT = hT * limit / wT; wT = limit; }
@@ -954,10 +960,12 @@
   // ---- Câu hỏi ----
   Builder.prototype.question = function (no, q) {
     const fontPt = this.L.fontPt;
-    const prefix = q.points
+    const baked = (t) => /^\s*!\[[^\]]*\|(qb|ob)\]/.test(t || '');
+    const prefix = baked(q.stem) ? '' : q.points
       ? this.r(`${q.word || 'Câu'} ${no}`, { b: true }) + this.r(' ' + q.points) + this.r('.', { b: true }) + this.r(' ')
       : this.r(`${q.word || 'Câu'} ${no}.`, { b: true }) + this.r(' ');
     const stemParas = this.paras(q.stem, { jc: 'both', before: 60 }, prefix);
+    if (baked(q.stem)) stemParas.forEach((p) => { if (!p.table) { p.o.jc = 'left'; p.o.left = 0; p.o.hanging = 0; } });
     stemParas.forEach((p, i) => { if (i > 0) p.o.before = 0; });
     const hasMore = (q.type === 'mcq' || q.type === 'tf') && q.options.length;
     let s = this.emit(stemParas, hasMore);
@@ -965,8 +973,10 @@
     if (q.type === 'tf' && q.options.length) {
       const ind = Math.round(0.5 * CM), hang = Math.round(0.6 * CM);
       q.options.forEach((o, i) => {
-        const lab = this.r(String.fromCharCode(97 + i) + ')\t');
-        const ps = this.paras(o.text, { jc: 'both', left: ind + hang, hanging: hang }, lab, this.textW - ind - hang);
+        const bk = /^\s*!\[[^\]]*\|ob\]/.test(o.text);
+        const lab = bk ? '' : this.r(String.fromCharCode(97 + i) + ')\t');
+        const ps = this.paras(o.text, bk ? { left: ind } : { jc: 'both', left: ind + hang, hanging: hang }, lab, this.textW - ind - hang);
+        if (bk) ps.forEach((p) => { p.o.jc = 'left'; });
         ps.forEach((p, k) => { if (k > 0) { p.o.hanging = 0; } });
         s += this.emit(ps, i < q.options.length - 1);
       });
@@ -988,8 +998,10 @@
       for (let c = 0; c < cols; c++) {
         const k = i + c;
         if (k >= q.options.length) { cells.push({ xml: '<w:p/>' }); continue; }
-        const lab = this.r(String.fromCharCode(65 + k) + '.', { b: true }) + this.r('\t');
-        const ps = this.paras(q.options[k].text, { left: hang, hanging: hang, right: 60 }, lab, widths[c] - hang - 60);
+        const bk = /^\s*!\[[^\]]*\|ob\]/.test(q.options[k].text);
+        const lab = bk ? '' : this.r(String.fromCharCode(65 + k) + '.', { b: true }) + this.r('\t');
+        const ps = this.paras(q.options[k].text, bk ? { right: 60 } : { left: hang, hanging: hang, right: 60 }, lab, widths[c] - (bk ? 0 : hang) - 60);
+        if (bk) ps.forEach((p) => { p.o.jc = 'left'; p.o.left = 0; });
         ps.forEach((p, j) => { if (j > 0) p.o.hanging = 0; });
         cells.push({ xml: this.emit(ps, !isLastRow) });
       }

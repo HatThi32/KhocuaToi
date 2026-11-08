@@ -55,7 +55,7 @@
     if (vars) Object.keys(vars).forEach((k) => (s = s.split('{' + k + '}').join(vars[k])));
     s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (m, alt, src) => {
       if (!/^(https?:|data:image\/|\.{0,2}\/|[\w-]+\.)/i.test(src)) return m;
-      const z = /^(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)cm$/.exec(alt);
+      const z = /^(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)cm(?:\|.*)?$/.exec(alt);
       return `<img src="${src}" alt=""${z ? ` style="width:${z[1]}cm;height:auto"` : ''}>`;
     });
     s = s.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/(^|[^_])__([^_\n]+?)__(?!_)/g, '$1<u>$2</u>');
@@ -81,7 +81,7 @@
           Array.from({ length: n }, (_, c) => `<td>${fmt(r[c] || '', vars)}</td>`).join('') + '</tr>').join('') + '</table>';
       }
       const t = l.trim();
-      const center = /^\$\$[\s\S]*\$\$$/.test(t) || /^!\[[^\]]*\]\([^)]*\)$/.test(t);
+      const center = /^\$\$[\s\S]*\$\$$/.test(t) || /^!\[[^\]|]*\]\([^)]*\)$/.test(t); // ảnh cắt từ PDF (alt có '|') giữ căn trái
       return `<p class="${cls}${center && !(i === 0 && prefix) ? ' center' : ''}">${i === 0 && prefix ? prefix : ''}${fmt(t, vars)}</p>`;
     }).join('');
   }
@@ -144,20 +144,24 @@
       for (let c = 0; c < cols; c++) {
         const k = i + c;
         cells += `<td style="width:${100 / cols}%">` + (k < q.options.length
-          ? `<div class="o"><b>${String.fromCharCode(65 + k)}.</b><span>${paras(q.options[k].text, '')}</span></div>` : '') + '</td>';
+          ? (BAKED_O.test(q.options[k].text) ? `<div class="o"><span>${paras(q.options[k].text, '')}</span></div>`
+            : `<div class="o"><b>${String.fromCharCode(65 + k)}.</b><span>${paras(q.options[k].text, '')}</span></div>`) : '') + '</td>';
       }
       rows += `<tr>${cells}</tr>`;
     }
     return `<table class="ex-opt">${rows}</table>`;
   }
 
+  const BAKED_Q = /^\s*!\[[^\]]*\|qb\]/;
+  const BAKED_O = /^\s*!\[[^\]]*\|ob\]/;
   function renderQuestion(no, q, L) {
-    const label = q.points ? `<b>${q.word || 'Câu'} ${no}</b> ${esc(q.points)}<b>.</b> ` : `<b>${q.word || 'Câu'} ${no}.</b> `;
+    const label = BAKED_Q.test(q.stem) ? '' : q.points ? `<b>${q.word || 'Câu'} ${no}</b> ${esc(q.points)}<b>.</b> ` : `<b>${q.word || 'Câu'} ${no}.</b> `;
     let h = paras(q.stem, 'ex-q', label);
     if (q.type === 'mcq' && q.options.length) h += renderOptionsMcq(q, L);
     if (q.type === 'tf') {
       q.options.forEach((o, i) => {
-        h += `<div class="ex-tf"><span>${String.fromCharCode(97 + i)})</span><span>${paras(o.text, '')}</span></div>`;
+        h += BAKED_O.test(o.text) ? `<div class="ex-tf"><span>${paras(o.text, '')}</span></div>`
+          : `<div class="ex-tf"><span>${String.fromCharCode(97 + i)})</span><span>${paras(o.text, '')}</span></div>`;
       });
     }
     return h;
@@ -299,7 +303,8 @@
       ? `Đã nhận ${c.total} câu: ${parts.join(', ')}.` +
         (parsed.keyCount ? ` Đã đọc bảng đáp án cuối đề (${parsed.keyCount} mục).` : '') +
         (parsed.preamble.length ? ` Bỏ qua ${parsed.preamble.length} dòng trước câu đầu tiên.` : '') +
-        (issues.length ? '' : ' Không phát hiện lỗi.')
+        (issues.length ? '' : ' Không phát hiện lỗi.') +
+        (saveFailed ? ' (Đề có nhiều hình nên trình duyệt không tự lưu được — hãy xáo và tải file trong lần mở này.)' : '')
       : '';
     $('stats').style.color = nErr ? 'var(--err-ink)' : '';
     showIssues(issues, $('warnings'));
@@ -350,13 +355,59 @@
     return v === 'orig' ? state.original : state.versions[parseInt(v, 10)];
   }
 
-  function showPreview() {
+  // Đề nhập từ PDF: ảnh câu hỏi/phương án có nhãn cũ => vẽ nhãn mới theo số thứ tự của mã đề
+  const RE_PDFIMG = /!\[([^\]]*\|(?:q|o)\|[^\]]*)\]\(([^)\s]+)\)/;
+  function hasPdfImages(v) {
+    return v.sections.some((sec) => X.flatQuestions(sec).some((x) => RE_PDFIMG.test(x.q.stem) || x.q.options.some((o) => RE_PDFIMG.test(o.text))));
+  }
+  async function bakeText(text, label) {
+    const m = RE_PDFIMG.exec(text || '');
+    if (!m || !window.XaoDePdf) return text;
+    const src = await window.XaoDePdf.bakeLabel(m[2], m[1], label);
+    const alt = m[1].replace(/\|(q|o)\|.*$/, '|$1b');
+    return text.replace(m[0], `![${alt}](${src})`);
+  }
+  async function bakeVersion(v) {
+    if (!hasPdfImages(v)) return v;
+    const c = { code: v.code, sections: v.sections.map((sec) => Object.assign({}, sec, {
+      items: sec.items.map((it) => (it.kind === 'group'
+        ? Object.assign({}, it, { questions: it.questions.map((x) => ({ no: x.no, q: Object.assign({}, x.q, { options: x.q.options.map((o) => Object.assign({}, o)) }) })) })
+        : { kind: 'q', no: it.no, q: Object.assign({}, it.q, { options: it.q.options.map((o) => Object.assign({}, o)) }) })),
+    })) };
+    for (const sec of c.sections) {
+      for (const x of X.flatQuestions(sec)) {
+        const q = x.q;
+        q.stem = await bakeText(q.stem, `${q.word || 'Câu'} ${x.no}.`);
+        for (let i = 0; i < q.options.length; i++) {
+          const lab = q.type === 'tf' ? `${String.fromCharCode(97 + i)})` : `${String.fromCharCode(65 + i)}.`;
+          q.options[i].text = await bakeText(q.options[i].text, lab);
+        }
+      }
+    }
+    return c;
+  }
+  async function bakeList(list) {
+    const out = [];
+    for (const it of list) out.push(Object.assign({}, it, { version: await bakeVersion(it.version) }));
+    return out;
+  }
+
+  let previewToken = 0;
+  async function showPreview() {
     const v = currentVersion();
     if (!v) return;
+    const token = ++previewToken;
     const L = state.layout;
     const paper = $('paper');
     paper.style.padding = `${L.top}cm ${L.right}cm ${L.bottom}cm ${L.left}cm`;
-    paper.innerHTML = renderVersion(v, state.meta, v === state.original, L);
+    const isOrig = v === state.original;
+    let bv = v;
+    if (hasPdfImages(v)) {
+      paper.innerHTML = '<p class="ex">Đang dựng đề…</p>';
+      try { bv = await bakeVersion(v); } catch (e) { console.error(e); }
+      if (token !== previewToken) return;
+    }
+    paper.innerHTML = renderVersion(bv, state.meta, isOrig, L);
     typeset(paper);
   }
 
@@ -449,8 +500,8 @@
       .replace(/[^\w-]+/g, '_').replace(/^_+|_+$/g, '');
   }
 
-  function examDocx(list, images) {
-    const r = W.buildExamDocx(list, state.meta, state.layout, images, X.SECTION_TYPES);
+  async function examDocx(list, images) {
+    const r = W.buildExamDocx(await bakeList(list), state.meta, state.layout, images, X.SECTION_TYPES);
     if (r.issues.length) console.warn('Xuất Word:', r.issues);
     return r.bytes;
   }
@@ -536,8 +587,8 @@
     } finally { btn.disabled = false; }
   }
 
-  function printHtml(list) {
-    const w = window.open('', '_blank');
+  async function printHtml(list, w) {
+    list = await bakeList(list);
     if (!w) {
       alert('Trình duyệt đã chặn cửa sổ in. Hãy cho phép cửa sổ bật lên (pop-up) cho trang này.');
       return;
@@ -610,11 +661,15 @@
         if (filled.length) notes.push('Đã tự điền: ' + filled.join(', ') + ' (lấy từ đầu đề trong file).');
         notes = notes.concat(r.warnings);
       } else if (name.endsWith('.pdf')) {
-        alert('File PDF chưa mở trực tiếp được: khi lấy chữ từ PDF, công thức (số mũ, phân số) và hình vẽ bị mất nên đề sẽ sai.\n\n' +
-          'Cách làm:\n• Dùng file Word gốc (.docx) của đề — tốt nhất.\n' +
-          '• Hoặc mở PDF bằng Word (Word tự chuyển PDF sang .docx), kiểm tra lại công thức rồi lưu thành .docx.\n' +
-          '• Với môn không có công thức (Sử, Địa, Anh, GDKT&PL…), có thể copy chữ trong PDF rồi dán vào ô Đề gốc.');
-        return;
+        if ($('source').value.trim() && !isSample($('source').value) && !confirm('Thay nội dung đề gốc hiện tại bằng nội dung file?')) return;
+        $('stats').textContent = 'Đang đọc file PDF…';
+        const r = await window.XaoDePdf.pdfToSource(await file.arrayBuffer(), {
+          onProgress: (m) => ($('stats').textContent = m),
+        });
+        text = r.text;
+        const filled = applyMeta(r.meta);
+        if (filled.length) notes.push('Đã tự điền: ' + filled.join(', ') + ' (lấy từ đầu đề trong file).');
+        notes = notes.concat(r.warnings);
       } else if (name.endsWith('.doc')) {
         alert('File .doc (Word 97-2003) chưa đọc được. Hãy mở bằng Word và chọn Lưu thành (Save As) định dạng .docx.');
         return;
@@ -640,13 +695,15 @@
   const FIELDS = ['subject', 'subjectLabel', 'dept', 'school', 'examName', 'year', 'time', 'docType', 'count', 'startCode', 'codeList', 'seed',
     'fontPt', 'lineSp', 'mTop', 'mBottom', 'mLeft', 'mRight', 'notes', 'source'];
   const CHECKS = ['optQuestions', 'optOptions', 'optTf', 'optInGroup', 'optEssay', 'optOriginal'];
+  let saveFailed = false;
   function save() {
     try {
       const data = {};
       FIELDS.forEach((f) => (data[f] = $(f).value));
       CHECKS.forEach((f) => (data[f] = $(f).checked));
       localStorage.setItem(STORE_KEY, JSON.stringify(data));
-    } catch (e) { /* bỏ qua nếu trình duyệt chặn lưu */ }
+      saveFailed = false;
+    } catch (e) { saveFailed = true; /* đề quá lớn (nhiều ảnh) hoặc trình duyệt chặn lưu */ }
   }
   function load() {
     try {
@@ -755,12 +812,13 @@
     const images = await preflight();
     if (!images) return;
     const v = currentVersion();
-    download(fileOf(v), examDocx([{ version: v, isOriginal: v === state.original }], images), DOCX_MIME);
+    download(fileOf(v), await examDocx([{ version: v, isOriginal: v === state.original }], images), DOCX_MIME);
   }));
   $('dlZip').addEventListener('click', (e) => withBusy(e.currentTarget, async () => {
     const images = await preflight();
     if (!images) return;
-    const files = exportList().map((it) => ({ name: fileOf(it.version), data: examDocx([it], images) }));
+    const files = [];
+    for (const it of exportList()) files.push({ name: fileOf(it.version), data: await examDocx([it], images) });
     files.push({ name: `Dap_an_${subj()}.docx`, data: keysDocx() });
     files.push({ name: `Dap_an_${subj()}.xlsx`, data: keysXlsx() });
     if (tpl) files.push({ name: tplFileName(), data: await keysFromTemplate() });
@@ -769,17 +827,31 @@
   $('dlAll').addEventListener('click', (e) => withBusy(e.currentTarget, async () => {
     const images = await preflight();
     if (!images) return;
-    download(`De_${subj()}_gop_${state.versions.length}_ma_de.docx`, examDocx(exportList(), images), DOCX_MIME);
+    download(`De_${subj()}_gop_${state.versions.length}_ma_de.docx`, await examDocx(exportList(), images), DOCX_MIME);
   }));
-  $('printOne').addEventListener('click', (e) => withBusy(e.currentTarget, async () => {
-    if (!(await preflight())) return;
-    const v = currentVersion();
-    printHtml([{ version: v, isOriginal: v === state.original }]);
-  }));
-  $('printAll').addEventListener('click', (e) => withBusy(e.currentTarget, async () => {
-    if (!(await preflight())) return;
-    printHtml(state.versions.map((v) => ({ version: v, isOriginal: false })));
-  }));
+  // Mở cửa sổ in ngay lúc bấm (trình duyệt chặn cửa sổ mở muộn), dựng xong mới ghi nội dung
+  function openPrintWindow() {
+    const w = window.open('', '_blank');
+    if (w) w.document.write('<p style="font:16px system-ui,sans-serif;margin:24px">Đang chuẩn bị đề để in…</p>');
+    return w;
+  }
+  $('printOne').addEventListener('click', (e) => {
+    if (!state.versions.length) return;
+    const win = openPrintWindow();
+    withBusy(e.currentTarget, async () => {
+      if (!(await preflight())) { if (win) win.close(); return; }
+      const v = currentVersion();
+      await printHtml([{ version: v, isOriginal: v === state.original }], win);
+    });
+  });
+  $('printAll').addEventListener('click', (e) => {
+    if (!state.versions.length) return;
+    const win = openPrintWindow();
+    withBusy(e.currentTarget, async () => {
+      if (!(await preflight())) { if (win) win.close(); return; }
+      await printHtml(state.versions.map((v) => ({ version: v, isOriginal: false })), win);
+    });
+  });
   $('dlKeysWord').addEventListener('click', (e) => withBusy(e.currentTarget, async () =>
     download(`Dap_an_${subj()}.docx`, keysDocx(), DOCX_MIME)));
   $('dlKeysTpl').addEventListener('click', (e) => withBusy(e.currentTarget, async () => {
