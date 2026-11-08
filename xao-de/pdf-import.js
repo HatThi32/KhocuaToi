@@ -34,13 +34,14 @@
     return loading;
   }
 
-  const RE_SECTION = /^\s*\[?\s*PH[ẦA]N\s+(III|II|IV|I|\d+)\b/i;
-  const RE_QLABEL = /^\s*(C[âa]u|Question)\s*(\d+)\s*[.:)]?/i;
-  const RE_OPT = /^\s*([A-D])\s*[.)]/;
+  // Các mẫu chạy trên chuỗi đã bỏ dấu (r.plain) để chịu được PDF lỗi font tiếng Việt
+  const RE_SECTION = /^\s*\[?\s*PHAN\s+(III|II|IV|I|\d+)\b/i;
+  const RE_QLABEL = /^\s*(Cau|Question)\s*(\d+)\s*[.:)]?/i;
+  const RE_OPT = /^\s*\*?\s*([A-D])\s*[.)]/;
   const RE_TF = /^\s*([a-d])\s*\)/;
-  const RE_END = /^\s*[-–—_=.*\s]*H[ẾE]T\s*[-–—_=.*\s]*$/i;
-  const RE_KEYHEAD = /^\s*(?:(?:BẢNG|PHẦN)\s+)?(?:ĐÁP\s*ÁN|HƯỚNG\s+DẪN\s+(?:CHẤM|GIẢI)|LỜI\s+GIẢI)/i;
-  const RE_PAGE = /^\s*(?:(?:mã\s*đề(?:\s*thi)?\s*:?\s*\S+)\s*[-–]?\s*)?trang\s*\d+\s*(?:\/\s*\d+)?\s*(?:[-–]\s*mã\s*đề(?:\s*thi)?\s*:?\s*\S+)?\s*$/i;
+  const RE_END = /^\s*[-–—_=.*\s]*HET\s*[-–—_=.*\s]*$/i;
+  const RE_KEYHEAD = /^\s*(?:(?:BANG|PHAN)\s+)?(?:DAP\s*AN|HUONG\s+DAN\s+(?:CHAM|GIAI)|LOI\s+GIAI)/i;
+  const RE_PAGE = /^\s*(?:(?:ma\s*de(?:\s*thi)?\s*:?\s*\S+)\s*[-–]?\s*)?trang\s*\d+\s*(?:\/\s*\d+)?\s*(?:[-–]\s*ma\s*de(?:\s*thi)?\s*:?\s*\S+)?\s*$/i;
 
   /** Gom các đoạn chữ thành dòng theo đường chân chữ */
   function groupRows(items) {
@@ -55,17 +56,56 @@
       r.items.sort((a, b) => a.x - b.x);
       r.left = r.items[0].x;
       r.right = Math.max(...r.items.map((i) => i.x + i.w));
-      let t = '';
-      r.items.forEach((it, k) => {
-        if (k) {
-          const prev = r.items[k - 1];
-          if (it.x - (prev.x + prev.w) > 0.18 * it.size && !/\s$/.test(t)) t += ' ';
-        }
-        t += it.str;
+      // từng ký tự kèm toạ độ x (chia đều bề rộng đoạn chữ)
+      const chars = [];
+      let lastEnd = -1e9;
+      r.items.forEach((it) => {
+        const cs = Array.from(clean(it.str));
+        if (!cs.length) return;
+        if (chars.length && it.x - lastEnd > 0.18 * it.size && chars[chars.length - 1].c !== ' ') chars.push({ c: ' ', x: lastEnd, w: Math.max(0, it.x - lastEnd), it });
+        const cw = it.w / cs.length;
+        cs.forEach((c, i) => chars.push({ c, x: it.x + i * cw, w: cw, it }));
+        lastEnd = Math.max(lastEnd, it.x + it.w);
       });
-      r.text = t.replace(/\s+/g, ' ').trim();
+      // gộp khoảng trắng, bỏ khoảng trắng đầu
+      r.chars = chars.filter((ch, i) => !(ch.c === ' ' && (i === 0 || chars[i - 1].c === ' ')));
+      r.text = r.chars.map((ch) => ch.c).join('').normalize('NFC').trim();
+      r.plain = r.chars.map((ch) => plainChar(ch.c)).join('');
     });
     return rows.sort((a, b) => a.base - b.base);
+  }
+
+  // Bỏ ký tự điều khiển (PDF lỗi font hay sinh ra), gom khoảng trắng lạ
+  function clean(s) {
+    return String(s).replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\ufeff]/g, '').replace(/[\u00a0\u2000-\u200a\u3000\t]/g, ' ');
+  }
+  // Ký tự "không dấu" (giữ nguyên độ dài để tra ngược vị trí): Câu → Cau, PHẦN → PHAN, Đ → D
+  function plainChar(c) {
+    if (c === 'đ') return 'd';
+    if (c === 'Đ') return 'D';
+    const d = c.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    return d.length === 1 ? d : /[\u0300-\u036f]/.test(c) ? ' ' : c.length === 1 ? c : '?';
+  }
+  // Sửa các từ khóa bị lỗi dấu do font: Câu, Phần, Đáp án, Đúng, Sai
+  function fixWords(r) {
+    const words = { cau: 'Câu', phan: 'Phần', dap: 'Đáp', an: 'án', dung: 'Đúng', sai: 'Sai', chon: 'Chọn', so: 'số' };
+    let out = '';
+    const re = /[A-Za-z]+|[^A-Za-z]+/g;
+    let m;
+    while ((m = re.exec(r.plain))) {
+      const raw = r.chars.slice(m.index, m.index + m[0].length).map((c) => c.c).join('');
+      const w = words[m[0].toLowerCase()];
+      if (w && /[A-Za-z]/.test(m[0]) && m[0].length > 1 && raw.normalize('NFD').replace(/[\u0300-\u036f]/g, '').length === m[0].length) {
+        out += m[0] === m[0].toUpperCase() ? w.toUpperCase() : (m[0][0] === m[0][0].toUpperCase() ? w : w.toLowerCase());
+      } else out += raw;
+    }
+    return out.normalize('NFC').replace(/\s+/g, ' ').trim();
+  }
+  // Hộp nhãn tại vị trí [i, j) trong chuỗi ký tự của dòng
+  function boxAt(r, i, j) {
+    const a = r.chars[i], b = r.chars[Math.max(i, j - 1)];
+    const it = a.it;
+    return { x: a.x, w: Math.max(2, b.x + b.w - a.x), top: r.top, bottom: r.bottom, base: r.base, size: it.size, bold: it.bold };
   }
 
   /** Đọc file PDF => { text: văn bản đề gốc (câu hỏi là ảnh cắt), meta, warnings } */
@@ -101,18 +141,18 @@
     }
 
     // Lề trái/phải chung của nội dung
-    const bodyRows = pages.flatMap((p) => p.rows.filter((r) => !RE_PAGE.test(r.text)));
+    const bodyRows = pages.flatMap((p) => p.rows.filter((r) => !RE_PAGE.test(r.plain)));
     if (!bodyRows.length) throw new Error('File PDF không có lớp chữ (có thể là bản scan/ảnh chụp) — chưa đọc được. Hãy dùng file Word hoặc PDF xuất từ Word.');
     const left = Math.max(0, Math.min(...bodyRows.map((r) => r.left)) - 4);
     const right = Math.min(pages[0].w, Math.max(...bodyRows.map((r) => Math.min(r.right, pages[0].w))) + 4);
     // Vùng nội dung từng trang (bỏ đầu/chân trang)
     pages.forEach((p) => {
-      const foot = p.rows.filter((r) => RE_PAGE.test(r.text));
+      const foot = p.rows.filter((r) => RE_PAGE.test(r.plain));
       const footTop = foot.filter((r) => r.base > p.h / 2).map((r) => r.top);
       const headBottom = foot.filter((r) => r.base <= p.h / 2).map((r) => r.bottom);
       p.contentTop = headBottom.length ? Math.max(...headBottom) + 2 : 6;
       p.contentBottom = footTop.length ? Math.min(...footTop) - 3 : p.h - 6;
-      p.rows = p.rows.filter((r) => !RE_PAGE.test(r.text) && r.base > p.contentTop && r.top < p.contentBottom);
+      p.rows = p.rows.filter((r) => !RE_PAGE.test(r.plain) && r.base > p.contentTop && r.top < p.contentBottom);
     });
 
     // ---------- Đọc cấu trúc ----------
@@ -126,41 +166,43 @@
     let secType = 'mcq';
     const sectionType = (t) => {
       const s = t.toUpperCase();
-      if (/ĐÚNG\s*\/?\s*SAI/.test(s)) return 'tf';
-      if (/TRẢ\s*LỜI\s*NGẮN/.test(s)) return 'short';
-      if (/TỰ\s*LUẬN/.test(s)) return 'essay';
-      if (/TRẮC\s*NGHIỆM|NHIỀU\s*(PHƯƠNG\s*ÁN|LỰA\s*CHỌN)/.test(s)) return 'mcq';
-      const m = s.match(/PH[ẦA]N\s+(III|II|IV|I|\d+)/);
+      if (/DUNG\s*\/?\s*SAI/.test(s)) return 'tf';
+      if (/TRA\s*LOI\s*NGAN/.test(s)) return 'short';
+      if (/TU\s*LUAN/.test(s)) return 'essay';
+      if (/TRAC\s*NGHIEM|NHIEU\s*(PHUONG\s*AN|LUA\s*CHON)/.test(s)) return 'mcq';
+      const m = s.match(/PHAN\s+(III|II|IV|I|\d+)/);
       const k = m ? { I: 1, II: 2, III: 3, IV: 4 }[m[1]] || +m[1] : 1;
       return ['mcq', 'tf', 'short', 'essay'][k - 1] || 'mcq';
     };
     const labelItems = (r, re) => r.items.filter((it) => re.test(it.str) && it.str.trim().length <= 3 || (re.test(it.str) && it === r.items[0]));
     for (const r of all) {
-      const t = r.text;
-      if (phase === 'key') { keyLines.push(t); continue; }
-      if (phase !== 'head' && (RE_END.test(t) || RE_KEYHEAD.test(t))) {
+      const t = r.text, pl = r.plain;
+      if (!r.chars.length) continue;
+      if (phase === 'key') { keyLines.push(fixWords(r)); continue; }
+      if (phase !== 'head' && (RE_END.test(pl) || RE_KEYHEAD.test(pl))) {
         out.push({ kind: 'end', row: r });
         phase = 'key';
-        if (!RE_END.test(t)) keyLines.push(t);
+        if (!RE_END.test(pl)) keyLines.push(fixWords(r));
         curQ = null;
         continue;
       }
-      if (RE_SECTION.test(t)) {
+      if (RE_SECTION.test(pl)) {
         phase = 'body';
-        secType = sectionType(t);
-        out.push({ kind: 'section', row: r, text: t });
+        secType = sectionType(pl);
+        const sm = RE_SECTION.exec(pl);
+        const rest = r.chars.slice(sm[0].length).map((ch) => ch.c).join('').normalize('NFC');
+        out.push({ kind: 'section', row: r, text: ('PHẦN ' + sm[1].toUpperCase() + rest).replace(/\s+/g, ' ').trim() });
         curQ = null;
         continue;
       }
-      const qm = RE_QLABEL.exec(r.items[0].str) || (r.items.length > 1 && RE_QLABEL.exec(r.items[0].str + r.items[1].str));
+      const qm = RE_QLABEL.exec(pl);
       if (qm && r.left < left + 40) {
         phase = 'body';
-        curQ = { kind: 'q', row: r, type: secType, opts: [], word: /^q/i.test(qm[1]) ? 'Question' : 'Câu' };
+        curQ = { kind: 'q', row: r, type: secType, opts: [], word: /^q/i.test(qm[1]) ? 'Question' : 'Câu', no: qm[2] };
         // hộp nhãn "Câu 1." trên ảnh
-        const li = r.items[0];
-        const labelTxt = qm[0].trim();
-        const lw = li.str.trim().length > labelTxt.length + 1 ? li.w * (labelTxt.length / li.str.length) : li.w;
-        curQ.label = { x: li.x, top: r.top, bottom: r.bottom, w: lw, base: r.base, size: li.size, bold: li.bold, text: labelTxt };
+        const i0 = qm[0].search(/\S/);
+        const i1 = qm[0].replace(/\s+$/, '').length;
+        curQ.label = Object.assign(boxAt(r, i0, i1), { text: qm[0].trim() });
         out.push(curQ);
         continue;
       }
@@ -169,25 +211,35 @@
         r.items.forEach((it, k) => {
           const prev = r.items[k - 1];
           if (prev && it.x - (prev.x + prev.w) > 2.5 * it.size) { header.push(cur.trim()); cur = ''; }
-          cur += (cur && !/\s$/.test(cur) ? ' ' : '') + it.str;
+          cur += (cur && !/\s$/.test(cur) ? ' ' : '') + clean(it.str);
         });
         if (cur.trim()) header.push(cur.replace(/\s+/g, ' ').trim());
         continue;
       }
-      if (curQ && (curQ.type === 'mcq') && RE_OPT.test(t)) {
-        const labs = r.items.filter((it) => /^\s*[A-D]\s*[.)]/.test(it.str) && (it.str.trim().length <= 3 || it === r.items[0]))
-          .filter((it, k, arr) => arr.findIndex((o) => o.str.trim()[0] === it.str.trim()[0]) === k);
-        labs.forEach((it) => {
-          const L = it.str.trim()[0];
-          const lw = it.str.trim().length > 3 ? it.w * (2 / it.str.length) : it.w;
-          curQ.opts.push({ letter: L, row: r, x: it.x, label: { x: it.x, w: lw, top: r.top, bottom: r.bottom, base: r.base, size: it.size, bold: it.bold, text: it.str.trim().slice(0, 2) } });
-        });
+      if (curQ && (curQ.type === 'mcq') && RE_OPT.test(pl)) {
+        // mọi nhãn A. B. C. D. trên dòng (đứng đầu dòng hoặc sau khoảng trắng), chữ cái tăng dần
+        const re = /(^|\s|[0-9₀-₉²³)\]])([A-D])\s*[.)](?=\s|$)/g;
+        let m, last = -1;
+        const have = new Set(curQ.opts.map((o) => o.letter));
+        while ((m = re.exec(pl))) {
+          const L = m[2];
+          const code = L.charCodeAt(0);
+          if (code <= last || have.has(L)) continue;
+          if (m[1] && !/\s/.test(m[1]) && last < 0) continue; // nhãn đầu tiên phải đứng đầu dòng hoặc sau khoảng trắng
+          const i0 = m.index + m[1].length;
+          const i1 = m.index + m[0].length;
+          const box = boxAt(r, i0, i1);
+          curQ.opts.push({ letter: L, row: r, x: box.x, label: Object.assign(box, { text: L + '.', lw: boxAt(r, i0, i0 + 1).w }) });
+          last = code;
+          have.add(L);
+        }
         continue;
       }
-      if (curQ && curQ.type === 'tf' && RE_TF.test(t)) {
-        const it = r.items[0];
-        const lw = it.str.trim().length > 3 ? it.w * (2 / it.str.length) : it.w;
-        curQ.opts.push({ letter: it.str.trim()[0], row: r, x: it.x, label: { x: it.x, w: lw, top: r.top, bottom: r.bottom, base: r.base, size: it.size, bold: it.bold, text: it.str.trim().slice(0, 2) } });
+      if (curQ && curQ.type === 'tf' && RE_TF.test(pl)) {
+        const m = RE_TF.exec(pl);
+        const i0 = m[0].search(/\S/);
+        const box = boxAt(r, i0, m[0].length);
+        curQ.opts.push({ letter: m[1], row: r, x: box.x, label: Object.assign(box, { text: m[1] + ')' }) });
         continue;
       }
       if (!curQ) {
@@ -230,7 +282,7 @@
       for (let k = i - 1; k >= 0; k--) {
         const q = all[k];
         if (q.page !== r.page) break;
-        if (q.base > r.base - 0.95 * r.size && q.base < r.base && !RE_QLABEL.test(q.text) && !RE_OPT.test(q.text)) top = Math.min(top, q.top);
+        if (q.base > r.base - 0.95 * r.size && q.base < r.base && !RE_QLABEL.test(q.plain) && !RE_OPT.test(q.plain)) top = Math.min(top, q.top);
         else {
           top = Math.max(q.bottom + 0.5, Math.min(top - 0.25 * r.size, (q.bottom + top) / 2));
           return top;
@@ -301,6 +353,7 @@
       top = Math.max(0, top - pad); bottom = Math.min(H - 1, bottom + pad);
       rightX = Math.min(W - 1, rightX + pad); leftX = Math.max(0, leftX - pad);
       if (bottom <= top || rightX <= leftX) return null; // vùng trắng
+      if ((rightX - leftX) < 9 * S && (bottom - top) < 9 * S && !keepLeft) return null; // đốm nhỏ, không phải nội dung
       const n = document.createElement('canvas');
       n.width = rightX - leftX + 1; n.height = bottom - top + 1;
       n.getContext('2d').drawImage(c, leftX, top, n.width, n.height, 0, 0, n.width, n.height);
@@ -320,7 +373,8 @@
     // Nhận dấu đáp án trên trang: chữ cái tô đỏ/xanh, gạch chân, in đậm khác biệt
     function labelMark(o) {
       const p = o.row.page, L = o.label;
-      const x0 = Math.round(L.x * S), w = Math.max(2, Math.round(L.w * S));
+      // chỉ đo trên chính chữ cái (dấu "." sau chữ cái thường không được gạch chân/tô màu)
+      const x0 = Math.round(L.x * S), w = Math.max(2, Math.round((L.lw || L.w) * S));
       const y0 = Math.round(L.top * S), h = Math.max(2, Math.round((L.bottom - L.top) * S));
       const d = p.ctx.getImageData(x0, y0, w, h + Math.round(0.35 * L.size * S)).data;
       let dark = 0, color = 0;
@@ -355,10 +409,10 @@
       segs.forEach((sg) => {
         const t = trim(crop(sg.page, left, sg.y0, right, sg.y1), true);
         if (!t) return;
-        if (first) { lines.push(`${b.word} ${b.row.text.match(/\d+/)[0]}. ${imgMarkup(t, 'q', b.label)}`); first = false; }
+        if (first) { lines.push(`${b.word} ${b.no}. ${imgMarkup(t, 'q', b.label)}`); first = false; }
         else lines.push(imgMarkup(t));
       });
-      if (first) lines.push(`${b.word} ${b.row.text.match(/\d+/)[0]}. ${b.row.text.replace(RE_QLABEL, '').trim()}`);
+      if (first) lines.push(`${b.word} ${b.no}. (không cắt được nội dung câu này)`);
       // Phương án / ý đúng sai: sắp theo chữ cái (đề có thể xếp phương án theo cột dọc)
       b.opts.sort((o1, o2) => o1.letter.toLowerCase().localeCompare(o2.letter.toLowerCase()));
       const marksInfo = b.type === 'mcq' ? b.opts.map(labelMark) : [];

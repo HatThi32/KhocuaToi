@@ -12,6 +12,10 @@ Tính năng:
 - Tạo nhiều mã đề: xáo thứ tự câu hỏi, xáo phương án A–D, xáo ý a–d của câu đúng/sai.
 - Nhóm câu (bài đọc, tư liệu) luôn đi liền nhau; tự giữ nguyên phương án kiểu "Cả A và B", "All of the above".
 - Mở đề gốc từ file Word (.docx) không cần mạng; tự điền Sở, Trường, Kỳ thi, Năm học, Môn, Thời gian từ đầu đề.
+- Đọc công thức **MathType** và **Microsoft Equation 3.0** trong file Word, chuyển thành công thức Word (Equation).
+- Mở đề **PDF**: cắt từng câu hỏi/phương án thành ảnh (giữ nguyên công thức, đồ thị, bảng biến thiên), vẽ lại số câu
+  và chữ cái theo mã đề; lấy đáp án từ lời giải ("Chọn A", "a) Đúng", "Đáp số: …"), bảng đáp án, hoặc chữ cái tô màu /
+  gạch chân / in đậm trên trang. Chịu được PDF lỗi font tiếng Việt và đề gõ không dấu.
 - Nhận đáp án đúng theo nhiều cách: dấu `*` trước chữ cái, **gạch chân** chữ cái A/B/C/D (a/b/c/d với câu đúng/sai),
   dòng `Đáp án: B`, hoặc **bảng đáp án cuối đề** (bảng ngang, bảng dọc, bảng Đúng/Sai theo ý, dòng `1.A 2.C`…);
   báo lỗi nếu các nguồn đáp án mâu thuẫn nhau.

@@ -47,10 +47,10 @@
 
   const RE_SECTION = /^\s*\[\s*(PH[ẦA]N\s+[^\]]*|T[ỰU]\s*LU[ẬA]N[^\]]*|TR[ẮA]C\s*NGHI[ỆE]M[^\]]*)\]\s*(.*)$/i;
   // "PHẦN I. CÂU TRẮC NGHIỆM ... (3.0 điểm) Thí sinh trả lời ..." (không có ngoặc vuông)
-  const RE_SECTION_PLAIN = /^\s*(PH[ẦA]N\s+(?:III|II|IV|I|\d+))\b\s*([.:\-–]?)\s*(.*)$/i;
+  const RE_SECTION_PLAIN = /^\s*(PH[ẦẤÂAẢ]N\s+(?:III|II|IV|I|\d+))\b\s*([.:\-–]?)\s*(.*)$/i;
   const RE_GROUP_START = /^\s*\[\s*NH[ÓO]M\s*(?::\s*([^\]]*))?\]\s*$/i;
   const RE_GROUP_END = /^\s*\[\s*H[ẾE]T\s+NH[ÓO]M\s*\]\s*$/i;
-  const RE_QUESTION = /^\s*(C[âa]u|Question)\s*(\d+)\s*(\([^)]{0,40}\))?\s*[.:)]?\s*(.*)$/i;
+  const RE_QUESTION = /^\s*(C[âaấầẩẫậ]u|Question)\s*(\d+)\s*(\([^)]{0,40}\))?\s*[.:)]?\s*(.*)$/i;
   const RE_MCQ_OPT = /^\s*(\*)?\s*([A-D])\s*[.)]\s*(.*)$/;
   const RE_TF_OPT = /^\s*(\*)?\s*([a-d])\s*[.)]\s*(.*)$/;
   const RE_ANSWER = /^\s*(?:Đ[áa]p\s*[áa]n|ĐA|Answer)\s*[:：]\s*(.*)$/i;
@@ -69,7 +69,7 @@
     if (/TRẢ\s*LỜI\s*NGẮN|TRA\s*LOI\s*NGAN/.test(s)) return 'short';
     if (/TỰ\s*LUẬN|TU\s*LUAN/.test(s)) return 'essay';
     if (/NHIỀU\s*LỰA\s*CHỌN|TRẮC\s*NGHIỆM/.test(s)) return 'mcq';
-    const m = s.match(/PH[ẦA]N\s+(III|II|IV|I|\d+)/);
+    const m = s.match(/PH[ẦẤÂAẢ]N\s+(III|II|IV|I|\d+)/);
     if (m) {
       const n = ROMAN[m[1]] || parseInt(m[1], 10);
       return ['mcq', 'tf', 'short', 'essay'][n - 1] || 'mcq';
@@ -79,7 +79,7 @@
 
   // Số thứ tự của một phần: "PHẦN II ..." -> 2
   function sectionNumber(label) {
-    const m = String(label || '').toUpperCase().match(/PH[ẦA]N\s+(III|II|IV|I|\d+)/);
+    const m = String(label || '').toUpperCase().match(/PH[ẦẤÂAẢ]N\s+(III|II|IV|I|\d+)/);
     return m ? ROMAN[m[1]] || parseInt(m[1], 10) : null;
   }
 
@@ -195,8 +195,30 @@
         }
       });
     }
+    let wsCols = 0; // số cột của bảng dạng "khoảng trắng" (bảng trong PDF thành dòng chữ)
     lines.forEach((raw) => {
       const line = raw.trim();
+      // Bảng mất đường kẻ: "Câu 1 2 3 … 12" / "Lệnh/Ý Câu 1 Câu 2" rồi các dòng "Đáp án A C D …", "a) Đúng Sai …"
+      const tokens = line.split(/\s+/).filter(Boolean);
+      const numHead = line.match(/^(.*?)((?:(?:c[âaấầ]u\s*)?\d{1,3}\s+){1,}(?:c[âaấầ]u\s*)?\d{1,3})\s*$/i);
+      if (numHead && !/[A-DĐS]\s*$/i.test(numHead[1] || '') && (!numHead[1] || /^(c[âaấầ]u|câu hỏi|lệnh|ý|đề|stt|tt|[^\d]{0,20})/i.test(numHead[1].trim()))) {
+        const nums = numHead[2].match(/(?:c[âaấầ]u\s*)?\d{1,3}/gi);
+        if (nums.length >= 2 && (numHead[1] || /c[âaấầ]u/i.test(numHead[2]) || nums.length >= 3)) {
+          flushGrid();
+          grid.push([numHead[1].trim() || 'Câu', ...nums]);
+          wsCols = nums.length;
+          return;
+        }
+      }
+      if (wsCols) {
+        const vals = tokens.slice(-wsCols);
+        const head = tokens.slice(0, tokens.length - wsCols).join(' ');
+        if (tokens.length >= wsCols + 1 && head && vals.every((v) => /^(\*?[A-Da-d]\.?|Đ|S|Đúng|Sai|D|T|F|-?\d+(?:[,.]\d+)?)$/i.test(v))) {
+          grid.push([head, ...vals]);
+          return;
+        }
+        wsCols = 0;
+      }
       // Hàng bảng: "| a | b |" hoặc "Câu | 1 | 2" với các ô ngắn (không nhầm với |x − 1| trong lời giải)
       const cellsRaw = line.split('|');
       if (cellsRaw.length >= 3 && ((/^\|/.test(line) && /\|$/.test(line)) || cellsRaw.every((c) => c.trim().length <= 14))) {
@@ -205,9 +227,9 @@
       }
       flushGrid();
       if (!line) return;
-      const sm = line.match(/^\[?\s*PH[ẦA]N\s+(III|II|IV|I|\d+)\b/i);
+      const sm = line.match(/^\[?\s*PH[ẦẤÂAẢ]N\s+(III|II|IV|I|\d+)\b/i);
       if (sm) { ctx = ROMAN[sm[1].toUpperCase()] || parseInt(sm[1], 10); cur = null; return; }
-      const cm = line.match(/^(?:câu|question)\s*(\d{1,3})\b/i);
+      const cm = line.match(/^(?:c[âaấầ]u|question)\s*(\d{1,3})\b/i);
       if (cm) cur = parseInt(cm[1], 10);
       // Lời giải: "... Chọn A.", "Đáp án đúng là B", "a) Đúng.", "Đáp số: 3,5."
       if (cur != null && solutionAnswer(line, cur)) return;
