@@ -104,6 +104,7 @@
     let group = null;
     let q = null;
     let lastTarget = null; // nơi nối dòng tiếp theo: {obj, key}
+    let nextId = 0;
 
     function ensureSection() {
       if (!sec) {
@@ -181,7 +182,7 @@
       if ((m = line.match(RE_QUESTION))) {
         finishQuestion();
         ensureSection();
-        q = { word: /^q/i.test(m[1]) ? 'Question' : 'Câu', origNo: parseInt(m[2], 10), stem: m[3] || '', options: [], answer: '', lock: false, type: sec.type };
+        q = { id: ++nextId, sectionIndex: sections.length - 1, word: /^q/i.test(m[1]) ? 'Question' : 'Câu', origNo: parseInt(m[2], 10), stem: m[3] || '', options: [], answer: '', lock: false, type: sec.type };
         if (group) group.questions.push(q);
         else sec.units.push({ kind: 'q', question: q });
         lastTarget = { obj: q, key: 'stem' };
@@ -298,6 +299,7 @@
         !q.lock && ((q.type === 'mcq' && o.shuffleOptions) || (q.type === 'tf' && o.shuffleTf));
       if (allow) idx = shuffle(idx, rng);
       return {
+        id: q.id,
         origNo: q.origNo,
         word: q.word,
         stem: q.stem,
@@ -351,9 +353,104 @@
     return '';
   }
 
+  // ---------- Kiểm tra đề trước khi xuất ----------
+  function norm(t) {
+    return String(t || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+  function countDollar(t) {
+    return (String(t || '').replace(/\\\$/g, '').match(/\$/g) || []).length;
+  }
+
+  /** Trả về danh sách { level: 'error' | 'warn', msg } */
+  function checkExam(parsed) {
+    const out = [];
+    const err = (msg) => out.push({ level: 'error', msg });
+    const warn = (msg) => out.push({ level: 'warn', msg });
+    parsed.warnings.forEach((w) => {
+      const isErr = /chưa đánh dấu đáp án|đáp án đúng\.|chỉ có \d+ phương án|chưa có "Đáp án/.test(w);
+      out.push({ level: isErr ? 'error' : 'warn', msg: w });
+    });
+    parsed.sections.forEach((s) => {
+      const name = s.label || 'Phần ' + SECTION_TYPES[s.type].toLowerCase();
+      if (countDollar(s.intro) % 2) err(`${name} – lời dẫn: thiếu dấu $ đóng/mở công thức.`);
+      const nums = [];
+      s.units.forEach((u) => {
+        if (u.kind === 'group' && countDollar(u.passage) % 2) err(`${name} – nhóm "${u.title || ''}": thiếu dấu $ đóng/mở công thức.`);
+        if (u.kind === 'group' && !u.questions.length) warn(`${name} – nhóm "${u.title || ''}" không có câu hỏi nào.`);
+        unitQuestions(u).forEach((q) => {
+          const where = `${name} – Câu ${q.origNo}`;
+          nums.push(q.origNo);
+          if (!q.stem.trim() && !q.options.length) err(`${where}: câu hỏi trống.`);
+          else if (!q.stem.trim()) warn(`${where}: chưa có nội dung câu hỏi.`);
+          if (countDollar(q.stem) % 2) err(`${where}: thiếu dấu $ đóng/mở công thức trong câu hỏi.`);
+          q.options.forEach((o, i) => {
+            const lab = q.type === 'tf' ? String.fromCharCode(97 + i) + ')' : String.fromCharCode(65 + i) + '.';
+            if (!o.text.trim()) err(`${where}: phương án ${lab} để trống.`);
+            if (countDollar(o.text) % 2) err(`${where}: thiếu dấu $ đóng/mở công thức ở phương án ${lab}`);
+          });
+          if (q.type === 'mcq' && q.options.length && q.options.length !== 4)
+            warn(`${where}: có ${q.options.length} phương án (đề chuẩn có 4 phương án A, B, C, D).`);
+          if (q.type === 'mcq' || q.type === 'tf') {
+            const seen = new Map();
+            q.options.forEach((o, i) => {
+              const k = norm(o.text);
+              if (!k) return;
+              if (seen.has(k)) err(`${where}: hai phương án giống hệt nhau (${seen.get(k) + 1} và ${i + 1}).`);
+              else seen.set(k, i);
+            });
+          }
+          if (q.type === 'short' && q.answer) {
+            const a = q.answer.replace(/\s+/g, '');
+            if (a.length > 4) warn(`${where}: đáp án "${q.answer}" dài hơn 4 ký tự (phiếu trả lời ngắn chỉ có 4 ô).`);
+            if (/\./.test(a) && !/^\d{1,3}(\.\d{3})+$/.test(a)) warn(`${where}: đáp án "${q.answer}" dùng dấu chấm — đề thi Việt Nam dùng dấu phẩy thập phân.`);
+          }
+        });
+      });
+      // Số thứ tự câu ở đề gốc bị lặp/thiếu — thường do gõ nhầm làm mất câu
+      const seen = new Set();
+      nums.forEach((n) => { if (seen.has(n)) warn(`${name}: số "Câu ${n}" bị lặp lại trong đề gốc — kiểm tra xem có thiếu câu nào không.`); seen.add(n); });
+      const sorted = [...seen].sort((a, b) => a - b);
+      for (let i = 1; i < sorted.length; i++) {
+        if (sorted[i] - sorted[i - 1] > 1) warn(`${name}: đề gốc nhảy từ Câu ${sorted[i - 1]} sang Câu ${sorted[i]} — có thể bị sót câu.`);
+      }
+    });
+    return out;
+  }
+
+  /** Tự kiểm chứng: mỗi mã đề có đủ mọi câu đúng 1 lần, đáp án đi theo phương án. */
+  function verifyVersions(parsed, versions) {
+    const errors = [];
+    const orig = new Map();
+    parsed.sections.forEach((s) => s.units.forEach((u) => unitQuestions(u).forEach((q) => orig.set(q.id, q))));
+    versions.forEach((v) => {
+      const seen = new Set();
+      v.sections.forEach((sec, si) => {
+        flatQuestions(sec).forEach((x, i) => {
+          const q = x.q;
+          const o = orig.get(q.id);
+          if (x.no !== i + 1) errors.push(`Mã ${v.code}: đánh số câu sai ở phần ${si + 1}.`);
+          if (!o) return errors.push(`Mã ${v.code}: câu lạ không có trong đề gốc.`);
+          if (seen.has(q.id)) errors.push(`Mã ${v.code}: câu ${o.origNo} xuất hiện 2 lần.`);
+          seen.add(q.id);
+          if (o.sectionIndex !== si) errors.push(`Mã ${v.code}: câu ${o.origNo} bị chuyển sang phần khác.`);
+          if (q.options.length !== o.options.length) errors.push(`Mã ${v.code}: câu ${o.origNo} bị mất phương án.`);
+          const used = new Set();
+          q.options.forEach((op) => {
+            const src = o.options[op.origIndex];
+            if (!src || used.has(op.origIndex) || src.text !== op.text || src.correct !== op.correct)
+              errors.push(`Mã ${v.code}: câu ${o.origNo} sai lệch phương án/đáp án.`);
+            used.add(op.origIndex);
+          });
+        });
+      });
+      if (seen.size !== orig.size) errors.push(`Mã ${v.code}: có ${seen.size}/${orig.size} câu.`);
+    });
+    return [...new Set(errors)];
+  }
+
   const api = {
     makeRng, shuffle, parseExam, makeVersion, makeVersions, flatQuestions,
-    answerOf, countQuestions, unitQuestions, SECTION_TYPES,
+    answerOf, countQuestions, unitQuestions, SECTION_TYPES, checkExam, verifyVersions,
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.XaoDe = api;

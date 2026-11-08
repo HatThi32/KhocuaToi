@@ -10,6 +10,8 @@
   --warn-bg: #fff6e0;
   --warn-ink: #7a5300;
   --ok-ink: #17703a;
+  --err-bg: #fde8e8;
+  --err-ink: #a01c1c;
   --paper: #ffffff;
   --paper-ink: #111111;
   --radius: 10px;
@@ -28,6 +30,8 @@
     --warn-bg: #3a2f14;
     --warn-ink: #f3d48a;
     --ok-ink: #7ad69b;
+    --err-bg: #3d1a1a;
+    --err-ink: #ffaaaa;
   }
 }
 
@@ -43,6 +47,8 @@
   --warn-bg: #3a2f14;
   --warn-ink: #f3d48a;
   --ok-ink: #7ad69b;
+  --err-bg: #3d1a1a;
+  --err-ink: #ffaaaa;
 }
 
 * { box-sizing: border-box; }
@@ -139,6 +145,10 @@ input:focus, select:focus, textarea:focus, button:focus-visible {
   outline: 2px solid var(--accent); outline-offset: 1px;
 }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.row4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.row4 input { padding: 6px 4px; text-align: center; }
+p.sub { margin: 2px 0 2px; font-size: 13px; color: var(--muted); }
+textarea#notes { resize: vertical; font-size: 13px; }
 .inline { display: flex; gap: 6px; align-items: center; margin-top: 4px; }
 .inline input { margin-top: 0; }
 
@@ -180,6 +190,11 @@ textarea#source {
   background: var(--warn-bg); color: var(--warn-ink);
   padding: 5px 9px; border-radius: 6px; font-size: 13px; margin-top: 4px;
 }
+.warnings li.error { background: var(--err-bg); color: var(--err-ink); font-weight: 600; }
+.warnings li.error::before { content: "Lỗi: "; }
+.warnings li.warn::before { content: "Lưu ý: "; }
+.dialog-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 18px; border-top: 1px solid var(--line); }
+.btn:disabled { opacity: .55; cursor: wait; }
 
 /* ---------- Kết quả ---------- */
 .tabs { display: flex; gap: 4px; }
@@ -203,7 +218,7 @@ textarea#source {
   color: var(--paper-ink);
   max-width: 21cm;
   margin: 0 auto;
-  padding: 1.5cm 1.6cm;
+  padding: 1.5cm 1.5cm 1.5cm 2cm;
   border: 1px solid var(--line);
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
   font-family: "Times New Roman", Times, serif;

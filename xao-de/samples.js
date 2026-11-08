@@ -256,28 +256,28 @@ b) Thả càng nhiều con giống thì năng suất càng cao.
   const LANG = `[PHẦN I] Mark the letter A, B, C or D to indicate the correct answer.
 Câu 1. (Câu hỏi 1...)
 *A. (Đáp án đúng)
-B. (Phương án nhiễu)
-C. (Phương án nhiễu)
-D. (Phương án nhiễu)
+B. (Phương án nhiễu 1)
+C. (Phương án nhiễu 2)
+D. (Phương án nhiễu 3)
 Câu 2. (Câu hỏi 2...)
-A. ...   B. ...   *C. ...   D. ...
+A. (PA 1)   B. (PA 2)   *C. (PA 3)   D. (PA 4)
 [NHÓM: Đọc hiểu]
 (Dán đoạn văn đọc hiểu vào đây) — trả lời các câu từ {từ} đến {đến}.
 Câu 3. (Câu hỏi về đoạn văn...)
-A. ...   *B. ...   C. ...   D. ...
+A. (PA 1)   *B. (PA 2)   C. (PA 3)   D. (PA 4)
 Câu 4. (Câu hỏi về đoạn văn...)
-A. ...   B. ...   C. ...   *D. ...
+A. (PA 1)   B. (PA 2)   C. (PA 3)   *D. (PA 4)
 [HẾT NHÓM]`;
   ['phap', 'nga', 'trung', 'nhat', 'han', 'duc'].forEach((k) => (S[k] = LANG));
 
   S.khac = `[PHẦN I]
 Câu 1. (Nội dung câu hỏi)
 *A. (Đáp án đúng — đánh dấu * ở trước)
-B. (Phương án nhiễu)
-C. (Phương án nhiễu)
+B. (Phương án nhiễu 1)
+C. (Phương án nhiễu 2)
 D. Cả A và B đều đúng
 Câu 2. (Nội dung câu hỏi)
-A. ...   B. ...   C. ...   D. ...
+A. (PA 1)   B. (PA 2)   C. (PA 3)   D. (PA 4)
 Đáp án: C
 [PHẦN II]
 Câu 1. (Nội dung câu hỏi đúng/sai)

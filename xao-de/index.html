@@ -46,6 +46,16 @@
       <label>Trường
         <input id="school" type="text" placeholder="TRƯỜNG THPT ...">
       </label>
+      <label>Loại đề (ô có khung ở góc trái)
+        <select id="docType">
+          <option value="ĐỀ CHÍNH THỨC">ĐỀ CHÍNH THỨC</option>
+          <option value="ĐỀ KIỂM TRA">ĐỀ KIỂM TRA</option>
+          <option value="ĐỀ THI THỬ">ĐỀ THI THỬ</option>
+          <option value="ĐỀ MINH HỌA">ĐỀ MINH HỌA</option>
+          <option value="ĐỀ ĐỀ XUẤT">ĐỀ ĐỀ XUẤT</option>
+          <option value="">(Không ghi)</option>
+        </select>
+      </label>
       <label>Tên kỳ thi
         <input id="examName" type="text" placeholder="KIỂM TRA CUỐI HỌC KÌ I">
       </label>
@@ -83,13 +93,44 @@
       <label class="check"><input type="checkbox" id="optTf" checked> Xáo các ý a), b), c), d) của câu đúng/sai</label>
       <label class="check"><input type="checkbox" id="optInGroup"> Xáo câu bên trong nhóm (bài đọc, tư liệu…)</label>
       <label class="check"><input type="checkbox" id="optEssay"> Xáo cả câu tự luận</label>
-      <label class="check"><input type="checkbox" id="optOriginal" checked> Kèm theo đề gốc trong file Word tất cả mã đề</label>
+      <label class="check"><input type="checkbox" id="optOriginal" checked> Kèm đề gốc khi tải tất cả mã đề</label>
+
+      <h2>4. Trình bày khi xuất file</h2>
+      <div class="row2">
+        <label>Cỡ chữ
+          <select id="fontPt">
+            <option value="12">12 pt (chuẩn đề thi)</option>
+            <option value="13">13 pt</option>
+            <option value="14">14 pt</option>
+          </select>
+        </label>
+        <label>Giãn dòng
+          <select id="lineSp">
+            <option value="1">1,0 (đơn)</option>
+            <option value="1.15">1,15</option>
+            <option value="1.3">1,3</option>
+            <option value="1.5">1,5</option>
+          </select>
+        </label>
+      </div>
+      <p class="sub">Lề trang giấy A4 (cm)</p>
+      <div class="row4">
+        <label>Trên <input id="mTop" type="number" step="0.1" min="0.5" max="5" value="1.5"></label>
+        <label>Dưới <input id="mBottom" type="number" step="0.1" min="0.5" max="5" value="1.5"></label>
+        <label>Trái <input id="mLeft" type="number" step="0.1" min="0.5" max="5" value="2"></label>
+        <label>Phải <input id="mRight" type="number" step="0.1" min="0.5" max="5" value="1.5"></label>
+      </div>
+      <label>Ghi chú cuối đề (mỗi dòng một ý)
+        <textarea id="notes" rows="3">- Thí sinh không được sử dụng tài liệu.
+- Cán bộ coi thi không giải thích gì thêm.</textarea>
+      </label>
+      <button type="button" class="btn small ghost" id="resetLayout">Khôi phục trình bày mặc định</button>
     </aside>
 
     <!-- CỘT GIỮA: soạn đề gốc -->
     <section class="panel editor">
       <div class="panel-head">
-        <h2>4. Đề gốc</h2>
+        <h2>5. Đề gốc</h2>
         <div class="tools">
           <button type="button" class="btn small ghost" id="loadSample">Nạp đề mẫu</button>
           <label class="btn small ghost file">Mở file Word / TXT
@@ -102,14 +143,14 @@
         (<code>*B.</code>) hoặc dòng <code>Đáp án: B</code>. Xem <button type="button" class="link inline-link" data-open="guide">hướng dẫn</button>.</p>
       <textarea id="source" spellcheck="false" placeholder="Dán hoặc gõ đề gốc vào đây…"></textarea>
       <div id="stats" class="stats"></div>
-      <ul id="warnings" class="warnings"></ul>
+      <ul id="warnings" class="warnings" aria-live="polite"></ul>
       <button type="button" class="btn primary big" id="run">Xáo đề</button>
     </section>
 
     <!-- KẾT QUẢ -->
     <section class="panel result" id="result" hidden>
       <div class="panel-head">
-        <h2>5. Kết quả</h2>
+        <h2>6. Kết quả</h2>
         <div class="tabs" role="tablist">
           <button type="button" role="tab" class="tab active" data-tab="preview">Xem đề</button>
           <button type="button" role="tab" class="tab" data-tab="keys">Bảng đáp án</button>
@@ -121,10 +162,12 @@
           <select id="versionSelect"></select>
         </label>
         <button type="button" class="btn small" id="dlOne">Tải Word mã này</button>
-        <button type="button" class="btn small" id="dlAll">Tải Word tất cả mã đề</button>
-        <button type="button" class="btn small" id="printAll">In tất cả</button>
-        <button type="button" class="btn small ghost" id="dlKeysWord">Tải đáp án (Word)</button>
-        <button type="button" class="btn small ghost" id="dlKeysCsv">Tải đáp án (Excel)</button>
+        <button type="button" class="btn small" id="dlZip" title="Mỗi mã đề một file Word + đáp án, nén trong 1 file .zip">Tải tất cả (.zip)</button>
+        <button type="button" class="btn small ghost" id="dlAll" title="Tất cả mã đề trong một file Word, mỗi mã đề bắt đầu ở trang mới">Word gộp 1 file</button>
+        <button type="button" class="btn small ghost" id="printOne">In / PDF mã này</button>
+        <button type="button" class="btn small ghost" id="printAll">In tất cả</button>
+        <button type="button" class="btn small ghost" id="dlKeysWord">Đáp án (Word)</button>
+        <button type="button" class="btn small ghost" id="dlKeysCsv">Đáp án (Excel)</button>
       </div>
 
       <div id="tab-preview" class="tab-body">
@@ -202,15 +245,34 @@ Câu 2. …
 
       <h3>Kết quả</h3>
       <ul>
-        <li><b>Tải Word</b>: tạo file .doc mở được bằng Microsoft Word / WPS để chỉnh sửa tiếp.</li>
-        <li><b>In</b>: mỗi mã đề bắt đầu ở trang mới; có thể chọn "Lưu dưới dạng PDF".</li>
-        <li><b>Bảng đáp án (Excel)</b>: file .csv gồm mã đề, câu, đáp án và câu tương ứng ở đề gốc.</li>
+        <li><b>Tải Word</b>: file .docx chuẩn (A4, Times New Roman, lề theo cài đặt), công thức được chuyển thành công thức Word (Equation) — sửa tiếp được bằng Microsoft Word, WPS, LibreOffice.</li>
+        <li>Chân trang ghi "Trang x/y – Mã đề thi …". Câu hỏi không bị tách khỏi các phương án khi sang trang.</li>
+        <li><b>Tải tất cả (.zip)</b>: mỗi mã đề một file Word riêng, kèm file đáp án Word và Excel.</li>
+        <li><b>Word gộp 1 file</b>: mọi mã đề trong một file, mỗi mã đề bắt đầu ở trang mới và đánh số trang lại từ 1.</li>
+        <li><b>In / PDF</b>: chọn máy in hoặc "Lưu dưới dạng PDF".</li>
+        <li>Trước khi xuất, phần mềm <b>tự kiểm tra lỗi</b>: thiếu đáp án, phương án trống hoặc trùng nhau, thiếu dấu $, công thức không đọc được, ảnh lỗi, đánh số câu nhảy cóc… và tự kiểm chứng mỗi mã đề có đủ câu, đáp án đúng vị trí.</li>
       </ul>
       <p>Đề của bạn được tự lưu trên trình duyệt này, không gửi đi đâu cả.</p>
     </div>
   </dialog>
 
+  <!-- KIỂM TRA TRƯỚC KHI XUẤT -->
+  <dialog id="checkDlg">
+    <div class="dialog-head">
+      <h2 id="checkTitle">Kiểm tra đề trước khi xuất</h2>
+    </div>
+    <div class="dialog-body">
+      <p id="checkSummary"></p>
+      <ul id="checkList" class="warnings"></ul>
+    </div>
+    <div class="dialog-foot">
+      <button type="button" class="btn small ghost" id="checkBack">Quay lại sửa</button>
+      <button type="button" class="btn small" id="checkGo">Vẫn tải file</button>
+    </div>
+  </dialog>
+
   <script src="core.js"></script>
+  <script src="word.js"></script>
   <script src="samples.js"></script>
   <script src="app.js"></script>
 </body>
