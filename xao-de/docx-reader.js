@@ -43,6 +43,7 @@
       p += 46 + nlen + xlen + clen;
     }
     return {
+      names: () => [...files.keys()],
       has: (n) => files.has(n),
       async bytes(n) {
         const f = files.get(n);

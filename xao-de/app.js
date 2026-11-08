@@ -474,6 +474,58 @@
   }
   const XLSX_MIME = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
+  // ---------- Mẫu Excel đáp án của người dùng ----------
+  const TPL_KEY = 'xaode.xlsxTemplate';
+  let tpl = null; // { name, bytes, summary }
+  function b64(bytes) {
+    let bin = '';
+    for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  }
+  function showTpl() {
+    $('tplClear').hidden = !tpl;
+    $('dlKeysTpl').hidden = !tpl;
+    const s = tpl && tpl.summary;
+    $('tplStatus').textContent = tpl
+      ? `Đang dùng mẫu: ${tpl.name} — ${s.mcq} cột trắc nghiệm, ${s.tfQuestions} câu đúng/sai (${s.tf} cột)` +
+        (s.short ? `, ${s.short} cột trả lời ngắn` : '') + '.'
+      : 'Chưa có mẫu — dùng bảng đáp án mặc định.';
+  }
+  async function setTemplate(name, bytes, quiet) {
+    const info = await window.XaoDeXlsxTemplate.inspectTemplate(bytes);
+    tpl = { name, bytes, summary: info.summary };
+    try { localStorage.setItem(TPL_KEY, JSON.stringify({ name, b64: b64(bytes) })); } catch (e) { /* mẫu quá lớn: chỉ giữ trong phiên */ }
+    showTpl();
+    if (!quiet) alert(`Đã nhận mẫu "${name}" (sheet "${info.summary.sheet}"): ${info.summary.mcq} cột trắc nghiệm, ` +
+      `${info.summary.tfQuestions} câu đúng/sai, ${info.summary.short} cột trả lời ngắn.`);
+  }
+  async function loadTemplate() {
+    try {
+      const d = JSON.parse(localStorage.getItem(TPL_KEY) || 'null');
+      if (!d) return;
+      const bin = atob(d.b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      await setTemplate(d.name, bytes, true);
+    } catch (e) { tpl = null; showTpl(); }
+  }
+  // Đáp án từng mã đề theo dạng cột của mẫu
+  function versionData(v) {
+    const d = { code: v.code, mcq: [], tf: [], short: [] };
+    v.sections.forEach((sec) => X.flatQuestions(sec).forEach((x) => {
+      if (x.q.type === 'mcq') d.mcq.push(X.answerOf(x.q));
+      else if (x.q.type === 'tf') d.tf.push(x.q.options.map((o) => !!o.correct));
+      else if (x.q.type === 'short') d.short.push(x.q.answer || '');
+    }));
+    return d;
+  }
+  async function keysFromTemplate() {
+    const r = await window.XaoDeXlsxTemplate.fillTemplate(tpl.bytes, state.versions.map(versionData));
+    if (r.warnings.length) alert(r.warnings.join('\n'));
+    return r.bytes;
+  }
+  const tplFileName = () => `Dap_an_${subj()}_theo_mau.xlsx`;
+
   async function withBusy(btn, fn) {
     if (!state.versions.length) return;
     btn.disabled = true;
@@ -704,6 +756,7 @@
     const files = exportList().map((it) => ({ name: fileOf(it.version), data: examDocx([it], images) }));
     files.push({ name: `Dap_an_${subj()}.docx`, data: keysDocx() });
     files.push({ name: `Dap_an_${subj()}.xlsx`, data: keysXlsx() });
+    if (tpl) files.push({ name: tplFileName(), data: await keysFromTemplate() });
     download(`De_${subj()}_${state.versions.length}_ma_de.zip`, W.zip(files), 'application/zip');
   }));
   $('dlAll').addEventListener('click', (e) => withBusy(e.currentTarget, async () => {
@@ -722,6 +775,20 @@
   }));
   $('dlKeysWord').addEventListener('click', (e) => withBusy(e.currentTarget, async () =>
     download(`Dap_an_${subj()}.docx`, keysDocx(), DOCX_MIME)));
+  $('dlKeysTpl').addEventListener('click', (e) => withBusy(e.currentTarget, async () =>
+    download(tplFileName(), await keysFromTemplate(), XLSX_MIME)));
+  $('tplInput').addEventListener('change', async (e) => {
+    const f = e.target.files[0];
+    e.target.value = '';
+    if (!f) return;
+    try { await setTemplate(f.name, new Uint8Array(await f.arrayBuffer())); } catch (err) { alert('Không dùng được file mẫu: ' + err.message); }
+  });
+  $('tplClear').addEventListener('click', () => {
+    tpl = null;
+    try { localStorage.removeItem(TPL_KEY); } catch (e) { /* bỏ qua */ }
+    showTpl();
+  });
+  loadTemplate();
   $('dlKeysXlsx').addEventListener('click', (e) => withBusy(e.currentTarget, async () =>
     download(`Dap_an_${subj()}.xlsx`, keysXlsx(), XLSX_MIME)));
 

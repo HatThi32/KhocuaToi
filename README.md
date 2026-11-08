@@ -21,6 +21,8 @@ Tính năng:
   câu hỏi không bị tách khỏi phương án khi sang trang; công thức LaTeX chuyển thành công thức Word (Equation).
 - Tải tất cả mã đề thành file .zip (mỗi mã một file Word + đáp án), hoặc gộp 1 file; in / lưu PDF.
 - Bảng đáp án **Excel (.xlsx)** và Word gồm đề gốc cùng tất cả mã đề, kèm sheet đối chiếu câu với đề gốc.
+- **Điền đáp án vào file Excel mẫu** của phần mềm chấm thi (hàng tiêu đề `Đề/Câu | 1 | 2 | … | 1a | 1b …`):
+  thay dữ liệu cũ, giữ nguyên định dạng, tự hiện cột ẩn khi có dữ liệu, tự kiểm tra lại từng ô; mẫu được nhớ cho lần sau.
 - Tự kiểm tra lỗi trước khi xuất (thiếu đáp án, phương án trống/trùng, thiếu dấu $, công thức/ảnh lỗi, đánh số câu
   nhảy cóc…) và tự kiểm chứng mỗi mã đề có đủ câu, đáp án đúng vị trí.
 - Dùng "hạt giống xáo" để xáo lại ra đúng kết quả cũ. Dữ liệu chỉ lưu trên máy bạn.

@@ -127,6 +127,17 @@
 - Cán bộ coi thi không giải thích gì thêm.</textarea>
       </label>
       <button type="button" class="btn small ghost" id="resetLayout">Khôi phục trình bày mặc định</button>
+
+      <h2>Mẫu Excel đáp án (tùy chọn)</h2>
+      <p class="sub">Chọn file Excel mẫu của phần mềm chấm thi (hàng tiêu đề dạng <code>Đề/Câu | 1 | 2 | … | 1a | 1b …</code>).
+        Khi xuất, đáp án các mã đề sẽ được điền vào mẫu, thay cho dữ liệu cũ, giữ nguyên định dạng.</p>
+      <div class="tools">
+        <label class="btn small ghost file">Chọn file mẫu .xlsx
+          <input type="file" id="tplInput" accept=".xlsx">
+        </label>
+        <button type="button" class="btn small ghost" id="tplClear" hidden>Bỏ mẫu</button>
+      </div>
+      <p id="tplStatus" class="sub">Chưa có mẫu — dùng bảng đáp án mặc định.</p>
     </aside>
 
     <!-- CỘT GIỮA: soạn đề gốc -->
@@ -171,6 +182,7 @@
         <button type="button" class="btn small ghost" id="printAll">In tất cả</button>
         <button type="button" class="btn small ghost" id="dlKeysWord">Đáp án (Word)</button>
         <button type="button" class="btn small ghost" id="dlKeysXlsx">Đáp án (Excel)</button>
+        <button type="button" class="btn small" id="dlKeysTpl" hidden>Đáp án Excel theo mẫu</button>
       </div>
 
       <div id="tab-preview" class="tab-body">
@@ -267,6 +279,8 @@ Câu 2. …
         <li><b>Tải Word</b>: file .docx chuẩn (A4, Times New Roman, lề theo cài đặt), công thức được chuyển thành công thức Word (Equation) — sửa tiếp được bằng Microsoft Word, WPS, LibreOffice.</li>
         <li>Chân trang ghi "Trang x/y – Mã đề thi …". Câu hỏi không bị tách khỏi các phương án khi sang trang.</li>
         <li><b>Tải tất cả (.zip)</b>: mỗi mã đề một file Word riêng, kèm file đáp án Word và Excel.</li>
+        <li><b>Đáp án Excel theo mẫu</b>: nếu đã chọn file mẫu ở mục 4, đáp án từng mã đề được điền vào đúng các cột của mẫu (câu 1, 2… và 1a, 1b…),
+          thay dữ liệu cũ và giữ nguyên định dạng; cột bị ẩn sẽ hiện ra nếu có dữ liệu. Mẫu được nhớ cho những lần sau.</li>
         <li><b>Đáp án (Excel)</b>: file .xlsx gồm sheet "Bảng đáp án" (cột Đề gốc và từng mã đề) và sheet "Đối chiếu câu" (câu của mã đề ứng với câu nào ở đề gốc).</li>
         <li><b>Word gộp 1 file</b>: mọi mã đề trong một file, mỗi mã đề bắt đầu ở trang mới và đánh số trang lại từ 1.</li>
         <li><b>In / PDF</b>: chọn máy in hoặc "Lưu dưới dạng PDF".</li>
@@ -295,6 +309,7 @@ Câu 2. …
   <script src="word.js"></script>
   <script src="docx-reader.js"></script>
   <script src="xlsx.js"></script>
+  <script src="xlsx-template.js"></script>
   <script src="samples.js"></script>
   <script src="app.js"></script>
 </body>
