@@ -609,6 +609,12 @@
         const filled = applyMeta(r.meta);
         if (filled.length) notes.push('Đã tự điền: ' + filled.join(', ') + ' (lấy từ đầu đề trong file).');
         notes = notes.concat(r.warnings);
+      } else if (name.endsWith('.pdf')) {
+        alert('File PDF chưa mở trực tiếp được: khi lấy chữ từ PDF, công thức (số mũ, phân số) và hình vẽ bị mất nên đề sẽ sai.\n\n' +
+          'Cách làm:\n• Dùng file Word gốc (.docx) của đề — tốt nhất.\n' +
+          '• Hoặc mở PDF bằng Word (Word tự chuyển PDF sang .docx), kiểm tra lại công thức rồi lưu thành .docx.\n' +
+          '• Với môn không có công thức (Sử, Địa, Anh, GDKT&PL…), có thể copy chữ trong PDF rồi dán vào ô Đề gốc.');
+        return;
       } else if (name.endsWith('.doc')) {
         alert('File .doc (Word 97-2003) chưa đọc được. Hãy mở bằng Word và chọn Lưu thành (Save As) định dạng .docx.');
         return;

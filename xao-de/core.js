@@ -145,6 +145,7 @@
   function parseAnswerKey(lines) {
     const out = [];
     let ctx = null; // số phần đang đọc (PHẦN I => 1)
+    let cur = null; // câu đang có lời giải
     let grid = [];
     const push = (no, raw, item) => {
       const v = String(raw).trim().replace(/^\*/, '');
@@ -196,14 +197,20 @@
     }
     lines.forEach((raw) => {
       const line = raw.trim();
-      if (/\|/.test(line) && line.split('|').length >= 3) {
+      // Hàng bảng: "| a | b |" hoặc "Câu | 1 | 2" với các ô ngắn (không nhầm với |x − 1| trong lời giải)
+      const cellsRaw = line.split('|');
+      if (cellsRaw.length >= 3 && ((/^\|/.test(line) && /\|$/.test(line)) || cellsRaw.every((c) => c.trim().length <= 14))) {
         grid.push(line.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim()));
         return;
       }
       flushGrid();
       if (!line) return;
       const sm = line.match(/^\[?\s*PH[ẦA]N\s+(III|II|IV|I|\d+)\b/i);
-      if (sm) { ctx = ROMAN[sm[1].toUpperCase()] || parseInt(sm[1], 10); return; }
+      if (sm) { ctx = ROMAN[sm[1].toUpperCase()] || parseInt(sm[1], 10); cur = null; return; }
+      const cm = line.match(/^(?:câu|question)\s*(\d{1,3})\b/i);
+      if (cm) cur = parseInt(cm[1], 10);
+      // Lời giải: "... Chọn A.", "Đáp án đúng là B", "a) Đúng.", "Đáp số: 3,5."
+      if (cur != null && solutionAnswer(line, cur)) return;
       // "Câu 1: Đ S Đ S" / "1. a) Đúng b) Sai ..."
       const tm = line.match(/^(?:câu\s*)?(\d{1,3})\s*[.:)\-–]\s*(.+)$/i);
       if (tm && /^[\s,;.\-–a-dĐđSs()]*$/.test(tm[2].replace(/đúng|sai/gi, 'Đ')) && parseTfAnswer(tm[2]).length >= 2) {
@@ -223,6 +230,17 @@
     });
     flushGrid();
     return out;
+
+    function solutionAnswer(line, no) {
+      let found = false;
+      const mc = [...line.matchAll(/(?:^|[\s.,;:⇒→(])(?:chọn|đáp\s*án(?:\s*đúng)?(?:\s*là)?|phương\s*án\s*đúng(?:\s*là)?)\s*(?:đáp\s*án|phương\s*án|câu)?\s*[:：]?\s*([A-D])(?=$|[\s.,;)!])/gi)];
+      if (mc.length) { out.push({ secNo: ctx, no, kind: 'mcq', value: mc[mc.length - 1][1].toUpperCase() }); found = true; }
+      const ti = line.match(/^\(?([a-d])\)\s*(Đúng|Sai|Đ|S)(?=$|[\s.,;:!(])/);
+      if (ti) { out.push({ secNo: ctx, no, kind: 'tfItem', item: ti[1].charCodeAt(0) - 97, value: tfVal(ti[2]) }); found = true; }
+      const sv = line.match(/(?:đáp\s*số|kết\s*quả|trả\s*lời|đáp\s*án)\s*[:：]\s*(-?[\d]+(?:[,.]\d+)?)\s*\.?\s*$/i);
+      if (sv) { out.push({ secNo: ctx, no, kind: 'value', value: sv[1] }); found = true; }
+      return found;
+    }
   }
 
   /**
@@ -233,7 +251,7 @@
    * question = { id, origNo, stem, points, options: [{text, correct}], answer, lock, type, marks }
    */
   function parseExam(text) {
-    const lines = String(text || '').replace(/\r\n?/g, '\n').split('\n');
+    const lines = String(text || '').replace(/\r\n?/g, '\n').replace(/[\f\v\u2028\u2029]/g, '\n').split('\n');
     const sections = [];
     const warnings = [];
     const errors = [];
@@ -278,8 +296,10 @@
       lastTarget = { obj: sec, key: 'intro' };
     }
 
+    const RE_PAGE = /^\s*(?:(?:mã\s*đề(?:\s*thi)?\s*:?\s*\S+)\s*[-–]?\s*)?trang\s*\d+\s*(?:\/\s*\d+)?\s*(?:[-–]\s*mã\s*đề(?:\s*thi)?\s*:?\s*\S+)?\s*$/i;
     for (const raw of lines) {
       const line = raw.replace(/\s+$/, '');
+      if (RE_PAGE.test(line)) continue; // số trang / mã đề ở chân trang
       if (inKey) { keyLines.push(line); continue; }
       if (!line.trim()) {
         if (lastTarget) lastTarget.obj[lastTarget.key] += '\n';
@@ -611,6 +631,11 @@
             if (!o.text.trim()) err(`${where}: phương án ${lab} để trống.`);
             if (countDollar(o.text) % 2) err(`${where}: thiếu dấu $ đóng/mở công thức ở phương án ${lab}`);
           });
+          // Chữ copy từ PDF: ký hiệu toán in nghiêng Unicode (𝑥, 𝑦…) => số mũ, phân số thường đã bị mất
+          const all = [q.stem, ...q.options.map((o) => o.text)].join('\n');
+          if (/[\u{1D400}-\u{1D7FF}]/u.test(all) || /[=+\-−]\s{6,}\S|[=+\-−]\s{6,}$/m.test(all.replace(/\$[^$]*\$/g, ''))) {
+            err(`${where}: công thức có vẻ được copy từ PDF nên đã mất số mũ/phân số (ví dụ x³ thành 𝑥). Hãy gõ lại công thức dạng $...$ hoặc dùng file Word gốc.`);
+          }
           if (q.type === 'mcq' && q.options.length && q.options.length !== 4)
             warn(`${where}: có ${q.options.length} phương án (đề chuẩn có 4 phương án A, B, C, D).`);
           if (q.type === 'mcq' || q.type === 'tf') {
