@@ -7,7 +7,7 @@ Phần mềm xáo đề thi chạy trực tiếp trên trình duyệt, dùng cho
 
 **Dùng ngay trên trình duyệt:** https://hatthi32.github.io/KhocuaToi/xao-de/
 
-**Tải về dùng không cần mạng:** https://github.com/HatThi32/KhocuaToi/archive/refs/heads/claude/exam-question-shuffler-mchp36.zip
+**Tải về dùng không cần mạng:** https://github.com/HatThi32/KhocuaToi/archive/main.zip
 — giải nén rồi mở file `xao-de/index.html` bằng trình duyệt (Chrome, Edge, Firefox…), không cần cài đặt.
 
 Mọi dữ liệu đề thi chỉ xử lý ngay trên máy người dùng, không gửi lên máy chủ nào.

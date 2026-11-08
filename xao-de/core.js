@@ -133,7 +133,7 @@
     return k.startsWith('Đ') || k === 'D' || k === 'DUNG' || k === 'T' || k === 'TRUE';
   }
   function qNo(c) {
-    const m = String(c).trim().match(/^(?:câu|question|c)?\s*(\d{1,3})\s*[.:)]?$/i);
+    const m = String(c).trim().match(/^(?:c[âaấầ]u|question|c)?\s*(\d{1,3})\s*[.:)]?$/i);
     return m ? parseInt(m[1], 10) : null;
   }
   function isTfSeq(v) {
@@ -234,20 +234,20 @@
       // Lời giải: "... Chọn A.", "Đáp án đúng là B", "a) Đúng.", "Đáp số: 3,5."
       if (cur != null && solutionAnswer(line, cur)) return;
       // "Câu 1: Đ S Đ S" / "1. a) Đúng b) Sai ..."
-      const tm = line.match(/^(?:câu\s*)?(\d{1,3})\s*[.:)\-–]\s*(.+)$/i);
-      if (tm && /^[\s,;.\-–a-dĐđSs()]*$/.test(tm[2].replace(/đúng|sai/gi, 'Đ')) && parseTfAnswer(tm[2]).length >= 2) {
+      const tm = line.match(/^(?:c[âaấầ]u\s*)?(\d{1,3})\s*[.:)\-–]\s*(.+)$/i);
+      if (tm && /^[\s,;.\-–a-dĐđDSs()]*$/.test(tm[2].replace(/đúng|sai|dung/gi, 'Đ')) && parseTfAnswer(tm[2]).length >= 2) {
         out.push({ secNo: ctx, no: parseInt(tm[1], 10), kind: 'tf', value: parseTfAnswer(tm[2]) });
         return;
       }
       // "1.A 2.C 3-D", "Câu 1: B"
-      const pairs = [...line.matchAll(/(?:^|[\s,;])(?:câu\s*)?(\d{1,3})\s*[.:)\-–]?\s*([A-D])(?=$|[\s,;.])/gi)];
-      const leftover = line.replace(/(?:^|[\s,;])(?:câu\s*)?(\d{1,3})\s*[.:)\-–]?\s*([A-D])(?=$|[\s,;.])/gi, '').replace(/[\s,;.]/g, '');
+      const pairs = [...line.matchAll(/(?:^|[\s,;])(?:c[âaấầ]u\s*)?(\d{1,3})\s*[.:)\-–]?\s*([A-D])(?=$|[\s,;.])/gi)];
+      const leftover = line.replace(/(?:^|[\s,;])(?:c[âaấầ]u\s*)?(\d{1,3})\s*[.:)\-–]?\s*([A-D])(?=$|[\s,;.])/gi, '').replace(/[\s,;.]/g, '');
       if (pairs.length && leftover.length <= 3) {
         pairs.forEach((p) => out.push({ secNo: ctx, no: parseInt(p[1], 10), kind: 'mcq', value: p[2].toUpperCase() }));
         return;
       }
       // "Câu 1: 12,5" (trả lời ngắn)
-      const vm = line.match(/^câu\s*(\d{1,3})\s*[.:)\-–]\s*(\S{1,12})$/i);
+      const vm = line.match(/^c[âaấầ]u\s*(\d{1,3})\s*[.:)\-–]\s*(\S{1,12})$/i);
       if (vm) out.push({ secNo: ctx, no: parseInt(vm[1], 10), kind: 'value', value: vm[2] });
     });
     flushGrid();
