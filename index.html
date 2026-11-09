@@ -1,44 +1,202 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài học multi page Website</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xáo Đề THPT – Phần mềm xáo đề thi miễn phí</title>
+  <meta name="description" content="Phần mềm xáo đề thi THPT miễn phí, chạy ngay trên trình duyệt. Mọi môn, đọc Word/PDF, MathType, xuất Word chuẩn và đáp án Excel.">
+  <meta property="og:title" content="Xáo Đề THPT – miễn phí, dùng ngay trên trình duyệt">
+  <meta property="og:description" content="Tạo nhiều mã đề từ file Word/PDF, xuất Word chuẩn A4 và bảng đáp án Excel. Dữ liệu chỉ xử lý trên máy bạn.">
+  <meta property="og:image" content="https://hatthi32.github.io/KhocuaToi/assets/images/qr-xao-de-in.png">
+  <meta property="og:url" content="https://hatthi32.github.io/KhocuaToi/">
+  <link rel="icon" href="assets/images/logo.png">
+  <style>
+    :root {
+      --bg: #f4f6fa; --panel: #ffffff; --text: #1c2333; --muted: #5e6a80;
+      --line: #dde2ec; --accent: #1f5fd6; --accent-ink: #ffffff; --accent-soft: #e7eefc;
+      --radius: 12px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #12161f; --panel: #1b2130; --text: #e4e8f1; --muted: #9aa5ba;
+        --line: #2d3547; --accent: #6c9cff; --accent-ink: #0d1424; --accent-soft: #233150;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6;
+    }
+    a { color: var(--accent); }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+    header.top { border-bottom: 1px solid var(--line); background: var(--panel); }
+    header.top .wrap { display: flex; align-items: center; gap: 12px; min-height: 60px; }
+    header.top img { width: 34px; height: 34px; border-radius: 8px; }
+    header.top strong { font-size: 1.1rem; }
+    header.top nav { margin-left: auto; display: flex; gap: 16px; font-size: .95rem; }
+    header.top nav a { text-decoration: none; color: var(--muted); }
+    header.top nav a:hover { color: var(--accent); }
+
+    .hero { padding: 56px 0 40px; }
+    .hero .wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin: 0 0 14px; }
+    .hero h1 span { color: var(--accent); }
+    .hero p.lead { font-size: 1.15rem; color: var(--muted); margin: 0 0 26px; }
+    .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px;
+      border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 1.02rem;
+      border: 1px solid var(--accent);
+    }
+    .btn.primary { background: var(--accent); color: var(--accent-ink); }
+    .btn.ghost { color: var(--accent); background: transparent; }
+    .btn:hover { filter: brightness(1.08); }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .badges span {
+      background: var(--accent-soft); color: var(--text); font-size: .88rem;
+      padding: 4px 12px; border-radius: 999px;
+    }
+
+    .qr-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 22px; text-align: center;
+    }
+    .qr-card img { width: 100%; max-width: 260px; background: #fff; border-radius: 8px; padding: 8px; }
+    .qr-card p { margin: 10px 0 6px; color: var(--muted); font-size: .95rem; }
+    .copy-row { display: flex; gap: 6px; margin-top: 8px; }
+    .copy-row input {
+      flex: 1; min-width: 0; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+      background: var(--bg); color: var(--text); font-size: .85rem;
+    }
+    .copy-row button, .small-btn {
+      padding: 8px 12px; border-radius: 8px; border: 1px solid var(--accent);
+      background: var(--accent); color: var(--accent-ink); cursor: pointer; font-weight: 600;
+      font-size: .85rem; text-decoration: none; white-space: nowrap;
+    }
+    .small-links { margin-top: 10px; font-size: .88rem; }
+
+    section { padding: 36px 0; }
+    section h2 { font-size: 1.6rem; margin: 0 0 20px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px;
+    }
+    .card .ic { font-size: 1.6rem; }
+    .card h3 { margin: 6px 0 6px; font-size: 1.05rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+
+    ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+    ol.steps li {
+      counter-increment: s; background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 14px 16px 14px 60px; position: relative;
+    }
+    ol.steps li::before {
+      content: counter(s); position: absolute; left: 16px; top: 13px; width: 30px; height: 30px;
+      border-radius: 50%; background: var(--accent); color: var(--accent-ink);
+      display: grid; place-items: center; font-weight: 700;
+    }
+    .note {
+      background: var(--accent-soft); border-radius: var(--radius); padding: 16px 18px; font-size: .97rem;
+    }
+    footer { border-top: 1px solid var(--line); padding: 24px 0 36px; color: var(--muted); font-size: .9rem; }
+    footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+
+    @media (max-width: 800px) {
+      .hero { padding-top: 32px; }
+      .hero .wrap { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      header.top nav { display: none; }
+    }
+  </style>
 </head>
-
 <body>
-    <!-- Thêm các link điều hướng -->
-    <!-- 1. Điều hướng về trang chủ -->
-    <a href="./">Home</a>
-    <!-- 2. Điều hướng đến contact.html -->
-    <a href="./more-info/contact.html">Contact me</a>
-    <!-- 3. Điều hướng đến my-skill.html -->
-    <a href="./more-info/my-skill.html">My skill</a>
-    <!-- 4. Phần mềm xáo đề thi THPT -->
-    <a href="./xao-de/">Xáo đề thi THPT</a>
+  <header class="top">
+    <div class="wrap">
+      <img src="assets/images/logo.png" alt="">
+      <strong>Xáo Đề THPT</strong>
+      <nav>
+        <a href="#tinh-nang">Tính năng</a>
+        <a href="#huong-dan">Hướng dẫn</a>
+        <a href="#chia-se">Chia sẻ</a>
+      </nav>
+    </div>
+  </header>
 
+  <main>
+    <div class="hero">
+      <div class="wrap">
+        <div>
+          <h1>Xáo đề thi THPT <span>nhanh, chuẩn, miễn phí</span></h1>
+          <p class="lead">Mở đề gốc Word hoặc PDF, tạo nhiều mã đề trong vài giây, xuất file Word chuẩn A4 kèm bảng đáp án Excel. Chạy ngay trên trình duyệt, không cần cài đặt.</p>
+          <div class="btns">
+            <a class="btn primary" href="xao-de/">▶ Dùng ngay</a>
+            <a class="btn ghost" href="https://github.com/HatThi32/KhocuaToi/archive/main.zip">⬇ Tải bản không cần mạng</a>
+          </div>
+          <div class="badges">
+            <span>Mọi môn THPT</span>
+            <span>Cấu trúc đề từ 2025</span>
+            <span>Đọc MathType</span>
+            <span>Đề chỉ xử lý trên máy bạn</span>
+          </div>
+        </div>
+        <div class="qr-card" id="chia-se">
+          <img src="assets/images/qr-xao-de.png" alt="Mã QR mở phần mềm Xáo Đề THPT">
+          <p>Quét mã bằng điện thoại hoặc gửi link cho đồng nghiệp</p>
+          <div class="copy-row">
+            <input id="link" readonly value="https://hatthi32.github.io/KhocuaToi/xao-de/" aria-label="Link phần mềm">
+            <button type="button" id="copyBtn">Sao chép</button>
+          </div>
+          <div class="small-links">
+            <a href="assets/images/qr-xao-de-in.png" download>Tải mã QR bản in</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <h1>Welcome to My Website!</h1>
-    <hr>
-    <h2>Nguyễn Trần Như Nhộng</h2>
-    <p>Creative Director and Designer - Giám đốc sáng tạo và nhà thiết kế</p>
-    <hr>
+    <section id="tinh-nang">
+      <div class="wrap">
+        <h2>Tính năng chính</h2>
+        <div class="grid">
+          <div class="card"><div class="ic">📄</div><h3>Mở đề Word &amp; PDF</h3><p>Đọc file .docx kể cả công thức MathType, Equation 3.0. Với PDF, tự cắt từng câu thành ảnh, giữ nguyên công thức, đồ thị, bảng.</p></div>
+          <div class="card"><div class="ic">🔀</div><h3>Xáo theo cấu trúc 2025</h3><p>Phần I trắc nghiệm, Phần II đúng/sai, Phần III trả lời ngắn và tự luận. Xáo câu, phương án A–D, ý a–d; nhóm câu bài đọc luôn đi liền.</p></div>
+          <div class="card"><div class="ic">✅</div><h3>Nhận đáp án thông minh</h3><p>Dấu *, gạch chân, dòng "Đáp án: B" hoặc bảng đáp án cuối đề. Báo lỗi nếu các nguồn đáp án mâu thuẫn.</p></div>
+          <div class="card"><div class="ic">📝</div><h3>Xuất Word chuẩn</h3><p>A4, Times New Roman, tiêu đề 2 cột, khung "ĐỀ CHÍNH THỨC", mã đề, chân trang; phương án tự xếp 4/2/1 cột.</p></div>
+          <div class="card"><div class="ic">📊</div><h3>Đáp án Excel</h3><p>Bảng đáp án tất cả mã đề, đối chiếu với đề gốc; điền thẳng vào file Excel mẫu của phần mềm chấm thi.</p></div>
+          <div class="card"><div class="ic">🛡️</div><h3>Tự kiểm tra, an toàn</h3><p>Kiểm lỗi trước khi xuất, kiểm chứng từng mã đề. Đề thi không gửi lên máy chủ nào.</p></div>
+        </div>
+      </div>
+    </section>
 
-    <!-- Thêm hình ảnh tuhoc.cc.jpg và khi click chuột sẽ điều hướng đến contact.html  -->
-    <a href="./more-info/contact.html"><img src="./assets/images/tuhoc.cc.jpg" alt="tuhoc.cc"></a>
-    <h2>About me</h2>
-    <p>Xin chào! Tôi là một Giám đốc sáng tạo và Nhà thiết kế đầy nhiệt huyết, mang trong mình niềm đam mê với nghệ
-        thuật và khả năng tạo ra những trải nghiệm độc đáo và gây ấn tượng. Với kinh nghiệm dày dặn và sự tinh tế trong
-        việc nắm bắt xu hướng và sự phát triển, tôi luôn tìm kiếm cách để đưa ra những giải pháp sáng tạo và ứng dụng
-        độc đáo trong mọi dự án.</p>
-    <p>Tôi đảm bảo rằng mỗi dự án sẽ được thực hiện với sự chính xác và sự đổi mới. Tôi không chỉ đơn thuần là một người
-        sáng tạo, mà còn là một người lãnh đạo đội ngũ, đảm bảo rằng mọi thành viên đều được truyền cảm hứng và tận dụng
-        tối đa khả năng của họ để mang lại kết quả xuất sắc.</p>
-    <hr>
+    <section id="huong-dan">
+      <div class="wrap">
+        <h2>Dùng trong 4 bước</h2>
+        <ol class="steps">
+          <li><strong>Mở phần mềm</strong> bằng nút "Dùng ngay" hoặc quét mã QR. Nên dùng Chrome, Edge hoặc Firefox trên máy tính.</li>
+          <li><strong>Nhập thông tin đề:</strong> môn, trường, kỳ thi, số mã đề. Phần mềm tự điền từ đầu đề nếu có.</li>
+          <li><strong>Mở đề gốc</strong> (Word hoặc PDF), kiểm tra danh sách câu và đáp án phần mềm nhận được.</li>
+          <li><strong>Tải về</strong> tất cả mã đề (.zip gồm file Word và đáp án) hoặc gộp 1 file, kèm bảng đáp án Excel.</li>
+        </ol>
+        <p class="note" style="margin-top:18px">💡 <strong>Không có mạng?</strong> Tải bản offline, giải nén, rồi mở file <code>xao-de/index.html</code> bằng trình duyệt là dùng được.</p>
+      </div>
+    </section>
+  </main>
 
+  <footer>
+    <div class="wrap">
+      <span>Xáo Đề THPT · Miễn phí cho giáo viên</span>
+      <span><a href="https://github.com/HatThi32/KhocuaToi">Mã nguồn trên GitHub</a></span>
+    </div>
+  </footer>
 
+  <script>
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      var input = document.getElementById('link');
+      var btn = this;
+      var done = function () { btn.textContent = 'Đã chép ✓'; setTimeout(function () { btn.textContent = 'Sao chép'; }, 1800); };
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(input.value).then(done, function () { input.select(); document.execCommand('copy'); done(); });
+      } else { input.select(); document.execCommand('copy'); done(); }
+    });
+  </script>
 </body>
-
 </html>
