@@ -1,0 +1,16 @@
+# Dữ liệu riêng của mỗi giáo viên (CSDL, khoá API, danh sách HS, bài làm) – KHÔNG đưa lên GitHub
+data/
+*.db
+*.db-journal
+
+# Python
+__pycache__/
+*.pyc
+
+# Hệ điều hành / trình soạn thảo
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+.claude/

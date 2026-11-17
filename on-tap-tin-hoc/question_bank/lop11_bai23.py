@@ -1,0 +1,63 @@
+# -*- coding: utf-8 -*-
+# Tin học 11 ICT (KNTT) – Bài 23. Thực hành truy xuất dữ liệu qua liên kết các bảng (SGK tr. 109–112)
+GRADE = 11
+DATA = ("CSDL mymusic: nhacsi(idNhacsi, tenNhacsi) = (1, Đỗ Nhuận), (2, Văn Cao), (3, Hoàng Việt), (4, Nguyễn Tài Tuệ); "
+        "bannhac(idBannhac, tenBannhac, idNhacsi) = (1, Du kích sông Thao, 1), (2, Trường ca Sông Lô, 2), (3, Tình ca, 3), "
+        "(4, Xa khơi, 4), (5, Việt Nam quê hương tôi, 1), (6, Tiến về Hà Nội, 2), (7, Nhạc rừng, 3), (8, Tiếng hát giữa rừng Pắc Bó, 4); "
+        "casi(idCasi, tenCasi) = (1, Trần Khánh), (2, Lê Dung), (3, Tân Nhân), (4, Quốc Hương), (5, Doãn Tần); "
+        "banthuam(idBanthuam, idBannhac, idCasi) = (1,1,5), (2,2,2), (3,3,1), (4,4,3), (5,5,4), (6,6,5), (7,7,4), (8,8,2), (9,2,1), (10,6,4).")
+BANK = {
+23: [
+    mcq("B", "Để truy vấn dữ liệu từ hai bảng qua liên kết khoá, câu truy vấn SQL dùng mệnh đề",
+        ["INNER JOIN ... ON ...", "INSERT INTO ... VALUES ...", "UPDATE ... SET ...", "GRANT ... ON ..."], "A"),
+    mcq("B", "Trong HeidiSQL, sau khi nhập câu truy vấn ở thẻ Truy vấn, để chạy câu truy vấn có thể nhấn phím",
+        ["F9", "F2", "F5", "F12"], "A"),
+    match("B", "Ghép mỗi thành phần của câu truy vấn liên kết với ý nghĩa của nó.",
+          [("SELECT", "Danh sách các trường cần lấy"), ("INNER JOIN", "Bảng được liên kết thêm"),
+           ("ON", "Điều kiện ghép theo trường khoá"), ("ORDER BY", "Sắp xếp kết quả")]),
+    mcq("H", "Trong câu truy vấn có hai trường cùng tên idNhacsi ở hai bảng, để phân biệt khi kết xuất ta dùng",
+        ["từ khoá as để đặt tên khác cho trường", "từ khoá DESC sau mỗi tên trường",
+         "dấu chấm phẩy giữa hai tên trường", "lệnh ALTER TABLE đổi tên trường"], "A",
+        "Ví dụ: bannhac.idNhacsi as idNS_BN, nhacsi.idNhacsi as idNS_NS."),
+    mcq("H", "Khi người dùng nhập tên bảng và dấu chấm (.) trong thẻ Truy vấn, HeidiSQL",
+        ["hiển thị danh sách tên trường của bảng để chọn", "tự động chạy câu truy vấn ngay lập tức",
+         "xoá tên bảng vừa nhập do sai cú pháp", "mở hộp thoại tạo bảng mới"], "A"),
+    mcq("H", "Để truy vấn nhiều hơn hai bảng theo liên kết khoá ngoài, ta",
+        ["lặp lại mệnh đề INNER JOIN ... ON ... cho mỗi bảng", "dùng nhiều câu SELECT riêng rồi ghép tay",
+         "gộp các bảng thành một bảng trước khi truy vấn", "dùng mệnh đề WHERE thay cho mọi liên kết"], "A"),
+    tf("H", "Xét câu truy vấn:\n```sql\nSELECT bannhac.tenBannhac, nhacsi.tenNhacsi\nFROM bannhac INNER JOIN nhacsi\nON bannhac.idNhacsi = nhacsi.idNhacsi;\n```",
+       ["Câu truy vấn lấy tên bản nhạc cùng tên nhạc sĩ sáng tác.",
+        "Liên kết dựa trên khoá ngoài idNhacsi của bảng bannhac.",
+        "Kết quả có thêm cột idCasi.",
+        "Bảng bannhac không có trường tenNhacsi nên cần liên kết với bảng nhacsi."], "ĐĐSĐ"),
+    fill("H", "Hoàn thiện câu truy vấn lấy tên bản nhạc và tên ca sĩ: SELECT bannhac.tenBannhac, casi.tenCasi FROM banthuam INNER JOIN bannhac ON banthuam.idBannhac = bannhac.idBannhac INNER JOIN ___ ON banthuam.___ = casi.idCasi;",
+         ["casi", "idCasi"]),
+    mcq("V", DATA + "\nCâu truy vấn sau trả về những bản nhạc nào?\n```sql\nSELECT bannhac.idBannhac, bannhac.tenBannhac\nFROM bannhac INNER JOIN nhacsi ON bannhac.idNhacsi = nhacsi.idNhacsi\nWHERE nhacsi.tenNhacsi = 'Đỗ Nhuận';\n```",
+        ["Du kích sông Thao, Việt Nam quê hương tôi", "Trường ca Sông Lô, Tiến về Hà Nội",
+         "Tình ca, Nhạc rừng, Du kích sông Thao", "Xa khơi, Tiếng hát giữa rừng Pắc Bó"], "A"),
+    mcq("V", "Lập danh sách idBanthuam, tenBannhac, tenCasi cần liên kết những bảng nào?",
+        ["banthuam, bannhac, casi", "bannhac, nhacsi, casi", "banthuam, nhacsi", "casi, nhacsi"], "A"),
+    tf("V", DATA + "\nXét kết quả liên kết banthuam với bannhac và casi.",
+       ["Bản thu âm số 9 là Trường ca Sông Lô do Trần Khánh thể hiện.",
+        "Ca sĩ Lê Dung có 2 bản thu âm.",
+        "Bản thu âm số 6 là Tiến về Hà Nội do Quốc Hương thể hiện.",
+        "Bản nhạc Tiến về Hà Nội có 2 bản thu âm."], "ĐĐSĐ",
+       "Bản thu âm số 6 có idCasi = 5 là Doãn Tần; Quốc Hương thể hiện bản thu âm số 10."),
+    short("V", DATA + "\nCâu truy vấn sau trả về bao nhiêu dòng?\n```sql\nSELECT banthuam.idBanthuam\nFROM banthuam INNER JOIN bannhac ON banthuam.idBannhac = bannhac.idBannhac\nINNER JOIN nhacsi ON bannhac.idNhacsi = nhacsi.idNhacsi\nWHERE nhacsi.tenNhacsi = 'Văn Cao';\n```",
+          "4", "Văn Cao có bản nhạc 2 và 6; bản thu âm của chúng: 2, 9 (bản nhạc 2) và 6, 10 (bản nhạc 6)."),
+    mcq("C", DATA + "\nCâu truy vấn nào lấy tên các bản nhạc do ca sĩ Lê Dung thể hiện?",
+        ["SELECT bannhac.tenBannhac FROM banthuam INNER JOIN bannhac ON banthuam.idBannhac = bannhac.idBannhac INNER JOIN casi ON banthuam.idCasi = casi.idCasi WHERE casi.tenCasi = 'Lê Dung';",
+         "SELECT bannhac.tenBannhac FROM banthuam INNER JOIN bannhac ON banthuam.idBannhac = bannhac.idBannhac INNER JOIN casi ON bannhac.idNhacsi = casi.idCasi WHERE casi.tenCasi = 'Lê Dung';",
+         "SELECT bannhac.tenBannhac FROM banthuam INNER JOIN bannhac ON banthuam.idCasi = bannhac.idBannhac INNER JOIN casi ON banthuam.idCasi = casi.idCasi WHERE casi.tenCasi = 'Lê Dung';",
+         "SELECT bannhac.tenBannhac FROM banthuam INNER JOIN bannhac ON banthuam.idBannhac = bannhac.idBannhac INNER JOIN casi ON banthuam.idBanthuam = casi.idCasi WHERE casi.tenCasi = 'Lê Dung';"], "A",
+        "Phải ghép banthuam với bannhac theo idBannhac và với casi theo idCasi."),
+    tf("C", "Ứng dụng Quản lý danh sách các bản thu âm (Hình 23.4) cho phép chọn tên bản nhạc, tên ca sĩ từ hộp danh sách.",
+       ["Người dùng không cần nhớ cấu trúc các bảng trong CSDL.",
+        "Chỉ chọn được tên đã có trong CSDL giúp hỗ trợ tính nhất quán dữ liệu.",
+        "Danh sách bản thu âm hiển thị tên bản nhạc, tên nhạc sĩ và tên ca sĩ, nhờ truy vấn liên kết các bảng.",
+        "Ứng dụng cho phép nhập tự do một tên ca sĩ chưa có trong CSDL vào bản thu âm."], "ĐĐĐS"),
+    essay("C", "Viết câu truy vấn lập danh sách các bản thu âm gồm idBanthuam, tenBannhac, tenNhacsi, tenCasi, sắp xếp theo tên bản nhạc. Giải thích vì sao phải liên kết bốn bảng.",
+          "- Câu truy vấn đúng với 3 mệnh đề INNER JOIN: banthuam–bannhac (idBannhac), bannhac–nhacsi (idNhacsi), banthuam–casi (idCasi), ORDER BY tenBannhac (0,7).\n- Giải thích: thông tin tên nằm ở các bảng khác nhau, liên kết qua khoá ngoài (0,3).",
+          ""),
+],
+}

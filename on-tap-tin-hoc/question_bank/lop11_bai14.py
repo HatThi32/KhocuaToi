@@ -1,0 +1,58 @@
+# -*- coding: utf-8 -*-
+# Tin học 11 ICT (KNTT) – Bài 14. SQL – Ngôn ngữ truy vấn có cấu trúc (SGK tr. 69–72)
+# Dữ liệu minh hoạ: CSDL music với bảng nhacsi(Aid, TenNS) và bannhac(Mid, Aid, TenBN) như Bài 13.
+GRADE = 11
+DATA = ("Bảng nhacsi: (1, Đỗ Nhuận), (2, Văn Cao), (3, Hoàng Việt), (4, Nguyễn Tài Tuệ).\n"
+        "Bảng bannhac: ('0001', 1, Du kích sông Thao), ('0002', 2, Trường ca sông Lô), ('0003', 3, Tình ca), "
+        "('0004', 4, Xa khơi), ('0005', 1, Việt Nam quê hương tôi), ('0006', 2, Tiến về Hà Nội).")
+BANK = {
+14: [
+    mcq("B", "SQL là viết tắt của",
+        ["Structured Query Language", "Simple Question Language", "System Quality Language", "Standard Quick Language"], "A"),
+    mcq("B", "Câu truy vấn DDL dùng để khởi tạo một bảng là",
+        ["CREATE DATABASE", "CREATE TABLE", "INSERT INTO", "ALTER TABLE"], "B"),
+    match("B", "Ghép mỗi thành phần của SQL với chức năng của nó.",
+          [("DDL", "Ngôn ngữ định nghĩa dữ liệu"), ("DML", "Ngôn ngữ thao tác dữ liệu"),
+           ("DCL", "Ngôn ngữ kiểm soát dữ liệu"), ("GRANT", "Cấp quyền cho người dùng")]),
+    mcq("H", "Kiểu dữ liệu nào trong SQL là xâu kí tự có độ dài thay đổi, không vượt quá n kí tự?",
+        ["CHAR(n)", "VARCHAR(n)", "INT", "DATE"], "B",
+        "CHAR(n) có độ dài cố định n; nếu ít hơn n kí tự thì thêm kí tự trống bên phải."),
+    mcq("H", "Điểm khác biệt cơ bản khi truy xuất dữ liệu bằng SQL so với tự lập trình là",
+        ["chỉ cần viết yêu cầu muốn làm gì, hệ QTCSDL tự thực hiện", "phải biết rõ cấu trúc tệp dữ liệu để đọc từng dòng",
+         "phải viết lại chương trình cho mỗi bài toán tương tự", "chỉ dùng được với một hệ QTCSDL duy nhất"], "A"),
+    mcq("H", "Câu truy vấn thu hồi quyền đối với người dùng bắt đầu bằng từ khoá",
+        ["GRANT", "REVOKE", "DELETE", "DROP"], "B"),
+    tf("H", "Xét câu truy vấn:\n```sql\nCREATE TABLE bannhac (\n    Mid CHAR(4),\n    Aid INT,\n    TenBN VARCHAR(128)\n);\nALTER TABLE bannhac ADD PRIMARY KEY (Mid);\n```",
+       ["Câu lệnh đầu khởi tạo bảng bannhac có 3 trường.",
+        "Trường TenBN là xâu kí tự có độ dài thay đổi, tối đa 128 kí tự.",
+        "Trường Mid lưu được giá trị '00001'.",
+        "Câu lệnh ALTER TABLE thêm khoá chính Mid cho bảng bannhac."], "ĐĐSĐ",
+       "Mid kiểu CHAR(4) chỉ chứa xâu 4 kí tự."),
+    fill("H", "Câu truy vấn xoá dữ liệu có dạng: ___ FROM <tên bảng> WHERE <điều kiện>; câu truy vấn sửa dữ liệu có dạng: ___ <tên bảng> SET <tên trường> = <giá trị>.",
+         ["DELETE", "UPDATE"]),
+    mcq("V", DATA + "\nCâu truy vấn sau trả về bao nhiêu dòng?\n```sql\nSELECT Mid, TenBN FROM bannhac WHERE Aid = 2;\n```",
+        ["1 dòng", "2 dòng", "3 dòng", "6 dòng"], "B", "Các bản nhạc có Aid = 2: '0002' và '0006'."),
+    mcq("V", "Câu truy vấn nào thêm nhạc sĩ có Aid = 5, tên 'Phú Quang' vào bảng nhacsi?",
+        ["INSERT INTO nhacsi VALUES (5, 'Phú Quang');", "UPDATE nhacsi VALUES (5, 'Phú Quang');",
+         "ADD INTO nhacsi SET (5, 'Phú Quang');", "INSERT nhacsi WHERE Aid = 5, 'Phú Quang';"], "A"),
+    tf("V", DATA + "\nXét câu truy vấn:\n```sql\nSELECT bannhac.TenBN, nhacsi.TenNS\nFROM bannhac INNER JOIN nhacsi\nON bannhac.Aid = nhacsi.Aid;\n```",
+       ["Câu truy vấn liên kết hai bảng theo khoá Aid.",
+        "Kết quả có 6 dòng.",
+        "Dòng ứng với bản nhạc “Xa khơi” có TenNS là Văn Cao.",
+        "Kết quả chỉ gồm hai cột TenBN và TenNS."], "ĐĐSĐ",
+       "Xa khơi có Aid = 4 nên TenNS là Nguyễn Tài Tuệ."),
+    short("V", DATA + "\nSau khi thực hiện câu truy vấn dưới đây, bảng bannhac còn bao nhiêu dòng?\n```sql\nDELETE FROM bannhac WHERE Aid = 1;\n```",
+          "4", "Xoá 2 dòng có Aid = 1 ('0001' và '0005'); còn 6 − 2 = 4 dòng."),
+    mcq("C", "Câu truy vấn nào lấy tên các bản nhạc của nhạc sĩ Văn Cao (Aid = 2), sắp xếp theo tên bản nhạc?",
+        ["SELECT TenBN FROM bannhac WHERE Aid = 2 ORDER BY TenBN;", "SELECT TenBN FROM bannhac ORDER BY Aid = 2;",
+         "SELECT TenBN WHERE Aid = 2 FROM bannhac ORDER BY TenBN;", "SELECT * FROM nhacsi WHERE TenNS = 2 ORDER BY TenBN;"], "A"),
+    tf("C", "Xét các câu truy vấn kiểm soát quyền trong CSDL music.",
+       ["GRANT select ON music.* TO guest; cấp quyền SELECT trên mọi bảng của music cho guest.",
+        "REVOKE create, alter ON music.bannhac FROM mod; thu hồi quyền CREATE, ALTER của mod với bảng bannhac.",
+        "GRANT và REVOKE thuộc thành phần DML của SQL.",
+        "Sau khi bị thu hồi quyền ALTER, mod không được thay đổi định nghĩa bảng bannhac."], "ĐĐSĐ",
+       "GRANT, REVOKE thuộc thành phần DCL (ngôn ngữ kiểm soát dữ liệu)."),
+    short("C", "Bảng diemtoan_11A có cột tb là điểm trung bình môn Toán của 4 học sinh: 7.5, 8.0, 6.5, 9.0. Câu truy vấn SELECT AVG(tb) FROM diemtoan_11A; cho kết quả bằng bao nhiêu?",
+          "7.75", "(7,5 + 8,0 + 6,5 + 9,0) : 4 = 31 : 4 = 7,75.", alts=["7,75"]),
+],
+}

@@ -35,3 +35,14 @@ Tính năng:
 - Tự kiểm tra lỗi trước khi xuất (thiếu đáp án, phương án trống/trùng, thiếu dấu $, công thức/ảnh lỗi, đánh số câu
   nhảy cóc…) và tự kiểm chứng mỗi mã đề có đủ câu, đáp án đúng vị trí.
 - Dùng "hạt giống xáo" để xáo lại ra đúng kết quả cũ. Dữ liệu chỉ lưu trên máy bạn.
+
+## Ôn tập Tin học THPT – KNTT, Tin học ứng dụng (`on-tap-tin-hoc/`)
+
+Ứng dụng cho giáo viên Tin học lớp 10, 11, 12: ngân hàng khoảng 1 860 câu hỏi soạn sẵn theo SGK Kết nối tri thức
+(20 câu/bài, 7 dạng), AI Gemini soạn câu hỏi và chấm bài, trình chiếu trên lớp (chọn đáp án, đếm giờ, âm thanh,
+quay ngẫu nhiên gọi tên học sinh), xuất PowerPoint có hiệu ứng, thi trực tiếp qua wifi lớp học và giao bài luyện tập.
+
+**Tải về:** https://github.com/HatThi32/KhocuaToi/archive/main.zip — giải nén, mở thư mục `on-tap-tin-hoc`,
+bấm đúp `Chay app.bat` (cần cài Python từ https://www.python.org/downloads/, tích ô *Add python.exe to PATH*).
+
+Hướng dẫn chi tiết: [`on-tap-tin-hoc/README.md`](on-tap-tin-hoc/README.md) và [`on-tap-tin-hoc/HUONG_DAN.md`](on-tap-tin-hoc/HUONG_DAN.md).
