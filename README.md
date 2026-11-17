@@ -46,3 +46,11 @@ quay ngẫu nhiên gọi tên học sinh), xuất PowerPoint có hiệu ứng, t
 bấm đúp `Chay app.bat` (cần cài Python từ https://www.python.org/downloads/, tích ô *Add python.exe to PATH*).
 
 Hướng dẫn chi tiết: [`on-tap-tin-hoc/README.md`](on-tap-tin-hoc/README.md) và [`on-tap-tin-hoc/HUONG_DAN.md`](on-tap-tin-hoc/HUONG_DAN.md).
+
+## Luyện HSG Tin học (`hsg-tin-hoc/`)
+
+Ứng dụng luyện thi học sinh giỏi Tin học THPT (SGK Kết nối tri thức, Khoa học máy tính và Tin học ứng dụng): đề thi thử theo cấu trúc Đà Nẵng 2026 và Ninh Bình 2025-2026, luyện theo chủ đề, sổ lỗi, ôn tập theo lỗi sai có bài hướng dẫn, theo dõi tiến bộ.
+
+**Dùng ngay trên trình duyệt:** https://hatthi32.github.io/KhocuaToi/hsg-tin-hoc/
+
+Là một tệp HTML duy nhất (`hsg-tin-hoc/index.html`), mở trực tiếp bằng trình duyệt cũng chạy. Số liệu của học sinh chỉ lưu trong trình duyệt của em.
