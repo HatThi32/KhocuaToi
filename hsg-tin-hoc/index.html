@@ -354,6 +354,8 @@ function progressCard(){
    h('span',{class:'chip',style:'color:var(--'+(d>5?'ok':d<-5?'bad':'warn')+')',text:d>5?'▲ Tiến bộ':d<-5?'▼ Giảm':'≈ Giữ nguyên'})))});
  return card}
 
+/* Liên kết bài giảng Canva theo mã bài */
+const CANVA={w4:'https://canva.link/yshcro7z9sk5ln2'};
 /* ---------- HỌC THEO CHỦ ĐỀ ---------- */
 let UNI=null;
 function LU(){if(!LEARN.u)LEARN.u={};return LEARN.u}
@@ -387,6 +389,7 @@ function vUnit(){
  root.append(h('h2',{text:u.t,style:'margin:10px 0 12px'}));
  const card=h('div',{class:'card'});
  if(pg.k==='intro'){
+  if(CANVA[id])card.append(h('a',{class:'btn',href:CANVA[id],target:'_blank',rel:'noopener',style:'display:inline-block;margin-bottom:10px;text-decoration:none',text:'🎨 Xem bài giảng Canva (slide)'}));
   card.append(h('p',{class:'lab',text:'Mục tiêu bài học ('+u.min+' phút)'}),h('ul',{style:'margin:0 0 10px;padding-left:20px'},u.goals.map(g=>h('li',{text:g}))),
    h('p',{class:'lab',text:'Nội dung'}),h('ol',{style:'margin:0 0 8px;padding-left:20px'},u.secs.map(s=>h('li',{text:s.h})),h('li',{text:'Kiểm tra cuối bài (5 câu)'})))}
  else if(pg.k==='sec'){const s=pg.s;
