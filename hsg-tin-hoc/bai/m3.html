@@ -1,0 +1,232 @@
+<!-- HEAD -->
+<title>Mạng 3 · Địa chỉ IP và mạng con</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · MẠNG MÁY TÍNH 3</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>ĐỊA CHỈ IP VÀ MẠNG CON</h1><p style="font-size:28px;line-height:1.5">IPv4, nhị phân – thập phân, lớp địa chỉ, mặt nạ mạng, CIDR, chia mạng con, địa chỉ riêng, IPv6.</p><div><span class="chip">IPv4</span><span class="chip">mặt nạ mạng</span><span class="chip">CIDR</span><span class="chip">mạng con</span><span class="chip">IPv6</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Mô tả cấu trúc <b>địa chỉ IPv4</b> (4 byte).</li><li>Đổi <b>nhị phân ↔ thập phân</b> từng byte.</li><li>Xác định <b>địa chỉ mạng, quảng bá, số máy</b> từ IP và mặt nạ.</li><li>Hiểu kí hiệu <b>CIDR (/n)</b> và <b>chia mạng con</b>.</li><li>Nhận biết <b>địa chỉ riêng, công cộng</b> và <b>IPv6</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Địa chỉ IPv4</li><li>Mặt nạ mạng</li><li>CIDR, số máy</li><li>Chia mạng con</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Địa chỉ IP là gì?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li><b>Địa chỉ IP</b>: nhãn số duy nhất xác định một thiết bị trong mạng.</li><li><b>IPv4</b>: <b>32 bit</b> = <b>4 byte</b>, viết 4 số thập phân (0–255) cách nhau dấu chấm.</li></ul></div></div><div class="col"><div class="key">Ví dụ: <b>192.168.1.10</b> = 11000000.10101000.00000001.00001010. Tổng số địa chỉ IPv4: <b>2³² = 4 294 967 296</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Cấu trúc: phần mạng + phần máy</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">IP = mạng + máy</span><svg viewBox="0 0 520 150" style="width:100%"><rect x="10" y="40" width="130" height="60" rx="8" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="75.0" y="77.0" text-anchor="middle" font-size="26" font-weight="800" fill="#0B2545" font-family="sans-serif">192</text><rect x="140" y="40" width="130" height="60" rx="8" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="205.0" y="77.0" text-anchor="middle" font-size="26" font-weight="800" fill="#0B2545" font-family="sans-serif">168</text><rect x="270" y="40" width="120" height="60" rx="8" fill="#FFCCBC" stroke="#D84315" stroke-width="3"/><text x="330.0" y="77.0" text-anchor="middle" font-size="26" font-weight="800" fill="#0B2545" font-family="sans-serif">1</text><rect x="390" y="40" width="120" height="60" rx="8" fill="#FFCCBC" stroke="#D84315" stroke-width="3"/><text x="450.0" y="77.0" text-anchor="middle" font-size="26" font-weight="800" fill="#0B2545" font-family="sans-serif">10</text><text x="140" y="25" text-anchor="middle" font-size="20" font-weight="800" fill="#1565C0" font-family="sans-serif">PHẦN MẠNG</text><text x="390" y="25" text-anchor="middle" font-size="20" font-weight="800" fill="#D84315" font-family="sans-serif">PHẦN MÁY</text><text x="260" y="135" text-anchor="middle" font-size="21" font-weight="800" font-family="sans-serif">mặt nạ 255.255.0.0 → /16</text></svg></div></div><div class="col"><div class="card"><h3>Ý nghĩa</h3><ul style="gap:6px"><li>Các máy <b>cùng phần mạng</b> thuộc cùng một mạng.</li><li>Phần máy <b>phân biệt</b> các máy trong mạng đó.</li><li><b>Mặt nạ mạng</b> cho biết ranh giới.</li></ul></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Đổi nhị phân ↔ thập phân (một byte)</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Vị trí</th><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr><tr><td>Trọng số</td><td>128</td><td>64</td><td>32</td><td>16</td><td>8</td><td>4</td><td>2</td><td>1</td></tr><tr><td>Ví dụ 192</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Ví dụ 168</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr></table><div class="key">192 = 128 + 64; 168 = 128 + 32 + 8. Mỗi byte có giá trị từ <b>0 đến 255</b> (2⁸ = 256).</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Đổi số bằng Python</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">ip = "192.168.1.10"
+byte = [int(x) for x in ip.split(".")]
+print(byte)
+print(".".join(format(b, "08b") for b in byte))
+print(int("11000000", 2))
+print(bin(168))</pre><div class="key"><code>format(b,"08b")</code> viết nhị phân đủ <b>8 bit</b>; <code>int(s,2)</code> đổi nhị phân → thập phân.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[192, 168, 1, 10]
+11000000.10101000.00000001.00001010
+192
+0b10101000</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Các lớp địa chỉ IPv4 (kiến thức nền)</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Lớp</th><th>Byte đầu</th><th>Mặt nạ mặc định</th><th>Dùng cho</th></tr><tr><td><b>A</b></td><td>1 – 126</td><td>255.0.0.0 (/8)</td><td>mạng rất lớn</td></tr><tr><td><b>B</b></td><td>128 – 191</td><td>255.255.0.0 (/16)</td><td>mạng vừa</td></tr><tr><td><b>C</b></td><td>192 – 223</td><td>255.255.255.0 (/24)</td><td>mạng nhỏ</td></tr><tr><td>D</td><td>224 – 239</td><td>—</td><td>phát đa hướng</td></tr><tr><td>E</td><td>240 – 255</td><td>—</td><td>dự phòng</td></tr></table><div class="warn">Hiện nay dùng <b>CIDR</b> không theo lớp; lớp A, B, C chỉ là kiến thức nền.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Mặt nạ mạng (subnet mask)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li>Dãy 32 bit: <b>bit 1</b> ứng với phần mạng, <b>bit 0</b> ứng với phần máy.</li><li>Ví dụ: <b>255.255.255.0</b> = 24 bit 1 + 8 bit 0.</li></ul></div></div><div class="col"><div class="key">Địa chỉ mạng = <b>IP AND mặt nạ</b> (phép AND từng bit).</div><div class="ok"><p>Mặt nạ luôn có dạng <b>các bit 1 liên tiếp</b> rồi tới các bit 0.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Hai địa chỉ đặc biệt trong mỗi mạng</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Địa chỉ</th><th>Phần máy</th><th>Ví dụ 192.168.1.0/24</th><th>Dùng được cho máy?</th></tr><tr><td><b>Địa chỉ mạng</b></td><td>toàn bit 0</td><td>192.168.1.0</td><td>không</td></tr><tr><td><b>Địa chỉ quảng bá</b></td><td>toàn bit 1</td><td>192.168.1.255</td><td>không</td></tr><tr><td>Các địa chỉ còn lại</td><td>khác</td><td>192.168.1.1 … 254</td><td><b>có</b> (254 máy)</td></tr></table><div class="key">Số máy tối đa = <b>2<sup>h</sup> − 2</b>, với h là số bit phần máy.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Tính địa chỉ mạng bằng Python</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">import ipaddress
+n = ipaddress.ip_network("192.168.1.10/24", strict=False)
+print(n.network_address)
+print(n.netmask)
+print(n.broadcast_address)
+print(n.num_addresses - 2)</pre><div class="key"><code>strict=False</code> cho phép nhập IP của một máy; thư viện <b>ipaddress</b> tính sẵn địa chỉ mạng, quảng bá, số máy.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">192.168.1.0
+255.255.255.0
+192.168.1.255
+254</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Kí hiệu CIDR: /n</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>CIDR</h3><ul style="gap:6px"><li><b>/n</b> = số bit 1 của mặt nạ (số bit phần mạng).</li><li>/24 → 255.255.255.0</li><li>/16 → 255.255.0.0</li><li>/26 → 255.255.255.192</li></ul></div></div><div class="col"><table><tr><th>CIDR</th><th>Mặt nạ</th><th>Số máy</th></tr><tr><td>/24</td><td>255.255.255.0</td><td>254</td></tr><tr><td>/25</td><td>255.255.255.128</td><td>126</td></tr><tr><td>/26</td><td>255.255.255.192</td><td>62</td></tr><tr><td>/27</td><td>255.255.255.224</td><td>30</td></tr><tr><td>/28</td><td>255.255.255.240</td><td>14</td></tr><tr><td>/30</td><td>255.255.255.252</td><td>2</td></tr></table></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Mẹo tính nhanh số máy</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy trình</h3><ul style="gap:6px"><li>1. Số bit máy <b>h = 32 − n</b>.</li><li>2. Số máy = <b>2<sup>h</sup> − 2</b>.</li><li>3. “Bước nhảy” của byte cuối = <b>2<sup>h</sup></b> (nếu h ≤ 8).</li></ul></div></div><div class="col"><div class="key">Ví dụ /26: h = 6, số máy = 64 − 2 = <b>62</b>, bước nhảy <b>64</b> → các mạng bắt đầu 0, 64, 128, 192.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Chia mạng con (subnetting)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Vì sao chia?</h3><ul style="gap:6px"><li>Quản lí dễ (mỗi phòng ban một mạng).</li><li><b>Giảm lưu lượng quảng bá</b>, tăng bảo mật.</li><li>Tiết kiệm địa chỉ IP.</li></ul></div></div><div class="col"><div class="key">Cách chia: <b>mượn bit</b> từ phần máy làm phần mạng. Mượn k bit → <b>2<sup>k</sup></b> mạng con.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Chia 192.168.10.0/24 thành 4 mạng con</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">import ipaddress
+n = ipaddress.ip_network("192.168.10.0/24")
+for s in n.subnets(prefixlen_diff=2):
+    h = list(s.hosts())
+    print(s, h[0], h[-1], s.broadcast_address)</pre><div class="key">Mượn <b>2 bit</b> → 4 mạng con /26, mỗi mạng 62 máy, bước nhảy 64.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">192.168.10.0/26 192.168.10.1 192.168.10.62 192.168.10.63
+192.168.10.64/26 192.168.10.65 192.168.10.126 192.168.10.127
+192.168.10.128/26 192.168.10.129 192.168.10.190 192.168.10.191
+192.168.10.192/26 192.168.10.193 192.168.10.254 192.168.10.255</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Kết quả chia 4 mạng con</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Mạng con</th><th>Máy đầu</th><th>Máy cuối</th><th>Quảng bá</th></tr><tr><td>192.168.10.0/26</td><td>.1</td><td>.62</td><td>.63</td></tr><tr><td>192.168.10.64/26</td><td>.65</td><td>.126</td><td>.127</td></tr><tr><td>192.168.10.128/26</td><td>.129</td><td>.190</td><td>.191</td></tr><tr><td>192.168.10.192/26</td><td>.193</td><td>.254</td><td>.255</td></tr></table><div class="key">Mỗi mạng con có <b>62 máy</b>; hai máy khác mạng con muốn liên lạc phải qua <b>router</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Hai máy có cùng mạng không?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cách kiểm tra</h3><ul style="gap:6px"><li>Tính <b>IP AND mặt nạ</b> của từng máy.</li><li>Hai kết quả <b>giống nhau</b> → cùng mạng.</li></ul></div><div class="key">Ví dụ /26: <b>192.168.10.70</b> và <b>192.168.10.100</b> đều thuộc 192.168.10.64/26 → cùng mạng. <b>192.168.10.70</b> và <b>192.168.10.130</b> khác mạng.</div></div><div class="col"><div class="res"><span class="lab">Địa chỉ mạng của 70, 100, 130</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:18px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">192.168.10.64  192.168.10.64  192.168.10.128</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Kiểm tra cùng mạng bằng Python</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">import ipaddress
+def cung_mang(a, b, n):
+    ma = ipaddress.ip_interface(f"{a}/{n}").network
+    mb = ipaddress.ip_interface(f"{b}/{n}").network
+    return ma == mb
+print(cung_mang("192.168.10.70", "192.168.10.100", 26))
+print(cung_mang("192.168.10.70", "192.168.10.130", 26))</pre><div class="key">So sánh <b>địa chỉ mạng</b> của hai máy: giống nhau → <b>True</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">True
+False</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>Địa chỉ riêng và địa chỉ công cộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Địa chỉ riêng (private)</h3><ul style="gap:6px"><li><b>10.0.0.0/8</b></li><li><b>172.16.0.0/12</b></li><li><b>192.168.0.0/16</b></li><li>Dùng trong LAN, <b>không định tuyến</b> ra Internet.</li></ul></div></div><div class="col"><div class="key"><b>NAT</b>: router đổi địa chỉ riêng thành <b>một địa chỉ công cộng</b> khi ra Internet, nên nhiều máy dùng chung một IP công cộng.</div><div class="warn">Địa chỉ <b>127.0.0.1</b> (localhost) là địa chỉ của chính máy đó.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>Phân loại địa chỉ bằng Python</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">import ipaddress
+for s in ["192.168.1.5", "8.8.8.8", "10.1.2.3", "127.0.0.1", "172.20.5.9"]:
+    a = ipaddress.ip_address(s)
+    print(s, "riêng" if a.is_private else "công cộng")</pre><div class="key"><code>is_private</code> kiểm tra địa chỉ có thuộc dải riêng. <b>8.8.8.8</b> là DNS công cộng của Google.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">192.168.1.5 riêng
+8.8.8.8 công cộng
+10.1.2.3 riêng
+127.0.0.1 riêng
+172.20.5.9 riêng</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>Cổng mặc định và cấu hình mạng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Một máy cần</h3><ul style="gap:6px"><li><b>Địa chỉ IP</b> riêng của máy.</li><li><b>Mặt nạ mạng</b>.</li><li><b>Cổng mặc định</b> (default gateway): địa chỉ router để ra ngoài.</li><li><b>Máy chủ DNS</b>.</li></ul></div></div><div class="col"><div class="key">Máy gửi gói tới đích <b>cùng mạng</b> thì gửi trực tiếp; <b>khác mạng</b> thì gửi tới <b>cổng mặc định</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>IPv6</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Vì sao có IPv6?</h3><ul style="gap:6px"><li>IPv4 chỉ có khoảng <b>4,3 tỉ</b> địa chỉ, <b>đã cạn</b>.</li><li><b>IPv6</b>: <b>128 bit</b>, viết 8 nhóm số hex, ví dụ <b>2001:0db8:85a3::8a2e:0370:7334</b>.</li><li>Số địa chỉ: <b>2¹²⁸</b>, rất lớn.</li></ul></div></div><div class="col"><div class="key">Quy tắc rút gọn: bỏ số 0 đầu mỗi nhóm; dùng <b>::</b> một lần thay cho các nhóm toàn 0.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>IPv4 gồm <b>32 bit</b> = 4 byte (0–255).</li><li>Địa chỉ mạng = <b>IP AND mặt nạ</b>; số máy = <b>2<sup>h</sup> − 2</b>.</li><li><b>/n</b> = số bit phần mạng; h = 32 − n.</li><li>Mượn k bit → <b>2<sup>k</sup></b> mạng con.</li><li><b>10/8, 172.16/12, 192.168/16</b> là địa chỉ riêng; IPv6 dài 128 bit.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Số máy /24</td><td>254</td></tr><tr><td class="m">Số máy /26</td><td>62</td></tr><tr><td class="m">Địa chỉ riêng</td><td>192.168.x.x</td></tr><tr><td class="m">Chính máy mình</td><td>127.0.0.1</td></tr></table><div class="warn">Quên trừ 2 (địa chỉ mạng và quảng bá).</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Máy cùng mạng ⇔ cùng <b>IP AND mặt nạ</b>.</li><li>Quảng bá = địa chỉ mạng với phần máy <b>toàn bit 1</b>.</li><li>/31 và /32 là trường hợp đặc biệt.</li><li>Mặt nạ ngược (wildcard) dùng trong ACL.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>VLSM</b>: chia mạng con có kích thước khác nhau.</li><li><b>Gộp tuyến</b> (route summarization).</li><li><b>APIPA</b> 169.254.x.x khi không có DHCP.</li></ul></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Đổi 11000000.10101000.00000001.00001010 sang thập phân.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mạng 192.168.5.0/24 có bao nhiêu máy dùng được?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Xác định địa chỉ mạng của 172.16.37.200/20.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Chia 192.168.1.0/24 thành 2 mạng con bằng nhau: cho biết mặt nạ và địa chỉ mạng.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Địa chỉ 192.168.3.7 là riêng hay công cộng?</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>192.168.1.10</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>2⁸ − 2 = <b>254</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>/20 → bước nhảy 16 ở byte thứ ba: 37 → 32 → <b>172.16.32.0</b>. 172.16.32.0 / 255.255.240.0 / 172.16.47.255 / 4094 máy (172.16.32.1–172.16.47.254)</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mượn 1 bit: <b>/25</b> (255.255.255.128): 192.168.1.0 và 192.168.1.128.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>Riêng</b> (192.168.0.0/16).</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Một công ty có 5 phòng, mỗi phòng tối đa 25 máy. Dùng mạng 192.168.20.0/24. Chia thế nào?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Hai máy 10.0.0.130/25 và 10.0.0.100/25 có cùng mạng không?</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mạng /30 dùng được mấy máy? Thường dùng ở đâu?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Cho 192.168.1.77/27. Tìm địa chỉ mạng, quảng bá, dải máy.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) 192.168.1.255/24 gán được cho máy. (b) 172.32.1.1 là địa chỉ riêng. (c) IPv6 dài 128 bit. (d) Mặt nạ 255.255.255.192 là /26.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Số mạng con và số máy mỗi mạng khi chia /24 thành mạng /28?</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Cần ≥ 5 mạng, mỗi mạng ≥ 25 máy: mượn 3 bit → 8 mạng /27, mỗi mạng <b>30 máy</b>. Ví dụ: 192.168.20.0/27, .32/27, .64/27, …</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>/25: 130 thuộc 10.0.0.128/25; 100 thuộc 10.0.0.0/25 → <b>khác mạng</b>.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>2 máy</b>; dùng cho đường nối <b>hai router</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>192.168.1.64 / 255.255.255.224 / 192.168.1.95 / 30 máy (192.168.1.65–192.168.1.94)</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b> (quảng bá). (b) <b>Sai</b> (riêng chỉ 172.16–172.31). (c) <b>Đúng</b>. (d) <b>Đúng</b>.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mượn 4 bit: <b>16</b> mạng con, mỗi mạng <b>14</b> máy.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
