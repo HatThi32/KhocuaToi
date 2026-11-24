@@ -53,7 +53,9 @@ svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
 .title-s h1{color:#fff;font-size:68px;border:0}
 .title-s .hd{border:0}
 .chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
-.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
 .bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
 .bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
 .bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
@@ -76,8 +78,8 @@ body.m .wide{overflow-x:auto}
 <div class="bd g21" style="align-items:center">
 <div class="col" style="gap:22px">
 <h1>TRANG WEB<br>VÀ HTML</h1>
-<p style="font-size:28px;line-height:1.5">Bài giảng chuyên sâu cho học sinh ôn thi HSG, sắp xếp theo đúng mạch SGK Tin học 12 KNTT (định hướng Khoa học máy tính): Bài 7, 8, 10, 11 và các dạng bài khó.</p>
-<div><span class="chip">Bài 7 · HTML</span><span class="chip">Bài 8 · Định dạng</span><span class="chip">Bài 10 · Liên kết</span><span class="chip">Bài 11 · Media</span><span class="chip">Dạng bài HSG</span></div></div>
+<p style="font-size:28px;line-height:1.5">Bài giảng chuyên sâu cho học sinh ôn thi HSG, sắp xếp theo đúng mạch SGK Tin học 12 KNTT (định hướng Khoa học máy tính): Bài 7, 8, 9, 10, 11 và các dạng bài khó.</p>
+<div><span class="chip">Bài 7 · HTML</span><span class="chip">Bài 8 · Định dạng</span><span class="chip">Bài 9 · Danh sách, bảng</span><span class="chip">Bài 10 · Liên kết</span><span class="chip">Bài 11 · Media</span><span class="chip">Dạng bài HSG</span></div></div>
 <svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
 <rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
 <rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
@@ -91,17 +93,12 @@ body.m .wide{overflow-x:auto}
 <li>Giải thích <b>quy trình tải</b> một trang web (URL, DNS, HTTP).</li>
 <li>Viết đúng tài liệu <b>HTML5</b>, đọc <b>cây phần tử</b>, đếm phần tử.</li>
 <li>Dùng thẻ và thuộc tính <b>định dạng văn bản, phông chữ</b>.</li>
+<li>Tạo <b>danh sách</b> (ol, ul, dl) và <b>bảng</b> (gộp ô).</li>
 <li>Viết <b>đường dẫn tương đối</b> và các kiểu <b>liên kết</b>.</li>
 <li>Nhúng <b>ảnh, âm thanh, video, iframe</b>.</li>
 <li><b>Tìm lỗi</b> và <b>dự đoán kết quả</b> hiển thị của mã HTML.</li></ul></div>
 <div class="key">Mỗi slide có nhãn bài (ví dụ <b>BÀI 8 · 2</b> = Bài 8, mục 2 của SGK) để học theo đúng sách.</div></div>
-<svg viewBox="0 0 540 480"><g font-weight="800" font-size="24" fill="#fff" text-anchor="middle">
-<rect x="20" y="6" width="500" height="64" rx="12" fill="#546E7A"/><text x="270" y="46">NỀN · Web, URL, HTTP</text>
-<rect x="20" y="82" width="500" height="64" rx="12" fill="#00695C"/><text x="270" y="122">BÀI 7 · HTML và cấu trúc trang web</text>
-<rect x="20" y="158" width="500" height="64" rx="12" fill="#4527A0"/><text x="270" y="198">BÀI 8 · Định dạng văn bản</text>
-<rect x="20" y="234" width="500" height="64" rx="12" fill="#AD1457"/><text x="270" y="274">BÀI 10 · Tạo liên kết</text>
-<rect x="20" y="310" width="500" height="64" rx="12" fill="#BF360C"/><text x="270" y="350">BÀI 11 · Ảnh, âm thanh, video, iframe</text>
-<rect x="20" y="386" width="500" height="64" rx="12" fill="#B71C1C"/><text x="270" y="426">DẠNG BÀI KHÓ HSG</text></g></svg>
+<svg viewBox="0 0 540 480"><g font-weight="800" font-size="24" fill="#fff" text-anchor="middle"><rect x="20" y="4" width="500" height="58" rx="12" fill="#546E7A"/><text x="270" y="41">NỀN · Web, URL, HTTP</text><rect x="20" y="72" width="500" height="58" rx="12" fill="#00695C"/><text x="270" y="109">BÀI 7 · HTML và cấu trúc trang</text><rect x="20" y="140" width="500" height="58" rx="12" fill="#4527A0"/><text x="270" y="177">BÀI 8 · Định dạng văn bản</text><rect x="20" y="208" width="500" height="58" rx="12" fill="#1565C0"/><text x="270" y="245">BÀI 9 · Danh sách và bảng</text><rect x="20" y="276" width="500" height="58" rx="12" fill="#AD1457"/><text x="270" y="313">BÀI 10 · Tạo liên kết</text><rect x="20" y="344" width="500" height="58" rx="12" fill="#BF360C"/><text x="270" y="381">BÀI 11 · Ảnh, âm thanh, video</text><rect x="20" y="412" width="500" height="58" rx="12" fill="#B71C1C"/><text x="270" y="449">DẠNG BÀI KHÓ HSG</text></g></svg>
 </div></section>
 
 <section class="s p0"><div class="hd"><span class="k">NỀN</span><h1>Web, trang web, website</h1></div>
@@ -383,6 +380,11 @@ c</pre></div></div>
 <div class="key"><code>pre</code> giữ nguyên dấu cách và xuống dòng; <code>p</code> thì <b>không</b>.</div></div>
 </div></section>
 
+<section class="s p3"><div class="hd"><span class="k">BÀI 8 · 3</span><h1>Bảng 8.1: các thẻ định dạng kiểu chữ</h1></div>
+<div class="bd g1">
+<div class="col"><table><tr><th>Kiểu chữ</th><th>Thẻ</th><th>Mã HTML</th><th>Kết quả</th></tr><tr><td>Chữ đậm</td><td class="m">strong ; b</td><td class="m">&lt;strong&gt;là câu&lt;/strong&gt;</td><td style="font-family:Georgia,serif;font-size:24px">Đây <span style="font-weight:700">là câu</span> chuẩn</td></tr><tr><td>Chữ nghiêng</td><td class="m">em ; i</td><td class="m">&lt;em&gt;là câu&lt;/em&gt;</td><td style="font-family:Georgia,serif;font-size:24px">Đây <span style="font-style:italic">là câu</span> chuẩn</td></tr><tr><td>Gạch chân</td><td class="m">u</td><td class="m">&lt;u&gt;là câu&lt;/u&gt;</td><td style="font-family:Georgia,serif;font-size:24px">Đây <span style="text-decoration:underline">là câu</span> chuẩn</td></tr><tr><td>Đánh dấu</td><td class="m">mark</td><td class="m">&lt;mark&gt;là câu&lt;/mark&gt;</td><td style="font-family:Georgia,serif;font-size:24px">Đây <span style="background:#FFEB3B">là câu</span> chuẩn</td></tr><tr><td>Giảm cỡ chữ</td><td class="m">small</td><td class="m">&lt;small&gt;là câu&lt;/small&gt;</td><td style="font-family:Georgia,serif;font-size:24px">Đây <span style="font-size:15px">là câu</span> chuẩn</td></tr><tr><td>Chỉ số trên</td><td class="m">sup</td><td class="m">x&lt;sup&gt;2&lt;/sup&gt;</td><td style="font-family:Georgia,serif;font-size:24px">x<sup>2</sup></td></tr><tr><td>Chỉ số dưới</td><td class="m">sub</td><td class="m">H&lt;sub&gt;2&lt;/sub&gt;O</td><td style="font-family:Georgia,serif;font-size:24px">H<sub>2</sub>O</td></tr><tr><td>Đánh dấu xoá</td><td class="m">del</td><td class="m">&lt;del&gt;là câu&lt;/del&gt;</td><td style="font-family:Georgia,serif;font-size:24px">Đây <del>là câu</del> chuẩn</td></tr></table><div class="ok"><p><b>strong, em</b> mang <b>ý nghĩa nhấn mạnh</b> (đậm, nghiêng) nên được <b>khuyến khích</b>; <b>b, i</b> chỉ đổi hình thức. SGK lưu ý HTML5 không hỗ trợ <code>big</code>, <code>u</code>: nên dùng <code>font-size</code>, <code>text-decoration</code> trong <code>style</code>.</p></div></div>
+</div></section>
+
 <section class="s p3"><div class="hd"><span class="k">BÀI 8 · 3</span><h1>Định dạng phông chữ bằng style</h1></div>
 <div class="bd g2">
 <div class="col"><table><tr><th>Cần</th><th>Cách viết</th></tr>
@@ -420,6 +422,27 @@ c</pre></div></div>
 <div class="key">Thẻ ngữ nghĩa cho biết <b>vai trò</b> vùng nội dung: tốt cho tìm kiếm, người khiếm thị. <code>div</code>, <code>span</code> thì <b>không có</b> ngữ nghĩa.</div></div>
 </div></section>
 
+<section class="s p3"><div class="hd"><span class="k">BÀI 8 · THỰC HÀNH</span><h1>Thực hành: Hình 8.3 (mã và kết quả)</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;h1&gt;Biện luận số nghiệm của
+ phương trình bậc 2&lt;/h1&gt;
+&lt;h2&gt;&lt;span style="color:red"&gt;Bài toán:&lt;/span&gt;
+ ax&lt;sup&gt;2&lt;/sup&gt; + bx + c = 0&lt;/h2&gt;
+&lt;h2&gt;Cách làm:&lt;/h2&gt;
+&lt;p&gt;B&lt;sub&gt;1&lt;/sub&gt;: Xác định a, b, c&lt;/p&gt;
+&lt;p&gt;B&lt;sub&gt;2&lt;/sub&gt;: Tính delta = b&lt;sup&gt;2&lt;/sup&gt; - 4ac&lt;/p&gt;
+&lt;p&gt;B&lt;sub&gt;3&lt;/sub&gt;: Kết luận&lt;br&gt;
++ Nếu delta &amp;lt; 0: vô nghiệm&lt;br&gt;
++ Nếu delta = 0: nghiệm kép&lt;/p&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif"><div style="font-size:28px;font-weight:700">Biện luận số nghiệm của phương trình bậc 2</div><div style="font-size:24px;font-weight:700;margin:6px 0"><span style="color:red">Bài toán:</span> ax<sup>2</sup> + bx + c = 0</div><div style="font-size:24px;font-weight:700">Cách làm:</div><div style="font-size:22px;margin-top:6px">B<sub>1</sub>: Xác định a, b, c<br>B<sub>2</sub>: Tính delta = b<sup>2</sup> - 4ac<br>B<sub>3</sub>: Kết luận<br>+ Nếu delta &lt; 0: vô nghiệm<br>+ Nếu delta = 0: nghiệm kép</div></div></div></div>
+</div></section>
+
+<section class="s p3"><div class="hd"><span class="k">BÀI 8 · THỰC HÀNH</span><h1>Phân tích đề để chọn thẻ</h1></div>
+<div class="bd g2">
+<div class="col"><table><tr><th>Thành phần</th><th>Thẻ</th></tr><tr><td>Dòng 1 (tiêu đề cao nhất)</td><td class="m">h1</td></tr><tr><td>Dòng 2, 3 (tiêu đề thấp hơn)</td><td class="m">h2</td></tr><tr><td>Ba bước làm</td><td class="m">3 thẻ p</td></tr><tr><td>Số mũ, chỉ số dưới</td><td class="m">sup, sub</td></tr><tr><td>Đổi màu một cụm chữ</td><td class="m">span + style</td></tr><tr><td>Xuống dòng trong đoạn</td><td class="m">br</td></tr></table></div>
+<div class="col"><div class="key">Ba dòng bắt đầu bằng <b>“+ Nếu…”</b> chỉ <b>xuống dòng</b>, không có khoảng cách trước và sau, nên <b>không phải đoạn riêng</b>: chúng nằm trong đoạn B<sub>3</sub>, ngăn bằng thẻ <code>br</code>.</div>
+<div class="ok"><p><b>Quy trình:</b> (1) xác định thành phần văn bản; (2) chọn thẻ tiêu đề cho các dòng đầu; (3) mỗi đoạn một thẻ <code>p</code>; (4) bổ sung <code>sup</code>, <code>sub</code>, <code>strong</code>, <code>br</code> khi cần.</p></div></div>
+</div></section>
+
 <section class="s p3"><div class="hd"><span class="k">BÀI 8</span><h1>Bài tập củng cố</h1></div>
 <div class="bd g1" style="gap:10px">
 <div class="q"><div class="n">1</div><p>Viết mã để chữ “Tin học” <b>đậm</b>, màu đỏ, cỡ 20px.</p></div>
@@ -438,7 +461,167 @@ c</pre></div></div>
 <div class="q a"><div class="n">5</div><p>Thẻ đơn <code>&lt;hr&gt;</code>.</p></div>
 </div></section>
 
-<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 1</span><h1>Siêu liên kết &lt;a&gt;</h1></div>
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 1</span><h1>Danh sách có thứ tự: thẻ ol</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;ol type="i" start="3"&gt;
+  &lt;li&gt;Nếu &lt;b&gt;delta&lt;/b&gt; &amp;lt; 0: ...&lt;/li&gt;
+  &lt;li&gt;Nếu &lt;b&gt;delta&lt;/b&gt; = 0: ...&lt;/li&gt;
+  &lt;li&gt;Nếu &lt;b&gt;delta&lt;/b&gt; &amp;gt; 0: ...&lt;/li&gt;
+&lt;/ol&gt;</pre><div class="res"><span class="lab">Kết quả hiển thị</span><ol type="i" start="3"><li>Nếu <b style="color:#000">delta</b> &lt; 0: ...</li><li>Nếu <b style="color:#000">delta</b> = 0: ...</li><li>Nếu <b style="color:#000">delta</b> &gt; 0: ...</li></ol></div><div class="key"><code>start</code> là <b>số bắt đầu</b> đánh (ở đây 3, kiểu i nên hiện iii).</div></div>
+<div class="col"><table><tr><th>type</th><th>Kiểu đánh</th></tr><tr><td class="m">"1"</td><td>1, 2, 3 (mặc định)</td></tr><tr><td class="m">"a"</td><td>a, b, c</td></tr><tr><td class="m">"A"</td><td>A, B, C</td></tr><tr><td class="m">"i"</td><td>i, ii, iii</td></tr><tr><td class="m">"I"</td><td>I, II, III</td></tr></table><div class="warn"><code>ol</code> và <code>ul</code> chỉ chứa các thẻ <code>li</code>; mỗi mục là một <code>li</code>.</div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 1</span><h1>Danh sách không có thứ tự: thẻ ul</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;ul style="list-style-type: square"&gt;
+  &lt;li&gt;Nếu delta &amp;lt; 0: ...&lt;/li&gt;
+  &lt;li&gt;Nếu delta = 0: ...&lt;/li&gt;
+  &lt;li&gt;Nếu delta &amp;gt; 0: ...&lt;/li&gt;
+&lt;/ul&gt;</pre><div class="res"><span class="lab">Kết quả hiển thị</span><ul style="list-style-type:square"><li>Nếu delta &lt; 0: ...</li><li>Nếu delta = 0: ...</li><li>Nếu delta &gt; 0: ...</li></ul></div></div>
+<div class="col"><table><tr><th>list-style-type</th><th>Kí tự đầu dòng</th></tr><tr><td class="m">disc</td><td>chấm tròn đặc ●</td></tr><tr><td class="m">circle</td><td>vòng tròn rỗng ○</td></tr><tr><td class="m">square</td><td>hình vuông ■</td></tr><tr><td class="m">none</td><td>không có kí tự</td></tr></table><div class="key">Kí tự đầu dòng đặt bằng <b>list-style-type</b> trong thuộc tính <b>style</b> của thẻ ul.</div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 1</span><h1>Danh sách mô tả: dl, dt, dd</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;dl&gt;
+  &lt;dt&gt;Kem&lt;/dt&gt;
+  &lt;dd&gt;Món ăn ngọt, dạng
+      đông lạnh.&lt;/dd&gt;
+  &lt;dt&gt;Trà sữa&lt;/dt&gt;
+  &lt;dd&gt;Đồ uống làm từ trà
+      và sữa.&lt;/dd&gt;
+&lt;/dl&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><dl><dt>Kem</dt><dd>Món ăn ngọt, dạng đông lạnh.</dd><dt>Trà sữa</dt><dd>Đồ uống làm từ trà và sữa.</dd></dl></div><table><tr><th>Thẻ</th><th>Vai trò</th></tr><tr><td class="m">dl</td><td>bao toàn bộ danh sách</td></tr><tr><td class="m">dt</td><td>tên mục (thuật ngữ, nhãn)</td></tr><tr><td class="m">dd</td><td>mô tả của mục đó</td></tr></table><div class="key">Mặc định <code>dd</code> được <b>thụt vào</b> so với <code>dt</code>.</div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 1</span><h1>Danh sách lồng nhau</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;ol&gt;
+  &lt;li&gt;Thể thao
+    &lt;ol type="a"&gt;
+      &lt;li&gt;Bóng đá&lt;/li&gt;
+      &lt;li&gt;Bơi&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Nghệ thuật&lt;/li&gt;
+&lt;/ol&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><ol><li>Thể thao<ol type="a"><li>Bóng đá</li><li>Bơi</li></ol></li><li>Nghệ thuật</li></ol></div><div class="key">Danh sách con đặt <b>bên trong thẻ li</b> của mục cha (trước <code>&lt;/li&gt;</code>). Mức 1 đánh 1, 2, 3; mức 2 dùng <code>type="a"</code> để đánh a, b, c.</div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 2</span><h1>Bảng: table, tr, th, td, caption</h1></div>
+<div class="bd g2">
+<div class="col"><table><tr><th>Thẻ</th><th>Tạo ra</th></tr>
+<tr><td class="m">table</td><td>cả bảng</td></tr>
+<tr><td class="m">tr</td><td>một <b>hàng</b></td></tr>
+<tr><td class="m">th</td><td>ô <b>tiêu đề</b> (đậm, giữa ô)</td></tr>
+<tr><td class="m">td</td><td>ô <b>dữ liệu</b></td></tr>
+<tr><td class="m">caption</td><td>tiêu đề bảng (ngay sau table, trước tr đầu)</td></tr></table>
+<div class="key">Bảng được xây từ các <b>hàng</b>; mỗi hàng chứa các ô. Không có thẻ tạo “cột”: số cột là số ô của hàng.</div>
+<div class="warn">Thứ tự đọc mã: <b>từ trên xuống, từ trái sang phải</b>. Thẻ <code>td</code>, <code>th</code> phải nằm trong <code>tr</code>.</div></div>
+<div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">&lt;table border="1"&gt;
+  &lt;caption&gt;Hoá đơn&lt;/caption&gt;
+  &lt;tr&gt;&lt;th&gt;Món&lt;/th&gt;&lt;th&gt;Giá&lt;/th&gt;&lt;th&gt;SL&lt;/th&gt;&lt;th&gt;Tiền&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Thịt xiên&lt;/td&gt;&lt;td&gt;10K&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;&lt;td&gt;30&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Cá viên&lt;/td&gt;&lt;td&gt;5K&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;&lt;td&gt;30&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre><div class="res"><span class="lab">Kết quả hiển thị</span><table class="rt"><caption style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#000">Hoá đơn</caption><tr><th>Món</th><th>Giá</th><th>SL</th><th>Tiền</th></tr><tr><td>Thịt xiên</td><td>10K</td><td>3</td><td>30</td></tr><tr><td>Cá viên</td><td>5K</td><td>6</td><td>30</td></tr></table></div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 2</span><h1>Định dạng bảng: tiêu đề, khung, kích thước</h1></div>
+<div class="bd g2">
+<div class="col"><table><tr><th>Việc cần làm</th><th>Cách viết</th></tr>
+<tr><td>Tiêu đề bảng</td><td class="m">&lt;caption&gt;</td></tr>
+<tr><td>Khung viền</td><td class="m">border: 1px solid black</td></tr>
+<tr><td>Chiều rộng, cao</td><td class="m">width:80%; height:400px</td></tr></table>
+<div class="warn">Nên dùng <b>%</b> cho kích thước, tránh <b>px</b>: thiết bị hiển thị có số điểm ảnh khác nhau nên bảng có thể không hiển thị như mong đợi.</div></div>
+<div class="col"><div class="card"><h3>Thuộc tính border</h3><p>Ba phần, cách nhau bằng dấu cách:</p><p><code>độ dày</code> · <code>kiểu viền</code> · <code>màu</code></p><ul style="gap:3px"><li>Kiểu: <b>solid, dotted, double, none</b>.</li><li>Màu mặc định là đen, có thể bỏ qua.</li></ul></div><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;table style="width:80%;
+  border:1px solid blue"&gt;</pre></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 2</span><h1>Gộp ô: rowspan và colspan</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;table border="1"&gt;
+ &lt;tr&gt;
+  &lt;th rowspan="2"&gt;Họ và tên&lt;/th&gt;
+  &lt;th colspan="3"&gt;Điểm thi&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+  &lt;th&gt;Toán&lt;/th&gt;&lt;th&gt;Vật lí&lt;/th&gt;
+  &lt;th&gt;Hoá học&lt;/th&gt;
+ &lt;/tr&gt;
+&lt;/table&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><table class="rt"><tr><th rowspan="2">Họ và tên</th><th colspan="3">Điểm thi</th></tr><tr><th>Toán</th><th>Vật lí</th><th>Hoá học</th></tr></table></div><div class="key"><b>rowspan</b> gộp các hàng, <b>colspan</b> gộp các cột. Lưới 2 hàng × 4 cột; hàng 2 chỉ viết <b>3 ô</b> vì ô “Họ và tên” đã chiếm cột 1.</div></div><div class="ok"><p><b>Cách đếm:</b> số ô cần viết ở một hàng = số cột của bảng − số ô bị gộp từ các hàng trên xuống cột đó.</p></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 3</span><h1>Thực hành 1: danh sách câu lạc bộ</h1></div>
+<div class="bd g2">
+<div class="col"><div class="lab">Phân tích và mã HTML</div><pre class="code" style="font-size:calc(17px*var(--z,1))">&lt;h2&gt;Danh sách Câu lạc bộ&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;THỂ THAO
+    &lt;ol&gt;
+      &lt;li&gt;Bóng đá&lt;/li&gt;
+      &lt;li&gt;Bóng chuyền&lt;/li&gt;
+      &lt;li&gt;Bơi&lt;/li&gt;
+      &lt;li&gt;Võ thuật
+        &lt;ol type="a"&gt;
+          &lt;li&gt;Karatedo&lt;/li&gt;
+          &lt;li&gt;Taekwondo&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;NGHỆ THUẬT ... (làm tương tự)&lt;/li&gt;
+&lt;/ul&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:25px;font-weight:700">Danh sách Câu lạc bộ</div><ul><li>THỂ THAO<ol><li>Bóng đá</li><li>Bóng chuyền</li><li>Bơi</li><li>Võ thuật<ol type="a"><li>Karatedo</li><li>Taekwondo</li></ol></li></ol></li><li>NGHỆ THUẬT …</li></ul></div><div class="ok"><p><b>Các bước (SGK):</b> 1) tách thành phần: một tiêu đề và một danh sách lồng nhau; 2) tiêu đề dùng <code>h2</code>; 3) danh sách ngoài là <code>ul</code>; 4) mục THỂ THAO chứa <code>ol</code>, mục thứ tư của <code>ol</code> chứa <code>ol type="a"</code>.</p></div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 3</span><h1>Thực hành 2: bảng lịch hoạt động</h1></div>
+<div class="bd g2">
+<div class="col"><div class="lab">Hai hàng đầu (gộp ô)</div><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;table border="1"&gt;
+ &lt;caption&gt;Lịch hoạt động
+   CLB Thể thao&lt;/caption&gt;
+ &lt;tr&gt;
+  &lt;th rowspan="2"&gt;Bộ môn&lt;/th&gt;
+  &lt;th rowspan="2"&gt;GV phụ trách&lt;/th&gt;
+  &lt;th colspan="5"&gt;Ngày&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;&lt;th&gt;Thứ 2&lt;/th&gt; ...
+     &lt;th&gt;Thứ 6&lt;/th&gt;&lt;/tr&gt;</pre><div class="key">Hàng 1: 3 ô (<b>rowspan 2, rowspan 2, colspan 5</b>); hàng 2: <b>5 ô</b>; mỗi hàng dữ liệu: <b>7 ô td</b>. Bảng có 7 hàng, 7 cột.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><table class="rt"><caption style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#000">Lịch hoạt động CLB Thể thao</caption><tr><th rowspan="2">Bộ môn</th><th rowspan="2">GV phụ trách</th><th colspan="5">Ngày</th></tr><tr><th>Thứ 2</th><th>Thứ 3</th><th>Thứ 4</th><th>Thứ 5</th><th>Thứ 6</th></tr><tr><td>Bóng đá</td><td>Thầy Hùng</td><td>x</td><td></td><td>x</td><td></td><td>x</td></tr><tr><td>Bóng chuyền</td><td>Cô Lan</td><td></td><td>x</td><td></td><td>x</td><td></td></tr><tr><td>Karatedo</td><td>Thầy Hoàng</td><td>x</td><td></td><td></td><td>x</td><td></td></tr><tr><td>Taekwondo</td><td>Thầy Đức</td><td></td><td>x</td><td></td><td></td><td>x</td></tr><tr><td>Vovinam</td><td>Thầy Thắng</td><td>x</td><td>x</td><td></td><td></td><td></td></tr></table></div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px">
+<div class="q"><div class="n">1</div><p>Viết mã tạo danh sách có thứ tự đánh số <b>a, b, c</b> nhưng bắt đầu từ <b>c</b> với 3 mục tuỳ ý.</p></div>
+<div class="q"><div class="n">2</div><p>Chọn <code>ul</code>, <code>ol</code> hay <code>dl</code> cho: (a) các bước giải bài toán; (b) bảng thuật ngữ kèm giải nghĩa; (c) danh sách đồ dùng cần mang.</p></div>
+<div class="q"><div class="n">3</div><p>Bảng có 3 hàng: hàng 1 một ô <code>th colspan="3"</code>; hàng 2 và 3 mỗi hàng 3 ô <code>td</code>. Có mấy cột? Mã có bao nhiêu thẻ <code>th</code>, <code>td</code>?</p></div>
+<div class="q"><div class="n">4</div><p>Hàng 1: <code>&lt;th rowspan="2"&gt;A&lt;/th&gt;&lt;th&gt;B&lt;/th&gt;&lt;th&gt;C&lt;/th&gt;</code>. Hàng 2 cần viết mấy ô? Nếu viết 3 ô thì điều gì xảy ra?</p></div>
+<div class="q"><div class="n">5</div><p>Sửa lỗi: <code>&lt;ul&gt;&lt;li&gt;A&lt;/li&gt;&lt;ol&gt;&lt;li&gt;a1&lt;/li&gt;&lt;/ol&gt;&lt;/ul&gt;</code> để a1 là mục con của A.</p></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px">
+<div class="q a"><div class="n">1</div><p><code>&lt;ol type="a" start="3"&gt;</code> rồi 3 thẻ <code>li</code>: hiển thị <b>c, d, e</b>.</p></div>
+<div class="q a"><div class="n">2</div><p>(a) <b>ol</b> (có thứ tự); (b) <b>dl</b> với dt là thuật ngữ, dd là giải nghĩa; (c) <b>ul</b> (không cần thứ tự).</p></div>
+<div class="q a"><div class="n">3</div><p><b>3 cột</b> (ô gộp chiếm 3 cột). Có <b>1 th</b> và <b>6 td</b> = 7 ô được viết, nhưng lưới có 3 × 3 = 9 ô.</p></div>
+<div class="q a"><div class="n">4</div><p>Chỉ cần <b>2 ô</b> (cho cột 2 và 3). Viết 3 ô thì ô thừa bị đẩy sang <b>cột thứ 4</b>, bảng bị lệch và dư một cột.</p></div>
+<div class="q a"><div class="n">5</div><p>Đặt <code>ol</code> <b>bên trong li</b> của A: <code>&lt;li&gt;A&lt;ol&gt;&lt;li&gt;a1&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;</code>.</p></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 1</span><h1>Siêu văn bản, siêu liên kết và thẻ a</h1></div>
+<div class="bd g2">
+<div class="col"><div class="card"><h3>Khái niệm (SGK)</h3><ul style="gap:5px"><li><b>Siêu văn bản</b> (hypertext): văn bản chứa chữ, ảnh, âm thanh… và các <b>siêu liên kết</b> tới siêu văn bản khác.</li><li><b>Siêu liên kết</b> (liên kết): tham chiếu tới siêu văn bản khác; nháy chuột để truy cập, <b>không cần đọc tuần tự</b>.</li></ul></div>
+<table><tr><th>Tệp</th><th>Siêu văn bản?</th></tr><tr><td class="m">.html</td><td>Có</td></tr><tr><td class="m">.docx (Word)</td><td>Có thể</td></tr><tr><td class="m">.txt (Notepad)</td><td>Không</td></tr></table></div>
+<div class="col"><div class="lab">Cấu trúc chung của thẻ a</div><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;a href="URL"&gt;Nội dung hiển thị&lt;/a&gt;</pre><div class="ok"><p><code>href</code> cung cấp <b>địa chỉ đích</b> (URL); giá trị <b>đặt trong cặp dấu nháy kép</b>. Đích thường là trang HTML, nhưng cũng có thể là <b>ảnh, âm thanh, video</b>.</p></div><div class="res"><span class="lab">Kết quả hiển thị</span><span style="font-family:Georgia,serif;font-size:23px;color:#1565C0;text-decoration:underline">Nội dung hiển thị</span> <span style="font-size:19px">(văn bản có liên kết thường gạch chân, màu xanh)</span></div><div class="key">Có <b>hai loại URL</b>: đường dẫn <b>tuyệt đối</b> và đường dẫn <b>tương đối</b>.</div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 1</span><h1>Đường dẫn tuyệt đối và tương đối</h1></div>
+<div class="bd g1">
+<div class="col"><table><tr><th></th><th>Tuyệt đối</th><th>Tương đối</th></tr>
+<tr><td><b>Giao thức, tên miền</b></td><td>Có đầy đủ</td><td>Không có</td></tr>
+<tr><td><b>Dùng khi</b></td><td>liên kết tới website <b>khác</b> (liên kết ngoài)</td><td>liên kết tới tài liệu <b>cùng website</b> (liên kết trong)</td></tr>
+<tr><td><b>Ví dụ</b></td><td class="m">https://www.nxbgd.vn/</td><td class="m">BT/bai_tap_1.html</td></tr>
+<tr><td><b>Đặc điểm</b></td><td>chính xác nhưng dài</td><td>ngắn; chuyển cả website sang nơi khác vẫn đúng</td></tr></table>
+<div style="display:grid;grid-template-columns:1.1fr 1fr;gap:16px"><div class="card"><h3>SGK: phân loại đường dẫn</h3><ul style="gap:4px"><li><code>html/cach tao lien ket.html</code>: <b>tương đối</b>.</li><li><code>http://google.com</code>: <b>tuyệt đối</b>.</li><li><code>mail.google.com/mail/u/0/#inbox/…</code>: <b>tương đối</b> (không có giao thức ở đầu).</li></ul></div>
+<div class="warn">Viết <code>href="www.google.com"</code> (thiếu <code>https://</code>) là <b>sai</b>: trình duyệt tìm tệp tên “www.google.com” trong website hiện tại và báo lỗi.</div></div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 2</span><h1>Siêu liên kết &lt;a&gt;</h1></div>
 <div class="bd g2">
 <div class="col"><table><tr><th>Đích</th><th>Cách viết href</th></tr>
 <tr><td>Trang khác cùng website</td><td class="m">"bai2.html"</td></tr>
@@ -454,6 +637,18 @@ c</pre></div></div>
 &lt;h2 id="muc3"&gt;Mục 3&lt;/h2&gt;</pre>
 <div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:23px"><a href="#" style="color:#1565C0">Bài 2</a><br><a href="#" style="color:#1565C0">Nhảy tới mục 3</a><br>…<div style="font-size:30px;font-weight:700">Mục 3 ← nhấn là nhảy xuống đây</div></div></div>
 <div class="key">Đích của neo là thuộc tính <b>id</b> (duy nhất trong trang), <b>không</b> phải <code>name</code>. Quên dấu <b>#</b> thì trình duyệt hiểu là tên tệp.</div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 2</span><h1>Liên kết ngoài: tới trang web khác</h1></div>
+<div class="bd g2">
+<div class="col"><div class="card"><h3>Liên kết ngoài</h3><p>Liên kết từ một trang web tới trang web khác trên Internet. Dùng thẻ <code>a</code> với <b>đường dẫn tuyệt đối</b> trong <code>href</code>.</p></div><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;p&gt;
+ &lt;a href="https://hanhtrangso.nxbgd.vn
+ /sach-dien-tu?book_active=9"&gt;
+  Sách điện tử Kết nối tri thức
+  với cuộc sống
+ &lt;/a&gt;
+&lt;/p&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><span style="font-family:Georgia,serif;font-size:25px;color:#1565C0;text-decoration:underline">Sách điện tử Kết nối tri thức với cuộc sống</span></div><div class="ok"><p><b>Khi nháy chuột</b> vào liên kết, trình duyệt gọi tới trang web Sách điện tử và hiển thị nội dung trang đó.</p></div>
+<table><tr><th>Mở rộng</th><th>Cách viết</th></tr><tr><td>Mở ở tab mới</td><td class="m">target="_blank"</td></tr><tr><td>Gửi thư</td><td class="m">href="mailto:a@b.vn"</td></tr></table></div>
 </div></section>
 
 <section class="s p4"><div class="hd"><span class="k">BÀI 10 · 2</span><h1>Liên kết trong website: đường dẫn tương đối</h1></div>
@@ -480,6 +675,15 @@ c</pre></div></div>
 <div class="warn">Không dùng <code>C:\anh\a.png</code> hay dấu <code>\</code>. Tên tệp có thể phân biệt hoa/thường.</div></div>
 </div></section>
 
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 2</span><h1>Liên kết trong website: các trường hợp</h1></div>
+<div class="bd g2" style="grid-template-rows:1fr 1fr">
+<div class="card"><h3>1 · Cùng thư mục</h3><p>Chỉ cần tên tệp. Từ <b>index.html</b> tới <b>thong_tin.html</b>:</p><pre class="code" style="margin-top:6px">&lt;a href="thong_tin.html"&gt;Giới thiệu&lt;/a&gt;</pre></div>
+<div class="card"><h3>2 · Thư mục con, một cấp</h3><p>Tên thư mục, dấu <b>/</b>, tên tệp. Từ <b>index.html</b> tới <b>bai_tap_1.html</b>:</p><pre class="code" style="margin-top:6px">&lt;a href="bai_tap/bai_tap_1.html"&gt;Bài 1&lt;/a&gt;</pre></div>
+<div class="card"><h3>3 · Thư mục con, hai cấp trở lên</h3><p>Liệt kê lần lượt từ trên xuống, ngăn bằng <b>/</b>:</p><pre class="code" style="margin-top:6px;font-size:calc(18px*var(--z,1))">&lt;a href="bai_tap/on_tap/
+bai_tap_on_tap.html"&gt;Ôn tập&lt;/a&gt;</pre></div>
+<div class="card"><h3>4 · Lên thư mục mẹ: ../</h3><p>Mỗi <b>../</b> lùi một mức. Từ <b>bai_tap_1.html</b> về <b>index.html</b>:</p><pre class="code" style="margin-top:6px">&lt;a href="../index.html"&gt;Trang chủ&lt;/a&gt;</pre><p style="margin-top:6px">Từ <b>bai_tap_on_tap.html</b> về index: <code>../../index.html</code></p></div>
+</div></section>
+
 <section class="s p4"><div class="hd"><span class="k">BÀI 10 · 2</span><h1>Liên kết trong cùng trang và liên kết ảnh</h1></div>
 <div class="bd g2">
 <div class="col"><div class="card"><h3>Hai bước (như “cắm cờ”)</h3><ol style="gap:4px"><li>Đặt thuộc tính <b>id</b> tại vị trí đích.</li><li>Tạo liên kết <code>href="#mã_định_danh"</code>.</li></ol></div>
@@ -491,6 +695,28 @@ c</pre></div></div>
 &lt;/a&gt;</pre>
 <div class="res"><span class="lab">Kết quả hiển thị</span><div style="display:flex;gap:12px;align-items:center"><svg viewBox="0 0 80 80" style="width:80px"><circle cx="40" cy="40" r="22" fill="#FFB300"/></svg><span style="font-family:Georgia,serif;font-size:21px">Nháy vào ảnh Mặt Trời → mở <b>thong_tin.html</b></span></div></div>
 <div class="warn">Ảnh dùng <b>đường dẫn tương đối</b> để tránh lỗi khi ảnh trên mạng bị đổi. Liên kết còn trỏ được tới <b>ảnh, âm thanh, video, tệp PDF</b>, không chỉ trang HTML.</div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 3</span><h1>Thực hành 1: liên kết trong cùng trang</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;table id="CLBTT" border="1"&gt;
+  &lt;caption&gt;Lịch hoạt động
+    các CLB Thể thao&lt;/caption&gt;
+  ...
+&lt;/table&gt;
+...
+&lt;a href="#CLBTT"&gt;Theo dõi lịch
+  hoạt động các CLB Thể thao&lt;/a&gt;</pre></div><div class="col"><div class="ok"><p><b>Hai bước:</b></p><ol style="gap:4px"><li>Đặt thuộc tính <code>id="CLBTT"</code> (duy nhất) cho bảng đích.</li><li>Viết liên kết <code>href="#CLBTT"</code> ở nơi cần nhấn.</li></ol></div><div class="warn">Giá trị <code>id</code> phải <b>duy nhất</b> trong cả trang (mã định danh đoạn); hai phần tử trùng id làm liên kết nhảy sai chỗ.</div><div class="key">Nháy vào liên kết, trang <b>cuộn tới bảng</b> có id tương ứng. Giá trị href phải có dấu <b>#</b> ở đầu.</div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 3</span><h1>Thực hành 2: liên kết sang trang khác</h1></div>
+<div class="bd g2">
+<div class="col"><div class="lab">Trang chủ CLB.html</div><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;ul&gt;
+  &lt;li&gt;&lt;a href="thong_tin.html"&gt;
+    Thông tin các CLB&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="bai_tap_1.html"&gt;
+    Bài tập 1&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</pre><div class="res"><span class="lab">Kết quả hiển thị</span><ul><li style="color:#1565C0;text-decoration:underline">Thông tin các CLB</li><li style="color:#1565C0;text-decoration:underline">Bài tập 1</li></ul></div></div><div class="col"><div class="lab">Trang thong_tin.html (quay về)</div><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;a href="CLB.html"&gt;Về trang chủ&lt;/a&gt;</pre><div class="ok"><p>Hai tệp <b>cùng thư mục</b> nên chỉ cần tên tệp. Nếu ở thư mục con thì thêm <code>../</code> để lùi một mức.</p></div></div>
 </div></section>
 
 <section class="s p5"><div class="hd"><span class="k">BÀI 11 · 1</span><h1>Ảnh với &lt;img&gt;</h1></div>
