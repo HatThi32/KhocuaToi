@@ -1,0 +1,311 @@
+<!-- HEAD -->
+<title>SQL 4A · Liên kết bảng với JOIN</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p9"><div class="hd"><span class="k">TIN HỌC · SQL 4A</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>LIÊN KẾT BẢNG<br>VỚI JOIN</h1><p style="font-size:28px;line-height:1.5">Vì sao phải JOIN, INNER JOIN … ON, bí danh bảng, nối ba bảng, JOIN kết hợp GROUP BY, LEFT JOIN, lỗi thiếu ON, cột trùng tên; dữ liệu mymusic và thuexe lấy từ đề.</p><div><span class="chip">JOIN … ON</span><span class="chip">bí danh</span><span class="chip">3 bảng</span><span class="chip">LEFT JOIN</span><span class="chip">GROUP BY</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">JOIN … ON</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">bí danh</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">3 bảng</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">LEFT JOIN</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">GROUP BY</text></svg></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Hiểu <b>khoá ngoài</b> liên kết các bảng và vì sao cần <b>JOIN</b>.</li><li>Viết <b>INNER JOIN … ON</b> đúng điều kiện nối; dùng <b>bí danh</b>.</li><li>Nối <b>ba bảng</b> (ví dụ bannhac – nhacsi, banthuam – bannhac – casi).</li><li>Kết hợp <b>JOIN + WHERE + GROUP BY + HAVING + ORDER BY</b>.</li><li>Phân biệt <b>INNER JOIN</b> và <b>LEFT JOIN</b>; tránh lỗi thiếu ON.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>JOIN</li><li>Nối ba bảng</li><li>JOIN + nhóm</li><li>LEFT JOIN, lỗi</li><li>Tự kiểm tra</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 0</span><h1>CSDL mymusic: bốn bảng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khoá chính và khoá ngoài</h3><p style="margin:0 0 8px"><b>nhacsi</b>(idNhacsi, tenNhacsi); <b>casi</b>(idCasi, tenCasi).</p><p style="margin:0 0 8px"><b>bannhac</b>(idBannhac, tenBannhac, <b>idNhacsi</b>→nhacsi).</p><p style="margin:0 0 8px"><b>banthuam</b>(idBanthuam, <b>idBannhac</b>→bannhac, <b>idCasi</b>→casi): ai hát bản nhạc nào.</p><p style="margin:0 0 8px">Bản thu âm là bảng <b>trung gian</b> cho quan hệ nhiều–nhiều giữa bản nhạc và ca sĩ.</p></div></div><div class="col"><div class="res"><span class="lab">Bảng BANNHAC</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:15px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">idBannhac | tenBannhac                 | idNhacsi
+----------+----------------------------+---------
+1         | Du kích sông Thao          | 1       
+7         | Nhạc rừng                  | 3       
+6         | Tiến về Hà Nội             | 2       
+8         | Tiếng hát giữa rừng Pắc Bó | 4       
+3         | Tình ca                    | 3       
+2         | Trường ca Sông Lô          | 2       
+5         | Việt Nam quê hương tôi     | 1       
+4         | Xa khơi                    | 4       </pre></div><div class="res"><span class="lab">Bảng BANTHUAM</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:15px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">idBanthuam | idBannhac | idCasi
+-----------+-----------+-------
+1          | 1         | 5     
+9          | 2         | 1     
+2          | 2         | 2     
+3          | 3         | 1     
+4          | 4         | 3     
+5          | 5         | 4     
+10         | 6         | 4     
+6          | 6         | 5     
+7          | 7         | 4     
+8          | 8         | 2     </pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 1</span><h1>Vì sao phải JOIN?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Dữ liệu nằm rải rác nhiều bảng</h3><p style="margin:0 0 8px">Bảng <b>bannhac</b> chỉ lưu <b>idNhacsi</b> (số), không lưu <b>tên</b> nhạc sĩ.</p><p style="margin:0 0 8px">Muốn hiển thị “tên bản nhạc – tên nhạc sĩ” phải <b>nối</b> bannhac với nhacsi theo <b>khoá ngoài = khoá chính</b>.</p></div></div><div class="col"><div class="res"><span class="lab">Chỉ có mã nhạc sĩ</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">idBannhac | tenBannhac        | idNhacsi
+----------+-------------------+---------
+1         | Du kích sông Thao | 1       
+7         | Nhạc rừng         | 3       
+6         | Tiến về Hà Nội    | 2       </pre></div><div class="key">JOIN ghép dòng của hai bảng khi <b>giá trị khoá ngoài = giá trị khoá chính</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 1</span><h1>INNER JOIN … ON</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cú pháp</h3><p style="margin:0 0 8px"><b>FROM bảng1 JOIN bảng2 ON điều kiện nối</b>.</p><p style="margin:0 0 8px"><b>b</b>, <b>n</b> là <b>bí danh</b> bảng, giúp viết ngắn và <b>phân biệt cột trùng tên</b>.</p></div><pre class="code" style="font-size:calc(18px*var(--z,1))">SELECT b.tenBannhac, n.tenNhacsi
+FROM bannhac b
+INNER JOIN nhacsi n ON b.idNhacsi = n.idNhacsi</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:17px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">tenBannhac                 | tenNhacsi     
+---------------------------+---------------
+Du kích sông Thao          | Đỗ Nhuận      
+Nhạc rừng                  | Hoàng Việt    
+Tiến về Hà Nội             | Văn Cao       
+Tiếng hát giữa rừng Pắc Bó | Nguyễn Tài Tuệ
+Tình ca                    | Hoàng Việt    
+Trường ca Sông Lô          | Văn Cao       
+Việt Nam quê hương tôi     | Đỗ Nhuận      
+Xa khơi                    | Nguyễn Tài Tuệ</pre></div><div class="key">INNER JOIN chỉ giữ cặp dòng <b>khớp điều kiện ON</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 1</span><h1>Lọc theo tên (không viết thẳng mã)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Dùng tên thay mã</h3><p style="margin:0 0 8px">Đề: “Đếm số bản nhạc của Văn Cao (<b>viết theo tên</b> nhạc sĩ, không viết thẳng mã)”.</p><p style="margin:0 0 8px">Tên chỉ có ở nhacsi → JOIN rồi WHERE theo tên.</p></div><pre class="code" style="font-size:calc(17px*var(--z,1))">SELECT COUNT(*) AS SoBanNhac
+FROM bannhac b
+JOIN nhacsi n ON b.idNhacsi = n.idNhacsi
+WHERE n.tenNhacsi = 'Văn Cao'</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">SoBanNhac
+---------
+2        </pre></div><div class="key">Không viết <code>idNhacsi = 2</code> vì đề yêu cầu dùng tên.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 1</span><h1>Tên cột trùng: phải có bí danh hoặc tên bảng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cột không rõ ràng</h3><p style="margin:0 0 8px">Cả bannhac và nhacsi đều có cột <b>idNhacsi</b>: viết trần sẽ báo lỗi “ambiguous”.</p><p style="margin:0 0 8px">Quy tắc: viết <b>bảng.cột</b> hoặc <b>bí danh.cột</b> cho mọi cột khi có JOIN.</p></div></div><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">-- LỖI: không biết idNhacsi của bảng nào
+SELECT idNhacsi FROM bannhac b
+JOIN nhacsi n ON b.idNhacsi = n.idNhacsi;
+
+-- ĐÚNG
+SELECT n.idNhacsi FROM bannhac b
+JOIN nhacsi n ON b.idNhacsi = n.idNhacsi;</pre><div class="res"><span class="lab">Kết quả chạy câu bị lỗi</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:18px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">LỖI: ambiguous column name: idNhacsi</pre></div><div class="key">Luôn đặt <b>bí danh</b> và viết <b>bí_danh.cột</b> trong câu có JOIN.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 2</span><h1>Nối ba bảng: bản nhạc – ca sĩ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai JOIN liên tiếp</h3><p style="margin:0 0 8px">Nối <b>banthuam</b> với bannhac (lấy tên bản nhạc) rồi với casi (lấy tên ca sĩ): <b>mỗi JOIN có một ON</b>.</p><p style="margin:0 0 8px">Sắp xếp theo hai cột.</p></div><pre class="code" style="font-size:calc(15px*var(--z,1))">SELECT bn.tenBannhac, cs.tenCasi
+FROM banthuam bt
+JOIN bannhac bn ON bt.idBannhac = bn.idBannhac
+JOIN casi cs ON bt.idCasi = cs.idCasi
+ORDER BY bn.tenBannhac, cs.tenCasi</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:17px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">tenBannhac                 | tenCasi   
+---------------------------+-----------
+Du kích sông Thao          | Doãn Tần  
+Nhạc rừng                  | Quốc Hương
+Tiến về Hà Nội             | Doãn Tần  
+Tiến về Hà Nội             | Quốc Hương
+Tiếng hát giữa rừng Pắc Bó | Lê Dung   
+Trường ca Sông Lô          | Lê Dung   
+Trường ca Sông Lô          | Trần Khánh
+Tình ca                    | Trần Khánh
+Việt Nam quê hương tôi     | Quốc Hương
+Xa khơi                    | Tân Nhân  </pre></div><div class="key">Nối 3 bảng cần <b>2 điều kiện ON</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 2</span><h1>Sơ đồ nối ba bảng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đi theo khoá ngoài</h3><ol style="gap:6px"><li>banthuam.<b>idBannhac</b> = bannhac.<b>idBannhac</b>.</li><li>banthuam.<b>idCasi</b> = casi.<b>idCasi</b>.</li><li>Nối đủ để có <b>tên bản nhạc</b> và <b>tên ca sĩ</b> cùng một dòng.</li></ol></div></div><div class="col"><svg viewBox="0 0 520 220" style="width:100%"><g font-family="sans-serif" font-weight="800" font-size="20"><rect x="10" y="80" width="130" height="60" rx="8" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="75" y="118" text-anchor="middle" fill="#0B2545">bannhac</text><rect x="195" y="80" width="130" height="60" rx="8" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="260" y="118" text-anchor="middle" fill="#0B2545">banthuam</text><rect x="380" y="80" width="130" height="60" rx="8" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="445" y="118" text-anchor="middle" fill="#0B2545">casi</text><line x1="140" y1="110" x2="195" y2="110" stroke="#C62828" stroke-width="4"/><line x1="325" y1="110" x2="380" y2="110" stroke="#C62828" stroke-width="4"/><text x="167" y="70" text-anchor="middle" font-size="15" fill="#C62828">idBannhac</text><text x="352" y="70" text-anchor="middle" font-size="15" fill="#C62828">idCasi</text></g></svg><div class="key">Bảng ở giữa (<b>banthuam</b>) chứa <b>hai khoá ngoài</b>: là cầu nối.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 2</span><h1>JOIN + GROUP BY: tổng số bản thu âm của mỗi nhạc sĩ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nhóm sau khi nối</h3><p style="margin:0 0 8px">“Với mỗi nhạc sĩ, cho biết tên và tổng số bản thu âm của các bản nhạc do nhạc sĩ đó sáng tác”.</p><p style="margin:0 0 8px">Nối 3 bảng, <b>nhóm theo nhạc sĩ</b>, đếm.</p></div><pre class="code" style="font-size:calc(14px*var(--z,1))">SELECT n.tenNhacsi, COUNT(*) AS SoBanThuAm
+FROM nhacsi n
+JOIN bannhac bn ON bn.idNhacsi = n.idNhacsi
+JOIN banthuam bt ON bt.idBannhac = bn.idBannhac
+GROUP BY n.idNhacsi, n.tenNhacsi
+ORDER BY SoBanThuAm DESC, n.tenNhacsi</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:18px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">tenNhacsi      | SoBanThuAm
+---------------+-----------
+Văn Cao        | 4         
+Hoàng Việt     | 2         
+Nguyễn Tài Tuệ | 2         
+Đỗ Nhuận       | 2         </pre></div><div class="key">Nhóm theo <b>khoá (idNhacsi)</b> và tên để tránh gộp nhầm hai người trùng tên.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 2</span><h1>JOIN + WHERE: nhạc sĩ có bản nhạc do Quốc Hương hát</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nối bốn bảng</h3><p style="margin:0 0 8px">Nối cả <b>bốn bảng</b>, lọc tên ca sĩ, <b>DISTINCT</b> để mỗi nhạc sĩ một lần.</p></div><pre class="code" style="font-size:calc(14px*var(--z,1))">SELECT DISTINCT n.tenNhacsi
+FROM nhacsi n
+JOIN bannhac bn ON bn.idNhacsi = n.idNhacsi
+JOIN banthuam bt ON bt.idBannhac = bn.idBannhac
+JOIN casi cs ON cs.idCasi = bt.idCasi
+WHERE cs.tenCasi = 'Quốc Hương'</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">tenNhacsi 
+----------
+Đỗ Nhuận  
+Văn Cao   
+Hoàng Việt</pre></div><div class="key">Không có DISTINCT, nhạc sĩ có nhiều bản do Quốc Hương hát bị lặp.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 2</span><h1>JOIN trên thuexe: ba bảng, nhiều điều kiện</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mẫu HSG</h3><p style="margin:0 0 8px">Mẫu của đề: <b>nối bảng → WHERE từng lượt → GROUP BY khách → HAVING tổng</b>.</p></div><pre class="code" style="font-size:calc(13px*var(--z,1))">SELECT k.MaKT, k.TenKT, SUM(l.SoGio) AS TongGio
+FROM KhachThue k
+JOIN LuotThue l ON k.MaKT = l.MaKT
+JOIN PhuongTien p ON p.MaPT = l.MaPT
+WHERE p.LoaiPT = 'Xe điện' AND l.Tram = 'DN01' AND l.NgayThue LIKE '2026%'
+GROUP BY k.MaKT, k.TenKT
+HAVING SUM(l.SoGio) &gt;= 6</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">MaKT | TenKT | TongGio
+-----+-------+--------
+K001 | An    | 7      
+K002 | Bình  | 6      </pre></div><div class="key">Nhóm theo <b>MaKT (khoá chính)</b>; có thêm TenKT để hiển thị.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 3</span><h1>INNER JOIN và LEFT JOIN</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>INNER JOIN</th><th>LEFT JOIN</th></tr><tr><td><b>Giữ dòng nào?</b></td><td>chỉ dòng có <b>cặp khớp</b> ở cả hai bảng</td><td><b>mọi dòng bảng trái</b>; không khớp thì cột bên phải là <b>NULL</b></td></tr><tr><td><b>Dùng khi</b></td><td>chỉ quan tâm dữ liệu có liên kết</td><td>cần liệt kê cả đối tượng <b>chưa có</b> liên kết (khách chưa thuê)</td></tr><tr><td><b>Ví dụ</b></td><td>khách đã có lượt thuê</td><td>khách chưa từng thuê</td></tr></table><div class="key">Tìm đối tượng “<b>chưa từng</b> …” → <b>LEFT JOIN … WHERE cột_bên_phải IS NULL</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 3</span><h1>LEFT JOIN: khách chưa từng thuê</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mẫu “chưa từng”</h3><p style="margin:0 0 8px">K006 (Khoa) không có lượt thuê nào: LEFT JOIN giữ lại dòng của Khoa, các cột của LuotThue là NULL, rồi lọc <b>IS NULL</b>.</p></div><pre class="code" style="font-size:calc(18px*var(--z,1))">SELECT k.MaKT, k.TenKT
+FROM KhachThue k
+LEFT JOIN LuotThue l ON k.MaKT = l.MaKT
+WHERE l.MaLuot IS NULL</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">MaKT | TenKT
+-----+------
+K006 | Khoa </pre></div><div class="key">INNER JOIN sẽ <b>làm mất</b> khách này.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 3</span><h1>Lỗi kinh điển: JOIN thiếu điều kiện ON</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Tích Descartes</h3><p style="margin:0 0 8px">Thiếu <b>ON</b> (hoặc nối sai cột) → mỗi dòng bảng 1 ghép <b>với mọi dòng</b> bảng 2.</p><p style="margin:0 0 8px">KhachThue 6 dòng × LuotThue 12 dòng = <b>72</b> dòng vô nghĩa.</p></div></div><div class="col"><div class="res"><span class="lab">Số dòng khi không có điều kiện nối</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">so_dong
+-------
+72     </pre></div><pre class="code" style="font-size:calc(19px*var(--z,1))">SELECT COUNT(*) FROM KhachThue
+CROSS JOIN LuotThue;       -- 72
+
+SELECT COUNT(*) FROM KhachThue k
+JOIN LuotThue l ON k.MaKT = l.MaKT; -- 12</pre><div class="key">Số dòng sau JOIN <b>vượt xa</b> dự kiến → kiểm tra lại <b>ON</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 4</span><h1>Tự kiểm tra 1: viết điều kiện nối</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Viết câu liệt kê tên bản nhạc và tên nhạc sĩ của bản nhạc đó.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><code>SELECT b.tenBannhac, n.tenNhacsi FROM bannhac b JOIN nhacsi n ON b.idNhacsi = n.idNhacsi;</code></p><p style="margin:0 0 8px">Điều kiện nối: <b>khoá ngoài = khoá chính</b>.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 4</span><h1>Tự kiểm tra 2: dự đoán kết quả</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Không chạy máy, dự đoán số dòng kết quả.</p><pre class="code" style="font-size:calc(20px*var(--z,1))">SELECT k.TenKT, l.SoGio
+FROM KhachThue k
+JOIN LuotThue l ON k.MaKT = l.MaKT;</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Mỗi lượt thuê khớp đúng một khách → <b>12</b> dòng (bằng số lượt thuê). Khách K006 không có lượt nên không xuất hiện.</p><p style="margin:0 0 8px">Chạy thật: <b>12</b> dòng.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · 4</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) INNER JOIN giữ dòng không khớp. (b) LEFT JOIN giữ mọi dòng bảng trái. (c) Nối 3 bảng cần 2 điều kiện ON. (d) Thiếu ON cho tích Descartes. (e) Khi có JOIN, cột trùng tên phải viết kèm bí danh.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Sai</b>: chỉ giữ dòng khớp.</p><p style="margin:0 0 8px">(b) <b>Đúng</b>.</p><p style="margin:0 0 8px">(c) <b>Đúng</b>.</p><p style="margin:0 0 8px">(d) <b>Đúng</b>.</p><p style="margin:0 0 8px">(e) <b>Đúng</b>.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>JOIN … ON khoá ngoài = khoá chính</b> ghép các bảng.</li><li>Dùng <b>bí danh</b>, viết <b>bí_danh.cột</b>.</li><li>Nối n bảng cần <b>n−1 điều kiện ON</b>.</li><li>JOIN + WHERE → GROUP BY → HAVING → ORDER BY.</li><li>“Chưa từng” → <b>LEFT JOIN … IS NULL</b>; thiếu ON → tích Descartes.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Nối hai bảng</td><td>JOIN … ON</td></tr><tr><td class="m">Giữ mọi dòng trái</td><td>LEFT JOIN</td></tr><tr><td class="m">Mỗi nhạc sĩ một lần</td><td>DISTINCT / GROUP BY</td></tr><tr><td class="m">Chưa từng</td><td>LEFT JOIN … IS NULL</td></tr></table><div class="warn">Thiếu ON; cột trùng tên không bí danh; dùng INNER JOIN khi cần LEFT JOIN; nhóm theo tên thay vì khoá.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>USING(cột)</b> khi tên cột giống nhau.</li><li><b>NATURAL JOIN</b> nên tránh.</li><li><b>Self join</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>RIGHT/FULL JOIN</b>.</li><li>Thứ tự JOIN và hiệu năng.</li><li><b>EXISTS</b> thay LEFT JOIN … IS NULL.</li></ul></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Điều kiện nối thường là?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Giữ mọi dòng bảng trái?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Số điều kiện ON khi nối 4 bảng?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Lỗi khi thiếu ON?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Liệt kê khách chưa từng thuê?</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>khoá ngoài = khoá chính</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>LEFT JOIN</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>3</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>Tích Descartes</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>LEFT JOIN … WHERE … IS NULL</b>.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Liệt kê tên bản nhạc và tên nhạc sĩ.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Liệt kê MaLuot và LoaiPT của mọi lượt thuê.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Tên bản nhạc và tên ca sĩ, sắp theo tên bản nhạc rồi ca sĩ.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Tổng giờ mỗi loại phương tiện.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Với mỗi ca sĩ, số bản nhạc KHÁC NHAU đã thể hiện.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Khách chưa từng thuê xe điện.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>JOIN bannhac, nhacsi.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>JOIN LuotThue, PhuongTien.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>JOIN 3 bảng + ORDER BY 2 cột.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>GROUP BY LoaiPT với SUM(SoGio).</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">SQL 4A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>COUNT(DISTINCT idBannhac) GROUP BY ca sĩ.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>NOT IN / LEFT JOIN điều kiện loại xe điện.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

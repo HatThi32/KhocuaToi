@@ -1,0 +1,325 @@
+<!-- HEAD -->
+<title>SQL 3B · GROUP BY, HAVING và thứ tự thực hiện</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p8"><div class="hd"><span class="k">TIN HỌC · SQL 3B</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>GROUP BY, HAVING<br>VÀ THỨ TỰ THỰC HIỆN</h1><p style="font-size:28px;line-height:1.5">Gom nhóm, hàm tổng hợp theo nhóm, WHERE khác HAVING, thứ tự thực hiện, ORDER BY với bí danh, các mẫu câu hỏi HSG trên CSDL thuexe, quanly_diem, thuvien.</p><div><span class="chip">GROUP BY</span><span class="chip">HAVING</span><span class="chip">WHERE ≠ HAVING</span><span class="chip">alias</span><span class="chip">thứ tự</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">GROUP BY</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">HAVING</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">WHERE ≠ HAVING</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">alias</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">thứ tự</text></svg></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Hiểu <b>GROUP BY</b>: gom dòng thành nhóm rồi tính theo nhóm.</li><li>Phân biệt <b>WHERE (lọc dòng)</b> và <b>HAVING (lọc nhóm)</b>.</li><li>Nắm <b>thứ tự thực hiện</b>: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT.</li><li>Viết đúng mẫu: <b>“với mỗi … cho biết …”</b>, <b>“các … có tổng/số lượng từ … trở lên”</b>.</li><li>Dùng <b>bí danh cột</b> trong ORDER BY.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>GROUP BY</li><li>HAVING</li><li>Thứ tự thực hiện</li><li>Mẫu câu HSG</li><li>Tự kiểm tra</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 1</span><h1>Vì sao cần GROUP BY?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi theo nhóm</h3><p style="margin:0 0 8px">Không có GROUP BY, hàm tổng hợp gộp <b>cả bảng</b> thành một số.</p><p style="margin:0 0 8px">Đề thường hỏi <b>“với mỗi khách…”</b>: cần một kết quả <b>cho từng khách</b>.</p></div><pre class="code" style="font-size:calc(22px*var(--z,1))">SELECT SUM(SoGio) AS TongGio
+FROM LuotThue</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">TongGio
+-------
+42     </pre></div><div class="key">Muốn kết quả theo từng nhóm → <b>GROUP BY</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 1</span><h1>GROUP BY: tổng giờ của từng khách</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Gom nhóm</h3><p style="margin:0 0 8px"><b>GROUP BY MaKT</b>: gom các dòng có cùng MaKT thành một nhóm, rồi hàm tổng hợp tính <b>trong từng nhóm</b>.</p><p style="margin:0 0 8px">Mỗi nhóm cho <b>một dòng kết quả</b>.</p></div><pre class="code" style="font-size:calc(22px*var(--z,1))">SELECT MaKT, SUM(SoGio) AS TongGio
+FROM LuotThue
+GROUP BY MaKT</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">MaKT | TongGio
+-----+--------
+K001 | 11     
+K002 | 12     
+K003 | 7      
+K004 | 4      
+K005 | 8      </pre></div><div class="key">5 khách → 5 dòng.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 1</span><h1>Cơ chế gom nhóm: nhìn từng bước</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba bước trong đầu</h3><ol style="gap:6px"><li>Lấy các dòng của bảng (sau WHERE).</li><li><b>Gom</b> các dòng có cùng giá trị cột trong GROUP BY.</li><li>Với <b>mỗi nhóm</b>, tính SUM/COUNT/… và ghi một dòng.</li></ol></div></div><div class="col"><table><tr><th>MaKT</th><th>Các SoGio trong nhóm</th><th>SUM</th></tr><tr><td>K001</td><td>3, 3, 4, 1</td><td><b>11</b></td></tr><tr><td>K002</td><td>2, 6, 4</td><td><b>12</b></td></tr><tr><td>K003</td><td>5, 2</td><td><b>7</b></td></tr><tr><td>K004</td><td>2, 2</td><td><b>4</b></td></tr><tr><td>K005</td><td>8</td><td><b>8</b></td></tr></table><div class="key">Kiểm tra: kết quả chạy thật ở slide trước trùng với bảng này.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 1</span><h1>Đếm số lượt thuê mỗi loại phương tiện</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nhóm + xếp hạng</h3><p style="margin:0 0 8px">“Hiển thị loại phương tiện và số lượt thuê, xếp giảm dần theo SoLuot”.</p><p style="margin:0 0 8px"><b>ORDER BY</b> dùng được <b>bí danh</b> SoLuot.</p></div><pre class="code" style="font-size:calc(17px*var(--z,1))">SELECT p.LoaiPT, COUNT(*) AS SoLuot
+FROM LuotThue l
+JOIN PhuongTien p ON l.MaPT = p.MaPT
+GROUP BY p.LoaiPT
+ORDER BY SoLuot DESC</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">LoaiPT  | SoLuot
+--------+-------
+Xe điện | 9     
+Xe đạp  | 2     
+Xe máy  | 1     </pre></div><div class="key">Cột trong SELECT hoặc nằm trong <b>GROUP BY</b>, hoặc nằm trong <b>hàm tổng hợp</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 1</span><h1>Quy tắc vàng của SELECT khi có GROUP BY</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cột nào được chọn?</h3><p style="margin:0 0 8px">Mỗi cột trong SELECT phải thuộc một trong hai loại:</p><p style="margin:0 0 8px">1. <b>Có trong GROUP BY</b>.</p><p style="margin:0 0 8px">2. <b>Nằm trong hàm tổng hợp</b> (SUM, COUNT…).</p><p style="margin:0 0 8px">Cột khác không xác định được giá trị đại diện cho nhóm → <b>sai</b> (nhiều hệ quản trị báo lỗi).</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">-- ĐÚNG
+SELECT MaKT, SUM(SoGio)
+FROM LuotThue GROUP BY MaKT;
+
+-- SAI: Tram không nằm trong
+-- GROUP BY cũng không có hàm
+SELECT MaKT, Tram, SUM(SoGio)
+FROM LuotThue GROUP BY MaKT;</pre><div class="key">Muốn lấy thêm cột → đưa vào <b>GROUP BY</b> hoặc bọc bằng <b>MIN/MAX</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 2</span><h1>HAVING: lọc nhóm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lọc sau khi gom</h3><p style="margin:0 0 8px"><b>HAVING</b> lọc <b>các nhóm</b> sau khi đã tính hàm tổng hợp.</p><p style="margin:0 0 8px">“Khách có tổng từ 8 giờ trở lên” → điều kiện trên <b>SUM</b> → phải ở <b>HAVING</b>.</p></div><pre class="code" style="font-size:calc(22px*var(--z,1))">SELECT MaKT, SUM(SoGio) AS TongGio
+FROM LuotThue
+GROUP BY MaKT
+HAVING SUM(SoGio) &gt;= 8</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">MaKT | TongGio
+-----+--------
+K001 | 11     
+K002 | 12     
+K005 | 8      </pre></div><div class="key">WHERE <b>không</b> dùng được hàm tổng hợp.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 2</span><h1>Khách có từ 3 lượt thuê trở lên</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>HAVING với COUNT</h3><p style="margin:0 0 8px">Điều kiện trên <b>số lượng</b> (COUNT) của nhóm → <b>HAVING</b>.</p></div><pre class="code" style="font-size:calc(22px*var(--z,1))">SELECT MaKT, COUNT(*) AS SoLuot
+FROM LuotThue
+GROUP BY MaKT
+HAVING COUNT(*) &gt;= 3</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">MaKT | SoLuot
+-----+-------
+K001 | 4     
+K002 | 3     </pre></div><div class="key">Đáp án chạy thật: K001 (4 lượt) và K002 (3 lượt).</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 2</span><h1>WHERE và HAVING</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>WHERE</th><th>HAVING</th></tr><tr><td><b>Lọc cái gì?</b></td><td>từng <b>dòng</b></td><td>từng <b>nhóm</b></td></tr><tr><td><b>Thời điểm</b></td><td><b>trước</b> GROUP BY</td><td><b>sau</b> GROUP BY</td></tr><tr><td><b>Dùng hàm tổng hợp?</b></td><td><b>không</b></td><td><b>có</b></td></tr><tr><td><b>Ví dụ</b></td><td><code>WHERE Tram='DN01'</code></td><td><code>HAVING SUM(SoGio)&gt;=5</code></td></tr></table><div class="key">Điều kiện trên <b>từng lượt thuê</b> (trạm, năm, loại) → WHERE. Điều kiện trên <b>tổng, số lượng, trung bình</b> → HAVING.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 2</span><h1>Kết hợp WHERE và HAVING</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai tầng lọc</h3><p style="margin:0 0 8px">Đề: “tổng giờ thuê tại trạm DN01 trong năm 2026, chỉ lấy khách có tổng từ 6 giờ trở lên”.</p><p style="margin:0 0 8px"><b>WHERE</b> lọc từng lượt (trạm, năm); <b>HAVING</b> lọc tổng.</p></div><pre class="code" style="font-size:calc(17px*var(--z,1))">SELECT MaKT, SUM(SoGio) AS TongGio
+FROM LuotThue
+WHERE Tram = 'DN01' AND NgayThue LIKE '2026%'
+GROUP BY MaKT
+HAVING SUM(SoGio) &gt;= 6</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">MaKT | TongGio
+-----+--------
+K001 | 11     
+K002 | 6      </pre></div><div class="key">Lượt thuê K003 năm 2025 và tại DN02 <b>không được cộng</b> vì bị WHERE loại trước.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 3</span><h1>Thứ tự thực hiện (khác thứ tự viết)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Máy chạy câu lệnh theo thứ tự này</h3><ol style="gap:6px"><li><b>FROM</b> (và JOIN): lấy bảng.</li><li><b>WHERE</b>: lọc dòng.</li><li><b>GROUP BY</b>: gom nhóm.</li><li><b>HAVING</b>: lọc nhóm.</li><li><b>SELECT</b>: chọn cột, tính biểu thức, đặt bí danh.</li><li><b>ORDER BY</b>: sắp xếp.</li><li><b>LIMIT</b>: cắt số dòng.</li></ol></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">SELECT MaKT, SUM(SoGio) AS T
+FROM LuotThue
+WHERE Tram='DN01'
+GROUP BY MaKT
+HAVING SUM(SoGio) &gt;= 5
+ORDER BY T DESC
+LIMIT 3;</pre><div class="key">Vì <b>SELECT chạy sau WHERE và HAVING</b>, bí danh đặt ở SELECT thường <b>không dùng được trong WHERE</b>; nhưng <b>ORDER BY dùng được</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 3</span><h1>Xếp theo tổng giảm dần rồi lấy</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mẫu chuẩn</h3><p style="margin:0 0 8px">Mẫu quen thuộc của đề: <b>GROUP BY → HAVING → ORDER BY … DESC</b>.</p></div><pre class="code" style="font-size:calc(19px*var(--z,1))">SELECT MaKT, SUM(SoGio) AS TongGio
+FROM LuotThue
+GROUP BY MaKT
+HAVING SUM(SoGio) &gt;= 5
+ORDER BY TongGio DESC</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">MaKT | TongGio
+-----+--------
+K002 | 12     
+K001 | 11     
+K005 | 8      
+K003 | 7      </pre></div><div class="key">Đây là đáp án đúng của câu “tổng giờ, chỉ lấy từ 5 trở lên, xếp giảm dần”.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 4</span><h1>Mẫu: với mỗi lớp, số học sinh</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Với mỗi …</h3><p style="margin:0 0 8px">“Với mỗi lớp, cho biết tên lớp và số học sinh”.</p><p style="margin:0 0 8px">Nhóm theo <b>Lop</b>, đếm bằng <b>COUNT(*)</b>.</p></div><pre class="code" style="font-size:calc(22px*var(--z,1))">SELECT Lop, COUNT(*) AS SoHS
+FROM HocSinh
+GROUP BY Lop</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">Lop  | SoHS
+-----+-----
+12A1 | 4   
+12A2 | 3   
+12A3 | 3   </pre></div><div class="key">Dữ liệu từ CSDL <b>quanly_diem</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 4</span><h1>Mẫu: lớp có từ 2 học sinh sinh năm 2008</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>WHERE + HAVING</h3><p style="margin:0 0 8px">Điều kiện “sinh năm 2008” là của <b>từng học sinh</b> → WHERE; “từ 2 học sinh trở lên” là của <b>nhóm</b> → HAVING.</p></div><pre class="code" style="font-size:calc(18px*var(--z,1))">SELECT Lop, COUNT(*) AS SoHS
+FROM HocSinh
+WHERE NgaySinh LIKE '2008%'
+GROUP BY Lop
+HAVING COUNT(*) &gt;= 2</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">Lop  | SoHS
+-----+-----
+12A1 | 2   
+12A2 | 3   </pre></div><div class="key">Chạy thật: 12A1 có 2 em (Bảo, Nam) và 12A2 có 3 em sinh năm 2008; 12A3 chỉ 1 em nên bị loại.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 4</span><h1>Mẫu: điểm trung bình môn Tin theo lớp (JOIN)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mẫu nâng cao</h3><p style="margin:0 0 8px">“Các lớp có điểm trung bình môn Tin năm học 2024-2025 từ 8,0 trở lên”.</p><p style="margin:0 0 8px">Điểm ở KetQua, lớp ở HocSinh → <b>JOIN</b>.</p></div><pre class="code" style="font-size:calc(16px*var(--z,1))">SELECT h.Lop, AVG(k.Diem) AS DiemTB
+FROM KetQua k
+JOIN HocSinh h ON k.MaHS = h.MaHS
+WHERE k.MaMon = 'TIN' AND k.NamHoc = '2024-2025'
+GROUP BY h.Lop
+HAVING AVG(k.Diem) &gt;= 8</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">Lop  | DiemTB
+-----+-------
+12A1 | 8.25  </pre></div><div class="key">Gồm cả ba tầng: JOIN, WHERE, GROUP BY + HAVING.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 4</span><h1>Mẫu: sách được ít nhất 2 độc giả KHÁC NHAU mượn</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đếm khác nhau theo nhóm</h3><p style="margin:0 0 8px">“<b>khác nhau</b>” → <b>COUNT(DISTINCT MaDG)</b>; S002 được mượn 5 lần nhưng bởi mấy người? Xem kết quả.</p></div><pre class="code" style="font-size:calc(17px*var(--z,1))">SELECT MaSach, COUNT(DISTINCT MaDG) AS SoDG
+FROM MuonSach
+GROUP BY MaSach
+HAVING COUNT(DISTINCT MaDG) &gt;= 2</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">MaSach | SoDG
+-------+-----
+S001   | 2   
+S002   | 3   
+S003   | 2   
+S005   | 2   </pre></div><div class="key">COUNT(*) đếm lượt mượn, COUNT(DISTINCT) đếm người.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 4</span><h1>Mẫu: tổng số ngày mượn từ 10 trở lên</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Tổng theo nhóm</h3><p style="margin:0 0 8px">“Các độc giả có TỔNG số ngày mượn từ 10 ngày trở lên, sắp giảm dần theo TongNgay”.</p></div><pre class="code" style="font-size:calc(17px*var(--z,1))">SELECT MaDG, SUM(SoNgay) AS TongNgay
+FROM MuonSach
+GROUP BY MaDG
+HAVING SUM(SoNgay) &gt;= 10
+ORDER BY TongNgay DESC</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy SQL</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">MaDG | TongNgay
+-----+---------
+D001 | 24      
+D003 | 23      
+D002 | 17      
+D004 | 12      </pre></div><div class="key">Mẫu “tổng từ … trở lên” = <b>SUM … HAVING … &gt;=</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 5</span><h1>Tự kiểm tra 1: WHERE hay HAVING?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Mỗi điều kiện đặt ở WHERE hay HAVING? (a) trạm = DN01; (b) tổng giờ ≥ 6; (c) năm 2026; (d) số lượt ≥ 3.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>WHERE</b>: điều kiện của từng lượt.</p><p style="margin:0 0 8px">(b) <b>HAVING</b>: trên SUM.</p><p style="margin:0 0 8px">(c) <b>WHERE</b>: điều kiện của từng lượt.</p><p style="margin:0 0 8px">(d) <b>HAVING</b>: trên COUNT.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 5</span><h1>Tự kiểm tra 2: dự đoán kết quả</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Không chạy máy, dự đoán kết quả rồi đối chiếu.</p><pre class="code" style="font-size:calc(20px*var(--z,1))">SELECT MaKT, COUNT(*) AS n
+FROM LuotThue
+GROUP BY MaKT
+HAVING COUNT(*) &gt;= 2
+ORDER BY n DESC, MaKT;</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Số lượt: K001 = 4; K002 = 3; K003 = 2; K004 = 2; K005 = 1 (loại).</p><p style="margin:0 0 8px">Chạy thật:<pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">MaKT | n
+-----+--
+K001 | 4
+K002 | 3
+K003 | 2
+K004 | 2</pre></p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · 5</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) WHERE dùng được SUM. (b) HAVING chạy sau GROUP BY. (c) Cột trong SELECT có thể là cột bất kì khi GROUP BY. (d) ORDER BY dùng được bí danh. (e) “từ 3 trở lên” là &gt; 3.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Sai</b>: dùng HAVING.</p><p style="margin:0 0 8px">(b) <b>Đúng</b>.</p><p style="margin:0 0 8px">(c) <b>Sai</b>: phải thuộc GROUP BY hoặc nằm trong hàm tổng hợp.</p><p style="margin:0 0 8px">(d) <b>Đúng</b>.</p><p style="margin:0 0 8px">(e) <b>Sai</b>: là <b>&gt;= 3</b>.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>GROUP BY</b> gom nhóm rồi tính theo nhóm.</li><li><b>WHERE</b> lọc dòng (trước), <b>HAVING</b> lọc nhóm (sau, dùng được hàm tổng hợp).</li><li>Thứ tự chạy: <b>FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</b>.</li><li>Cột ở SELECT: thuộc GROUP BY hoặc nằm trong hàm tổng hợp.</li><li>“Khác nhau” → <b>COUNT(DISTINCT)</b>; “từ … trở lên” → <b>&gt;=</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Lọc tổng</td><td>HAVING SUM(…) &gt;= n</td></tr><tr><td class="m">Lọc từng dòng</td><td>WHERE</td></tr><tr><td class="m">Với mỗi …</td><td>GROUP BY</td></tr><tr><td class="m">Xếp giảm</td><td>ORDER BY … DESC</td></tr></table><div class="warn">Dùng SUM trong WHERE; thiếu GROUP BY; chọn cột lạ; nhầm &gt; với &gt;=.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Có thể GROUP BY <b>nhiều cột</b>.</li><li><b>HAVING</b> không bắt buộc đi với GROUP BY.</li><li>Bí danh dùng được ở ORDER BY.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Window function</b> (ROW_NUMBER).</li><li><b>ROLLUP</b>.</li><li>Tối ưu truy vấn lớn.</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mệnh đề lọc nhóm?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mệnh đề chạy trước SELECT?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đếm người khác nhau theo nhóm?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>“Từ 2 trở lên”?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Nơi đặt điều kiện trên SUM?</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>HAVING</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>WHERE, GROUP BY, HAVING</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>COUNT(DISTINCT)</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>&gt;= 2</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>HAVING</b>.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Số lượt thuê của từng trạm.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Tổng giờ mỗi khách, xếp giảm dần.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Trạm có từ 4 lượt thuê trở lên.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Số học sinh mỗi lớp, chỉ lớp có từ 3 em.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Loại phương tiện đã được từ 3 khách KHÁC NHAU trở lên thuê.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Khách có tổng giờ thuê xe điện tại DN01 năm 2026 từ 6 giờ trở lên, hiển thị MaKT, TenKT, TongGio.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Tram | COUNT(*) / -----+--------- / DN01 | 10       / DN02 | 1        / DN03 | 1       .</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>GROUP BY MaKT ORDER BY SUM(SoGio) DESC</code>.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>GROUP BY Tram HAVING COUNT(*)&gt;=4</code>: DN01.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>HocSinh GROUP BY Lop HAVING COUNT(*)&gt;=3.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">SQL 3B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>JOIN, GROUP BY LoaiPT, <code>HAVING COUNT(DISTINCT MaKT)&gt;=3</code>.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>JOIN 3 bảng, WHERE ba điều kiện, GROUP BY, HAVING SUM&gt;=6.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
