@@ -1,0 +1,264 @@
+<!-- HEAD -->
+<title>Bài 18 · Thiết kế trang web</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · BÀI 18</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BÀI 18<br>THỰC HÀNH TỔNG HỢP: THIẾT KẾ TRANG WEB</h1><p style="font-size:28px;line-height:1.5">Dự án website giới thiệu các câu lạc bộ ngoại khoá: cấu trúc, bố cục, một tệp CSS dùng chung.</p><div><span class="chip">website</span><span class="chip">bố cục</span><span class="chip">flex</span><span class="chip">CSS dùng chung</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Tạo website nhiều trang bằng <b>HTML + CSS</b>.</li><li>Dùng <b>một tệp CSS</b> cho toàn bộ website.</li><li>Chia bố cục: <b>header, banner, slogan, content, footer</b>.</li><li>Dùng <b>div + class</b>, <b>display: flex</b> chia cột.</li><li>Tạo liên kết giữa các trang; thêm trang biểu mẫu.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Phân tích yêu cầu</li><li>Cấu trúc website</li><li>Bố cục và lớp CSS</li><li>Chia cột bằng flex</li><li>Liên kết, mở rộng</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 1</span><h1>Câu hỏi mở đầu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Một tệp CSS cho cả website?</h3><ul style="gap:6px"><li><b>Có thể</b>: mọi trang cùng <code>link</code> tới <b>một tệp CSS ngoài</b>.</li><li>Mỗi trang có tệp HTML riêng.</li><li>Sửa một chỗ trong CSS: <b>cả website đổi theo</b>.</li></ul></div></div><div class="col"><div class="key">Các bước: (1) tạo thư mục site; (2) viết <code>style.css</code>; (3) mỗi trang HTML có <code>&lt;link href="style.css" rel="stylesheet"&gt;</code>.</div><div class="ok"><p>Đây là cách <b>CSS ngoài</b> học ở Bài 13 phát huy tác dụng.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 1</span><h1>Thảo luận nhóm: 4 câu hỏi của dự án</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><ul style="gap:6px"><li><b>Cấu trúc</b> website thế nào cho phù hợp?</li><li>Mỗi CLB đưa <b>thông tin</b> gì?</li><li>Trình bày thế nào để <b>đẹp và thống nhất</b>?</li><li>Làm sao để website <b>sinh động</b>?</li></ul></div></div><div class="col"><div class="card"><h3>Gợi ý trả lời</h3><ul style="gap:6px"><li>Trang chủ + trang CLB thể thao + trang CLB nghệ thuật.</li><li>Tên CLB, giới thiệu, hoạt động, thành tích, liên hệ, ảnh, video.</li><li>Dùng <b>chung một tệp CSS</b>, cùng bố cục, cùng bảng màu.</li><li>Hình ảnh, video, hiệu ứng :hover.</li></ul></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 1</span><h1>Cấu trúc website 3 trang</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Sơ đồ website</span><svg viewBox="0 0 520 320" style="width:100%"><rect x="170" y="10" width="180" height="56" rx="10" fill="#C62828"/><text x="260" y="46" text-anchor="middle" font-size="25" font-weight="800" fill="#fff">index.html</text><rect x="10" y="150" width="190" height="56" rx="10" fill="#1565C0"/><text x="105" y="186" text-anchor="middle" font-size="23" font-weight="800" fill="#fff">thethao.html</text><rect x="320" y="150" width="190" height="56" rx="10" fill="#1565C0"/><text x="415" y="186" text-anchor="middle" font-size="23" font-weight="800" fill="#fff">nghethuat.html</text><rect x="170" y="258" width="180" height="50" rx="10" fill="#2E7D32"/><text x="260" y="291" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">style.css</text><path d="M220 68 L130 148 M300 68 L390 148" stroke="#0B2545" stroke-width="4"/><path d="M260 258 L260 70 M240 258 L130 208 M280 258 L390 208" stroke="#2E7D32" stroke-width="3" stroke-dasharray="7 5" fill="none"/></svg></div></div><div class="col"><div class="card"><h3>Ý nghĩa</h3><ul style="gap:6px"><li>Trang chủ <b>liên kết</b> tới hai trang CLB.</li><li>Ba trang cùng nối tới <b>style.css</b>.</li><li>Cuối trang có liên kết qua lại.</li></ul></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 2</span><h1>Bố cục website (Hình 18.2)</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Hình 18.2</span><svg viewBox="0 0 520 350" style="width:100%"><rect x="10" y="8" width="500" height="50" fill="#FFCDD2" stroke="#C62828" stroke-width="3"/><text x="260" y="40" text-anchor="middle" font-size="26" font-weight="800" fill="#C62828">Đầu trang (header) + banner</text><rect x="10" y="66" width="500" height="55" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="260" y="101" text-anchor="middle" font-size="26" font-weight="800" fill="#E65100">Khẩu hiệu (slogan): 3 khối</text><rect x="10" y="130" width="500" height="160" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="260" y="157" text-anchor="middle" font-size="26" font-weight="800" fill="#1565C0">Nội dung chính (content)</text><rect x="25" y="170" width="225" height="50" fill="#fff" stroke="#1565C0"/><rect x="270" y="170" width="225" height="50" fill="#fff" stroke="#1565C0"/><rect x="25" y="228" width="225" height="50" fill="#fff" stroke="#1565C0"/><rect x="270" y="228" width="225" height="50" fill="#fff" stroke="#1565C0"/><text x="137" y="202" text-anchor="middle" font-size="23" font-weight="700" fill="#0B2545">Ảnh / nội dung</text><text x="382" y="202" text-anchor="middle" font-size="23" font-weight="700" fill="#0B2545">Ảnh / nội dung</text><text x="137" y="260" text-anchor="middle" font-size="23" font-weight="700" fill="#0B2545">Ảnh / nội dung</text><text x="382" y="260" text-anchor="middle" font-size="23" font-weight="700" fill="#0B2545">Ảnh / nội dung</text><rect x="10" y="298" width="500" height="45" fill="#E0E0E0" stroke="#424242" stroke-width="3"/><text x="260" y="328" text-anchor="middle" font-size="26" font-weight="800" fill="#212121">Cuối trang (footer)</text></svg></div></div><div class="col"><div class="card"><h3>Mỗi thành phần = một lớp CSS</h3><ul style="gap:6px"><li><b>.banner</b>, <b>.slogan</b>, <b>.content</b>, <b>.footer</b></li><li>Hàng ngang chứa các ô: <b>.row</b></li><li>Mỗi ô: <b>.block_3</b> hoặc <b>.block_2</b></li></ul></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 2</span><h1>Khung HTML của trang chủ</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;body&gt;
+ &lt;header&gt;
+  &lt;div class="banner"&gt;…&lt;/div&gt;
+ &lt;/header&gt;
+ &lt;div class="slogan"&gt;…&lt;/div&gt;
+ &lt;div class="content"&gt;
+  &lt;div class="row"&gt;…&lt;/div&gt;
+ &lt;/div&gt;
+ &lt;footer class="footer"&gt;…&lt;/footer&gt;
+&lt;/body&gt;</pre><div class="key">Dùng <b>div + class</b> để mỗi thành phần có <b>mẫu CSS riêng</b>; thành phần cùng định dạng thì dùng <b>chung một lớp</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:22px">Mỗi khối là một <b style="color:#000">div</b> (hoặc thẻ ngữ nghĩa) có <b style="color:#000">class</b> riêng.<br><br>Thẻ ngữ nghĩa <b style="color:#000">header, footer, nav</b> giúp mã dễ đọc.</div></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 2</span><h1>Lớp .banner: ảnh nền và tiêu đề</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">.banner {
+  background: url("../assets/img/bg.jpg")
+     no-repeat center center;
+  background-size: cover;
+  padding-top: 12rem;
+  padding-bottom: 12rem;
+  color: white;
+  text-align: center;
+}</pre><div class="key"><b>padding-top, padding-bottom</b> làm banner cao; <b>rem</b> là đơn vị tương đối so với cỡ chữ của phần tử gốc.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:21px"><div style="background:linear-gradient(135deg,#1565C0,#6A1B9A);color:#fff;text-align:center;padding:24px 6px;font-weight:700;font-size:23px">CLB NGOẠI KHOÁ TRƯỜNG THPT</div><br><b style="color:#000">url()</b>: đường dẫn ảnh nền (tương đối, Bài 10).<br><b style="color:#000">cover</b>: ảnh phủ kín khung.</div></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 2</span><h1>Thuộc tính nền (background) hay dùng</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thuộc tính</th><th>Ý nghĩa</th><th>Ví dụ</th></tr><tr><td class="m">background-color</td><td>màu nền</td><td><code>#f8f9fa</code></td></tr><tr><td class="m">background-image</td><td>ảnh nền</td><td><code>url("a.jpg")</code></td></tr><tr><td class="m">background-repeat</td><td>lặp ảnh</td><td><code>no-repeat</code></td></tr><tr><td class="m">background-position</td><td>vị trí ảnh</td><td><code>center center</code></td></tr><tr><td class="m">background-size</td><td>kích thước ảnh</td><td><code>cover</code></td></tr></table><div class="ok"><p>Viết gộp: <code>background: url("a.jpg") no-repeat center center;</code>.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 2</span><h1>Lớp .slogan</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">.slogan {
+  background-color: rgb(248,249,250)
+       !important;
+  text-align: center !important;
+  width: 100%;
+  padding: 7rem 9.5rem 7rem 3rem;
+}</pre><div class="key"><code>padding</code> 4 giá trị: <b>trên, phải, dưới, trái</b> (Bài 16).</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:22px"><div style="background:#f8f9fa;text-align:center;padding:12px;border:1px dashed #999"><b>Năng động · Đam mê · Toả sáng</b></div><br><b style="color:#000">!important</b> đảm bảo nền xám nhạt và căn giữa <b style="color:#000">luôn áp dụng</b> (Bài 14, 17).</div></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 3</span><h1>Chia cột trong một hàng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Vì sao cần chia cột</h3><ul style="gap:6px"><li>Nhiều ô <b>cùng một hàng</b> tạo sự <b>cân đối, hài hoà</b>.</li><li>Dùng cho slogan (3 ô) và nội dung (2 ô mỗi hàng).</li><li>Cách làm: lớp <b>.row</b> + <b>display: flex</b>.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">.row {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  padding: 0 3rem;
+}</pre></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 3</span><h1>Lớp .block_3: ba cột đều nhau</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">.block_3 {
+  flex: 0 0 auto;
+  width: 33.333333%;
+}
+
+.block_2 {
+  flex: 0 0 auto;
+  width: 50%;
+}</pre><div class="key"><b>display: flex</b> xếp các ô con <b>thành hàng ngang</b>; <b>width</b> quyết định độ rộng mỗi ô.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="display:flex;gap:6px;font-size:21px"><div style="flex:1;background:#FFCDD2;padding:10px;text-align:center;font-weight:700">33,3%</div><div style="flex:1;background:#C8E6C9;padding:10px;text-align:center;font-weight:700">33,3%</div><div style="flex:1;background:#BBDEFB;padding:10px;text-align:center;font-weight:700">33,3%</div></div><br><b style="color:#000;font-size:22px">3 × 33,33% ≈ 100%</b></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 3</span><h1>Thuộc tính flex thường dùng</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thuộc tính</th><th>Ý nghĩa</th></tr><tr><td class="m">display: flex</td><td>phần tử trở thành <b>vùng chứa</b> xếp con theo hàng</td></tr><tr><td class="m">flex-wrap: wrap</td><td>cho phép các ô <b>xuống dòng</b> khi hết chỗ</td></tr><tr><td class="m">flex: 0 0 auto</td><td>ô <b>không co giãn</b>, độ rộng theo width</td></tr><tr><td class="m">justify-content</td><td>căn các ô theo chiều ngang</td></tr><tr><td class="m">align-items</td><td>căn các ô theo chiều dọc</td></tr></table><div class="warn">SGK in nhầm một số giá trị (flex: 9 0 auto; max-width: 190%). Đúng là <b>flex: 0 0 auto</b> và <b>max-width: 100%</b>.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 3</span><h1>HTML cho khối slogan ba ô</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;div class="slogan"&gt;
+ &lt;div class="row"&gt;
+  &lt;div class="block_3"&gt;
+   &lt;h3&gt;Năng động&lt;/h3&gt;
+   &lt;p&gt;Hoạt động năng nổ&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="block_3"&gt;…&lt;/div&gt;
+  &lt;div class="block_3"&gt;…&lt;/div&gt;
+ &lt;/div&gt;
+&lt;/div&gt;</pre><div class="key">Phân tích: <b>slogan</b> (nền, căn giữa) ⊃ <b>row</b> (flex) ⊃ <b>block_3</b> (ô rộng 1/3).</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="display:flex;gap:6px;font-size:20px;text-align:center"><div style="flex:1;background:#f8f9fa;padding:8px"><b style="font-size:22px">Năng động</b><br>Hoạt động năng nổ</div><div style="flex:1;background:#f8f9fa;padding:8px"><b style="font-size:22px">Đam mê</b><br>Cháy hết mình</div><div style="flex:1;background:#f8f9fa;padding:8px"><b style="font-size:22px">Toả sáng</b><br>Giải cao nhất</div></div><br><b style="color:#000;font-size:21px">Ba lớp div lồng nhau: slogan → row → block_3.</b></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 3</span><h1>Sơ đồ lồng nhau của div</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Ba lớp div</span><svg viewBox="0 0 520 280" style="width:100%"><rect x="10" y="10" width="500" height="260" rx="10" fill="#FFF9C4" stroke="#F9A825" stroke-width="4"/><text x="30" y="42" font-size="24" font-weight="800" fill="#E65100">div.slogan</text><rect x="30" y="58" width="460" height="195" rx="8" fill="#E3F2FD" stroke="#1565C0" stroke-width="4"/><text x="50" y="90" font-size="24" font-weight="800" fill="#1565C0">div.row (flex)</text><rect x="45" y="106" width="130" height="135" rx="6" fill="#fff" stroke="#C62828" stroke-width="3"/><rect x="195" y="106" width="130" height="135" rx="6" fill="#fff" stroke="#C62828" stroke-width="3"/><rect x="345" y="106" width="130" height="135" rx="6" fill="#fff" stroke="#C62828" stroke-width="3"/><text x="110" y="172" text-anchor="middle" font-size="20" font-weight="800" fill="#C62828">block_3</text><text x="260" y="172" text-anchor="middle" font-size="20" font-weight="800" fill="#C62828">block_3</text><text x="410" y="172" text-anchor="middle" font-size="20" font-weight="800" fill="#C62828">block_3</text></svg></div></div><div class="col"><div class="card"><h3>Lưu ý</h3><ul style="gap:6px"><li>Ngoài cùng: nền, căn lề, khoảng đệm.</li><li>Giữa: bật <b>flex</b>.</li><li>Trong cùng: nội dung từng ô.</li></ul></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 3</span><h1>Nội dung chính: hai cột mỗi hàng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">.content {padding: 3rem;}
+.block_2 {
+  flex: 0 0 auto;
+  width: 50%;
+  padding: 1rem;
+}
+.block_2 img {
+  max-width: 100%;
+}</pre><div class="key">Lớp <b>.row</b> dùng lại; chỉ đổi <b>block_3</b> thành <b>block_2</b> là đổi từ 3 cột thành 2 cột.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="display:flex;gap:6px;font-size:21px"><div style="flex:1;background:#E3F2FD;padding:20px 6px;text-align:center;font-weight:700">Ảnh CLB bóng đá</div><div style="flex:1;background:#E3F2FD;padding:20px 6px;text-align:center;font-weight:700">Giới thiệu CLB</div></div><br><b style="color:#000;font-size:21px"><code>.block_2 img {max-width:100%}</code>:<br>ảnh luôn vừa khung ô.</b></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 4</span><h1>Liên kết giữa các trang</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Việc cần làm</h3><ul style="gap:6px"><li>Từ <b>trang chủ</b> đến hai trang còn lại.</li><li>Đặt liên kết <b>sang các trang khác</b> ở cuối trang.</li><li>Chuẩn bị <b>ảnh, video</b> hoạt động của lớp, trường.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;footer class="footer"&gt;
+ &lt;a href="index.html"&gt;Trang chủ&lt;/a&gt; |
+ &lt;a href="thethao.html"&gt;CLB thể thao&lt;/a&gt; |
+ &lt;a href="nghethuat.html"&gt;CLB nghệ thuật&lt;/a&gt; |
+ &lt;a href="dang_ki.html"&gt;Đăng kí&lt;/a&gt;
+&lt;/footer&gt;</pre><div class="key">Các trang cùng thư mục nên dùng <b>đường dẫn tương đối</b> (Bài 10).</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 4</span><h1>Luyện tập: trang đăng kí câu lạc bộ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Yêu cầu SGK</h3><ul style="gap:6px"><li>Tạo <b>dang_ki.html</b> chứa <b>biểu mẫu</b> đăng kí CLB (Bài 12).</li><li>Thêm liên kết tới trang này ở <b>cuối mọi trang</b>.</li><li>Dùng <b>cùng tệp CSS</b>.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(17px*var(--z,1))">&lt;form&gt;
+ &lt;fieldset&gt;&lt;legend&gt;Đăng kí CLB&lt;/legend&gt;
+  &lt;label for="ht"&gt;Họ tên&lt;/label&gt;
+  &lt;input id="ht" type="text"&gt;
+  &lt;label&gt;CLB&lt;/label&gt;
+  &lt;select&gt;&lt;option&gt;Bóng đá&lt;/option&gt;
+   &lt;option&gt;Piano&lt;/option&gt;&lt;/select&gt;
+  &lt;input type="submit" value="Đăng kí"&gt;
+ &lt;/fieldset&gt;
+&lt;/form&gt;</pre></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 4</span><h1>Luyện tập: hiệu ứng khi di chuột</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">.block_3:hover {
+  background-color: #FFE082;
+  color: #BF360C;
+}
+
+a:hover {
+  color: red;
+  text-decoration: underline;
+}</pre><div class="key">Kết hợp kiến thức: <b>lớp</b> (.block_3) + <b>lớp giả</b> (:hover) → trọng số 10 + 10 = 20.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="display:flex;gap:6px;font-size:21px;text-align:center"><div style="flex:1;background:#f8f9fa;padding:10px">Bình thường</div><div style="flex:1;background:#FFE082;color:#BF360C;padding:10px;font-weight:700">Khi di chuột</div></div><br><b style="color:#000;font-size:21px">Dùng lớp giả <code>:hover</code> (Bài 17) để đổi màu, cỡ chữ vùng khi trỏ chuột qua.</b></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 4</span><h1>Vận dụng: thiết kế mới</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Việc cần làm</h3><ul style="gap:6px"><li>Đưa ra <b>một thiết kế khác</b> cho website.</li><li><b>Chỉ viết lại tệp CSS</b> theo thiết kế mới.</li><li><b>Không sửa</b> các tệp HTML (hoặc sửa rất ít).</li></ul></div></div><div class="col"><div class="key">Đây chính là <b>sức mạnh của CSS</b>: tách nội dung (HTML) và hình thức (CSS). Đổi một tệp, cả website thay đổi.</div><div class="ok"><p>Gợi ý: đổi bảng màu, đổi font, đổi từ 3 cột sang 2 cột (block_3 → block_2).</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · 4</span><h1>Tổng hợp các lớp của dự án</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Lớp CSS</th><th>Dùng cho</th><th>Thuộc tính chính</th></tr><tr><td class="m">.banner</td><td>ảnh nền đầu trang</td><td>background, padding, color</td></tr><tr><td class="m">.slogan</td><td>khẩu hiệu</td><td>nền, text-align, padding</td></tr><tr><td class="m">.row</td><td>hàng chứa các ô</td><td>display: flex, flex-wrap</td></tr><tr><td class="m">.block_3 / .block_2</td><td>ô 1/3 và 1/2</td><td>width: 33,33% / 50%</td></tr><tr><td class="m">.content</td><td>nội dung chính</td><td>padding</td></tr><tr><td class="m">.footer</td><td>cuối trang</td><td>nền, text-align</td></tr></table><div class="key">Nhớ: <b>một tệp CSS</b> + <b>lớp</b> cho từng thành phần + <b>flex</b> chia cột.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Một tệp <b>CSS ngoài</b> dùng chung cho nhiều trang.</li><li>Bố cục: <b>header/banner, slogan, content, footer</b>; mỗi phần một <b>lớp</b>.</li><li><b>display: flex</b> + <b>flex-wrap</b> + <b>width %</b> để chia cột trong một hàng.</li><li>Liên kết các trang bằng <b>đường dẫn tương đối</b>.</li><li>Đổi giao diện: chỉ cần sửa <b>tệp CSS</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Chia ba cột</td><td>width: 33,33%</td></tr><tr><td class="m">Chia hai cột</td><td>width: 50%</td></tr><tr><td class="m">Ảnh vừa ô</td><td>max-width: 100%</td></tr><tr><td class="m">Ảnh nền</td><td>background: url(…)</td></tr></table></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">NÂNG CAO</span><h1>Mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Kĩ thuật hay gặp</h3><ul style="gap:6px"><li><b>Responsive</b>: dùng <code>@media</code> để 3 cột xếp thành 1 cột trên điện thoại.</li><li><b>Grid</b>: <code>display: grid; grid-template-columns: 1fr 1fr 1fr;</code>.</li><li><b>Biến CSS</b>: <code>:root {--mau: #D84315;}</code> rồi <code>color: var(--mau);</code>.</li></ul></div></div><div class="col"><div class="card"><h3>Kiểm tra website</h3><ul style="gap:6px"><li>Mọi liên kết có mở đúng trang?</li><li>Ảnh có hiện (đường dẫn đúng)?</li><li>Thử thu nhỏ cửa sổ: bố cục có vỡ không?</li></ul></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Có thể dùng một tệp CSS cho cả website nhiều trang không? Nêu các bước.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Tên lớp nào dùng cho khối đầu trang? Giải thích vì sao tách thành lớp riêng.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Viết CSS chia mỗi hàng thành 2 ô bằng nhau.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Viết thẻ liên kết đặt ở cuối trang chủ để sang trang nghethuat.html.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Làm sao để mọi ảnh trong ô không tràn khung?</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>Được</b>: viết một <code>style.css</code>; mỗi trang HTML thêm <code>link</code> tới tệp đó trong <code>head</code>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Ví dụ <code>.banner</code>: để mỗi thành phần có mẫu CSS riêng, dễ sửa.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>.row {display:flex; flex-wrap:wrap;}</code> và <code>.block_2 {width:50%;}</code></p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>&lt;a href="nghethuat.html"&gt;CLB nghệ thuật&lt;/a&gt;</code></p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>img {max-width: 100%;}</code></p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Hàng flex có 4 ô rộng 25% và padding 10px mỗi ô (mô hình mặc định). Hậu quả? Cách khắc phục?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Vì sao cần <code>flex-wrap: wrap</code> khi có 5 ô width 25%?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đường dẫn ảnh nền trong <code>css/style.css</code> là <code>url("../img/a.jpg")</code>. Ảnh nằm ở đâu so với thư mục chứa tệp HTML?</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) Mỗi trang HTML phải có tệp CSS riêng. (b) Đổi <code>block_3</code> thành <code>block_2</code> đổi số cột. (c) <code>display:flex</code> đặt ở các ô con. (d) <code>a.html</code> và <code>b.html</code> cùng thư mục thì <code>href="b.html"</code> đúng.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Viết CSS: footer nền xám đậm, chữ trắng, căn giữa, padding 20px; liên kết trong footer màu vàng, di chuột có gạch chân.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Website 3 trang cần đổi màu nền slogan. Cần sửa mấy tệp? Vì sao?</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Tổng rộng mỗi ô = 25% + 20px nên <b>tràn hàng</b>, ô cuối xuống dòng. Khắc phục: <code>box-sizing: border-box</code> hoặc giảm width.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>4 ô × 25% = 100%; ô thứ 5 sẽ <b>xuống hàng mới</b> khi có wrap; không có wrap thì bị <b>co hoặc tràn</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>..</code> lùi lên thư mục cha của <code>css</code>: ảnh ở <b>img/a.jpg</b> cùng cấp thư mục css, tính từ thư mục gốc site.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">BÀI 18 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b>. (b) <b>Đúng</b>. (c) <b>Sai</b>: đặt ở <b>vùng chứa</b> (.row). (d) <b>Đúng</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>.footer {background:#424242; color:#fff; text-align:center; padding:20px;}</code> <code>.footer a {color:yellow;}</code> <code>.footer a:hover {text-decoration:underline;}</code></p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p><b>1 tệp</b> (style.css), vì cả 3 trang cùng liên kết tới tệp đó.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

@@ -1,0 +1,239 @@
+<!-- HEAD -->
+<title>Bài 16 · Định dạng khung</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · BÀI 16</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BÀI 16<br>ĐỊNH DẠNG KHUNG</h1><p style="font-size:28px;line-height:1.5">Phần tử khối, nội tuyến; width, height, padding, margin, border; bộ chọn class, id, thuộc tính.</p><div><span class="chip">block / inline</span><span class="chip">khung</span><span class="chip">class · id</span><span class="chip">[thuộc tính]</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Phân biệt phần tử <b>khối</b> và <b>nội tuyến</b>; đổi bằng <b>display</b>.</li><li>Định dạng khung: <b>width, height, padding, margin, border</b>.</li><li>Dùng bộ chọn <b>class, id, thuộc tính</b>.</li><li>Đặt tên class, id đúng quy tắc; gán nhiều lớp.</li><li>Thực hành tạo bảng 16 màu cơ bản.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Khối và nội tuyến</li><li>Khung của phần tử</li><li>Bộ chọn đặc biệt</li><li>Thực hành bảng màu</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 1</span><h1>Câu hỏi mở đầu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Vấn đề</h3><ul style="gap:6px"><li>Trang web có <b>rất nhiều thẻ p</b>.</li><li>Mẫu <code>p {…}</code> áp dụng cho <b>tất cả</b>.</li><li>Muốn mỗi đoạn một kiểu thì sao?</li></ul></div></div><div class="col"><div class="key">Giải pháp: gán <b>class</b> hoặc <b>id</b> cho từng phần tử rồi viết bộ chọn riêng. Đó là nội dung bài này.</div><div class="ok"><p>Trước hết cần hiểu <b>phần tử khối</b> và <b>nội tuyến</b> để định dạng khung đúng.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 1</span><h1>Phần tử khối và phần tử nội tuyến</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>Khối (block)</th><th>Nội tuyến (inline)</th></tr><tr><td>Vị trí</td><td>bắt đầu từ <b>đầu hàng</b></td><td><b>nhúng</b> trong phần tử khác</td></tr><tr><td>Chiều rộng</td><td>kéo dài <b>suốt chiều rộng</b> trang</td><td>chỉ vừa <b>nội dung</b> bên trong</td></tr><tr><td>Ví dụ</td><td>h1–h6, p, div, ul, ol, li, table, form, section</td><td>a, span, em, strong, img, b, i, input, label</td></tr><tr><td>width, height</td><td><b>áp dụng được</b></td><td><b>không</b> áp dụng</td></tr></table><div class="key">Ví dụ SGK: dòng “Thư Bác Hồ gửi học sinh” là khối; cụm “Việt Nam” là nội tuyến nhúng trong p.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 1</span><h1>Đổi loại phần tử bằng display</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">span {display: block;
+       color: red;}
+p {color: blue;}
+
+&lt;p&gt;Phần đầu…
+ &lt;span&gt;dòng 1&lt;/span&gt;
+ &lt;span&gt;dòng 2&lt;/span&gt;
+ phần cuối&lt;/p&gt;</pre><div class="key"><code>display: block</code> biến span (nội tuyến) thành <b>khối</b>: mỗi span chiếm <b>một dòng riêng</b>.</div><div class="ok"><p>Trước khi đổi: span <b>nằm cùng dòng</b> với chữ xung quanh.</p></div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:26px;color:blue;line-height:1.6">Phần đầu…<div style="color:red">dòng 1</div><div style="color:red">dòng 2</div>phần cuối</div></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 1</span><h1>Các giá trị của display</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Giá trị</th><th>Tác dụng</th></tr><tr><td class="m"><code>block</code></td><td>thành phần tử <b>khối</b></td></tr><tr><td class="m"><code>inline</code></td><td>thành phần tử <b>nội tuyến</b></td></tr><tr><td class="m"><code>none</code></td><td><b>ẩn</b> phần tử, không chiếm chỗ</td></tr><tr><td class="m"><code>inline-block</code></td><td>nằm cùng dòng nhưng đặt được width, height</td></tr></table><div class="ok"><p>Luyện tập SGK: ẩn phần tử bằng <code>display: none;</code>. Ví dụ Bài 17 dùng <code>img {display: none;}</code>.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 1</span><h1>Chiều rộng phần tử</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hỏi đáp SGK</h3><ul style="gap:6px"><li>Chiều rộng phần tử <b>nội tuyến</b> phụ thuộc <b>nội dung</b> bên trong; có phụ thuộc cửa sổ trình duyệt khi nội dung dài và phải xuống dòng.</li><li>Phần tử <b>khối</b> mặc định rộng bằng phần tử cha, nhưng có thể đặt <b>width</b> khác.</li></ul></div></div><div class="col"><div class="warn">Khẳng định “chiều rộng phần tử khối chỉ phụ thuộc kích thước cửa sổ” là <b>SAI</b>: còn phụ thuộc <code>width</code>, <code>padding</code>, <code>margin</code>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 2</span><h1>Mô hình khung của phần tử</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Hình 16.3</span><svg viewBox="0 0 520 330" style="width:100%"><rect x="10" y="10" width="500" height="310" fill="#FFE0B2" stroke="#E65100" stroke-width="3" stroke-dasharray="8 5"/><text x="260" y="40" text-anchor="middle" font-size="26" font-weight="800" fill="#E65100">margin (lề khung)</text><rect x="60" y="60" width="400" height="230" fill="#BBDEFB" stroke="#0B2545" stroke-width="5"/><text x="260" y="92" text-anchor="middle" font-size="25" font-weight="800" fill="#0B2545">border (viền)</text><rect x="100" y="105" width="320" height="140" fill="#C8E6C9" stroke="#2E7D32" stroke-width="2"/><text x="260" y="132" text-anchor="middle" font-size="24" font-weight="800" fill="#2E7D32">padding (vùng đệm)</text><rect x="150" y="145" width="220" height="80" fill="#fff" stroke="#999" stroke-width="2"/><text x="260" y="182" text-anchor="middle" font-size="23" font-weight="800" fill="#0B2545">nội dung</text><text x="260" y="210" text-anchor="middle" font-size="20" font-weight="700" fill="#C62828">width × height</text></svg></div></div><div class="col"><div class="card"><h3>Từ trong ra ngoài</h3><ul style="gap:5px"><li>Nội dung (<b>width × height</b>)</li><li><b>padding</b>: đệm quanh nội dung</li><li><b>border</b>: đường viền</li><li><b>margin</b>: lề ngoài</li></ul></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 2</span><h1>Bảng 16.2: thuộc tính liên quan đến khung</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thuộc tính</th><th>Ý nghĩa</th></tr><tr><td class="m">width / height</td><td>chiều rộng / cao; <b>chỉ áp dụng cho phần tử khối</b></td></tr><tr><td class="m">padding</td><td><b>vùng đệm</b>: từ nội dung đến đường viền</td></tr><tr><td class="m">margin</td><td><b>lề khung</b>: từ đường viền ra phần xung quanh</td></tr><tr><td class="m">border-color / -width / -style</td><td>màu / độ dày / kiểu viền</td></tr><tr><td class="m">border</td><td>viết gộp: <code>2px solid red</code></td></tr></table><div class="warn">SGK: các thuộc tính khung <b>đều không có tính kế thừa</b>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 2</span><h1>Kiểu đường viền border-style</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Giá trị</th><th>Ý nghĩa</th><th>Giá trị</th><th>Ý nghĩa</th></tr><tr><td class="m">none</td><td>không viền</td><td>double</td><td>hai nét</td></tr><tr><td class="m">solid</td><td>nét liền</td><td>ridge</td><td>nổi (3D)</td></tr><tr><td class="m">dotted</td><td>chấm tròn</td><td>groove</td><td>lõm (3D)</td></tr><tr><td class="m">dashed</td><td>nét đứt</td><td>inset / outset</td><td>chìm / nổi</td></tr></table><div class="key">Viết gộp: <b>border: độ-dày kiểu màu;</b> ví dụ <code>border: 5px ridge blue;</code>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 2</span><h1>Ví dụ Hình 16.4: định dạng khung</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">h1 {
+  border: 5px ridge blue;
+  width: 200px;
+  padding: 10px;
+  margin: 20px;
+}
+em {border: 2px double red;}</pre><div class="key">h1 là <b>khối</b>: có đủ width, padding, margin. em là <b>nội tuyến</b>: chỉ có viền, không có width, height.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:21px"><div style="border:5px ridge blue;width:200px;padding:10px;margin:8px 8px 8px 20px;font-size:26px;font-weight:700">Lịch sử CSS</div><span style="font-size:20px">Ý tưởng của CSS do kĩ sư <em style="border:2px double red">Håkon Wium Lie</em>…</span></div></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 2</span><h1>So sánh padding và margin</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th></th><th>padding</th><th>margin</th></tr><tr><td>Vị trí</td><td><b>trong</b> viền</td><td><b>ngoài</b> viền</td></tr><tr><td>Tác dụng</td><td>cách chữ và viền</td><td>cách khung với phần tử bên cạnh</td></tr><tr><td>Có nền?</td><td><b>có</b> nền của phần tử</td><td><b>không</b> có nền (trong suốt)</td></tr></table></div><div class="col"><div class="key">Trả lời SGK: khoảng cách từ vùng văn bản đến đường viền gọi là <b>padding</b> (vùng đệm); khoảng cách từ viền ra ngoài là <b>margin</b> (lề khung).</div><div class="ok"><p>Mẹo nhớ: <b>pad</b> = đệm lót bên trong; <b>margin</b> = lề giấy bên ngoài.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 2</span><h1>Cú pháp viết nhiều giá trị</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">padding: 10px;
+  /* 4 cạnh */
+padding: 10px 20px;
+  /* trên-dưới | trái-phải */
+padding: 5px 10px 15px 20px;
+  /* trên, phải, dưới, trái */</pre></div><div class="col"><div class="card"><h3>Mở rộng (Vận dụng SGK)</h3><ul style="gap:6px"><li>Có thể đặt riêng từng cạnh: <code>border-top</code>, <code>border-right</code>, <code>border-bottom</code>, <code>border-left</code>.</li><li>Tương tự: <code>margin-top</code>, <code>padding-left</code>…</li><li>Thứ tự 4 giá trị: <b>trên, phải, dưới, trái</b> (theo chiều kim đồng hồ).</li></ul></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 3</span><h1>Bộ chọn lớp (class)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khi nào dùng</h3><ul style="gap:6px"><li>Định dạng một <b>nhóm</b> phần tử cùng ý nghĩa.</li><li>Cú pháp: <code>.tên_lớp {thuộc tính: giá trị;}</code></li><li>Dấu <b>chấm</b> trước tên lớp.</li></ul></div><div class="key">Gán lớp trong HTML: <code>class="tên_lớp"</code>.</div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">.warning {color: red;}
+.test {color: blue;
+       font-weight: bold;}
+
+&lt;p class="test"&gt;Thông tin test&lt;/p&gt;
+&lt;p class="warning"&gt;Cần warning&lt;/p&gt;</pre></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 3</span><h1>Bảng 16.3: bộ chọn lớp hay gặp</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Bộ chọn</th><th>Áp dụng cho</th></tr><tr><td class="m"><code>.test</code></td><td>mọi phần tử có lớp <b>test</b></td></tr><tr><td class="m"><code>.test.warning</code></td><td>phần tử có <b>đồng thời</b> hai lớp test và warning (viết liền, không cách)</td></tr><tr><td class="m"><code>p.test</code></td><td>chỉ phần tử <b>p</b> có lớp test</td></tr><tr><td class="m"><code>.test p</code></td><td>p là <b>cháu</b> của phần tử có lớp test</td></tr></table><div class="warn">Cẩn thận: <code>.a.b</code> (liền) khác <code>.a .b</code> (có dấu cách = quan hệ con cháu).</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 3</span><h1>Bộ chọn id</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đặc điểm</h3><ul style="gap:6px"><li>Cú pháp: <code>#tên_id {…}</code>, dấu <b>#</b>.</li><li>Mỗi id chỉ <b>duy nhất một phần tử</b> trong trang.</li><li>Có thể viết <code>p#home</code>: p có id là home.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">#home {color: red;}
+p#home {font-size: 150%;}
+
+&lt;p id="home"&gt;Trang chủ&lt;/p&gt;</pre><div class="key"><b>class</b>: nhiều phần tử dùng chung. <b>id</b>: định danh <b>riêng một</b> phần tử.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 3</span><h1>So sánh class và id</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>class</th><th>id</th></tr><tr><td>Kí hiệu CSS</td><td><b>.</b> (dấu chấm)</td><td><b>#</b> (dấu thăng)</td></tr><tr><td>Số phần tử</td><td><b>nhiều</b> phần tử cùng lớp</td><td><b>duy nhất</b> một phần tử</td></tr><tr><td>Một phần tử có</td><td><b>nhiều</b> lớp (cách nhau bằng dấu cách)</td><td><b>một</b> id</td></tr><tr><td>Dùng cho</td><td>nhóm cùng ý nghĩa</td><td>phần tử riêng biệt, liên kết trong trang</td></tr></table><div class="key">Vận dụng SGK: ba đoạn quan trọng P1, P2, P3: dùng <b>#p1</b> riêng cho P1; lớp <b>.quan-trong</b> chung cho P2, P3; các đoạn còn lại dùng mẫu <code>p</code>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 3</span><h1>Bộ chọn thuộc tính</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">[href] {border: 1px solid blue;}
+
+a[target="_blank"] {
+  color: red;
+  font-weight: bold;
+}</pre><div class="key"><code>[thuộc_tính]</code>: có thuộc tính. <code>[thuộc_tính="giá_trị"]</code>: thuộc tính bằng đúng giá trị.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:22px"><span style="border:1px solid blue">Liên kết có href</span> được viền xanh.<br><br><b style="color:red">a[target="_blank"]</b>: chỉ các thẻ a mở tab mới → chữ đỏ, đậm.</div></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 3</span><h1>Quy tắc đặt tên id và class</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bắt buộc</h3><ul style="gap:6px"><li><b>Phân biệt chữ hoa, thường</b>: <code>Test</code> khác <code>test</code>.</li><li>Có <b>ít nhất một kí tự không phải số</b>; <b>không bắt đầu bằng số</b>.</li><li><b>Không chứa dấu cách</b> và kí tự đặc biệt.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;p class="test more once"&gt;
+  Đoạn cần kiểm tra
+&lt;/p&gt;</pre><div class="key">Một phần tử thuộc <b>nhiều lớp</b>: các tên cách nhau bằng <b>dấu cách</b>. Ở ví dụ p thuộc ba lớp test, more, once.</div><div class="warn">Tên <code>1abc</code>, <code>my id</code> là <b>sai</b>; <code>abc1</code>, <code>my-id</code> là đúng.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 4</span><h1>Thực hành: bảng 16 màu cơ bản</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Yêu cầu</h3><ul style="gap:6px"><li>Bảng có 4 cột: <b>Tên màu, #hex, rgb(r,g,b), Thể hiện</b>.</li><li>Tên bảng bằng thẻ <b>caption</b>.</li><li>Hàng tiêu đề dùng thẻ <b>th</b>, ô dữ liệu dùng <b>td</b>.</li><li>Ô cuối mỗi hàng tô <b>màu nền</b> đúng với màu ở hai cột trước.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(17px*var(--z,1))">&lt;table&gt;
+ &lt;caption&gt;Bảng tên màu CSS&lt;/caption&gt;
+ &lt;tr&gt;&lt;th&gt;Tên màu&lt;/th&gt;&lt;th&gt;#hex&lt;/th&gt;
+     &lt;th&gt;rgb(r,g,b)&lt;/th&gt;&lt;th&gt;Thể hiện&lt;/th&gt;&lt;/tr&gt;
+ &lt;tr&gt;&lt;td&gt;red&lt;/td&gt;&lt;td&gt;#FF0000&lt;/td&gt;
+     &lt;td&gt;rgb(255,0,0)&lt;/td&gt;
+     &lt;td style="background-color:red"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · 4</span><h1>Thực hành: CSS cho bảng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(16px*var(--z,1))">table {border: 4px solid magenta;
+       padding: 5px;}
+td, th, tr {border: 1px solid blue;}
+th {border: 1px solid blue;
+    background-color: rgb(255,255,0);}
+caption {color: red;
+         font-size: 200%;
+         font-weight: bold;
+         border: 4px solid green;
+         padding: 2px;
+         margin: 15px;}</pre><div class="warn">SGK in nhầm <code>width: 253%</code> cho td; dùng giá trị hợp lí như <code>25%</code>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:19px"><div style="color:red;font-size:24px;font-weight:700;border:4px solid green;padding:2px;margin:6px;text-align:center">Bảng tên màu CSS</div><table style="border:4px solid magenta;border-collapse:separate;padding:5px"><tr><th style="border:1px solid blue;background:rgb(255,255,0);padding:2px 6px">Tên màu</th><th style="border:1px solid blue;background:rgb(255,255,0)">#hex</th><th style="border:1px solid blue;background:rgb(255,255,0)">Thể hiện</th></tr><tr><td style="border:1px solid blue">red</td><td style="border:1px solid blue">#FF0000</td><td style="border:1px solid blue;background:red;width:60px"></td></tr><tr><td style="border:1px solid blue">lime</td><td style="border:1px solid blue">#00FF00</td><td style="border:1px solid blue;background:lime"></td></tr></table></div></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Khối</b> (h1, p, div…) rộng suốt hàng; <b>nội tuyến</b> (a, span, em…) vừa nội dung. Đổi bằng <b>display</b>.</li><li>Khung: <b>width, height</b> (chỉ khối), <b>padding</b> (trong), <b>border</b>, <b>margin</b> (ngoài); đều <b>không kế thừa</b>.</li><li><b>.class</b> cho nhóm; <b>#id</b> cho một phần tử; <b>[attr]</b> theo thuộc tính.</li><li>Tên id, class phân biệt hoa thường, không bắt đầu bằng số.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Ẩn phần tử</td><td>display: none</td></tr><tr><td class="m">Cách chữ với viền</td><td>padding</td></tr><tr><td class="m">Cách khung với bên ngoài</td><td>margin</td></tr><tr><td class="m">Hai lớp cùng lúc</td><td>.a.b</td></tr></table></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy</h3><ul style="gap:6px"><li><code>width</code> chỉ có tác dụng với <b>phần tử khối</b>; span không đổi dù đặt width (trừ khi đổi display).</li><li>Tổng rộng thực = width + padding + border + margin (mô hình hộp mặc định).</li><li><code>.a .b</code> ≠ <code>.a.b</code> ≠ <code>.a, .b</code>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>box-sizing: border-box</b>: width đã gồm cả padding và border.</li><li><b>border-radius</b>: bo góc.</li><li><b>margin: 0 auto</b>: căn giữa khối có width.</li></ul></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Phần tử nào là khối, nội tuyến: p, a, em, div, img, li?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Khoảng cách từ vùng văn bản đến đường viền gọi là gì? Lề khung khác gì vùng đệm?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Viết CSS: tất cả thẻ p thuộc lớp “tin” có nền lightyellow.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Phần tử html có ẩn được không? Dùng lệnh nào?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Giải thích <code>.test.more {background-color: red;}</code>.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>Khối</b>: p, div, li. <b>Nội tuyến</b>: a, em, img.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>padding</b> (vùng đệm) nằm <b>trong</b> viền; <b>margin</b> (lề) nằm <b>ngoài</b> viền.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>p.tin {background-color: lightyellow;}</code></p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Được: <code>display: none;</code>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Phần tử thuộc <b>đồng thời</b> hai lớp test và more có nền đỏ.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Tìm lỗi: <code>&lt;p class="1a b"&gt;</code> kèm <code>.1a {color:red;}</code> và <code>#top {color:blue;}</code> gán cho 2 thẻ p khác nhau.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Cho <code>.a {color: red;} p.a {color: blue;}</code> và <code>&lt;p class="a"&gt;</code>. Chữ p màu gì? Vì sao?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) <code>width</code> áp dụng cho span. (b) <code>margin</code> kế thừa. (c) <code>#x</code> chọn phần tử có id là x. (d) <code>a[target]</code> chọn a có thuộc tính target.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Một div có width 200px, padding 10px, border 5px, margin 20px. Tổng chiều rộng chiếm trên trang (mô hình mặc định)?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Viết CSS: mọi a có href bắt đầu giữ chữ xanh không gạch chân; khi trỏ chuột đổi nền vàng.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Có 5 đoạn: P1 riêng; P2, P3 chung kiểu; còn lại giống nhau. Thiết kế id/class.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>(1) Tên lớp <b>không được bắt đầu bằng số</b> (1a). (2) <b>id</b> phải duy nhất: dùng <code>#top</code> cho hai thẻ là sai.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Xanh</b>: <code>p.a</code> có trọng số 11 &gt; <code>.a</code> có 10 (Bài 17).</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b>. (b) <b>Sai</b>. (c) <b>Đúng</b>. (d) <b>Đúng</b>.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">BÀI 16 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>200 + 2×10 + 2×5 + 2×20 = <b>270px</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>a[href] {color: blue; text-decoration: none;}</code> <code>a:hover {background-color: yellow;}</code></p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p><code>&lt;p id="p1"&gt;</code>, <code>&lt;p class="quan-trong"&gt;</code> cho P2, P3; mẫu <code>p</code> chung cho phần còn lại.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

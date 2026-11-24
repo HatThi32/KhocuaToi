@@ -1,0 +1,234 @@
+<!-- HEAD -->
+<title>Bài 12 · Tạo biểu mẫu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · BÀI 12</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BÀI 12<br>TẠO BIỂU MẪU</h1><p style="font-size:28px;line-height:1.5">Biểu mẫu web: form, label, input, select, textarea, fieldset. Bám SGK Tin học 12 KNTT (KHMT).</p><div><span class="chip">form</span><span class="chip">input</span><span class="chip">select</span><span class="chip">textarea</span><span class="chip">fieldset</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Giải thích <b>biểu mẫu web</b> và hai thành phần của nó.</li><li>Dùng <b>form, label, input</b> đúng cú pháp.</li><li>Phân biệt các <b>type</b>: text, password, radio, checkbox, button, file, submit.</li><li>Dùng <b>select, option, textarea, fieldset, legend</b>.</li><li>Phân tích đề rồi <b>thiết kế biểu mẫu hoàn chỉnh</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Biểu mẫu web và thẻ form</li><li>label và input; Bảng 12.1</li><li>select, textarea, fieldset</li><li>Thực hành 1 và 2</li><li>Trọng tâm, nâng cao</li><li>Bài tập, bài khó HSG, đáp án</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 1</span><h1>Biểu mẫu web là gì?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm (SGK)</h3><ul style="gap:6px"><li><b>Biểu mẫu web</b> (phần tử <code>form</code>) là công cụ <b>thu thập dữ liệu</b> từ người dùng.</li><li>Dữ liệu được <b>xử lí tại chỗ</b> hoặc <b>gửi về máy chủ</b>.</li><li>Gặp khi: đăng kí tài khoản, mua hàng, tìm kiếm thông tin.</li></ul></div><div class="key">Một biểu mẫu đầy đủ có <b>hai thành phần</b>: phần hiển thị (HTML) và phần xử lí (script, thường ở máy chủ).</div></div><div class="col"><div class="res"><span class="lab">Sơ đồ hoạt động</span><svg viewBox="0 0 520 160" style="width:100%"><rect x="0" y="5" width="160" height="150" rx="12" fill="#00838F"/><text x="80" y="62" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">Người dùng</text><text x="80" y="100" text-anchor="middle" font-size="19" fill="#FFE082">nhập dữ liệu</text><polygon points="162,70 178,80 162,90" fill="#0B2545"/><rect x="180" y="5" width="160" height="150" rx="12" fill="#00838F"/><text x="260" y="62" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">Form HTML</text><text x="260" y="100" text-anchor="middle" font-size="19" fill="#FFE082">input, select…</text><polygon points="342,70 358,80 342,90" fill="#0B2545"/><rect x="360" y="5" width="160" height="150" rx="12" fill="#00838F"/><text x="440" y="62" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">Máy chủ</text><text x="440" y="100" text-anchor="middle" font-size="19" fill="#FFE082">script xử lí</text></svg></div><div class="warn">Phần <b>script xử lí</b> nằm ngoài phạm vi HTML nên SGK không đi sâu.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 1</span><h1>Thẻ form và các phần tử</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">&lt;form&gt;
+  các phần tử của biểu mẫu
+&lt;/form&gt;</pre><div class="ok"><p>Thẻ <code>form</code> bao tất cả các phần tử nhập liệu của một biểu mẫu. Phần tử quan trọng nhất là <b>input</b>.</p></div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:23px">Các phần tử thường dùng trong <b style="color:#000">form</b>:<ul><li>input</li><li>label</li><li>select (kèm option)</li><li>textarea</li><li>fieldset, legend, datalist</li></ul></div></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 1</span><h1>Phần tử label</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;label for="hoten"&gt;Họ tên&lt;/label&gt;
+&lt;input id="hoten" type="text"&gt;</pre><div class="key"><b>for</b> của label phải trùng <b>id</b> của input. Nháy vào nhãn thì con trỏ nhảy vào ô nhập tương ứng.</div><div class="warn">Quên <code>id</code> hoặc viết sai <code>for</code> thì nhãn <b>không liên kết</b> được với ô nhập.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><label for="hoten">Họ tên</label><br><input id="hoten" type="text" style="width:240px"></div><div class="ok"><p>Về hiển thị, label không có gì đặc biệt; tác dụng nằm ở <b>liên kết nhãn với input</b>.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 1</span><h1>Phần tử input và ba thuộc tính chính</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;input id="mã" type="loại" name="tên"&gt;</pre><table><tr><th>Thuộc tính</th><th>Vai trò</th></tr><tr><td class="m">id</td><td>mã định danh, để <b>label</b> trỏ tới</td></tr><tr><td class="m">type</td><td><b>loại</b> dữ liệu ô nhập</td></tr><tr><td class="m">name</td><td>tên dùng khi <b>xử lí, gửi</b> dữ liệu</td></tr></table></div><div class="col"><div class="key"><code>input</code> là <b>thẻ đơn</b>, không có thẻ kết thúc.</div><div class="warn"><code>input</code> chỉ nhập dữ liệu; muốn có <b>thông tin về nội dung nhập</b> phải tạo kèm <code>label</code>.</div><div class="ok"><p>Thuộc tính <b>name</b> dùng để tham chiếu tới dữ liệu đã nhập khi tính toán hay gửi lên máy chủ.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 1</span><h1>Bảng 12.1: các type thông dụng</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>type</th><th>Tạo ra</th><th>Cần thêm</th></tr><tr><td class="m">text</td><td>trường nhập văn bản</td><td>—</td></tr><tr><td class="m">password</td><td>nhập mật khẩu, bị che</td><td>—</td></tr><tr><td class="m">radio</td><td>chọn <b>một</b> giá trị trong các radio cùng name</td><td>value</td></tr><tr><td class="m">checkbox</td><td>ô <b>có / không</b></td><td>value</td></tr><tr><td class="m">button</td><td>một nút bấm</td><td>value</td></tr><tr><td class="m">file</td><td>chọn tệp để tải lên máy chủ</td><td>—</td></tr><tr><td class="m">submit</td><td>nút <b>gửi</b> thông tin; trình duyệt gọi tới <code>action</code> của form</td><td>value</td></tr></table><div class="warn">Mỗi ô <code>radio</code> và <code>checkbox</code> cần thuộc tính <b>value</b> để ghi nhận giá trị.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 1</span><h1>type="text" và type="password"</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;label for="u"&gt;Tên đăng nhập&lt;/label&gt;
+&lt;input id="u" type="text" name="u"&gt;
+&lt;label for="p"&gt;Mật khẩu&lt;/label&gt;
+&lt;input id="p" type="password" name="p"&gt;</pre><div class="key"><b>password</b> vẫn nhập văn bản nhưng nội dung bị <b>che bằng dấu chấm</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><label>Tên đăng nhập</label><br><input type="text" value="hocsinh12" style="width:230px"><br><label>Mật khẩu</label><br><input type="password" value="abc12345" style="width:230px"></div><div class="card"><h3>Hỏi nhanh</h3><ul style="gap:6px"><li>Ô nào bị che nội dung khi nhập? <b>password</b>.</li><li>Hai ô này cần thuộc tính nào để máy chủ phân biệt dữ liệu? <b>name</b> khác nhau (u, p).</li><li>Nhãn “Mật khẩu” gắn với ô nào? Ô có <code>id="p"</code>.</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 1</span><h1>type="radio": chọn một</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;input id="n" type="radio" name="gt" value="Nam"&gt;
+&lt;label for="n"&gt;Nam&lt;/label&gt;
+&lt;input id="f" type="radio" name="gt" value="Nu"&gt;
+&lt;label for="f"&gt;Nữ&lt;/label&gt;</pre><div class="key">Các radio <b>cùng name</b> thuộc một nhóm: chỉ chọn được <b>một</b>.</div><div class="warn">Hai radio <b>khác name</b> thì chọn được cả hai, vì thành hai nhóm riêng.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><input type="radio" name="gt1" checked> <label>Nam</label> &nbsp; <input type="radio" name="gt1"> <label>Nữ</label></div><div class="card"><h3>Hỏi nhanh</h3><ul style="gap:6px"><li>Hai radio này thuộc mấy nhóm? <b>Một</b> (cùng name="gt").</li><li>Nếu đổi name của radio Nữ thành "gt2"? Chọn được <b>cả hai</b>.</li><li>Giá trị gửi đi khi chọn Nữ? <b>Nu</b> (value).</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 1</span><h1>type="checkbox": có hoặc không</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;input id="t" type="checkbox" name="mon" value="Toan"&gt;
+&lt;label for="t"&gt;Toán&lt;/label&gt;
+&lt;input id="v" type="checkbox" name="mon" value="Van"&gt;
+&lt;label for="v"&gt;Văn&lt;/label&gt;</pre><div class="key">Mỗi checkbox là một lựa chọn <b>độc lập</b>: chọn nhiều ô cùng lúc được.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><input type="checkbox" checked> <label>Toán</label> &nbsp; <input type="checkbox" checked> <label>Văn</label> &nbsp; <input type="checkbox"> <label>Ngoại ngữ</label></div><div class="card"><h3>Hỏi nhanh</h3><ul style="gap:6px"><li>Chọn được mấy ô cùng lúc? <b>Tuỳ ý</b>, kể cả không chọn.</li><li>Vì sao hai checkbox có thể cùng name? Dữ liệu gửi đi gồm các <b>value</b> đã chọn.</li><li>Muốn ô Toán chọn sẵn? Thêm <code>checked</code>.</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 1</span><h1>So sánh radio, checkbox và select</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>radio</th><th>checkbox</th><th>select</th></tr><tr><td>Số lựa chọn</td><td>đúng <b>một</b></td><td><b>không hoặc nhiều</b></td><td>thường <b>một</b> (danh sách thả xuống)</td></tr><tr><td>Điều kiện nhóm</td><td>cùng <code>name</code></td><td>mỗi ô độc lập</td><td>một thẻ chứa nhiều <code>option</code></td></tr><tr><td>Dùng khi</td><td>giới tính, tổ hợp môn</td><td>các môn thi, sở thích</td><td>danh sách dài: lớp, tỉnh thành</td></tr><tr><td>Cần value</td><td>có</td><td>có</td><td>ở mỗi <code>option</code></td></tr></table><div class="key">Đây là câu hỏi SGK: <b>radio</b> chọn một trong nhóm cùng name; <b>checkbox</b> chọn có/không từng ô; <b>select</b> chọn trong danh sách thả xuống.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 1</span><h1>Nút bấm: button, submit, file</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;input type="button" value="Quên mật khẩu"&gt;
+&lt;input type="file"&gt;
+&lt;input type="submit" value="Gửi thông tin"&gt;</pre><div class="key">Nút cần thuộc tính <b>value</b> để có <b>chữ hiện trên nút</b>.</div><div class="ok"><p><b>submit</b>: gửi tới địa chỉ ở thuộc tính <code>action</code> của <code>form</code>. <b>file</b>: chọn tệp để tải lên.</p></div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><input type="button" value="Quên mật khẩu"><br><input type="file"><br><input type="submit" value="Gửi thông tin"></div><div class="card"><h3>Hỏi nhanh</h3><ul style="gap:6px"><li>Nút nào gửi dữ liệu đi? <b>submit</b>.</li><li>Chữ trên nút lấy từ đâu? Thuộc tính <b>value</b>.</li><li>Muốn chọn ảnh để tải lên? <code>type="file"</code>.</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 2</span><h1>Danh sách thả xuống select</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">&lt;label for="class"&gt;Lớp:&lt;/label&gt;
+&lt;select id="class" name="class"&gt;
+  &lt;option value="10"&gt;10&lt;/option&gt;
+  &lt;option value="11"&gt;11&lt;/option&gt;
+  &lt;option value="12"&gt;12&lt;/option&gt;
+&lt;/select&gt;</pre><div class="key"><code>select</code> chứa nhiều <code>option</code>; mỗi cặp là một lựa chọn. Giá trị gửi đi là <b>value</b> của option.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><label>Lớp:</label> <select><option>10</option><option>11</option><option selected>12</option></select></div><div class="card"><h3>Hỏi nhanh</h3><ul style="gap:6px"><li>Thẻ nào tạo mỗi lựa chọn? <b>option</b>.</li><li>Muốn chọn sẵn lớp 12? Thêm <code>selected</code> vào option 12.</li><li>Giá trị gửi đi là chữ hiển thị hay value? <b>value</b>.</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 2</span><h1>Vùng nhập nhiều dòng textarea</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">&lt;label for="gc"&gt;Ghi chú&lt;/label&gt;
+&lt;textarea id="gc" name="gc"
+  rows="4" cols="30"&gt;Nhập nội dung&lt;/textarea&gt;</pre><div class="key"><b>rows</b> là số dòng, <b>cols</b> là số cột. Chữ nằm giữa hai thẻ hiện sẵn trong vùng nhập; để trống thì vùng nhập trắng.</div><div class="warn"><code>textarea</code> có <b>thẻ đóng</b> riêng, không phải thẻ đơn như <code>input</code>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><label>Ghi chú</label><br><textarea rows="4" cols="26">Nhập nội dung</textarea></div><div class="card"><h3>Hỏi nhanh</h3><ul style="gap:6px"><li>Vùng này cao mấy dòng, rộng mấy cột? <b>4 dòng, 30 cột</b>.</li><li>Chữ “Nhập nội dung” nằm ở đâu trong mã? Giữa hai thẻ <code>textarea</code>.</li><li>Khác <code>input type="text"</code> ở điểm nào? Nhập được <b>nhiều dòng</b>.</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 2</span><h1>Nhóm phần tử: fieldset và legend</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;fieldset&gt;
+  &lt;legend&gt;Thông tin cá nhân&lt;/legend&gt;
+  &lt;label&gt;Họ tên&lt;/label&gt;
+  &lt;input type="text"&gt;
+&lt;/fieldset&gt;</pre><div class="key"><b>fieldset</b> vẽ khung bao quanh nhóm phần tử liên quan; <b>legend</b> đặt tên cho khung.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><fieldset><legend>Thông tin cá nhân</legend><label>Họ tên </label><input type="text" style="width:160px"></fieldset></div><div class="card"><h3>Hỏi nhanh</h3><ul style="gap:6px"><li>Thẻ nào vẽ khung? <b>fieldset</b>.</li><li>Thẻ nào đặt tên cho khung? <b>legend</b>.</li><li>Legend đặt ở đâu? Ngay <b>trong</b> fieldset.</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 2</span><h1>Một số type mở rộng thường gặp</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>type</th><th>Dùng cho</th><th>Thuộc tính hay đi kèm</th></tr><tr><td class="m">number</td><td>số (căn cước, số lượng)</td><td>min, max</td></tr><tr><td class="m">date</td><td>chọn ngày sinh</td><td>—</td></tr><tr><td class="m">email</td><td>địa chỉ thư điện tử</td><td>placeholder</td></tr><tr><td class="m">tel</td><td>số điện thoại</td><td>—</td></tr><tr><td class="m">range</td><td>thanh trượt</td><td>min, max</td></tr><tr><td class="m">color</td><td>chọn màu</td><td>—</td></tr></table><div class="ok"><p>Hoạt động 2 của SGK dùng <code>type="number"</code> cho số căn cước và <code>type="date"</code> cho ngày sinh.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 3</span><h1>Thực hành 1: biểu mẫu món ăn</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(17px*var(--z,1))">&lt;h2&gt;Thông tin món ăn&lt;/h2&gt;
+&lt;form&gt;
+ &lt;label for="monan"&gt;Tên món ăn&lt;/label&gt;
+ &lt;input id="monan" type="text"&gt;
+ &lt;br&gt;&lt;label for="gia"&gt;Đơn giá&lt;/label&gt;
+ &lt;input id="gia" type="text"&gt;
+ &lt;br&gt;&lt;label for="sl"&gt;Số lượng&lt;/label&gt;
+ &lt;input id="sl" type="text"&gt;
+&lt;/form&gt;</pre><div class="key">Thêm <code>&lt;br&gt;</code> trước <code>label</code> để nhãn xuống dòng mới.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:26px;font-weight:700">Thông tin món ăn</div><label>Tên món ăn</label> <input type="text" style="width:130px"><br><label>Đơn giá</label> <input type="text" style="width:130px"><br><label>Số lượng</label> <input type="text" style="width:130px"></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 3</span><h1>Thực hành 2: phân tích đề</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thông tin → type tương ứng</h3><ul style="gap:4px"><li>Họ và tên → <code>text</code></li><li>Số căn cước → <code>number</code></li><li>Ngày sinh → <code>date</code></li><li>Giới tính → <code>radio</code> (hoặc select)</li><li>Các môn Toán, Văn, Ngoại ngữ → <code>checkbox</code></li><li>Tổ hợp KHTN / KHXH → <code>radio</code> (hoặc select)</li><li>Nút gửi → <code>submit</code> value="Gửi thông tin"</li></ul></div></div><div class="col"><div class="key">Bước 1: <b>phân tích</b> thông tin cần thu thập rồi chọn type. Bước 2: thêm lần lượt phần tử. Bước 3: thêm <code>h1</code> và nhóm bằng <code>fieldset</code>.</div><div class="ok"><p>Chọn <b>radio</b> khi chỉ được một giá trị; chọn <b>checkbox</b> khi có hoặc không từng môn.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · 3</span><h1>Thực hành 2: mã và kết quả</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(16px*var(--z,1))">&lt;h1&gt;Đăng kí môn thi&lt;/h1&gt;
+&lt;form&gt;&lt;fieldset&gt;
+ Họ tên &lt;input type="text"&gt;&lt;br&gt;
+ CCCD &lt;input type="number"&gt;&lt;br&gt;
+ Ngày sinh &lt;input type="date"&gt;&lt;br&gt;
+ Giới tính
+ &lt;input type="radio" name="gt"&gt; Nam
+ &lt;input type="radio" name="gt"&gt; Nữ&lt;br&gt;
+ Môn &lt;input type="checkbox"&gt; Toán
+ &lt;input type="checkbox"&gt; Văn&lt;br&gt;
+ &lt;input type="submit"
+   value="Gửi thông tin"&gt;
+&lt;/fieldset&gt;&lt;/form&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:24px;font-weight:700">Đăng kí môn thi</div><fieldset>Họ tên <input type="text" style="width:120px"><br>CCCD <input type="number" style="width:120px"><br>Ngày sinh <input type="date"><br>Giới tính <input type="radio" name="x"> Nam <input type="radio" name="x"> Nữ<br>Môn <input type="checkbox"> Toán <input type="checkbox"> Văn<br><input type="submit" value="Gửi thông tin"></fieldset></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><code>form</code> bao các phần tử nhập liệu; <b>input</b> quan trọng nhất.</li><li><code>label for</code> = <code>input id</code>: nháy nhãn thì vào ô nhập.</li><li><b>type</b> quyết định loại ô; <b>name</b> dùng khi xử lí, gửi.</li><li><b>radio</b> cùng name chọn một; <b>checkbox</b> có/không; cả hai cần <b>value</b>.</li><li><code>select</code> + <code>option</code>; <code>textarea</code> có rows, cols; <code>fieldset</code> + <code>legend</code> nhóm khung.</li></ul></div></div><div class="col"><table><tr><th>Muốn…</th><th>Dùng</th></tr><tr><td class="m">Mật khẩu bị che</td><td>type="password"</td></tr><tr><td class="m">Chọn một trong hai</td><td>radio cùng name</td></tr><tr><td class="m">Chọn nhiều</td><td>checkbox</td></tr><tr><td class="m">Gửi dữ liệu</td><td>type="submit"</td></tr></table><div class="warn"><code>input</code> là thẻ đơn; <code>textarea</code> và <code>select</code> có thẻ đóng.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">NÂNG CAO</span><h1>Gửi dữ liệu và thuộc tính hay gặp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>form gửi đi thế nào</h3><ul style="gap:6px"><li><code>action</code>: địa chỉ xử lí dữ liệu.</li><li><code>method="get"</code>: dữ liệu hiện trên URL; <code>"post"</code>: gửi kín trong thân yêu cầu.</li><li>Ô <b>không có name</b> thì dữ liệu <b>không được gửi</b>.</li></ul></div><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;form action="xuly.php" method="post"&gt;</pre></div><div class="col"><div class="card"><h3>Thuộc tính bổ sung</h3><ul style="gap:5px"><li><code>checked</code>: chọn sẵn radio, checkbox.</li><li><code>placeholder</code>: chữ gợi ý mờ.</li><li><code>required</code>: bắt buộc nhập.</li><li><code>disabled</code>: khoá, không gửi.</li><li><code>selected</code>: chọn sẵn option.</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Viết mã tạo ô nhập mật khẩu có nhãn “Mật khẩu”.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Viết mã chọn giới tính chỉ được một giá trị: Nam, Nữ.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Điểm khác nhau giữa radio, checkbox và select là gì?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Viết câu lệnh thêm nút có tên “Quên mật khẩu” vào biểu mẫu.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Dùng thẻ nào để nhóm các ô nhập trong khung có tiêu đề?</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>&lt;label for="mk"&gt;Mật khẩu&lt;/label&gt;&lt;input id="mk" type="password" name="mk"&gt;</code></p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Hai <code>input type="radio"</code> <b>cùng name</b> (ví dụ name="gt") với value Nam, Nu.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>radio: chọn một trong nhóm cùng name; checkbox: có/không từng ô; select: chọn trong danh sách thả xuống.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>&lt;input type="button" value="Quên mật khẩu"&gt;</code></p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>fieldset</code> chứa <code>legend</code> làm tiêu đề.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Tìm 3 lỗi:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">&lt;label for="a"&gt;Tên&lt;/label&gt;
+&lt;input id="b" type="text"&gt;&lt;/input&gt;
+&lt;input type="radio" name="g1" value="Nam"&gt;Nam
+&lt;input type="radio" name="g2" value="Nu"&gt;Nữ</pre></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Trình duyệt hiển thị gì và chọn được mấy mục?</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">&lt;input type="checkbox" name="m" value="T"&gt; Toán
+&lt;input type="checkbox" name="m" value="V"&gt; Văn
+&lt;input type="radio" name="k" value="A"&gt; A
+&lt;input type="radio" name="k" value="B"&gt; B</pre></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) <code>textarea</code> là thẻ đơn. (b) Nháy nhãn mà <code>for</code> trùng <code>id</code> thì ô nhập được chọn. (c) <code>password</code> mã hoá dữ liệu khi gửi. (d) Radio khác name chọn được đồng thời.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Một form có ba <code>input type="text"</code>, hai <code>radio</code> cùng name, một <code>select</code>, một <code>submit</code>. Giả sử mọi ô nhập đều có name, dữ liệu gửi đi có mấy trường (không tính nút submit)?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Viết mã tạo biểu mẫu đăng kí câu lạc bộ: họ tên, lớp (select 10/11/12), CLB (checkbox: Bóng đá, Piano), nút Đăng kí.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Vì sao dùng radio thay cho checkbox khi hỏi “Giới tính”?</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>(1) <code>for="a"</code> không trùng <code>id="b"</code>. (2) <code>input</code> là thẻ đơn, bỏ <code>&lt;/input&gt;</code>. (3) Hai radio <b>khác name</b> (g1, g2) nên chọn được cả hai; phải cùng name.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Hiện hai ô vuông (Toán, Văn) và hai nút tròn (A, B). Chọn được tối đa <b>3 mục</b>: cả 2 checkbox (độc lập) và <b>1</b> trong 2 radio (cùng name).</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b>. (b) <b>Đúng</b>. (c) <b>Sai</b>: chỉ che hiển thị. (d) <b>Đúng</b>.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">BÀI 12 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Ba text + một nhóm radio (cùng name là <b>một trường</b>) + một select = <b>5 trường</b>. Nút submit không tính vì không mang dữ liệu nhập.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>text</code> (họ tên), <code>select</code> với 3 option, hai <code>checkbox</code>, <code>submit</code> value="Đăng kí", trong một <code>form</code> với label tương ứng.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Giới tính chỉ có <b>một</b> giá trị tại một thời điểm, nên cần radio cùng name; checkbox cho phép chọn nhiều hoặc không chọn.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

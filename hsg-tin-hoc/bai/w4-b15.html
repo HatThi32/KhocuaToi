@@ -1,0 +1,231 @@
+<!-- HEAD -->
+<title>Bài 15 · Tạo màu cho chữ và nền</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · BÀI 15</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BÀI 15<br>TẠO MÀU CHO CHỮ VÀ NỀN</h1><p style="font-size:28px;line-height:1.5">Hệ màu RGB, HSL, tên màu; màu nền, khung viền; bộ chọn tổ hợp các phần tử.</p><div><span class="chip">RGB</span><span class="chip">HSL</span><span class="chip">background</span><span class="chip">E F · E>F · E+F · E~F</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Biểu diễn màu bằng <b>RGB, mã #rrggbb, HSL, tên màu</b>.</li><li>Đặt <b>color, background-color, border</b>.</li><li>Dùng bộ chọn <b>tổ hợp</b>: cách, &gt;, +, ~.</li><li>Thực hành định dạng trang “Lợi ích của CSS”.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Hệ màu RGB</li><li>Hệ màu HSL</li><li>Tên màu có sẵn</li><li>Màu chữ, nền, viền</li><li>Bộ chọn tổ hợp</li><li>Thực hành, trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 1</span><h1>Câu hỏi mở đầu</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">p {color: rgb(128,0,128);}
+p {color: #800080;}
+p {color: hsl(300,100%,25.1%);}</pre></div><div class="col"><div class="card"><h3>Nhận xét</h3><ul style="gap:6px"><li>Ba cách viết cho <b>cùng một màu tím</b>.</li><li>CSS có <b>nhiều hệ biểu diễn màu</b>.</li><li>Bài này học cách <b>đổi qua lại</b> các hệ.</li></ul></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 1</span><h1>Hệ màu RGB</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li><b>R</b> (red), <b>G</b> (green), <b>B</b> (blue).</li><li>Mỗi giá trị là số nguyên <b>0 đến 255</b> (8 bit).</li><li>Tổng số màu: 256³ = 2²⁴ = <b>16 777 216</b>.</li></ul></div><div class="key">Số màu = 2<sup>8</sup> × 2<sup>8</sup> × 2<sup>8</sup> = 2<sup>24</sup> = 16 777 216.</div></div><div class="col"><div class="res"><span class="lab">Ví dụ màu</span><div style="font-size:22px;line-height:1.5"><span style="display:inline-block;background:rgb(255,0,0);color:#fff;padding:2px 10px;border-radius:6px;margin:2px;font-size:20px;font-weight:700">rgb(255,0,0)</span><br><span style="background:rgb(255,0,0);color:#fff;padding:2px 10px;font-weight:700">R=255 đỏ</span> <span style="background:rgb(0,160,0);color:#fff;padding:2px 10px;font-weight:700">G=160</span> <span style="background:rgb(0,0,255);color:#fff;padding:2px 10px;font-weight:700">B=255</span></div></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 1</span><h1>Ba cách viết màu RGB</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Cách</th><th>Cú pháp</th><th>Ví dụ (đỏ)</th></tr><tr><td>Hàm rgb, số nguyên</td><td><code>rgb(r,g,b)</code>, mỗi số 0–255</td><td><code>rgb(255,0,0)</code></td></tr><tr><td>Hàm rgb, phần trăm</td><td><code>rgb(r%,g%,b%)</code></td><td><code>rgb(100%,0%,0%)</code></td></tr><tr><td>Mã hexa</td><td><code>#rrggbb</code> (cơ số 16)</td><td><code>#FF0000</code></td></tr></table><div class="key">Trắng <b>rgb(255,255,255)</b> = #FFFFFF; đen <b>rgb(0,0,0)</b> = #000000; xám <b>rgb(128,128,128)</b> = #808080.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 1</span><h1>Đổi số thập phân sang hexa</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cách đổi (mỗi kênh 2 chữ số hexa)</h3><ul style="gap:6px"><li>Chia số cho 16: <b>thương</b> là chữ số đầu, <b>dư</b> là chữ số sau.</li><li>Hexa dùng 0–9, A=10, B=11, C=12, D=13, E=14, F=15.</li><li>Ví dụ: 128 = 8×16 + 0 → <b>80</b>.</li><li>255 = 15×16 + 15 → <b>FF</b>.</li></ul></div></div><div class="col"><table><tr><th>Thập phân</th><th>Hexa</th></tr><tr><td class="m">0</td><td>00</td></tr><tr><td class="m">128</td><td>80</td></tr><tr><td class="m">165</td><td>A5</td></tr><tr><td class="m">255</td><td>FF</td></tr></table><div class="key">Cam rgb(255,165,0) = <b>#FFA500</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 1</span><h1>Hình 15.1: trắng, xám, đen</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Hình 15.1</span><svg viewBox="0 0 520 270" style="width:100%"><rect x="10" y="20" width="150" height="110" fill="#fff" stroke="#0B2545" stroke-width="3"/><rect x="185" y="20" width="150" height="110" fill="#808080"/><rect x="360" y="20" width="150" height="110" fill="#000"/><text x="85" y="170" text-anchor="middle" font-size="28" font-weight="800" fill="#0B2545">white</text><text x="260" y="170" text-anchor="middle" font-size="28" font-weight="800" fill="#0B2545">gray</text><text x="435" y="170" text-anchor="middle" font-size="28" font-weight="800" fill="#0B2545">black</text><text x="85" y="203" text-anchor="middle" font-size="23" font-weight="700" fill="#BF360C">255,255,255</text><text x="260" y="203" text-anchor="middle" font-size="23" font-weight="700" fill="#BF360C">128,128,128</text><text x="435" y="203" text-anchor="middle" font-size="23" font-weight="700" fill="#BF360C">0,0,0</text><text x="85" y="236" text-anchor="middle" font-size="23" font-weight="700" fill="#1565C0">#FFFFFF</text><text x="260" y="236" text-anchor="middle" font-size="23" font-weight="700" fill="#1565C0">#808080</text><text x="435" y="236" text-anchor="middle" font-size="23" font-weight="700" fill="#1565C0">#000000</text></svg></div></div><div class="col"><div class="card"><h3>Quy luật</h3><ul style="gap:6px"><li><b>r = g = b</b> → màu xám (đen, trắng là hai đầu).</li><li>Càng gần 255 càng <b>sáng</b>, gần 0 càng <b>tối</b>.</li></ul></div><div class="key">Nhớ ba mốc: <b>trắng #FFFFFF</b>, <b>xám #808080</b>, <b>đen #000000</b>.</div><div class="ok"><p>Hexa: mỗi cặp ký tự là một kênh R, G, B theo thứ tự.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 2</span><h1>Hệ màu HSL</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba tham số</h3><ul style="gap:6px"><li><b>H</b> (Hue): sắc độ, góc trên vòng tròn màu <b>0°–360°</b>.</li><li><b>S</b> (Saturation): độ bão hoà <b>0%–100%</b>.</li><li><b>L</b> (Lightness): độ sáng <b>0%–100%</b>.</li></ul></div><div class="key">Đặt <b>L = 50%</b> và <b>S = 100%</b> để có màu “đúng” (tươi nhất).</div></div><div class="col"><div class="res"><span class="lab">Vòng tròn màu Hue</span><svg viewBox="0 0 520 290" style="width:100%"><circle cx="150" cy="140" r="110" fill="none" stroke="#999" stroke-width="2"/><path d="M150 140 L150 30" stroke="#E53935" stroke-width="22"/><path d="M150 140 L245 195" stroke="#43A047" stroke-width="22"/><path d="M150 140 L55 195" stroke="#1E88E5" stroke-width="22"/><text x="150" y="22" text-anchor="middle" font-size="20" font-weight="800" fill="#E53935">0° đỏ</text><text x="270" y="215" font-size="20" font-weight="800" fill="#43A047">120° xanh lá</text><text x="20" y="225" font-size="20" font-weight="800" fill="#1E88E5">240° xanh dương</text><text x="330" y="80" font-size="22" font-weight="800" fill="#0B2545">360° = 0°</text><text x="330" y="115" font-size="20" font-weight="700" fill="#BF360C">S=0%: xám</text><text x="330" y="145" font-size="20" font-weight="700" fill="#BF360C">L=0%: đen</text><text x="330" y="175" font-size="20" font-weight="700" fill="#BF360C">L=100%: trắng</text></svg></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 2</span><h1>Màu cơ bản theo hsl</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Màu</th><th>hsl(H, S, L)</th><th>rgb tương ứng</th></tr><tr><td>Đỏ (red)</td><td>hsl(0,100%,50%)</td><td>rgb(255,0,0)</td></tr><tr><td>Vàng (yellow)</td><td>hsl(60,100%,50%)</td><td>rgb(255,255,0)</td></tr><tr><td>Xanh lá (green)</td><td>hsl(120,100%,50%)</td><td>rgb(0,255,0)</td></tr><tr><td>Lục lam (cyan)</td><td>hsl(180,100%,50%)</td><td>rgb(0,255,255)</td></tr><tr><td>Xanh dương (blue)</td><td>hsl(240,100%,50%)</td><td>rgb(0,0,255)</td></tr><tr><td>Hồng tím (magenta)</td><td>hsl(300,100%,50%)</td><td>rgb(255,0,255)</td></tr></table><div class="key">Đáp án Hoạt động SGK: H lần lượt <b>0, 60, 120, 180, 240, 300</b>; S = 100%, L = 50%.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 2</span><h1>Màu xám: hai cách viết</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai cách thiết lập màu xám</h3><ul style="gap:6px"><li><code>rgb(x,x,x)</code>: ba tham số <b>bằng nhau</b>.</li><li><code>hsl(h,0%,x%)</code>: độ bão hoà <b>S = 0%</b>.</li></ul></div><div class="key">Trong hệ rgb có <b>256 màu xám</b> (x từ 0 đến 255), kể cả đen và trắng.</div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">p {color: rgb(100,100,100);}
+p {color: hsl(0,0%,40%);}</pre></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 2</span><h1>Tên màu có sẵn trong CSS</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Phiên bản</th><th>Số tên màu</th><th>Ghi chú</th></tr><tr><td>CSS2</td><td><b>16</b> tên màu chuẩn</td><td>black, gray, white, red, green, orange, yellow, purple, blue, lime…</td></tr><tr><td>CSS3</td><td><b>140</b> tên màu</td><td>không phân biệt chữ hoa, thường</td></tr><tr><td>Hệ chính</td><td><b>RGB</b></td><td>ngoài ra dùng HSL hoặc tên màu</td></tr></table><div class="ok"><p>Chú ý: <code>RED</code>, <code>Red</code>, <code>red</code> đều hợp lệ vì tên màu không phân biệt hoa, thường.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 3</span><h1>color và background-color</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">h1 {color: red;
+     background-color: lightgreen;
+     border: 2px solid magenta;}
+
+p {color: blue;}</pre><div class="key"><b>color</b>: màu chữ. <b>background-color</b>: màu nền. <b>border</b>: khung viền (độ dày, kiểu, màu).</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:23px"><div style="color:red;background:lightgreen;border:2px solid magenta;font-weight:700;font-size:28px;margin-bottom:6px">Lịch sử CSS</div><span style="color:blue">Ý tưởng của CSS do kĩ sư Håkon Wium Lie…</span></div></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 3</span><h1>Định dạng cụm từ bằng em</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">em {background-color: lightgreen;
+     border: 1px solid red;}
+p  {color: blue;}</pre><div class="key">Phần tử nội tuyến <code>em</code> có nền và viền riêng; chữ vẫn kế thừa <b>màu xanh</b> của p.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><p style="font-size:23px;color:blue;margin:0">Ý tưởng của CSS do kĩ sư <em style="background:lightgreen;border:1px solid red;font-style:normal">Håkon Wium Lie</em>, người Na Uy, thiết lập năm 1994.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 3</span><h1>Tính kế thừa của các thuộc tính màu</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th>Thuộc tính</th><th>Kế thừa?</th></tr><tr><td class="m">color</td><td><b>Có</b></td></tr><tr><td class="m">background-color</td><td><b>Có</b> (theo SGK)</td></tr><tr><td class="m">border</td><td><b>KHÔNG</b></td></tr></table></div><div class="col"><div class="warn">Thuộc tính <b>border không kế thừa</b>: đặt viền cho <code>p</code> thì <code>em</code> bên trong không tự có viền.</div><div class="ok"><p>SGK: màu chữ và màu nền có tính kế thừa, riêng border thì không.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 4</span><h1>Bộ chọn tổ hợp các phần tử</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý nghĩa</h3><ul style="gap:6px"><li>Trước giờ bộ chọn chỉ là <b>một phần tử riêng lẻ</b>.</li><li>Bộ chọn tổ hợp: áp dụng khi các phần tử có <b>quan hệ</b> với nhau trong cây HTML.</li><li>Có <b>bốn</b> kiểu: <b>E F</b>, <b>E &gt; F</b>, <b>E + F</b>, <b>E ~ F</b>.</li></ul></div></div><div class="col"><div class="res"><span class="lab">Quan hệ trong cây HTML</span><svg viewBox="0 0 520 300" style="width:100%"><rect x="195" y="10" width="130" height="46" rx="8" fill="#D84315"/><text x="260" y="40" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">div (E)</text><rect x="60" y="120" width="130" height="46" rx="8" fill="#1565C0"/><text x="125" y="150" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">p (F)</text><rect x="330" y="120" width="130" height="46" rx="8" fill="#1565C0"/><text x="395" y="150" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">p</text><rect x="30" y="230" width="90" height="46" rx="8" fill="#2E7D32"/><text x="75" y="260" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">em</text><rect x="140" y="230" width="110" height="46" rx="8" fill="#2E7D32"/><text x="195" y="260" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">strong</text><path d="M240 56 L140 118 M280 56 L380 118 M110 168 L80 228 M140 168 L190 228" stroke="#0B2545" stroke-width="4"/></svg></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 4</span><h1>Bảng 15.1: bốn bộ chọn tổ hợp</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Bộ chọn</th><th>Quan hệ</th><th>Ví dụ</th></tr><tr><td class="m"><code>E F</code></td><td><b>con, cháu</b> (F nằm trong E ở mọi cấp)</td><td><code>div p {color: blue;}</code></td></tr><tr><td class="m"><code>E &gt; F</code></td><td><b>con trực tiếp</b></td><td><code>p &gt; em {color: red;}</code></td></tr><tr><td class="m"><code>E + F</code></td><td><b>anh em liền kề</b> (F ngay sau E, cùng cha)</td><td><code>em + strong {color: red;}</code></td></tr><tr><td class="m"><code>E ~ F</code></td><td><b>anh em</b> (F sau E, không cần liền, cùng cha)</td><td><code>em ~ strong {color: red;}</code></td></tr></table><div class="key">Cách: con <b>và</b> cháu. “&gt;”: chỉ con. “+”: ngay sau. “~”: sau (nhiều phần tử).</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 4</span><h1>E F và E > F: so sánh</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">div p {color: blue;}
+
+p &gt; em {color: red;}
+
+&lt;div&gt;
+ &lt;p&gt;Đoạn 1&lt;/p&gt;
+ &lt;section&gt;&lt;p&gt;Đoạn 2&lt;/p&gt;&lt;/section&gt;
+&lt;/div&gt;</pre><div class="key">E F = mọi cấp bên dưới. E &gt; F = đúng một cấp.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:22px"><b style="color:blue">div p</b>: chọn <b>cả hai</b> p (con và cháu của div).<br><br><b style="color:red">p &gt; em</b>: chỉ chọn em là <b>con trực tiếp</b> của p; em nằm trong strong trong p thì <b>không</b> chọn.</div></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 4</span><h1>E + F: anh em liền kề</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">em + strong {color: red;}
+
+&lt;p&gt;Ý tưởng do &lt;em&gt;Håkon&lt;/em&gt;,
+ làm việc với
+ &lt;strong&gt;Tim Berners-Lee&lt;/strong&gt;
+ tại &lt;em&gt;CERN&lt;/em&gt;.&lt;/p&gt;</pre><div class="key">Phải <b>cùng phần tử cha</b> và <b>liền kề ngay sau</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><p style="font-size:23px;margin:0">Ý tưởng do <em>Håkon</em>, làm việc với <strong style="color:red">Tim Berners-Lee</strong> tại <em>CERN</em>.</p><div style="font-size:20px;margin-top:8px"><b style="color:#000">Kết quả:</b> strong đứng <b style="color:#000">liền sau em</b> nên có chữ đỏ. (Hình 15.6 SGK)</div></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 4</span><h1>E ~ F: anh em phía sau</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">em ~ strong {color: red;}
+
+&lt;p&gt;Do &lt;em&gt;Håkon&lt;/em&gt;, làm với
+ &lt;strong&gt;Tim&lt;/strong&gt; tại
+ &lt;strong&gt;CERN&lt;/strong&gt;.&lt;/p&gt;</pre><div class="key"><b>~</b> không cần liên tục: mọi F cùng cha, đứng <b>sau</b> E.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><p style="font-size:23px;margin:0">Do <em>Håkon</em>, làm với <strong style="color:red">Tim</strong> tại <strong style="color:red">CERN</strong>.</p><div style="font-size:20px;margin-top:8px">Cả <b style="color:#000">hai strong</b> đều nằm sau em nên đều đỏ (Hình 15.7).</div></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 4</span><h1>Sơ đồ so sánh + và ~</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">So sánh</span><svg viewBox="0 0 520 250" style="width:100%"><rect x="10" y="30" width="80" height="44" rx="6" fill="#2E7D32"/><text x="50" y="60" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">em</text><rect x="110" y="30" width="120" height="44" rx="6" fill="#C62828"/><text x="165" y="60" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">strong 1</text><rect x="240" y="30" width="80" height="44" rx="6" fill="#999"/><text x="280" y="60" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">span</text><rect x="340" y="30" width="120" height="44" rx="6" fill="#999"/><text x="395" y="60" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">strong 2</text><text x="10" y="120" font-size="25" font-weight="800" fill="#C62828">em + strong → chỉ strong 1</text><rect x="10" y="150" width="80" height="44" rx="6" fill="#2E7D32"/><text x="50" y="180" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">em</text><rect x="110" y="150" width="120" height="44" rx="6" fill="#C62828"/><text x="165" y="180" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">strong 1</text><rect x="240" y="150" width="80" height="44" rx="6" fill="#999"/><text x="280" y="180" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">span</text><rect x="340" y="150" width="120" height="44" rx="6" fill="#C62828"/><text x="395" y="180" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">strong 2</text><text x="10" y="232" font-size="25" font-weight="800" fill="#C62828">em ~ strong → cả hai strong</text></svg></div></div><div class="col"><div class="card"><h3>Khi nào E F và E > F cho kết quả như nhau?</h3><ul style="gap:6px"><li>Khi F chỉ xuất hiện là <b>con trực tiếp</b> của E, không có cấp trung gian.</li></ul></div><div class="key"><b>+</b> chỉ lấy phần tử <b>ngay sau</b>; <b>~</b> lấy <b>tất cả</b> phần tử cùng cha đứng sau.</div><div class="warn">Cả <b>+</b> và <b>~</b> đều không chọn phần tử đứng <b>trước</b> E.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 5</span><h1>Thực hành: Lợi ích của CSS (HTML)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(17px*var(--z,1))">&lt;h1&gt;LỢI ÍCH CỦA CSS&lt;/h1&gt;
+&lt;p&gt;Sử dụng CSS mang lại … &lt;/p&gt;
+&lt;ul&gt;
+ &lt;li&gt;&lt;strong&gt;Trình bày chính xác.&lt;/strong&gt;
+   Có thể điều khiển &lt;em&gt;chính xác&lt;/em&gt;…&lt;/li&gt;
+ &lt;li&gt;&lt;strong&gt;Tiết kiệm công sức.&lt;/strong&gt;
+   …&lt;/li&gt;
+ &lt;li&gt;&lt;strong&gt;Điều khiển hiển thị đa dạng.&lt;/strong&gt;
+   …&lt;/li&gt;
+ &lt;li&gt;&lt;strong&gt;Tiếp cận theo ngữ nghĩa.&lt;/strong&gt;
+   …&lt;/li&gt;
+&lt;/ul&gt;</pre><div class="key">Đặt nội dung bằng HTML trước; định dạng bằng CSS sau (tách hai việc).</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:22px"><b style="color:#000">Bước 1: dựng HTML</b><ul><li>Bốn ý chính: cặp thẻ <b style="color:#000">ul, li</b>.</li><li>Câu đầu in đậm: thẻ <b style="color:#000">strong</b>.</li><li>Cụm từ in nghiêng: thẻ <b style="color:#000">em</b>.</li></ul></div></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · 5</span><h1>Thực hành: định dạng bằng CSS</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">h1 {color: red;}
+li {line-height: 1.5;}
+strong {color: blue;}
+strong ~ em {color: red;}</pre><div class="key"><code>strong ~ em</code>: em đứng <b>sau</b> strong cùng cha → chữ đỏ, nghiêng. Tiêu đề đỏ, chữ nhấn mạnh xanh đậm.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:21px"><b style="color:red;font-size:26px">LỢI ÍCH CỦA CSS</b><ul style="line-height:1.5;margin:4px 0"><li><b style="color:blue">Trình bày chính xác.</b> Có thể điều khiển <em style="color:red">chính xác</em> cách hiển thị.</li><li><b style="color:blue">Tiết kiệm công sức.</b> Chỉ sửa <em style="color:red">một tệp</em> CSS.</li></ul></div></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>RGB: 3 giá trị 0–255; <b>2²⁴ = 16 777 216</b> màu; mã <b>#rrggbb</b>.</li><li>HSL: Hue 0–360°, Saturation, Lightness; <b>L=50%</b> màu đúng.</li><li>Xám: <b>r=g=b</b> hoặc <b>S=0%</b>. CSS3 có <b>140</b> tên màu.</li><li><b>color, background-color, border</b>; border <b>không kế thừa</b>.</li><li>Tổ hợp: <b>E F</b> (cháu), <b>E&gt;F</b> (con), <b>E+F</b> (liền kề), <b>E~F</b> (sau).</li></ul></div></div><div class="col"><table><tr><th>Muốn chọn…</th><th>Viết</th></tr><tr><td class="m">Mọi p trong div</td><td>div p</td></tr><tr><td class="m">em là con của p</td><td>p > em</td></tr><tr><td class="m">strong ngay sau em</td><td>em + strong</td></tr><tr><td class="m">mọi strong sau em</td><td>em ~ strong</td></tr></table></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy</h3><ul style="gap:6px"><li>Chuyển hexa: <b>#FFF</b> (3 chữ số) = <b>#FFFFFF</b>.</li><li><code>rgb(50%,50%,50%)</code> ≈ <code>rgb(128,128,128)</code>.</li><li><code>h2 + p</code> chọn p <b>liền sau h2</b>, không chọn p ở sau xa hơn.</li><li><code>E ~ F</code> yêu cầu <b>cùng cha</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>rgba(r,g,b,a)</b>, <b>hsla()</b>: thêm độ trong suốt <b>a</b> (0–1).</li><li>Độ tương phản chữ–nền: chữ sáng cần nền tối và ngược lại để dễ đọc.</li></ul></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Có bao nhiêu màu trong hệ rgb? Có bao nhiêu màu xám?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Đổi <code>rgb(255,128,0)</code> sang mã hexa.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Viết mẫu CSS: h1 chữ đỏ, nền vàng nhạt (lightyellow), viền 2px nét liền xanh.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Khi nào <code>E F</code> và <code>E &gt; F</code> có tác dụng như nhau?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Giải thích <code>em + strong {color: red;}</code> và <code>em ~ strong {color: red;}</code>.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>16 777 216</b> màu; <b>256</b> màu xám (r=g=b).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>255→FF, 128→80, 0→00: <b>#FF8000</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>h1 {color:red; background-color:lightyellow; border:2px solid blue;}</code></p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Khi F chỉ là <b>con trực tiếp</b> của E (không có cấp trung gian).</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>+</b>: strong ngay sau em (cùng cha). <b>~</b>: mọi strong đứng sau em (cùng cha), không cần liền kề.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mã hexa <code>#1A2B3C</code> tương ứng rgb(r,g,b) nào?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Cho <code>&lt;div&gt;&lt;p&gt;A&lt;/p&gt;&lt;p&gt;B&lt;/p&gt;&lt;h2&gt;C&lt;/h2&gt;&lt;p&gt;D&lt;/p&gt;&lt;/div&gt;</code> và <code>h2 + p {color: red;}</code>. Đoạn nào đỏ? Nếu đổi thành <code>h2 ~ p</code>?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) hsl(0,0%,50%) là màu xám. (b) <code>border</code> kế thừa. (c) CSS2 có 16 tên màu. (d) rgb(255,255,0) là màu vàng.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Có bao nhiêu màu rgb mà ba kênh r, g, b đều là số chẵn?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Viết CSS: mọi em là con trực tiếp của p có nền lightgreen; mọi strong sau em chữ đỏ.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Vì sao hsl(120,100%,50%) và hsl(120,100%,100%) khác nhau hoàn toàn?</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>1A = 26, 2B = 43, 3C = 60 → <b>rgb(26,43,60)</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>h2 + p</code>: chỉ <b>D</b> (liền sau h2). <code>h2 ~ p</code>: cũng chỉ <b>D</b> vì A, B nằm <b>trước</b> h2.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Đúng</b> (S=0%). (b) <b>Sai</b>. (c) <b>Đúng</b>. (d) <b>Đúng</b>.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">BÀI 15 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Số chẵn 0–255: 128 giá trị. Tổng = 128³ = <b>2 097 152</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>p &gt; em {background-color: lightgreen;}</code> và <code>em ~ strong {color: red;}</code></p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>L=50% là màu xanh lá đúng; <b>L=100% luôn là trắng</b> bất kể H, S.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

@@ -1,0 +1,220 @@
+<!-- HEAD -->
+<title>Bài 13 · Khái niệm, vai trò của CSS</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · BÀI 13</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BÀI 13<br>KHÁI NIỆM, VAI TRÒ CỦA CSS</h1><p style="font-size:28px;line-height:1.5">Mẫu định dạng CSS: cấu trúc, ba cách thiết lập, vai trò và lịch sử.</p><div><span class="chip">CSS</span><span class="chip">Bộ chọn</span><span class="chip">CSS trong / ngoài / nội tuyến</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Giải thích <b>CSS</b> và vai trò của mẫu định dạng.</li><li>Viết đúng <b>cấu trúc</b>: bộ chọn và vùng mô tả.</li><li>Phân biệt <b>CSS trong, ngoài, nội tuyến</b>.</li><li>Liên kết tệp CSS bằng <code>link</code> và <code>@import</code>.</li><li>Nêu <b>lợi ích</b> của CSS và <b>lịch sử</b> CSS.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Khái niệm mẫu định dạng CSS</li><li>Cấu trúc CSS</li><li>Ba cách thiết lập CSS</li><li>Vai trò, ý nghĩa, lịch sử</li><li>Trọng tâm, nâng cao, bài tập HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 1</span><h1>Vấn đề khi chưa có CSS</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Định dạng thủ công bằng style</h3><ul style="gap:6px"><li>Mỗi phần tử phải đặt <b>thuộc tính style riêng</b>.</li><li>Nhiều trang, nhiều phần tử: <b>mất thời gian</b>.</li><li>Dễ <b>không thống nhất</b> giữa các trang.</li><li>Muốn đổi màu tiêu đề: sửa <b>từng thẻ</b>.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;h1 style="color:red"&gt;A&lt;/h1&gt;
+&lt;h1 style="color:red"&gt;B&lt;/h1&gt;
+&lt;h1 style="color:red"&gt;C&lt;/h1&gt;</pre><div class="key">Ba tiêu đề giống nhau mà viết <b>ba lần</b>. CSS ra đời để viết <b>một lần, dùng nhiều lần</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 1</span><h1>Trang web có CSS (SGK Hình 13.2)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;head&gt;
+ &lt;style&gt;
+  h1 {color: red;}
+  h1 {border: 2px solid blue;}
+  p {text-indent: 15px;}
+ &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+ &lt;h1&gt;Lịch sử phát triển HTML&lt;/h1&gt;
+ &lt;p&gt;Các chuẩn HTML …&lt;/p&gt;
+ &lt;p&gt;Ý tưởng ban đầu …&lt;/p&gt;
+&lt;/body&gt;</pre><div class="key">Ba dòng trong <code>style</code> là ba <b>mẫu định dạng</b>. Mẫu 3 áp dụng cho <b>cả hai</b> thẻ <code>p</code>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><style>.x13 h1{color:red;border:2px solid blue;font-size:26px;margin:4px 0}.x13 p{text-indent:15px;font-family:Georgia,serif;font-size:21px;margin:4px 0}</style><div class="x13"><h1>Lịch sử phát triển HTML</h1><p>Các chuẩn HTML của trang web hiện nay được nhà vật lí Tim Berners-Lee đưa ra lần đầu…</p><p>Ý tưởng ban đầu của Berners-Lee là…</p></div></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 1</span><h1>CSS là gì?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cascading Style Sheets</h3><ul style="gap:6px"><li><b>CSS</b> = tập hợp các <b>mẫu định dạng</b> viết <b>độc lập</b> với mã HTML.</li><li>CSS có <b>cách viết riêng</b> (ngôn ngữ CSS), <b>không phải HTML</b>.</li><li>Viết mẫu <b>một lần</b>, áp dụng đồng thời cho <b>mọi phần tử</b> được chọn.</li><li>Mẫu CSS có thể viết trên <b>nhiều hàng</b>.</li></ul></div></div><div class="col"><div class="key">CSS là định dạng <b>độc lập</b> với chuẩn HTML, dùng để thiết lập các mẫu định dạng của trang web.</div><div class="warn">Nhầm “CSS là HTML”. HTML <b>đánh dấu nội dung</b>; CSS <b>định dạng cách hiển thị</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 2</span><h1>Cấu trúc một mẫu CSS</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">h1 {
+  color: red;
+  text-align: center;
+}</pre><div class="key">Mẫu CSS có <b>hai phần</b>: <b>bộ chọn</b> (selector) và <b>vùng mô tả</b> (declaration block).</div></div><div class="col"><div class="res"><span class="lab">Sơ đồ cấu trúc</span><svg viewBox="0 0 520 270" style="width:100%"><rect x="10" y="20" width="110" height="60" rx="10" fill="#558B2F"/><text x="65" y="60" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">h1</text><text x="65" y="108" text-anchor="middle" font-size="22" font-weight="800" fill="#558B2F">bộ chọn</text><rect x="130" y="20" width="380" height="150" rx="10" fill="#E8F5E9" stroke="#558B2F" stroke-width="4"/><text x="150" y="62" font-size="24" class="mono" fill="#0B2545">{ color: red;</text><text x="150" y="104" font-size="24" class="mono" fill="#0B2545">  text-align: center; }</text><text x="320" y="148" text-anchor="middle" font-size="22" font-weight="800" fill="#558B2F">vùng mô tả</text><rect x="140" y="190" width="170" height="44" rx="8" fill="#BF360C"/><text x="225" y="220" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">thuộc tính</text><rect x="330" y="190" width="170" height="44" rx="8" fill="#1565C0"/><text x="415" y="220" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">giá trị</text></svg></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 2</span><h1>Quy tắc viết mẫu CSS</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Quy tắc</th><th>Ví dụ</th></tr><tr><td>Một quy định</td><td><code>h1 {color: red;}</code></td></tr><tr><td>Quy định = <b>thuộc tính : giá trị ;</b></td><td><code>text-indent: 15px;</code></td></tr><tr><td>Nhiều quy định: ngăn bằng <b>dấu ;</b></td><td><code>p {text-indent: 15px; color: blue;}</code></td></tr><tr><td>Nhiều bộ chọn: ngăn bằng <b>dấu phẩy</b></td><td><code>h1, h2, h3 {color: red;}</code></td></tr><tr><td>Chú thích</td><td><code>/* nội dung chú thích */</code></td></tr></table><div class="warn">Giữa tên thuộc tính và giá trị dùng <b>dấu hai chấm :</b>; cuối mỗi quy định có <b>dấu chấm phẩy ;</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 2</span><h1>Ví dụ 1, 2, 3 của SGK</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">h1 {color: red;}
+
+p {text-indent: 15px;
+   color: blue;}
+
+h1, h2, h3 {color: red;}</pre><div class="key">Bộ chọn có thể là <b>một thẻ</b> hoặc <b>nhiều thẻ</b> ngăn bằng dấu phẩy.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:23px"><b style="color:red">VD1:</b> mọi <b>h1</b> có chữ đỏ.<br><br><b style="color:red">VD2:</b> mọi <b>p</b> thụt dòng đầu 15px và chữ xanh dương.<br><br><b style="color:red">VD3:</b> <b>h1, h2, h3</b> cùng chữ đỏ (bộ chọn nhiều thẻ).</div></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 2</span><h1>Ba cách thiết lập CSS</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Cách</th><th>Viết ở đâu</th><th>Phạm vi</th></tr><tr><td>CSS <b>trong</b> (internal)</td><td>thẻ <code>style</code> trong <code>head</code></td><td><b>chỉ tệp HTML đó</b></td></tr><tr><td>CSS <b>ngoài</b> (external)</td><td>tệp <code>.css</code> riêng, nối bằng <code>link</code> hoặc <code>@import</code></td><td><b>nhiều trang</b>, cả website</td></tr><tr><td>CSS <b>nội tuyến</b> (inline)</td><td>thuộc tính <code>style</code> trong thẻ</td><td><b>một phần tử</b></td></tr></table><div class="key">Chọn theo phạm vi: một phần tử → nội tuyến; một trang → trong; nhiều trang → ngoài.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 2</span><h1>CSS trong (internal CSS)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;head&gt;
+  &lt;style&gt;
+    h1 {color: red;}
+    p {color: blue;}
+  &lt;/style&gt;
+&lt;/head&gt;</pre><div class="warn">Thẻ <code>style</code> đặt trong <code>body</code> hoặc ngoài <code>head</code> là chưa đúng chuẩn SGK.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:23px">Đặt toàn bộ mẫu trong thẻ <b style="color:#000">style</b>, nằm trong phần tử <b style="color:#000">head</b>.<br><br>Chỉ áp dụng cho <b style="color:#000">tệp HTML hiện thời</b>.</div></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 2</span><h1>CSS ngoài (external CSS)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">/* tệp styles.css */
+h1 {color: red;}
+p {text-indent: 15px;}
+
+&lt;!-- trong tệp HTML --&gt;
+&lt;head&gt;
+ &lt;link href="styles.css"
+  rel="stylesheet"
+  type="text/css"&gt;
+&lt;/head&gt;</pre><div class="key"><code>href</code> là đường dẫn tới tệp CSS; <code>rel="stylesheet"</code> cho biết đó là tệp định dạng.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:23px"><b style="color:#000">Bước 1:</b> viết mẫu trong tệp <b style="color:#000">.css</b>.<br><b style="color:#000">Bước 2:</b> nối vào trang bằng thẻ <b style="color:#000">link</b> đặt trong <b style="color:#000">head</b>.<br><br>Tệp CSS <b style="color:#000">không chứa thẻ HTML</b>.</div></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 2</span><h1>Cách 2: lệnh @import</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;head&gt;
+  &lt;style&gt;
+    @import "styles.css";
+  &lt;/style&gt;
+&lt;/head&gt;</pre><div class="ok"><p>Cách 1: <code>link</code>. Cách 2: <code>@import</code>. Cả hai đều nối <b>tệp CSS ngoài</b> vào trang.</p></div><div class="key">Một tệp CSS có thể dùng cho <b>nhiều trang web</b>: sửa một lần, mọi trang đổi theo.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:23px">Cách 2 nối tệp CSS: lệnh <b style="color:#000">@import</b> đặt trong thẻ <b style="color:#000">style</b> ở phần <b style="color:#000">head</b>.</div></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 2</span><h1>CSS nội tuyến (inline CSS)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;p style="color: blue;
+   text-indent: 15px"&gt;
+  Đoạn này chỉ định dạng
+  riêng cho thẻ p này.
+&lt;/p&gt;</pre><div class="warn">CSS nội tuyến làm <b>mất thời gian</b> khi có nhiều phần tử và khó đồng bộ. Chỉ dùng cho <b>trường hợp riêng lẻ</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><p style="color:blue;text-indent:15px;font-family:Georgia,serif;font-size:23px;margin:0">Đoạn này chỉ định dạng riêng cho thẻ p này.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 3</span><h1>Vai trò và ý nghĩa của CSS</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lợi ích</h3><ul style="gap:6px"><li><b>Tách</b> việc nhập nội dung (HTML) và việc định dạng (CSS).</li><li>Viết mẫu <b>một lần</b>, dùng <b>nhiều lần</b>.</li><li>Định dạng cho <b>nhiều trang, cả website</b> bằng một tệp CSS.</li><li>Đổi định dạng: sửa <b>một lần</b>.</li><li>Định dạng <b>thống nhất</b>, chuyên nghiệp.</li></ul></div></div><div class="col"><div class="key">Nếu không dùng CSS, phải đặt thuộc tính cho <b>từng phần tử</b>: tốn thời gian và không thống nhất.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 3</span><h1>Một tệp CSS, nhiều trang HTML</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Sơ đồ</span><svg viewBox="0 0 520 330" style="width:100%"><rect x="170" y="10" width="180" height="60" rx="10" fill="#558B2F"/><text x="260" y="48" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">styles.css</text><rect x="10" y="230" width="150" height="60" rx="10" fill="#1565C0"/><text x="85" y="268" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">index.html</text><rect x="185" y="230" width="150" height="60" rx="10" fill="#1565C0"/><text x="260" y="268" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">thethao.html</text><rect x="360" y="230" width="150" height="60" rx="10" fill="#1565C0"/><text x="435" y="268" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">nghethuat.html</text><path d="M240 72 L100 228 M260 72 L260 228 M280 72 L420 228" stroke="#0B2545" stroke-width="4"/><text x="260" y="170" font-size="22" font-weight="800" fill="#C62828" text-anchor="middle">link href="styles.css"</text></svg></div></div><div class="col"><div class="card"><h3>Ý nghĩa</h3><ul style="gap:6px"><li>Ba trang cùng <b>link</b> tới một tệp.</li><li>Đổi màu tiêu đề trong tệp CSS: <b>cả ba trang đổi</b>.</li><li>Website có <b>phong cách thống nhất</b>.</li></ul></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · 3</span><h1>Lịch sử CSS (đọc thêm)</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Mốc</th><th>Sự kiện</th></tr><tr><td>1994</td><td>Ý tưởng của kĩ sư <b>Håkon Wium Lie</b> (Na Uy), làm việc với Tim Berners-Lee tại CERN</td></tr><tr><td>1996</td><td><b>CSS1</b> chính thức ra đời</td></tr><tr><td>1998</td><td><b>CSS2</b> hoàn thiện</td></tr><tr><td>2011</td><td><b>CSS2.1</b>; bản nâng cấp hoàn thiện năm 2016</td></tr><tr><td>Từ CSS3</td><td>phát triển theo <b>từng gói riêng</b>; CSS4, CSS5 vẫn đang được thiết lập</td></tr></table><div class="ok"><p>Tổ chức phát triển chuẩn HTML, CSS: <b>W3C</b> (World Wide Web Consortium), website <code>www.w3.org</code>.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>CSS <b>không phải HTML</b>: ngôn ngữ riêng để định dạng.</li><li>Mẫu = <b>bộ chọn { thuộc tính: giá trị; }</b>.</li><li>Ba cách: <b>trong</b> (style trong head), <b>ngoài</b> (tệp .css + link/@import), <b>nội tuyến</b> (thuộc tính style).</li><li>Lợi ích: <b>viết một lần, dùng nhiều lần</b>; một tệp cho cả website.</li></ul></div></div><div class="col"><table><tr><th>Muốn…</th><th>Dùng</th></tr><tr><td class="m">Cả trang</td><td>CSS trong</td></tr><tr><td class="m">Nhiều trang</td><td>CSS ngoài</td></tr><tr><td class="m">Một thẻ</td><td>CSS nội tuyến</td></tr></table><div class="warn"><code>link</code> đặt trong <b>head</b>; chú thích CSS là <code>/* */</code>, không phải <code>&lt;!-- --&gt;</code>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm về CSS</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy</h3><ul style="gap:6px"><li>Chú thích CSS là <code>/* … */</code>; <code>&lt;!-- --&gt;</code> là của HTML.</li><li>Quên <b>dấu ;</b> giữa hai quy định thì quy định sau có thể <b>mất tác dụng</b>.</li><li>Sai tên thuộc tính: trình duyệt <b>bỏ qua</b> quy định đó, không báo lỗi.</li><li>Đường dẫn <code>href</code> của <code>link</code> theo quy tắc <b>đường dẫn tương đối</b> (Bài 10).</li></ul></div></div><div class="col"><div class="card"><h3>So sánh nhanh</h3><ul style="gap:6px"><li><b>Trong</b>: không cần tệp riêng, chỉ một trang.</li><li><b>Ngoài</b>: tải được một lần, dùng lại cho nhiều trang.</li><li><b>Nội tuyến</b>: ưu tiên cao hơn khi trùng (Bài 17).</li></ul></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Ngôn ngữ CSS chính là HTML. Đúng hay sai?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Chỉ cần sửa một tệp CSS có thể đổi định dạng của nhiều trang, thậm chí cả website. Đúng hay sai?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Muốn tất cả đoạn p của trang chữ xanh (blue), viết mẫu CSS thế nào?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Giải thích ý nghĩa: <code>h1,h2,h3 {border: 2px solid red;}</code></p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Muốn áp dụng CSS cho nhiều trang cùng lúc thì làm thế nào?</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>Sai</b>: CSS có cách viết riêng, độc lập với HTML.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Đúng</b>: dùng CSS ngoài, các trang cùng liên kết tới tệp.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>p {color: blue;}</code></p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Các thẻ <b>h1, h2, h3</b> đều có khung viền <b>dày 2px, nét liền, màu đỏ</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Dùng <b>CSS ngoài</b>: viết tệp .css, rồi nối bằng <code>link</code> (hoặc <code>@import</code>) trong từng trang.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mẫu CSS sau nằm trong tệp <code>style.css</code>. Tìm 2 lỗi:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">&lt;style&gt;
+ h1 {color = red; text-align: center}
+ p {font-size: 20px color: blue;}
+&lt;/style&gt;</pre></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Cho tệp HTML: <code>&lt;link href="css/main.css" rel="stylesheet"&gt;</code> đặt trong <code>head</code> của trang ở thư mục gốc. Tệp CSS đặt ở đâu?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) Thẻ <code>style</code> nằm trong <code>head</code>. (b) Tệp .css chứa cả thẻ <code>&lt;html&gt;</code>. (c) Chú thích CSS viết <code>&lt;!-- --&gt;</code>. (d) <code>@import</code> cũng nối được tệp CSS ngoài.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Website có 10 trang cần đổi màu tiêu đề từ đỏ sang xanh. So sánh số chỗ phải sửa nếu dùng CSS ngoài và CSS nội tuyến (mỗi trang 3 tiêu đề).</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Viết mã CSS ngoài: tiêu đề h1 màu đỏ, p chữ xanh thụt dòng 2em; viết cả thẻ liên kết.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mẫu <code>h1 {color: red;}</code> và <code>h1 {border: 2px solid blue;}</code> viết liên tiếp có cần gộp không? Gộp thế nào?</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>(1) <code>color = red</code> phải là <code>color: red</code>. (2) thiếu <b>dấu ;</b> sau <code>20px</code>. (Và thẻ <code>style</code> không có trong tệp .css.)</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Trong thư mục con <b>css</b> của thư mục chứa trang: <code>css/main.css</code> (đường dẫn tương đối).</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Đúng</b>. (b) <b>Sai</b>. (c) <b>Sai</b>: dùng <code>/* */</code>. (d) <b>Đúng</b>.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">BÀI 13 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>CSS ngoài: <b>1 chỗ</b>. CSS nội tuyến: 10 × 3 = <b>30 chỗ</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>h1 {color: red;} p {color: blue; text-indent: 2em;}</code> và <code>&lt;link href="style.css" rel="stylesheet"&gt;</code> trong head.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Không bắt buộc, kết quả như nhau. Gộp: <code>h1 {color: red; border: 2px solid blue;}</code>.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

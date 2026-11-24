@@ -1,0 +1,237 @@
+<!-- HEAD -->
+<title>Bài 14 · Định dạng văn bản bằng CSS</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · BÀI 14</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BÀI 14<br>ĐỊNH DẠNG VĂN BẢN BẰNG CSS</h1><p style="font-size:28px;line-height:1.5">Phông chữ, màu chữ, dòng văn bản; tính kế thừa và thứ tự ưu tiên.</p><div><span class="chip">font</span><span class="chip">color</span><span class="chip">text</span><span class="chip">kế thừa</span><span class="chip">ưu tiên</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Dùng CSS định dạng <b>phông chữ</b>: font-family, font-size, font-style, font-weight.</li><li>Đặt <b>màu chữ</b> bằng color.</li><li>Định dạng <b>dòng văn bản</b>: line-height, text-align, text-decoration, text-indent.</li><li>Giải thích <b>tính kế thừa</b> và <b>thứ tự ưu tiên</b> (cascading, *, !important).</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Định dạng phông chữ</li><li>Màu chữ</li><li>Định dạng dòng văn bản</li><li>Kế thừa và ưu tiên</li><li>Thực hành, trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 1</span><h1>Ba nhóm thuộc tính định dạng văn bản</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th>Nhóm</th><th>Thuộc tính chính</th></tr><tr><td class="m">Phông chữ</td><td>font-family, font-size, font-style, font-weight</td></tr><tr><td class="m">Màu chữ</td><td>color</td></tr><tr><td class="m">Dòng văn bản</td><td>line-height, text-align, text-decoration, text-indent</td></tr></table></div><div class="col"><div class="key">Cú pháp chung: <code>bộ_chọn {thuộc_tính: giá_trị;}</code>.</div><div class="ok"><p>Văn bản trên trang web được định dạng qua <b>phông chữ</b>, <b>màu chữ</b>, <b>dòng văn bản</b>.</p></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 1</span><h1>font-family: chọn phông chữ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Năm loại phông chữ</h3><ul style="gap:5px"><li><b>serif</b>: chữ <b>có chân</b></li><li><b>sans-serif</b>: chữ <b>không chân</b></li><li><b>monospace</b>: chiều rộng đều nhau</li><li><b>cursive</b>: chữ viết tay</li><li><b>fantasy</b>: chữ trừu tượng</li></ul></div></div><div class="col"><div class="res"><span class="lab">Hiển thị</span><div style="font-size:26px;line-height:1.5"><span style="font-family:serif">CSS history · serif</span><br><span style="font-family:sans-serif">CSS history · sans-serif</span><br><span style="font-family:monospace">CSS history · monospace</span><br><span style="font-family:cursive">CSS history · cursive</span><br><span style="font-family:fantasy">CSS history · fantasy</span></div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 1</span><h1>font-family: danh sách phông</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">p {
+  font-family: "Times New Roman",
+               Georgia, serif;
+}
+
+h1 {font-family: Arial, sans-serif;}</pre><div class="key">Tên loại phông (serif, sans-serif…) đặt <b>cuối danh sách</b> làm phương án dự phòng.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:23px">Trình duyệt tìm phông <b>từ trái sang phải</b>.<br>Không có phông nào trong danh sách: chọn phông <b>cùng loại</b> bất kì.<br>Tên phông có <b>dấu cách</b> phải đặt trong <b>nháy kép</b> hoặc nháy đơn.</div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 1</span><h1>font-size: cỡ chữ</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Dạng</th><th>Đơn vị</th><th>Ví dụ</th></tr><tr><td>Tuyệt đối</td><td>cm, mm, in, <b>px</b>, pt</td><td><code>font-size: 16px;</code></td></tr><tr><td>Tương đối</td><td><b>em</b> (so cỡ chữ hiện thời), ex, rem (so với html)</td><td><code>p {font-size: 1.2em;}</code></td></tr><tr><td>Phần trăm</td><td>% cỡ chữ của phần tử cha</td><td><code>html {font-size: 100%;}</code></td></tr><tr><td>Mức chữ</td><td>xx-small … medium … xx-large</td><td>mặc định là <b>medium</b></td></tr></table><div class="key">1in = 2,54 cm; 1px = 1/96 in; 1pt = 1/72 in. Cỡ mặc định: <b>medium</b>.</div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 1</span><h1>font-style và font-weight</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">em     {font-style: italic;
+        font-weight: bold;}
+strong {font-style: italic;
+        font-weight: 900;}</pre><div class="warn">SGK in nhầm <code>italics</code> và <code>990</code>. Đúng là <b>italic</b>; font-weight là <b>normal, bold</b> hoặc <b>100…900</b> (từ 500 trở lên là đậm).</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:24px;line-height:1.5"><em style="font-weight:bold">Chữ em: nghiêng + đậm</em><br><strong style="font-style:italic;font-weight:900">Chữ strong: nghiêng + rất đậm</strong><br>Chữ thường: normal</div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 1</span><h1>Tổng hợp thuộc tính phông chữ</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thuộc tính</th><th>Chức năng</th><th>Giá trị</th></tr><tr><td class="m">font-family</td><td>chọn phông</td><td>tên phông, loại phông</td></tr><tr><td class="m">font-size</td><td>cỡ chữ</td><td>px, em, %, medium…</td></tr><tr><td class="m">font-style</td><td>kiểu chữ</td><td>normal, <b>italic</b></td></tr><tr><td class="m">font-weight</td><td>độ đậm</td><td>normal, bold, 100–900</td></tr></table><div class="ok"><p>Ví dụ thường gặp: <code>body {font-family: sans-serif; font-size: 18px;}</code>.</p></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 2</span><h1>color: màu chữ</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">h1 {color: red;}
+em {color: green;}
+* {color: black;}</pre><div class="key">Màu cơ bản: <b>black, white, purple, blue, orange, red, green, yellow</b>. Bộ chọn <code>*</code> chọn <b>mọi phần tử</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:24px;line-height:1.5"><b style="color:red;font-size:30px">Tiêu đề h1 màu đỏ</b><br><em style="color:green">Chữ em màu xanh lá</em><br>Các phần tử còn lại màu đen</div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 2</span><h1>Cách cho giá trị màu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba cách viết màu</h3><ul style="gap:6px"><li>Tên màu: <code>red</code></li><li>Mã thập lục phân: <code>#FF0000</code></li><li>Hàm RGB: <code>rgb(255,0,0)</code></li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">h1 {color: red;}
+h1 {color: #FF0000;}
+h1 {color: rgb(255,0,0);}</pre><div class="key">Ba mẫu trên cho <b>cùng một màu đỏ</b>.</div><div class="ok"><p>Mở rộng: SGK chỉ dùng tên màu, nhưng đề HSG có thể gặp mã màu.</p></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 3</span><h1>Đường cơ sở và chiều cao dòng</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Hình 14.3</span><svg viewBox="0 0 520 280" style="width:100%"><line x1="20" y1="70" x2="500" y2="70" stroke="#C62828" stroke-width="3" stroke-dasharray="8 6"/><line x1="20" y1="170" x2="500" y2="170" stroke="#C62828" stroke-width="3" stroke-dasharray="8 6"/><text x="30" y="68" font-size="40" font-weight="800" fill="#0B2545">Chữ dòng một</text><text x="30" y="168" font-size="40" font-weight="800" fill="#0B2545">Chữ dòng hai</text><path d="M470 72 V168" stroke="#1565C0" stroke-width="4"/><path d="M462 80 L470 70 L478 80 M462 160 L470 170 L478 160" fill="none" stroke="#1565C0" stroke-width="4"/><text x="260" y="130" font-size="22" font-weight="800" fill="#1565C0" text-anchor="middle">line-height</text><text x="30" y="220" font-size="22" font-weight="800" fill="#C62828">---- đường cơ sở (baseline)</text></svg></div></div><div class="col"><div class="card"><h3>Định nghĩa</h3><ul style="gap:6px"><li><b>Đường cơ sở</b>: đường ngang mà các chữ cái <b>đứng trên</b> nó.</li><li><b>Chiều cao dòng</b>: khoảng cách giữa các đường cơ sở của hai dòng liên tiếp.</li></ul></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 3</span><h1>line-height: chiều cao dòng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">p {line-height: 3;}
+p {line-height: 2em;}
+p {line-height: 200%;}</pre><div class="key">Số không có đơn vị là <b>hệ số nhân</b> với cỡ chữ.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:23px">Ba cách viết:<br>• <b style="color:#000">3</b>: gấp 3 lần cỡ chữ<br>• <b style="color:#000">2em</b>: 2 lần chiều cao dòng hiện thời<br>• <b style="color:#000">200%</b>: 200% chiều cao dòng của phần tử cha</div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 3</span><h1>text-align: căn lề</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">p {text-align: left;}
+p {text-align: center;}
+p {text-align: right;}
+p {text-align: justify;}</pre><div class="warn">SGK có đoạn ghi nhầm <code>line-align</code>. Thuộc tính đúng là <b>text-align</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:24px;line-height:1.5"><div style="text-align:left;border:1px solid #888;margin:3px 0;font-size:20px">left: căn trái</div><div style="text-align:center;border:1px solid #888;margin:3px 0;font-size:20px">center: căn giữa</div><div style="text-align:right;border:1px solid #888;margin:3px 0;font-size:20px">right: căn phải</div><div style="text-align:justify;border:1px solid #888;margin:3px 0;font-size:20px">justify: căn đều hai bên, trải đều nhau chữ trong đoạn nhiều dòng.</div></div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 3</span><h1>text-decoration: trang trí dòng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">a {text-decoration: none;}
+p {text-decoration: underline;}
+h2 {text-decoration: overline;}
+s {text-decoration: line-through;}</pre><div class="warn"><b>text-decoration KHÔNG có tính kế thừa.</b> Thuộc tính này mở rộng cho thẻ <code>u</code> của HTML.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:24px;line-height:1.5"><span style="text-decoration:underline">underline: gạch dưới</span><br><span style="text-decoration:overline">overline: gạch trên</span><br><span style="text-decoration:line-through">line-through: gạch giữa</span></div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 3</span><h1>text-indent: thụt dòng đầu</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">p {text-indent: 10px;}
+p {text-indent: 2em;}
+p {text-indent: 5%;}</pre><div class="key">Dòng đầu thụt <b>10px</b> / <b>2em</b> (2 kí tự) / <b>5%</b> chiều rộng dòng của phần tử cha.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:21px;line-height:1.4"><p style="text-indent:2em;margin:0">Dòng đầu thụt 2em, các dòng sau không thụt vào. Quan sát đoạn nhiều dòng để thấy rõ khác biệt giữa dòng đầu và các dòng tiếp theo.</p></div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 3</span><h1>Tổng hợp thuộc tính dòng văn bản</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thuộc tính</th><th>Chức năng</th><th>Giá trị</th></tr><tr><td class="m">line-height</td><td>chiều cao dòng</td><td>số, em, %</td></tr><tr><td class="m">text-align</td><td>căn lề</td><td>left, center, right, justify</td></tr><tr><td class="m">text-decoration</td><td>trang trí</td><td>none, underline, overline, line-through</td></tr><tr><td class="m">text-indent</td><td>thụt dòng đầu</td><td>px, em, %</td></tr></table><div class="warn">Nhớ: <b>text-decoration không kế thừa</b>. Các thuộc tính còn lại kế thừa.</div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 4</span><h1>Tính kế thừa của CSS</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">body {color: blue;}
+h1   {color: red;
+      text-align: center;}</pre><div class="key">Mẫu áp dụng cho phần tử cha sẽ <b>tự áp dụng cho mọi phần tử con, cháu</b> trong cây HTML (trừ phần tử có mẫu riêng).</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:23px"><b style="color:red">Tính kế thừa của CSS</b> (h1: tự đặt đỏ)<br><b style="color:blue">1. Mô hình cây HTML</b> (h2: kế thừa xanh)<br><span style="color:blue">Đây là đoạn đầu tiên…</span> (p: kế thừa xanh)</div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 4</span><h1>Cây HTML và kế thừa</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Sơ đồ</span><svg viewBox="0 0 520 300" style="width:100%"><rect x="190" y="10" width="140" height="50" rx="8" fill="#6A1B9A"/><text x="260" y="43" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">body (blue)</text><rect x="20" y="130" width="130" height="50" rx="8" fill="#C62828"/><text x="85" y="163" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">h1 (red)</text><rect x="195" y="130" width="130" height="50" rx="8" fill="#1565C0"/><text x="260" y="163" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">h2 (blue)</text><rect x="370" y="130" width="130" height="50" rx="8" fill="#1565C0"/><text x="435" y="163" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">p (blue)</text><path d="M240 62 L100 128 M260 62 L260 128 M280 62 L420 128" stroke="#0B2545" stroke-width="4"/><text x="260" y="240" text-anchor="middle" font-size="22" font-weight="800" fill="#C62828">h1 có mẫu riêng → ghi đè; h2, p kế thừa</text></svg></div></div><div class="col"><div class="card"><h3>Kết luận</h3><ul style="gap:6px"><li>Phần tử <b>cha</b> đặt màu → <b>con, cháu</b> nhận lại.</li><li>Mẫu <b>riêng</b> của phần tử con có mức ưu tiên hơn.</li></ul></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 4</span><h1>Thứ tự ưu tiên 1: mẫu viết sau</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">h1 {color: red;
+     text-align: center;}
+h1 {text-align: left;}</pre><div class="key">Hai mẫu cùng bộ chọn: thuộc tính <b>trùng nhau</b> lấy theo mẫu <b>cuối</b>; thuộc tính khác nhau thì giữ cả hai.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:23px"><b style="color:red">Cùng bộ chọn h1:</b><br>mẫu <b>viết sau cùng</b> được áp dụng.<br>Kết quả: h1 <b style="color:#000">căn trái</b>, vẫn màu đỏ.<br>(Đây là tính “cascading”.)</div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 4</span><h1>Ưu tiên 2: dấu * và !important</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">h1 {
+  text-align: center !important;
+}
+h1 {text-align: left; color: red;}
+* {text-indent: 1em; color: blue;}</pre><div class="key"><b>!important</b>: ưu tiên <b>cao nhất</b>. Bộ chọn <b>*</b>: ưu tiên <b>thấp nhất</b>, dù viết ở cuối.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:21px">Với h1:<br>• <b style="color:#000">text-align: center</b> thắng nhờ <b style="color:red">!important</b><br>• <b style="color:#000">color: red</b> thắng <b style="color:#000">*</b> (blue)<br>• <b style="color:#000">text-indent: 1em</b> từ <b style="color:#000">*</b> vẫn áp dụng vì h1 không đặt</div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 4</span><h1>Bảng thứ tự ưu tiên</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Mức</th><th>Quy tắc</th></tr><tr><td>1 (cao nhất)</td><td>thuộc tính có <b>!important</b></td></tr><tr><td>2</td><td>mẫu nhắm <b>đúng phần tử</b> (bộ chọn thẻ)</td></tr><tr><td>3</td><td>nhiều mẫu cùng bộ chọn: mẫu <b>viết sau</b> thắng</td></tr><tr><td>4</td><td>giá trị <b>kế thừa</b> từ phần tử cha</td></tr><tr><td>5 (thấp nhất)</td><td>bộ chọn <b>*</b></td></tr></table><div class="warn">Ghi nhớ thứ tự: <b>!important</b> › mẫu riêng (viết sau) › kế thừa › <b>*</b>. Mức 4–5 theo cách SGK diễn đạt; trên thực tế <b>*</b> vẫn trội hơn giá trị kế thừa thuần.</div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 5</span><h1>Thực hành 1: trình bày văn bản</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">h1,h2 {font-family: sans-serif;
+        font-size: 16px;
+        color: red;
+        text-align: left;}
+p {font-family: serif;
+   text-align: left;
+   text-indent: 2em;}</pre><div class="key">Yêu cầu: tiêu đề căn trái, đỏ, không chân; đoạn văn có chân, thụt 2 kí tự.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:21px;line-height:1.35"><h2 style="font-family:sans-serif;color:red;text-align:left;font-size:22px;margin:0">Lịch sử CSS</h2><p style="font-family:serif;text-indent:2em;margin:4px 0">Ý tưởng của CSS do kĩ sư Håkon Wium Lie, người Na Uy, thiết lập năm 1994 khi làm việc với Tim Berners-Lee tại CERN.</p></div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · 5</span><h1>Thực hành 2: sửa định dạng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">h1,h2 {font-family: sans-serif;
+        font-size: 16px;
+        color: blue;
+        text-align: center;}
+p {text-align: justify;
+   text-indent: 2em;}
+strong,em {font-size: 100%;}</pre><div class="warn">SGK ghi <code>font-size: 199%</code> là in lỗi; dùng <b>100%</b> để chữ đậm, nghiêng giữ nguyên cỡ.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:21px;line-height:1.35"><h2 style="font-family:sans-serif;color:blue;text-align:center;font-size:22px;margin:0">Lịch sử CSS</h2><p style="text-align:justify;text-indent:2em;margin:4px 0">Ý tưởng chính của CSS là tạo ra các mẫu định dạng <strong>riêng, độc lập</strong> cho phần tử <em>HTML</em> của trang web.</p></div></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>font-family</b> (5 loại), <b>font-size</b>, <b>font-style: italic</b>, <b>font-weight</b>.</li><li><b>color</b>: màu chữ; <b>*</b> chọn mọi phần tử.</li><li><b>line-height, text-align, text-decoration, text-indent</b>.</li><li><b>Kế thừa</b>: con, cháu nhận mẫu của cha; riêng <b>text-decoration không kế thừa</b>.</li><li>Ưu tiên: <b>!important</b> cao nhất; cùng bộ chọn → mẫu <b>sau</b>; <b>*</b> thấp nhất.</li></ul></div></div><div class="col"><table><tr><th>Muốn…</th><th>Dùng</th></tr><tr><td class="m">Chữ nghiêng</td><td>font-style: italic</td></tr><tr><td class="m">Căn đều hai bên</td><td>text-align: justify</td></tr><tr><td class="m">Thụt dòng đầu</td><td>text-indent: 2em</td></tr><tr><td class="m">Gạch ngang chữ</td><td>text-decoration: line-through</td></tr></table><div class="warn">Viết đúng: <code>italic</code> (không phải italics), <code>text-align</code> (không phải line-align).</div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>em</b> của font-size khác <b>thẻ em</b> của HTML.</li><li>Thụt <code>%</code> tính theo <b>chiều rộng phần tử cha</b>.</li><li><code>line-height: 2</code> khác <code>2em</code> khi có lồng nhau (số: nhân với cỡ chữ của <b>chính nó</b>).</li><li><code>h1,h2</code> (có dấu phẩy) khác <code>h1 h2</code> (h2 nằm trong h1).</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng (Vận dụng SGK)</h3><ul style="gap:6px"><li><b>font-variant</b>: chữ in hoa nhỏ.</li><li><b>letter-spacing</b>: khoảng cách kí tự.</li><li><b>word-spacing</b>: khoảng cách từ.</li><li><b>text-shadow</b>: chữ bóng.</li></ul></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mỗi phông sau thuộc loại nào: Times New Roman, Courier New, Arial, Consolas?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Đúng hay sai: toàn bộ văn bản trang web mặc định có chân nếu <code>body {font-family: sans-serif;}</code>.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Giải thích: <code>h1 {color: red; text-align: center;}</code> và <code>p {text-align: justify;}</code>.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Với <code>h1 {text-align:center !important;} h1 {text-align:left;} * {font-family:serif;}</code> thì mẫu nào áp dụng cho h1?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Liệt kê thuộc tính CSS cần để định dạng một đoạn thơ có tiêu đề căn giữa, đoạn thụt dòng, chữ nghiêng.</p></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Times New Roman: <b>serif</b>; Courier New: <b>monospace</b>; Arial: <b>sans-serif</b>; Consolas: <b>monospace</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Sai</b>: sans-serif là chữ <b>không chân</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>h1: chữ <b>đỏ, căn giữa</b>; p: <b>căn đều hai bên</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>h1 <b>căn giữa</b> nhờ !important; phông h1 là <b>serif</b> (do <code>*</code>) nếu h1 không đặt font-family khác.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>text-align: center</code>, <code>text-indent</code>, <code>font-style: italic</code>, (có thể thêm <code>line-height</code>, <code>font-size</code>).</p></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Có CSS: <code>body {color: blue;}</code> <code>h1 {color: red;}</code> <code>* {color: black;}</code>. Chữ trong thẻ p có màu gì? Chữ h1?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Cho <code>p {text-align:left;}</code> rồi <code>p {text-align:right; color: red;}</code>. Kết quả căn lề và màu của p?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) <code>font-weight: 900</code> là chữ đậm. (b) <code>text-decoration</code> kế thừa từ cha. (c) <code>medium</code> là cỡ chữ mặc định. (d) <code>serif</code> là chữ không chân.</p></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Sửa lỗi: <code>p {font-style: italics; line-align: right; text-indent = 2em}</code>.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Viết CSS: tiêu đề h1, h2 chữ xanh, căn giữa; đoạn p chữ đen, căn đều, thụt 2em, chiều cao dòng gấp 1,5 lần.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Cho <code>p {font-size: 1.5em;}</code> trong body cỡ 16px. Cỡ chữ của p là bao nhiêu px?</p></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>p: <b>đen</b> vì <code>*</code> chọn mọi phần tử nhưng p không có mẫu riêng (SGK: * áp dụng cho phần tử còn lại); h1: <b>đỏ</b> (mẫu riêng ưu tiên hơn *).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Căn phải, màu đỏ</b>: mẫu viết sau thắng thuộc tính trùng.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Đúng</b>. (b) <b>Sai</b>. (c) <b>Đúng</b>. (d) <b>Sai</b>.</p></div></div></div></section>
+
+<section class="s p10"><div class="hd"><span class="k">BÀI 14 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>font-style: italic; text-align: right; text-indent: 2em;</code> (3 lỗi: italics, line-align, dấu =).</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>h1,h2 {color: blue; text-align: center;}</code> <code>p {color: black; text-align: justify; text-indent: 2em; line-height: 1.5;}</code></p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>1,5 × 16 = <b>24px</b>.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

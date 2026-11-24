@@ -1,0 +1,242 @@
+<!-- HEAD -->
+<title>Bài 17 · Các mức ưu tiên của bộ chọn</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · BÀI 17</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BÀI 17<br>CÁC MỨC ƯU TIÊN CỦA BỘ CHỌN</h1><p style="font-size:28px;line-height:1.5">Pseudo-class, pseudo-element; thứ tự ưu tiên; cách tính trọng số của bộ chọn.</p><div><span class="chip">:hover</span><span class="chip">::first-line</span><span class="chip">!important</span><span class="chip">trọng số</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Dùng <b>lớp giả</b> (pseudo-class) cho trạng thái tương tác.</li><li>Dùng <b>phần tử giả</b> (pseudo-element).</li><li>Nêu <b>7 mức ưu tiên</b> của CSS.</li><li><b>Tính trọng số</b> bộ chọn: ID, class, element.</li><li>Thực hành trang “Giới thiệu HTML và CSS”.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Lớp giả, phần tử giả</li><li>Thứ tự ưu tiên</li><li>Trọng số</li><li>Thực hành</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 1</span><h1>Vấn đề: CSS cho trạng thái tương tác</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi mở đầu</h3><ul style="gap:6px"><li>Các lệnh đã biết chỉ áp dụng cho <b>phần tử tĩnh</b>.</li><li>Muốn chữ <b>đổi màu khi di chuột</b> hoặc khi nháy chuột lên phần tử thì sao?</li></ul></div></div><div class="col"><div class="key">Dùng <b>lớp giả</b> (pseudo-class): trạng thái đặc biệt của phần tử, viết sau dấu <b>:</b>.</div><div class="ok"><p>Còn muốn định dạng <b>một phần của phần tử</b> (dòng đầu, chữ cái đầu) dùng <b>phần tử giả</b> (pseudo-element), viết sau <b>::</b>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 1</span><h1>Lớp giả (pseudo-class)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li>Chỉ các <b>trạng thái đặc biệt</b> của phần tử HTML.</li><li>Không cần định nghĩa, <b>có sẵn</b> trong CSS.</li><li>Cú pháp: <code>:lớp_giả {thuộc tính: giá trị;}</code></li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">a:link    {color: blue;}
+a:visited {color: gray;}
+a:hover   {color: magenta;}
+#home:hover {font-size: 150%;}</pre></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 1</span><h1>Bảng 17.1: một số lớp giả thường dùng</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Lớp giả</th><th>Áp dụng khi</th><th>Ví dụ</th></tr><tr><td class="m"><code>:link</code></td><td>liên kết <b>chưa</b> được kích hoạt</td><td><code>a:link {color: blue;}</code></td></tr><tr><td class="m"><code>:visited</code></td><td>liên kết <b>đã</b> được kích hoạt</td><td><code>a:visited {color: gray;}</code></td></tr><tr><td class="m"><code>:hover</code></td><td><b>di chuột</b> lên phần tử</td><td><code>#home:hover {font-size: 150%;}</code></td></tr><tr><td class="m"><code>:active</code></td><td>đang <b>nháy giữ chuột</b> (mở rộng)</td><td><code>a:active {color: red;}</code></td></tr><tr><td class="m"><code>:focus</code></td><td>phần tử đang được <b>chọn</b> (mở rộng)</td><td><code>input:focus {border: 2px solid blue;}</code></td></tr></table><div class="warn">Thứ tự khuyến nghị khi viết cho liên kết: <b>link → visited → hover → active</b> (LoVe HAte).</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 1</span><h1>Ví dụ: liên kết đổi màu</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">a:link    {color: red;}
+a:visited {color: green;}
+a:hover   {color: magenta;}
+h1 {color: blue;}
+
+&lt;h1&gt;CSS là gì&lt;/h1&gt;
+&lt;p&gt;&lt;a href="…"&gt;Tự học nhanh CSS&lt;/a&gt;&lt;/p&gt;</pre><div class="key">Một thẻ a có <b>ba màu khác nhau</b> tuỳ trạng thái: mặc định đỏ, đã kích hoạt xanh lá, di chuột hồng.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:23px"><b style="color:blue;font-size:28px">CSS là gì</b><br><a style="color:red">Tự học nhanh CSS</a> (chưa nháy)<br><a style="color:green">Tự học nhanh CSS</a> (đã nháy)<br><a style="color:magenta">Tự học nhanh CSS</a> (di chuột)</div></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 1</span><h1>Tình huống thường gặp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi SGK</h3><ul style="gap:6px"><li><b>Đổi màu chữ</b> khi nháy chuột vào vùng đó? Dùng <code>:active</code> (hoặc <code>:focus</code>).</li><li><b>Tăng cỡ chữ</b> khi di chuột qua đoạn văn? Dùng <code>:hover</code>.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">p:hover {font-size: 150%;}
+p:active {color: red;}</pre><div class="ok"><p>Đáp án SGK: <code>p:hover {font-size:150%;}</code> cho tăng cỡ chữ khi trỏ chuột.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 1</span><h1>Phần tử giả (pseudo-element)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li>Mô tả các <b>thành phần nhỏ hơn</b> của phần tử.</li><li>Cú pháp: <code>phần_tử::phần_tử_giả {…}</code> (hai dấu hai chấm).</li><li>Ví dụ: <b>first-line</b> (dòng đầu), <b>first-letter</b> (chữ cái đầu).</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(23px*var(--z,1))">p::first-line {
+  color: red;
+  font-family: monospace;
+  font-size: 126%;
+}</pre><div class="key">SGK so sánh: <b>lớp giả</b> = trạng thái; <b>phần tử giả</b> = thành phần nhỏ của phần tử.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 1</span><h1>Ví dụ ::first-line</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">p::first-line {color: red;
+  font-family: monospace;
+  font-size: 126%;}
+
+&lt;p&gt;HTML là ngôn ngữ đánh dấu siêu văn bản, là ngôn ngữ đặc biệt dùng để thiết kế nội dung các trang web…&lt;/p&gt;</pre><div class="key">Chỉ <b>dòng đầu tiên</b> của đoạn được định dạng; khi đổi độ rộng cửa sổ, dòng đầu thay đổi theo.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:22px;width:100%"><p style="margin:0;line-height:1.5"><span style="color:red;font-family:monospace;font-size:27px">HTML là ngôn ngữ đánh dấu siêu văn</span><br>bản, là ngôn ngữ đặc biệt dùng để thiết kế nội dung các trang web.</p></div></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 1</span><h1>Lớp giả và phần tử giả: so sánh</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>Lớp giả</th><th>Phần tử giả</th></tr><tr><td>Dấu</td><td><code>:</code> một dấu</td><td><code>::</code> hai dấu</td></tr><tr><td>Mô tả</td><td><b>trạng thái</b> của phần tử</td><td><b>một phần</b> của phần tử</td></tr><tr><td>Ví dụ</td><td><code>a:hover</code>, <code>a:visited</code></td><td><code>p::first-line</code>, <code>p::first-letter</code></td></tr><tr><td>Trọng số</td><td>như <b>class</b> (10)</td><td>như <b>phần tử</b> (1)</td></tr></table><div class="key">Rất quan trọng cho tính trọng số: lớp giả = <b>10</b>, phần tử giả = <b>1</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 2</span><h1>Câu hỏi: màu nào được áp dụng?</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">.test {color: green;}
+p     {color: red;}
+
+&lt;p class="test"&gt;Tin học 12&lt;/p&gt;</pre></div><div class="col"><div class="card"><h3>Phân tích</h3><ul style="gap:6px"><li>Cả hai mẫu đều chọn được phần tử p.</li><li>Mẫu <code>.test</code> (class) có trọng số <b>10</b>.</li><li>Mẫu <code>p</code> (phần tử) có trọng số <b>1</b>.</li><li>Kết quả: chữ <b style="color:#2E7D32">xanh lá</b> dù mẫu p viết sau.</li></ul></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 2</span><h1>Bảng 17.3: 7 mức ưu tiên (cao đến thấp)</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Mức</th><th>Quy tắc</th></tr><tr><td>1</td><td><b>!important</b></td></tr><tr><td>2</td><td>CSS <b>nội tuyến</b> (thuộc tính style)</td></tr><tr><td>3</td><td>CSS theo <b>kích thước thiết bị</b> (@media)</td></tr><tr><td>4</td><td><b>Trọng số</b> của bộ chọn</td></tr><tr><td>5</td><td><b>Thứ tự cuối cùng</b> (viết sau thắng)</td></tr><tr><td>6</td><td><b>Kế thừa</b> từ phần tử cha</td></tr><tr><td>7</td><td><b>Mặc định</b> của trình duyệt</td></tr></table><div class="key">Nhớ: <b>!important › nội tuyến › media › trọng số › viết sau › kế thừa › mặc định</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 2</span><h1>Giải thích từng mức</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mức 1–3</h3><ul style="gap:6px"><li><b>!important</b>: cao nhất.</li><li><b>Nội tuyến</b>: định dạng trong thuộc tính style của thẻ.</li><li><b>@media</b>: tuỳ kích thước màn hình.</li></ul></div></div><div class="col"><div class="card"><h3>Mức 4–7</h3><ul style="gap:6px"><li><b>Trọng số</b>: bộ chọn nào cụ thể hơn thắng.</li><li><b>Cuối cùng</b>: cùng trọng số, mẫu viết sau thắng.</li><li><b>Kế thừa</b>: lấy từ cha nếu không có mẫu nào chọn trực tiếp.</li><li><b>Mặc định</b>: trình duyệt tự quyết.</li></ul></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 2</span><h1>Ví dụ @media (theo kích thước thiết bị)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">@media only screen
+  and (max-width: 600px) {
+  body {font-size: 150%;}
+}</pre><div class="key">Media query giúp một trang <b>thích ứng</b> nhiều thiết bị.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:22px">Nếu <b style="color:#000">chiều ngang màn hình nhỏ hơn 600px</b> thì cỡ chữ body tăng lên <b style="color:#000">150%</b>.<br><br>Dùng để làm trang web <b style="color:#000">hiển thị đẹp trên điện thoại</b> (SGK in nhầm 699px/159%; hiểu là 600px/150%).</div></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 2</span><h1>Trọng số của bộ chọn</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Giá trị thành phần (Bảng 17.4)</h3><ul style="gap:5px"><li><b>ID</b> (#id): <b>100</b></li><li><b>Class, lớp giả, thuộc tính</b> (.c, :hover, [a]): <b>10</b></li><li><b>Phần tử, phần tử giả</b> (p, ::first-line): <b>1</b></li><li><b>*</b>: <b>0</b></li></ul></div></div><div class="col"><div class="key">Trọng số của mẫu = <b>tổng</b> giá trị các thành phần trong bộ chọn.</div><div class="ok"><p>Bộ chọn tổ hợp (+, &gt;, ~, cách) <b>không có giá trị riêng</b>; chỉ cộng các thành phần.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 2</span><h1>Bảng 17.5: ví dụ tính trọng số</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Bộ chọn</th><th>Phân tích</th><th>Trọng số</th></tr><tr><td class="m"><code>p &gt; em</code></td><td>1 + 1</td><td><b>2</b></td></tr><tr><td class="m"><code>.test #p11</code></td><td>10 + 100</td><td><b>110</b></td></tr><tr><td class="m"><code>p.test em.more</code></td><td>1+10+1+10</td><td><b>22</b></td></tr><tr><td class="m"><code>a:hover</code></td><td>1 + 10</td><td><b>11</b></td></tr><tr><td class="m"><code>#home p::first-line</code></td><td>100+1+1</td><td><b>102</b></td></tr></table><div class="warn">Trọng số so sánh theo <b>giá trị tổng</b> (theo cách SGK): lớn hơn thì được ưu tiên.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 2</span><h1>Luyện tính trọng số (câu hỏi SGK)</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th>Bộ chọn</th><th>Cách tính</th><th>Trọng số</th></tr><tr><td><code>#n12 &gt; .test</code></td><td>100 + 10</td><td><b>110</b></td></tr><tr><td><code>h1, h2, h3, h4 &gt; #new</code></td><td>tính <b>riêng từng bộ chọn</b>: h1=1; h2=1; h3=1; h4&gt;#new=101</td><td>1, 1, 1, <b>101</b></td></tr><tr><td><code>p + em.test</code></td><td>1 + 1 + 10</td><td><b>12</b></td></tr></table></div><div class="col"><div class="warn">Dấu <b>phẩy</b> tách ra các bộ chọn <b>độc lập</b>; không cộng chung.</div><div class="key">Khi nào dùng nguyên tắc <b>cascading</b>? Khi các mẫu có <b>cùng trọng số</b>: mẫu viết sau thắng.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 2</span><h1>Trọng số quyết định kết quả</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">p       {color: red;}   /* 1   */
+.note   {color: blue;}  /* 10  */
+p.note  {color: green;} /* 11  */
+#a      {color: black;} /* 100 */
+
+&lt;p class="note" id="a"&gt;…&lt;/p&gt;</pre><div class="key">Id &gt; class &gt; phần tử, không phụ thuộc thứ tự viết.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:23px">Phần tử p có class note, id a.<br>Trọng số: 1, 10, 11, <b style="color:#000">100</b>.<br>Mẫu <b style="color:#000">#a</b> thắng → chữ <b style="color:#000">đen</b>.</div></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 2</span><h1>Khi nào !important thắng?</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">p {color: red !important;}
+#a {color: blue;}
+
+&lt;p id="a" style="color:green"&gt;</pre><div class="warn">Lạm dụng <b>!important</b> làm CSS khó sửa; chỉ dùng khi thật cần.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:23px">Cả id (100), nội tuyến (style) đều thua.<br>Chữ p: <b style="color:red">đỏ</b>.</div></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 3</span><h1>Thực hành: trang “Giới thiệu HTML và CSS”</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Yêu cầu bố cục</h3><ul style="gap:6px"><li>Đầu trang: <b>thanh liên kết</b> “Giới thiệu HTML”, “Giới thiệu CSS” (nav, ul, li).</li><li>Tiêu đề h1 đỏ, căn giữa; h2 xanh.</li><li>Nội dung: các đoạn p, ảnh logo.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">&lt;nav&gt;
+ &lt;ul&gt;
+  &lt;li&gt;&lt;a href="#P1"&gt;Giới thiệu HTML&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="#P2"&gt;Giới thiệu CSS&lt;/a&gt;&lt;/li&gt;
+ &lt;/ul&gt;
+&lt;/nav&gt;</pre></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 3</span><h1>Thực hành: CSS (phần 1)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">h1 {color: red;
+     text-align: center;}
+h2 {color: blue;}
+nav {text-align: right;}
+li {display: inline;
+    border: 1px solid blue;
+    padding: 5px;
+    background-color: lime;}</pre><div class="key"><b>li {display: inline}</b> xếp các mục danh sách thành <b>một hàng ngang</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:22px"><div style="color:red;text-align:center;font-weight:700;font-size:28px">Giới thiệu HTML và CSS</div><div style="text-align:right;margin:6px 0"><span style="border:1px solid blue;padding:5px;background:lime">Giới thiệu HTML</span> <span style="border:1px solid blue;padding:5px;background:lime">Giới thiệu CSS</span></div><div style="color:blue;font-weight:700;font-size:25px">HTML là gì</div></div></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 3</span><h1>Thực hành: CSS (phần 2)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a:hover {color: red;
+         background-color: cyan;}
+h2 + p {color: red;}
+img {display: none;}</pre><div class="key"><b>h2 + p</b>: chỉ p <b>liền sau</b> h2 chữ đỏ. <b>img {display:none}</b> ẩn mọi ảnh.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-size:23px"><span style="color:red;background:cyan;padding:3px">Giới thiệu HTML</span> ← khi di chuột<br><br><b style="color:blue">HTML là gì</b><br><span style="color:red">HTML là ngôn ngữ đánh dấu siêu văn bản…</span> ← p liền sau h2<br><br>Ảnh logo: <b style="color:#000">bị ẩn</b> (display: none).</div></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · 3</span><h1>Phân tích các mẫu trong thực hành</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th>Mẫu</th><th>Tác dụng</th></tr><tr><td><code>nav {text-align: right;}</code></td><td>thanh liên kết dồn sang <b>phải</b></td></tr><tr><td><code>li {display: inline;}</code></td><td>các mục nằm <b>trên một hàng</b></td></tr><tr><td><code>a:hover {…}</code></td><td>đổi màu chữ và nền khi <b>di chuột</b></td></tr><tr><td><code>h2 + p {color: red;}</code></td><td>đoạn p <b>liền sau h2</b> chữ đỏ</td></tr><tr><td><code>img {display:none;}</code></td><td><b>ẩn</b> mọi ảnh</td></tr></table></div><div class="col"><div class="ok"><p>Liên kết dạng <code>href="#P1"</code> nhảy tới phần tử có <code>id="P1"</code> trong cùng trang (Bài 10).</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Lớp giả</b> <code>:hover, :visited, :link, :active</code>; <b>phần tử giả</b> <code>::first-line</code>.</li><li><b>7 mức ưu tiên</b>: !important › nội tuyến › media › trọng số › viết sau › kế thừa › mặc định.</li><li>Trọng số: <b>ID 100</b>, <b>class / lớp giả / thuộc tính 10</b>, <b>phần tử / phần tử giả 1</b>.</li><li>Cùng trọng số: mẫu <b>viết sau</b> thắng.</li></ul></div></div><div class="col"><table><tr><th>Bộ chọn</th><th>Trọng số</th></tr><tr><td class="m">#a</td><td>100</td></tr><tr><td class="m">.a, a:hover</td><td>10, 11</td></tr><tr><td class="m">p, p::first-line</td><td>1, 2</td></tr></table></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy</h3><ul style="gap:6px"><li><code>p::first-line</code> không phải “lớp”; thành phần <code>p</code>=1 và <code>::first-line</code>=1, tổng <b>2</b>.</li><li>Thứ tự viết chỉ quyết định khi <b>trọng số bằng nhau</b>.</li><li>Mẫu kế thừa <b>luôn thua</b> mẫu áp thẳng lên phần tử, dù mẫu đó có trọng số rất thấp.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><code>:first-child</code>, <code>:nth-child(n)</code>, <code>:not()</code>.</li><li><code>::before</code>, <code>::after</code> chèn nội dung bằng <code>content</code>.</li></ul></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Muốn chữ đổi màu khi di chuột qua thì dùng định dạng nào? Muốn đổi khi nháy chuột?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Tính trọng số: <code>#n12 &gt; .test</code>; <code>p + em.test</code>.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Liệt kê thứ tự 7 mức ưu tiên của CSS.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Khi nào nguyên tắc cascading được áp dụng?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Lớp giả khác phần tử giả ở điểm nào? Cho ví dụ.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Di chuột: <code>:hover</code>; nháy chuột: <code>:active</code> (hoặc <code>:focus</code>).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>110 và 12.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>!important › nội tuyến › media › trọng số › thứ tự cuối › kế thừa › mặc định.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Khi nhiều mẫu cùng áp dụng cho một phần tử và có <b>cùng trọng số</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Lớp giả = <b>trạng thái</b> (a:hover). Phần tử giả = <b>thành phần nhỏ</b> (p::first-line).</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Tính trọng số: <code>ul li a:hover</code>; <code>#menu .item p::first-line</code>; <code>*</code>.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Cho <code>.x {color:red;}</code>, <code>div p {color:blue;}</code>, <code>p {color:green;}</code> và <code>&lt;div&gt;&lt;p class="x"&gt;</code>. Màu chữ p? Vì sao?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Cho <code>p {color: red !important;}</code> và <code>&lt;p style="color:blue"&gt;</code>. Màu p?</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Sắp xếp theo mức ưu tiên giảm dần: kế thừa, id, class, phần tử, nội tuyến, !important.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Viết CSS: liên kết chưa thăm xanh, đã thăm tím, di chuột có gạch chân; dòng đầu mỗi p đậm.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) <code>:hover</code> là phần tử giả. (b) Hai mẫu cùng trọng số, mẫu viết sau thắng. (c) <code>#a</code> luôn thắng <code>.a</code>. (d) Phần tử kế thừa thắng mẫu trực tiếp.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>ul li a:hover</code> = 1+1+1+10 = <b>13</b>. <code>#menu .item p::first-line</code> = 100+10+1+1 = <b>112</b>. <code>*</code> = <b>0</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Đỏ</b>: <code>.x</code> = 10 &gt; <code>div p</code> = 2 &gt; <code>p</code> = 1.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Đỏ</b>: !important cao hơn CSS nội tuyến.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 17 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>!important › nội tuyến › id › class › phần tử › kế thừa (id, class, phần tử thuộc mức “trọng số”).</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>a:link {color:blue;} a:visited {color:purple;} a:hover {text-decoration:underline;} p::first-line {font-weight:bold;}</code></p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b> (lớp giả). (b) <b>Đúng</b>. (c) <b>Đúng</b> (100 &gt; 10). (d) <b>Sai</b>.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
