@@ -1,0 +1,209 @@
+<!-- HEAD -->
+<title>CSDL 2 · Khoá, ràng buộc và kiểu dữ liệu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · CƠ SỞ DỮ LIỆU 2</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>KHOÁ, RÀNG BUỘC<br>VÀ KIỂU DỮ LIỆU</h1><p style="font-size:28px;line-height:1.5">Khoá chính, khoá ngoài, toàn vẹn tham chiếu, NOT NULL, UNIQUE, CHECK, DEFAULT, kiểu dữ liệu SQL.</p><div><span class="chip">PRIMARY KEY</span><span class="chip">FOREIGN KEY</span><span class="chip">NOT NULL</span><span class="chip">CHECK</span><span class="chip">kiểu dữ liệu</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Phân biệt <b>khoá chính, khoá ngoài, khoá ứng viên</b>.</li><li>Hiểu <b>toàn vẹn tham chiếu</b> giữa hai bảng.</li><li>Dùng <b>NOT NULL, UNIQUE, CHECK, DEFAULT</b> khi tạo bảng.</li><li>Chọn <b>kiểu dữ liệu</b> phù hợp: INT, REAL, VARCHAR, DATE…</li><li>Viết lệnh <b>CREATE TABLE</b> hoàn chỉnh.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Khoá chính</li><li>Khoá ngoài, tham chiếu</li><li>Ràng buộc toàn vẹn</li><li>Kiểu dữ liệu</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 1</span><h1>Khoá chính (PRIMARY KEY)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Định nghĩa</h3><ul style="gap:6px"><li><b>Khoá chính</b>: trường (hoặc nhóm trường) có giá trị <b>duy nhất</b>, <b>không rỗng</b>, xác định <b>một bản ghi</b>.</li><li>Mỗi bảng có <b>tối đa một</b> khoá chính.</li><li>Ví dụ: <b>MAHS</b> của HOCSINH, <b>MALOP</b> của LOP.</li></ul></div></div><div class="col"><div class="key">Không chọn <b>họ tên</b> làm khoá chính vì có thể <b>trùng tên</b>. Nên dùng <b>mã</b> (mã học sinh, số căn cước).</div><div class="ok"><p><b>Khoá ứng viên</b>: mọi tập trường có thể làm khoá; khoá chính là một khoá ứng viên được chọn.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 1</span><h1>Khoá chính chống trùng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">INSERT INTO hocsinh VALUES('HS01','Khoa','12A','Nam',8)</pre><div class="key">Thêm bản ghi có <b>MAHS = HS01</b> đã tồn tại → HQTCSDL <b>từ chối</b> (vi phạm UNIQUE của khoá chính).</div><div class="warn">Thông báo lỗi tiếng Anh của SQLite: “UNIQUE constraint failed”.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">LỖI: UNIQUE constraint failed: hocsinh.mahs</pre></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 1</span><h1>Khoá phức hợp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khi một trường không đủ</h3><ul style="gap:6px"><li>Bảng <b>DIEM(mahs, mamon, diem)</b>: một học sinh có nhiều môn, một môn nhiều học sinh.</li><li>Cặp <b>(mahs, mamon)</b> mới xác định duy nhất một dòng điểm.</li><li>Đó là <b>khoá chính phức hợp</b>.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">CREATE TABLE diem(
+  mahs  TEXT,
+  mamon TEXT,
+  diem  REAL,
+  PRIMARY KEY (mahs, mamon)
+);</pre></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 2</span><h1>Khoá ngoài (FOREIGN KEY)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Định nghĩa</h3><ul style="gap:6px"><li><b>Khoá ngoài</b>: trường trong bảng này <b>tham chiếu</b> khoá chính của bảng khác.</li><li>Thể hiện <b>mối liên kết</b> giữa hai bảng.</li><li>Ví dụ: <b>HOCSINH.lop</b> tham chiếu <b>LOP.malop</b>.</li></ul></div></div><div class="col"><div class="res"><span class="lab">Quan hệ khoá ngoài → khoá chính</span><svg viewBox="0 0 520 250" style="width:100%"><g font-family="sans-serif" font-weight="800" text-anchor="middle" font-size="22"><rect x="10" y="20" width="220" height="40" fill="#6A1B9A"/><text x="120" y="48" fill="#fff">HOCSINH</text><rect x="10" y="60" width="220" height="150" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="3"/><text x="120" y="92" fill="#0B2545">mahs (PK)</text><text x="120" y="125" fill="#0B2545">hoten</text><rect x="14" y="135" width="212" height="34" fill="#FFF59D"/><text x="120" y="160" fill="#C62828">lop (FK)</text><text x="120" y="195" fill="#0B2545">diemtb</text><rect x="290" y="20" width="220" height="40" fill="#6A1B9A"/><text x="400" y="48" fill="#fff">LOP</text><rect x="290" y="60" width="220" height="110" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="3"/><rect x="294" y="68" width="212" height="34" fill="#C8E6C9"/><text x="400" y="93" fill="#2E7D32">malop (PK)</text><text x="400" y="128" fill="#0B2545">tenlop</text><text x="400" y="158" fill="#0B2545">gvcn</text><path d="M226 152 L290 85" stroke="#C62828" stroke-width="4"/><path d="M276 85 L290 85 L284 100" stroke="#C62828" stroke-width="4" fill="none"/></g></svg></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 2</span><h1>Bảng có khoá ngoài</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">SELECT h.hoten, h.lop, l.tenlop
+FROM hocsinh h JOIN lop l ON h.lop = l.malop
+WHERE h.lop = '12A'</pre><div class="key">Giá trị <b>lop</b> trong HOCSINH phải là một <b>malop có thật</b> trong LOP: đó là <b>toàn vẹn tham chiếu</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">hoten | lop | tenlop    
+------+-----+-----------
+An    | 12A | Toan - Tin
+Binh  | 12A | Toan - Tin
+Em    | 12A | Toan - Tin</pre></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 2</span><h1>Toàn vẹn tham chiếu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy tắc</h3><ul style="gap:6px"><li>Giá trị khoá ngoài phải <b>có sẵn</b> làm khoá chính ở bảng được tham chiếu (hoặc NULL nếu cho phép).</li><li><b>Không thêm</b> học sinh thuộc lớp chưa tồn tại.</li><li><b>Không xoá</b> lớp còn học sinh (trừ khi cấu hình xoá dây chuyền).</li></ul></div></div><div class="col"><div class="key">Tuỳ chọn: <b>ON DELETE CASCADE</b> (xoá bảng cha thì xoá luôn con), <b>SET NULL</b>, <b>RESTRICT</b> (cấm xoá).</div><div class="warn">Thứ tự: tạo bảng <b>cha</b> (LOP) trước bảng <b>con</b> (HOCSINH); nhập dữ liệu bảng cha trước.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 2</span><h1>Vi phạm khoá ngoài bị từ chối</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">INSERT INTO hocsinh2 VALUES('HS09','Lan','13Z')</pre><div class="key">Lớp <b>13Z</b> không tồn tại trong LOP nên lệnh bị từ chối: <b>FOREIGN KEY constraint failed</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">LỖI: FOREIGN KEY constraint failed</pre></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 2</span><h1>So sánh khoá chính và khoá ngoài</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>Khoá chính</th><th>Khoá ngoài</th></tr><tr><td>Số lượng trong bảng</td><td><b>một</b></td><td>có thể <b>nhiều</b></td></tr><tr><td>Giá trị trùng</td><td><b>không</b></td><td><b>được</b> (nhiều học sinh cùng lớp)</td></tr><tr><td>Giá trị rỗng (NULL)</td><td><b>không</b></td><td>có thể (nếu cho phép)</td></tr><tr><td>Tác dụng</td><td>nhận diện bản ghi</td><td>liên kết hai bảng</td></tr></table><div class="key">Nhớ: khoá chính là <b>“chứng minh thư”</b> của dòng; khoá ngoài là <b>“số chứng minh thư của người khác”</b> dùng để tham chiếu.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 3</span><h1>Các ràng buộc toàn vẹn thường dùng</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th>Ràng buộc</th><th>Ý nghĩa</th><th>Ví dụ</th></tr><tr><td><code>PRIMARY KEY</code></td><td>duy nhất, không rỗng</td><td><code>mahs TEXT PRIMARY KEY</code></td></tr><tr><td><code>NOT NULL</code></td><td>không được rỗng</td><td><code>hoten TEXT NOT NULL</code></td></tr><tr><td><code>UNIQUE</code></td><td>không trùng</td><td><code>email TEXT UNIQUE</code></td></tr><tr><td><code>CHECK</code></td><td>thoả điều kiện</td><td><code>CHECK (diem BETWEEN 0 AND 10)</code></td></tr><tr><td><code>DEFAULT</code></td><td>giá trị mặc định</td><td><code>lop TEXT DEFAULT '12A'</code></td></tr><tr><td><code>FOREIGN KEY</code></td><td>tham chiếu bảng khác</td><td><code>REFERENCES lop(malop)</code></td></tr></table></div><div class="col"><div class="key">Ràng buộc giúp <b>bảo vệ tính đúng đắn</b> của dữ liệu ngay tại CSDL, không phụ thuộc ứng dụng.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 3</span><h1>CREATE TABLE đầy đủ ràng buộc</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">INSERT INTO sv(ma,ten,diem) VALUES (2,'Binh',11)</pre><div class="key">Điểm 11 vi phạm <b>CHECK (diem BETWEEN 0 AND 10)</b> → bị từ chối: <b>CHECK constraint failed</b>.</div><div class="ok"><p>Bảng: <code>CREATE TABLE sv(ma INTEGER PRIMARY KEY, ten TEXT NOT NULL, diem REAL CHECK (diem BETWEEN 0 AND 10), lop TEXT DEFAULT '12A')</code></p></div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">LỖI: CHECK constraint failed: diem BETWEEN 0 AND 10</pre></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 3</span><h1>NOT NULL và DEFAULT</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">SELECT * FROM sv</pre><div class="key">Thêm <code>INSERT INTO sv(ma,ten) VALUES (3,'Chi')</code> không nêu <b>lop</b> và <b>diem</b> thì <b>lop</b> nhận giá trị mặc định <b>12A</b>, <b>diem</b> là NULL.</div><div class="warn">Quên <b>ten</b> (NOT NULL) sẽ báo lỗi.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">ma | ten | diem | lop
+---+-----+------+----
+1  | An  | 9.0  | 12A
+3  | Chi | None | 12A</pre></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 3</span><h1>Giá trị NULL</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>NULL là gì</h3><ul style="gap:6px"><li><b>NULL</b> = “chưa biết / không có giá trị”, <b>khác 0</b> và khác xâu rỗng.</li><li>So sánh với NULL phải dùng <b>IS NULL / IS NOT NULL</b>, <b>không dùng =</b>.</li><li>Các hàm tổng hợp (AVG, SUM…) <b>bỏ qua NULL</b>.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">SELECT * FROM sv WHERE diem IS NULL;
+-- đúng
+SELECT * FROM sv WHERE diem = NULL;
+-- sai: không trả về dòng nào</pre></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 4</span><h1>Các kiểu dữ liệu thông dụng trong SQL</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Nhóm</th><th>Kiểu</th><th>Ví dụ</th></tr><tr><td class="m">Số nguyên</td><td><code>INT, INTEGER, BIGINT</code></td><td>12, -5</td></tr><tr><td class="m">Số thực</td><td><code>REAL, FLOAT, DECIMAL(p,s)</code></td><td>7.5</td></tr><tr><td class="m">Xâu kí tự</td><td><code>CHAR(n), VARCHAR(n), TEXT</code></td><td>'An', '12A'</td></tr><tr><td class="m">Ngày giờ</td><td><code>DATE, TIME, DATETIME</code></td><td>'2026-11-24'</td></tr><tr><td class="m">Logic</td><td><code>BOOLEAN</code></td><td>TRUE, FALSE</td></tr></table><div class="key">Chọn kiểu theo <b>ý nghĩa</b>: mã học sinh dạng chữ (VARCHAR), điểm (REAL/DECIMAL), ngày sinh (DATE), số lượng (INT).</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 4</span><h1>CHAR và VARCHAR</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th></th><th>CHAR(n)</th><th>VARCHAR(n)</th></tr><tr><td>Độ dài</td><td><b>cố định</b> n kí tự</td><td><b>thay đổi</b> tối đa n</td></tr><tr><td>Bộ nhớ</td><td>luôn n</td><td>đúng độ dài dữ liệu (+ phụ)</td></tr><tr><td>Dùng cho</td><td>mã cố định (mã vùng, giới tính)</td><td>họ tên, địa chỉ</td></tr></table></div><div class="col"><div class="key"><b>VARCHAR(50)</b> cho họ tên; <b>CHAR(1)</b> cho giới tính (M/F).</div><div class="ok"><p>Kiểu <b>DECIMAL(10,2)</b> lưu tiền chính xác (10 chữ số, 2 chữ số thập phân), tránh sai số số thực.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 4</span><h1>Kiểu dữ liệu trong thực tế: ngày tháng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">SELECT hoten, date('2026-11-24') AS hom_nay, date('2026-11-24', '+30 day') AS sau_30_ngay FROM hocsinh LIMIT 2</pre><div class="key">Kiểu <b>DATE</b> cho phép <b>so sánh, cộng trừ ngày</b>. Chuỗi ngày chuẩn: <b>YYYY-MM-DD</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">hoten | hom_nay    | sau_30_ngay
+------+------------+------------
+An    | 2026-11-24 | 2026-12-24 
+Binh  | 2026-11-24 | 2026-12-24 </pre></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 4</span><h1>Thiết kế bảng: ví dụ thư viện</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai bảng SACH và MUON</h3><ul style="gap:6px"><li><b>SACH</b>(<b>masach</b> PK, tensach, tacgia, namxb)</li><li><b>BANDOC</b>(<b>mabd</b> PK, hoten, ngaysinh)</li><li><b>MUON</b>(<b>mabd</b> FK, <b>masach</b> FK, ngaymuon, ngaytra)</li><li>Khoá chính MUON: (mabd, masach, ngaymuon)</li></ul></div></div><div class="col"><div class="key">Mối quan hệ <b>nhiều – nhiều</b> (một bạn đọc mượn nhiều sách; một sách nhiều lần mượn) cần <b>bảng trung gian</b> MUON.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · 4</span><h1>Quy trình thiết kế CSDL</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các bước</h3><ul style="gap:6px"><li><b>Xác định yêu cầu</b>: lưu gì? truy vấn gì?</li><li><b>Xác định thực thể</b> → bảng.</li><li>Chọn <b>khoá chính</b> cho từng bảng.</li><li>Xác định <b>mối liên kết</b> → khoá ngoài.</li><li>Chọn <b>kiểu dữ liệu</b> và <b>ràng buộc</b>.</li><li><b>Tạo</b> bằng SQL, <b>nhập thử</b>, kiểm tra.</li></ul></div></div><div class="col"><div class="key">Nguyên tắc: mỗi bảng <b>một chủ đề</b>, mỗi thông tin <b>lưu một nơi</b>.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Khoá chính</b>: duy nhất, không NULL; <b>khoá ngoài</b>: tham chiếu khoá chính bảng khác.</li><li><b>Toàn vẹn tham chiếu</b>: không thêm con không có cha; không xoá cha còn con.</li><li><b>NOT NULL, UNIQUE, CHECK, DEFAULT</b> bảo vệ dữ liệu.</li><li>Kiểu: INT, REAL/DECIMAL, VARCHAR, DATE, BOOLEAN.</li><li>So sánh NULL bằng <b>IS NULL</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Không rỗng</td><td>NOT NULL</td></tr><tr><td class="m">Không trùng</td><td>UNIQUE</td></tr><tr><td class="m">Giới hạn giá trị</td><td>CHECK</td></tr><tr><td class="m">Liên kết bảng</td><td>FOREIGN KEY</td></tr></table><div class="warn">Khoá chính không được NULL; khoá ngoài có thể NULL.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Khoá chính <b>phức hợp</b> cho bảng trung gian.</li><li><code>DECIMAL</code> chính xác hơn <code>FLOAT</code> với tiền.</li><li><code>UNIQUE</code> khác khoá chính: cho phép <b>một</b> (hoặc nhiều) NULL tuỳ hệ.</li><li>Khoá <b>thay thế</b> (surrogate) như số tự tăng <code>AUTOINCREMENT</code>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Chuẩn hoá</b> 1NF, 2NF, 3NF.</li><li><b>Index</b> (chỉ mục) tăng tốc tìm kiếm.</li><li><b>Giao dịch</b> (transaction): ACID.</li></ul></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Chọn khoá chính phù hợp cho bảng HOCSINH. Vì sao không chọn họ tên?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Khoá ngoài là gì? Nêu một ví dụ.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Viết lệnh tạo bảng MONHOC(mamon, tenmon, sotiet) với mamon là khoá chính, tenmon không rỗng, sotiet &gt; 0.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Điểm nhập vào phải từ 0 đến 10: dùng ràng buộc nào?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Chọn kiểu dữ liệu cho: số điện thoại, giá bán, ngày sinh, giới tính.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>mahs</b> (mã học sinh), vì họ tên có thể trùng.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Trường tham chiếu khoá chính của bảng khác. Ví dụ <b>HOCSINH.lop</b> → <b>LOP.malop</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>CREATE TABLE monhoc(mamon TEXT PRIMARY KEY, tenmon TEXT NOT NULL, sotiet INT CHECK (sotiet &gt; 0));</code></p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>CHECK (diem BETWEEN 0 AND 10)</code></p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>VARCHAR(15); DECIMAL(10,0) hoặc INT; DATE; CHAR(1) hoặc VARCHAR.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Bảng DONHANG(madon, makh, ngay) với makh tham chiếu KHACHHANG. Viết CREATE TABLE đầy đủ cho DONHANG.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Cho bảng DIEM(mahs, mamon, diem) với khoá chính (mahs, mamon). Thêm hai dòng (HS01, TIN, 9) và (HS01, TIN, 8) được không? Vì sao?</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) Khoá ngoài phải khác NULL. (b) Một bảng có nhiều khoá ngoài được. (c) <code>WHERE diem = NULL</code> chọn các dòng chưa có điểm. (d) CHECK có thể kiểm tra liên quan nhiều cột.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Phân tích lỗi thiết kế: bảng HOADON(mahd, makh, tenkh, diachikh, tongtien) lưu cả tên và địa chỉ khách.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Khi xoá một lớp trong LOP còn 30 học sinh, các lựa chọn xử lí tham chiếu là gì?</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Vì sao nên dùng mã số thay vì tên để làm khoá chính?</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>CREATE TABLE donhang(madon INT PRIMARY KEY, makh INT NOT NULL, ngay DATE, FOREIGN KEY (makh) REFERENCES khachhang(makh));</code></p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Không</b>: (HS01, TIN) trùng khoá chính phức hợp.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b> (có thể NULL nếu cho phép). (b) <b>Đúng</b>. (c) <b>Sai</b>: phải dùng IS NULL. (d) <b>Đúng</b> (CHECK mức bảng).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>Dư thừa</b>: tên, địa chỉ khách lặp ở mọi hoá đơn, dễ mâu thuẫn. Tách bảng KHACHHANG(makh, tenkh, diachikh); HOADON chỉ giữ <b>makh</b>.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">CSDL 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>RESTRICT</b> (cấm xoá), <b>CASCADE</b> (xoá cả học sinh), <b>SET NULL</b> (đặt lớp của học sinh là NULL).</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mã <b>ngắn, duy nhất, ít đổi</b>; họ tên dài, có thể trùng và có thể đổi.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

@@ -1,0 +1,222 @@
+<!-- HEAD -->
+<title>CSDL 5 · An toàn và phân quyền cơ sở dữ liệu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · CƠ SỞ DỮ LIỆU 5</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>AN TOÀN VÀ PHÂN QUYỀN<br>CƠ SỞ DỮ LIỆU</h1><p style="font-size:28px;line-height:1.5">Mối đe doạ, xác thực – phân quyền, GRANT/REVOKE, SQL injection, sao lưu – phục hồi, mã hoá.</p><div><span class="chip">phân quyền</span><span class="chip">GRANT</span><span class="chip">SQL injection</span><span class="chip">sao lưu</span><span class="chip">mã hoá</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Nêu các <b>mối đe doạ</b> đối với CSDL.</li><li>Phân biệt <b>xác thực</b> và <b>phân quyền</b>.</li><li>Dùng <b>GRANT, REVOKE</b> cấp và thu hồi quyền.</li><li>Giải thích <b>SQL injection</b> và cách phòng chống.</li><li>Nêu biện pháp <b>sao lưu, phục hồi, mã hoá</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Mối đe doạ</li><li>Xác thực và phân quyền</li><li>SQL injection</li><li>Sao lưu, mã hoá</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 1</span><h1>Vì sao cần bảo vệ CSDL?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Dữ liệu là tài sản</h3><ul style="gap:6px"><li>CSDL chứa <b>thông tin cá nhân, tài chính, nghiệp vụ</b>.</li><li>Lộ, mất, sửa trái phép gây <b>thiệt hại lớn</b>.</li><li>Luật bảo vệ dữ liệu cá nhân quy định <b>trách nhiệm</b> của đơn vị quản lí.</li></ul></div></div><div class="col"><div class="key">Ba mục tiêu an toàn thông tin (<b>CIA</b>): <b>bí mật</b> (Confidentiality), <b>toàn vẹn</b> (Integrity), <b>sẵn sàng</b> (Availability).</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 1</span><h1>Các mối đe doạ với CSDL</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Mối đe doạ</th><th>Ví dụ</th><th>Hậu quả</th></tr><tr><td>Truy cập trái phép</td><td>đoán mật khẩu, dùng tài khoản của người khác</td><td>lộ dữ liệu</td></tr><tr><td><b>SQL injection</b></td><td>nhập mã SQL vào ô đăng nhập</td><td>đọc, sửa, xoá dữ liệu</td></tr><tr><td>Mã độc, tấn công mạng</td><td>ransomware mã hoá dữ liệu đòi tiền</td><td>mất dữ liệu, ngừng dịch vụ</td></tr><tr><td>Lỗi người dùng</td><td>xoá nhầm, quên WHERE</td><td>mất, sai dữ liệu</td></tr><tr><td>Sự cố phần cứng, thiên tai</td><td>hỏng đĩa, cháy</td><td>mất dữ liệu</td></tr><tr><td>Mối đe doạ từ bên trong</td><td>nhân viên lạm quyền</td><td>lộ, sửa trái phép</td></tr></table><div class="key">Biện pháp: <b>kiểm soát truy cập</b>, <b>mã hoá</b>, <b>sao lưu</b>, <b>cập nhật phần mềm</b>, <b>giám sát</b>, <b>đào tạo</b> người dùng.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 2</span><h1>Xác thực và phân quyền</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th></th><th>Xác thực</th><th>Phân quyền</th></tr><tr><td>Câu hỏi</td><td>Bạn <b>là ai</b>?</td><td>Bạn được <b>làm gì</b>?</td></tr><tr><td>Cách làm</td><td>tên đăng nhập + mật khẩu, mã OTP, vân tay</td><td>gán <b>quyền</b> theo người dùng/vai trò</td></tr><tr><td>Thứ tự</td><td><b>trước</b></td><td><b>sau</b> xác thực</td></tr></table></div><div class="col"><div class="key">Quy trình: <b>đăng nhập (xác thực)</b> → hệ thống tra <b>quyền</b> → cho phép hoặc từ chối thao tác.</div><div class="ok"><p><b>Xác thực hai yếu tố</b> (2FA): mật khẩu + mã OTP, an toàn hơn chỉ dùng mật khẩu.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 2</span><h1>Các quyền trên CSDL</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Quyền</th><th>Cho phép</th><th>Lệnh SQL</th></tr><tr><td class="m">SELECT</td><td>xem dữ liệu</td><td><code>SELECT</code></td></tr><tr><td class="m">INSERT</td><td>thêm bản ghi</td><td><code>INSERT</code></td></tr><tr><td class="m">UPDATE</td><td>sửa bản ghi</td><td><code>UPDATE</code></td></tr><tr><td class="m">DELETE</td><td>xoá bản ghi</td><td><code>DELETE</code></td></tr><tr><td class="m">CREATE / ALTER / DROP</td><td>tạo, sửa, xoá bảng</td><td>DDL</td></tr><tr><td class="m">ALL PRIVILEGES</td><td>mọi quyền</td><td>—</td></tr></table><div class="warn">Nguyên tắc <b>đặc quyền tối thiểu</b>: chỉ cấp quyền <b>đủ để làm việc</b>, không hơn.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 2</span><h1>GRANT và REVOKE</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">-- cấp quyền xem và thêm cho giáo viên
+GRANT SELECT, INSERT
+  ON truong.hocsinh
+  TO giaovien;
+
+-- thu hồi quyền thêm
+REVOKE INSERT
+  ON truong.hocsinh
+  FROM giaovien;</pre></div><div class="col"><div class="card"><h3>Ý nghĩa</h3><ul style="gap:6px"><li><b>GRANT</b> quyền <b>ON</b> đối tượng <b>TO</b> người dùng.</li><li><b>REVOKE</b> quyền <b>ON</b> đối tượng <b>FROM</b> người dùng.</li><li>Thuộc nhóm <b>DCL</b>.</li></ul></div><div class="key">SQLite không có GRANT/REVOKE; MySQL, SQL Server, PostgreSQL có.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 2</span><h1>Ví dụ phân quyền theo vai trò</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th>Vai trò</th><th>SELECT</th><th>INSERT/UPDATE</th><th>DELETE</th><th>DDL</th></tr><tr><td>Quản trị</td><td>có</td><td>có</td><td>có</td><td><b>có</b></td></tr><tr><td>Giáo viên</td><td>có</td><td>điểm của lớp mình</td><td>—</td><td>—</td></tr><tr><td>Học sinh</td><td>điểm của mình</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Khách</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></table></div><div class="col"><div class="key"><b>Vai trò (role)</b>: nhóm quyền gán cho nhiều người; đổi vai trò là đổi quyền một lần.</div><div class="ok"><p>Quyền theo <b>hàng/cột</b>: học sinh chỉ xem được điểm <b>của mình</b> (dùng VIEW hoặc điều kiện lọc).</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 3</span><h1>SQL injection là gì?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li>Kẻ tấn công <b>chèn mã SQL</b> vào dữ liệu nhập (ô đăng nhập, tìm kiếm).</li><li>Nguyên nhân: ứng dụng <b>ghép chuỗi</b> dữ liệu người dùng vào câu SQL.</li><li>Hậu quả: <b>đăng nhập không cần mật khẩu</b>, đọc/sửa/xoá dữ liệu.</li></ul></div></div><div class="col"><div class="key">Câu SQL ghép: <code>"SELECT * FROM user WHERE ten='" + ten + "' AND mk='" + mk + "'"</code></div><div class="warn">Nhập tên: <code>admin' --</code> thì phần kiểm tra mật khẩu bị <b>biến thành chú thích</b>.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 3</span><h1>Mô phỏng tấn công SQL injection</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">import sqlite3
+con = sqlite3.connect(":memory:")
+con.execute("CREATE TABLE u(ten TEXT, mk TEXT)")
+con.execute("INSERT INTO u VALUES ('admin', 'S3cr3t')")
+
+def dang_nhap(ten, mk):
+    q = "SELECT * FROM u WHERE ten='" + ten + "' AND mk='" + mk + "'"
+    return con.execute(q).fetchall()
+
+print(dang_nhap("admin", "sai"))
+print(dang_nhap("admin' --", "bất kì"))</pre><div class="key">Lần 2: câu SQL thành <code>… ten='admin' --' AND mk=…</code>: phần sau <b>--</b> là chú thích nên <b>bỏ qua mật khẩu</b> và đăng nhập được!</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[]
+[('admin', 'S3cr3t')]</pre></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 3</span><h1>Phòng chống: câu lệnh tham số hoá</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">import sqlite3
+con = sqlite3.connect(":memory:")
+con.execute("CREATE TABLE u(ten TEXT, mk TEXT)")
+con.execute("INSERT INTO u VALUES ('admin', 'S3cr3t')")
+
+def dang_nhap(ten, mk):
+    q = "SELECT * FROM u WHERE ten=? AND mk=?"
+    return con.execute(q, (ten, mk)).fetchall()
+
+print(dang_nhap("admin", "S3cr3t"))
+print(dang_nhap("admin' --", "bất kì"))</pre><div class="key">Dấu <b>?</b> là <b>tham số</b>: dữ liệu luôn được coi là <b>giá trị</b>, không bao giờ là mã SQL → mã chèn vào <b>vô hiệu</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[('admin', 'S3cr3t')]
+[]</pre></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 3</span><h1>Cách phòng chống SQL injection</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Biện pháp</th><th>Giải thích</th></tr><tr><td><b>Truy vấn tham số hoá</b></td><td>không ghép chuỗi; dùng <code>?</code> hoặc tham số có tên</td></tr><tr><td>Kiểm tra, lọc dữ liệu nhập</td><td>giới hạn kiểu, độ dài, kí tự</td></tr><tr><td>Đặc quyền tối thiểu</td><td>tài khoản của ứng dụng <b>chỉ có SELECT/INSERT</b> cần thiết</td></tr><tr><td>Không hiện lỗi chi tiết ra ngoài</td><td>tránh lộ tên bảng, cột</td></tr><tr><td>Cập nhật phần mềm</td><td>vá lỗ hổng đã biết</td></tr></table><div class="key">Quy tắc vàng: <b>không bao giờ tin dữ liệu người dùng nhập</b>.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 4</span><h1>Sao lưu và phục hồi</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sao lưu (backup)</h3><ul style="gap:6px"><li><b>Toàn bộ</b>: sao chép mọi dữ liệu.</li><li><b>Gia tăng</b>: chỉ phần thay đổi từ lần trước.</li><li>Lưu bản sao ở <b>nơi khác</b> (máy chủ khác, đám mây).</li><li>Kiểm tra bản sao <b>khôi phục được</b>.</li></ul></div></div><div class="col"><div class="key">Quy tắc <b>3-2-1</b>: <b>3</b> bản sao, trên <b>2</b> loại thiết bị, <b>1</b> bản để <b>ngoài địa điểm</b>.</div><div class="ok"><p><b>Phục hồi</b> (restore): đưa CSDL về trạng thái của bản sao khi có sự cố; <b>nhật kí giao dịch</b> giúp phục hồi đến thời điểm gần nhất.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 4</span><h1>Mã hoá dữ liệu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai nơi cần mã hoá</h3><ul style="gap:6px"><li><b>Khi lưu trữ</b>: mã hoá đĩa, cột nhạy cảm.</li><li><b>Khi truyền</b>: dùng <b>HTTPS/TLS</b>.</li><li><b>Mật khẩu</b> không lưu nguyên văn: lưu <b>giá trị băm</b> (hash) kèm “muối”.</li></ul></div></div><div class="col"><div class="key"><b>Băm</b> là một chiều: không giải ngược được; so sánh bằng cách băm mật khẩu nhập vào rồi đối chiếu.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 4</span><h1>Băm mật khẩu với hashlib</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">import hashlib
+def bam(mk, muoi="x9"):
+    return hashlib.sha256((muoi + mk).encode()).hexdigest()
+
+luu = bam("S3cr3t")
+print(luu[:20], "...")
+print(bam("S3cr3t") == luu)
+print(bam("s3cr3t") == luu)</pre><div class="key">Cùng mật khẩu → cùng mã băm; sai <b>một kí tự</b> → mã băm hoàn toàn khác. CSDL bị lộ thì kẻ xấu chỉ thấy <b>mã băm</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">d024305e910650bb51c0 ...
+True
+False</pre></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 4</span><h1>Mật khẩu mạnh và thói quen an toàn</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Nên</th><th>Không nên</th></tr><tr><td>Dài (≥ 12 kí tự), có chữ hoa, thường, số, kí hiệu</td><td>dùng ngày sinh, 123456, tên mình</td></tr><tr><td>Mỗi dịch vụ <b>một mật khẩu</b></td><td>dùng chung một mật khẩu ở nhiều nơi</td></tr><tr><td>Bật <b>xác thực hai yếu tố</b></td><td>chia sẻ mật khẩu qua tin nhắn</td></tr><tr><td>Dùng trình quản lí mật khẩu</td><td>ghi mật khẩu lên giấy dán màn hình</td></tr><tr><td>Đăng xuất khi dùng máy công cộng</td><td>lưu mật khẩu trên máy lạ</td></tr></table><div class="key">Người dùng là <b>mắt xích yếu nhất</b>: tấn công <b>lừa đảo</b> (phishing) nhắm vào con người.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · 4</span><h1>Pháp luật và đạo đức dữ liệu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Trách nhiệm</h3><ul style="gap:6px"><li>Chỉ <b>thu thập đủ</b> dữ liệu cần thiết, có <b>sự đồng ý</b> của người dùng.</li><li><b>Bảo mật</b> thông tin cá nhân; thông báo khi bị lộ.</li><li>Truy cập trái phép, phát tán dữ liệu cá nhân là <b>vi phạm pháp luật</b> (Luật An ninh mạng, Luật Bảo vệ dữ liệu cá nhân).</li></ul></div></div><div class="col"><div class="key">Người làm CNTT phải tuân thủ <b>đạo đức nghề nghiệp</b>: không lạm quyền truy cập dữ liệu của người khác.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>CIA</b>: bí mật, toàn vẹn, sẵn sàng.</li><li><b>Xác thực</b> (bạn là ai) trước, <b>phân quyền</b> (bạn được làm gì) sau.</li><li><b>GRANT / REVOKE</b>; nguyên tắc <b>đặc quyền tối thiểu</b>.</li><li><b>SQL injection</b> phòng bằng <b>truy vấn tham số hoá</b>.</li><li><b>Sao lưu 3-2-1</b>, <b>mã hoá</b>, mật khẩu lưu dạng <b>băm</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Cấp quyền</td><td>GRANT</td></tr><tr><td class="m">Thu quyền</td><td>REVOKE</td></tr><tr><td class="m">Chống injection</td><td>tham số hoá</td></tr><tr><td class="m">Lưu mật khẩu</td><td>băm + muối</td></tr></table><div class="warn">Ghép chuỗi SQL với dữ liệu nhập là lỗ hổng nghiêm trọng.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Băm khác <b>mã hoá</b>: băm một chiều; mã hoá hai chiều (có khoá giải mã).</li><li><b>Phishing</b> không phải lỗ hổng CSDL nhưng lấy được tài khoản.</li><li>Sao lưu <b>không kiểm tra</b> khôi phục = chưa chắc có bản sao.</li><li>2FA cũng có thể bị vượt nếu người dùng bị lừa mã OTP.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>RBAC</b> (kiểm soát truy cập theo vai trò).</li><li><b>Audit log</b>: ghi lại ai làm gì.</li><li><b>Data masking</b>: che dữ liệu nhạy cảm (số thẻ).</li></ul></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Phân biệt xác thực và phân quyền.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Viết lệnh cấp cho người dùng <code>hocsinh_xem</code> quyền chỉ xem bảng DIEM.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Nêu hai biện pháp phòng chống SQL injection.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Vì sao không nên lưu mật khẩu dạng văn bản thường?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Quy tắc sao lưu 3-2-1 là gì?</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Xác thực: kiểm tra <b>danh tính</b>; phân quyền: xác định <b>được làm gì</b> sau khi biết danh tính.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>GRANT SELECT ON truong.diem TO hocsinh_xem;</code></p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Truy vấn <b>tham số hoá</b>; kiểm tra, lọc dữ liệu nhập; đặc quyền tối thiểu.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>CSDL bị lộ là lộ mật khẩu; phải lưu <b>giá trị băm</b> kèm muối.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>3</b> bản sao, <b>2</b> loại thiết bị, <b>1</b> bản ngoài địa điểm.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Câu <code>"SELECT * FROM sp WHERE ten LIKE '%" + t + "%'"</code> có lỗ hổng không? Nhập gì để lấy toàn bộ bảng?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Một ứng dụng dùng tài khoản CSDL có quyền DROP TABLE. Rủi ro gì? Cách khắc phục?</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) Băm có thể giải ngược ra mật khẩu. (b) HTTPS bảo vệ dữ liệu khi truyền. (c) REVOKE thuộc DML. (d) Sao lưu cùng ổ đĩa với dữ liệu là đủ an toàn.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Nêu ba nguyên nhân khiến dữ liệu CSDL có thể bị mất và biện pháp tương ứng.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Thiết kế phân quyền cho hệ thống tra cứu điểm gồm: quản trị, giáo viên, học sinh.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Khi phát hiện CSDL bị tấn công, các bước xử lí ban đầu là gì?</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>Có</b>. Nhập <code>' OR '1'='1</code> làm điều kiện luôn đúng, trả mọi sản phẩm. Phòng bằng tham số hoá.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Nếu bị tấn công, kẻ xấu có thể <b>xoá bảng</b>. Khắc phục: cấp tài khoản ứng dụng <b>chỉ SELECT/INSERT/UPDATE</b> cần thiết.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b>. (b) <b>Đúng</b>. (c) <b>Sai</b>: thuộc DCL. (d) <b>Sai</b>: ổ hỏng là mất cả hai.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Hỏng phần cứng → sao lưu; tấn công mã độc → cập nhật, phòng thủ, sao lưu ngoài; người dùng xoá nhầm → phân quyền, nhật kí, phục hồi.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSDL 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Quản trị: toàn quyền; giáo viên: xem/sửa điểm lớp mình; học sinh: chỉ xem điểm của mình.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Cô lập hệ thống; <b>đổi mật khẩu</b>; xem <b>nhật kí</b>; <b>khôi phục</b> từ bản sao sạch; vá lỗ hổng; thông báo theo quy định.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

@@ -1,0 +1,191 @@
+<!-- HEAD -->
+<title>CSDL 1 · Cơ sở dữ liệu và hệ quản trị</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · CƠ SỞ DỮ LIỆU 1</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>CƠ SỞ DỮ LIỆU VÀ<br>HỆ QUẢN TRỊ CSDL</h1><p style="font-size:28px;line-height:1.5">Khái niệm CSDL, bảng – bản ghi – trường, hệ quản trị CSDL, mô hình quan hệ, lợi ích.</p><div><span class="chip">CSDL</span><span class="chip">HQTCSDL</span><span class="chip">bảng</span><span class="chip">bản ghi</span><span class="chip">trường</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Giải thích <b>CSDL</b> và <b>hệ quản trị CSDL</b>.</li><li>Nhận biết <b>bảng, bản ghi, trường</b> trong CSDL quan hệ.</li><li>Nêu <b>chức năng</b> của hệ QTCSDL.</li><li>Nêu <b>lợi ích</b> so với lưu trữ tệp rời rạc.</li><li>Phân biệt <b>người dùng</b> các vai trò: quản trị, lập trình, cuối.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Dữ liệu và CSDL</li><li>Mô hình quan hệ</li><li>Hệ quản trị CSDL</li><li>Lợi ích, ứng dụng</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 1</span><h1>Dữ liệu và thông tin</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phân biệt</h3><ul style="gap:6px"><li><b>Dữ liệu</b>: các giá trị thô (số, chữ, ảnh) chưa qua xử lí.</li><li><b>Thông tin</b>: dữ liệu được <b>xử lí</b> để có ý nghĩa.</li><li>Ví dụ: điểm 8, 7, 9 là dữ liệu; “điểm trung bình lớp là 8” là thông tin.</li></ul></div></div><div class="col"><div class="key"><b>Cơ sở dữ liệu (CSDL)</b> là tập hợp dữ liệu <b>có tổ chức</b>, có liên quan, lưu trên thiết bị nhớ để <b>nhiều người, nhiều ứng dụng</b> cùng khai thác.</div><div class="ok"><p>Ví dụ: CSDL thư viện, CSDL học sinh, CSDL bán hàng, CSDL ngân hàng.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 1</span><h1>Vì sao cần CSDL? Lưu trữ bằng tệp rời rạc</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nhược điểm của quản lí bằng tệp</h3><ul style="gap:6px"><li><b>Dư thừa, trùng lặp</b> dữ liệu (cùng thông tin ở nhiều nơi).</li><li>Dễ <b>mâu thuẫn</b>: sửa chỗ này quên chỗ kia.</li><li><b>Khó truy xuất</b> theo nhiều tiêu chí.</li><li>Khó <b>chia sẻ</b>, <b>bảo mật</b>, sao lưu.</li></ul></div></div><div class="col"><div class="key">CSDL giải quyết: dữ liệu <b>tập trung, nhất quán, ít dư thừa</b>, có <b>phân quyền</b>, truy vấn bằng <b>ngôn ngữ chuẩn (SQL)</b>.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 2</span><h1>Mô hình CSDL quan hệ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các khái niệm</h3><ul style="gap:6px"><li><b>Bảng</b> (table): dữ liệu theo <b>hàng và cột</b>.</li><li><b>Bản ghi</b> (record, hàng): một đối tượng cụ thể.</li><li><b>Trường</b> (field, cột): một thuộc tính, có <b>kiểu dữ liệu</b>.</li><li><b>Khoá chính</b>: trường nhận diện duy nhất mỗi bản ghi.</li></ul></div></div><div class="col"><div class="res"><span class="lab">Bảng HOCSINH (6 bản ghi, 5 trường)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">mahs | hoten | lop | gioitinh | diemtb
+-----+-------+-----+----------+-------
+HS01 | An    | 12A | Nam      | 8.5   
+HS02 | Binh  | 12A | Nam      | 7.0   
+HS03 | Chi   | 12B | Nu       | 9.0   
+HS04 | Dung  | 12B | Nu       | 6.5   
+HS05 | Em    | 12A | Nu       | 8.0   
+HS06 | Ha    | 12C | Nu       | 7.5   </pre></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 2</span><h1>Sơ đồ bảng, bản ghi, trường</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Minh hoạ</span><svg viewBox="0 0 520 280" style="width:100%"><g font-family="sans-serif" font-weight="800" font-size="22" text-anchor="middle"><rect x="10" y="20" width="500" height="44" fill="#00838F"/><g fill="#fff"><text x="70" y="50">MAHS</text><text x="185" y="50">HOTEN</text><text x="295" y="50">LOP</text><text x="405" y="50">DIEMTB</text></g><g fill="#E0F7FA" stroke="#00838F" stroke-width="2"><rect x="10" y="64" width="500" height="44"/><rect x="10" y="108" width="500" height="44" fill="#FFF59D"/><rect x="10" y="152" width="500" height="44"/></g><g fill="#0B2545"><text x="70" y="94">HS01</text><text x="185" y="94">An</text><text x="295" y="94">12A</text><text x="405" y="94">8.5</text><text x="70" y="138">HS02</text><text x="185" y="138">Binh</text><text x="295" y="138">12A</text><text x="405" y="138">7.0</text><text x="70" y="182">HS03</text><text x="185" y="182">Chi</text><text x="295" y="182">12B</text><text x="405" y="182">9.0</text></g></g><text x="260" y="238" text-anchor="middle" font-size="22" font-weight="800" fill="#C62828">hàng vàng = 1 bản ghi (HS02); tiêu đề cột = trường</text><text x="260" y="268" text-anchor="middle" font-size="22" font-weight="800" fill="#00838F">MAHS là khoá chính: không trùng nhau</text></svg></div></div><div class="col"><div class="card"><h3>Quy ước</h3><ul style="gap:6px"><li>Cột = <b>trường</b> (thuộc tính).</li><li>Hàng = <b>bản ghi</b> (bộ).</li><li>Mỗi ô chứa <b>một giá trị</b> (không lặp).</li></ul></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 2</span><h1>Tính chất của bảng trong mô hình quan hệ</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Tính chất</th><th>Ý nghĩa</th></tr><tr><td>Tên bảng</td><td><b>duy nhất</b> trong CSDL</td></tr><tr><td>Tên trường</td><td><b>duy nhất</b> trong một bảng</td></tr><tr><td>Giá trị mỗi ô</td><td><b>nguyên tử</b>: một giá trị, không phải danh sách</td></tr><tr><td>Thứ tự</td><td>thứ tự hàng, cột <b>không quan trọng</b></td></tr><tr><td>Hai bản ghi</td><td><b>không trùng hoàn toàn</b> (có khoá chính)</td></tr></table><div class="key">Dữ liệu một ô ghi nhiều số điện thoại cách nhau dấu phẩy <b>vi phạm</b> tính nguyên tử; nên tách thành bảng riêng.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 3</span><h1>Hệ quản trị cơ sở dữ liệu (HQTCSDL)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li><b>Phần mềm</b> để <b>tạo, lưu trữ, cập nhật, truy xuất</b> và <b>quản lí</b> CSDL.</li><li>Là <b>trung gian</b> giữa người dùng/ứng dụng và dữ liệu.</li><li>Ví dụ: <b>MySQL, SQL Server, PostgreSQL, Oracle, SQLite, MS Access</b>.</li></ul></div></div><div class="col"><div class="res"><span class="lab">Mô hình ba lớp</span><svg viewBox="0 0 520 300" style="width:100%"><g font-family="sans-serif" font-weight="800" text-anchor="middle"><rect x="10" y="10" width="500" height="55" rx="10" fill="#B2EBF2" stroke="#00838F" stroke-width="3"/><text x="260" y="46" font-size="24" fill="#0B2545">Người dùng, ứng dụng web / di động</text><path d="M260 66 L260 105 M245 92 L260 108 L275 92" stroke="#00838F" stroke-width="5" fill="none"/><rect x="10" y="110" width="500" height="70" rx="10" fill="#00838F"/><text x="260" y="143" font-size="26" fill="#fff">HỆ QUẢN TRỊ CSDL</text><text x="260" y="170" font-size="20" fill="#E0F7FA">(MySQL, SQL Server, SQLite…)</text><path d="M260 182 L260 220 M245 207 L260 223 L275 207" stroke="#00838F" stroke-width="5" fill="none"/><ellipse cx="260" cy="255" rx="160" ry="35" fill="#FFE082" stroke="#E65100" stroke-width="3"/><text x="260" y="263" font-size="24" fill="#0B2545">CƠ SỞ DỮ LIỆU</text></g></svg></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 3</span><h1>Chức năng của hệ QTCSDL</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Chức năng</th><th>Nội dung</th></tr><tr><td><b>Định nghĩa dữ liệu</b></td><td>tạo bảng, kiểu dữ liệu, khoá, ràng buộc (<b>DDL</b>: CREATE, ALTER, DROP)</td></tr><tr><td><b>Thao tác dữ liệu</b></td><td>thêm, sửa, xoá, truy vấn (<b>DML</b>: INSERT, UPDATE, DELETE, SELECT)</td></tr><tr><td><b>Kiểm soát, điều khiển</b></td><td>phân quyền, bảo mật, toàn vẹn, đồng thời, sao lưu, phục hồi (<b>DCL</b>: GRANT, REVOKE)</td></tr></table><div class="key">Ba nhóm lệnh SQL tương ứng ba chức năng: <b>DDL, DML, DCL</b>.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 3</span><h1>Ví dụ DDL và DML bằng SQL</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">import sqlite3
+con = sqlite3.connect(":memory:")
+con.execute("CREATE TABLE sv(ma INTEGER PRIMARY KEY, ten TEXT)")
+con.execute("INSERT INTO sv VALUES (1, 'An')")
+con.execute("INSERT INTO sv VALUES (2, 'Binh')")
+con.execute("UPDATE sv SET ten = 'Bình' WHERE ma = 2")
+con.execute("DELETE FROM sv WHERE ma = 1")
+print(con.execute("SELECT * FROM sv").fetchall())</pre><div class="key"><b>CREATE</b> tạo bảng; <b>INSERT</b> thêm; <b>UPDATE</b> sửa; <b>DELETE</b> xoá; <b>SELECT</b> truy vấn. Python có sẵn mô-đun <b>sqlite3</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[(2, 'Bình')]</pre></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 3</span><h1>Các đối tượng người dùng CSDL</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th>Người dùng</th><th>Nhiệm vụ</th></tr><tr><td><b>Quản trị CSDL</b></td><td>thiết kế, cấp quyền, sao lưu, bảo mật, tối ưu</td></tr><tr><td><b>Lập trình viên</b></td><td>viết ứng dụng truy cập CSDL</td></tr><tr><td><b>Người dùng cuối</b></td><td>nhập, xem, tìm kiếm dữ liệu qua ứng dụng</td></tr></table></div><div class="col"><div class="key">Người dùng cuối <b>không cần biết SQL</b>: họ dùng giao diện ứng dụng, ứng dụng gọi HQTCSDL.</div><div class="ok"><p>Ví dụ: học sinh tra điểm trên website là <b>người dùng cuối</b>; giáo viên Tin viết trang tra điểm là <b>lập trình viên</b>.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 4</span><h1>Lợi ích của CSDL và hệ QTCSDL</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lợi ích</h3><ul style="gap:6px"><li><b>Giảm dư thừa</b> và mâu thuẫn dữ liệu.</li><li><b>Toàn vẹn</b>: dữ liệu đúng, đủ nhờ ràng buộc.</li><li><b>Chia sẻ</b> nhiều người, nhiều ứng dụng.</li><li><b>Bảo mật, phân quyền</b> truy cập.</li><li><b>Truy vấn nhanh</b> theo nhiều tiêu chí.</li><li>Sao lưu, <b>phục hồi</b> khi sự cố.</li></ul></div></div><div class="col"><div class="key">Dùng CSDL tập trung thay cho tệp rời rạc giúp <b>dễ bảo trì, mở rộng</b> khi dữ liệu lớn.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 4</span><h1>So sánh tệp rời rạc và CSDL</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Tiêu chí</th><th>Tệp rời rạc</th><th>CSDL + HQTCSDL</th></tr><tr><td>Dư thừa dữ liệu</td><td>cao</td><td>thấp</td></tr><tr><td>Nhất quán</td><td>dễ mâu thuẫn</td><td>đảm bảo bằng ràng buộc</td></tr><tr><td>Truy vấn phức tạp</td><td>phải tự viết chương trình</td><td>một câu SQL</td></tr><tr><td>Nhiều người dùng đồng thời</td><td>dễ xung đột</td><td>kiểm soát đồng thời</td></tr><tr><td>Bảo mật</td><td>theo tệp</td><td>theo người dùng, bảng, cột</td></tr></table><div class="key">CSDL không chỉ là bảng tính: khác Excel ở <b>ràng buộc, nhiều người dùng, truy vấn chuẩn, khối lượng lớn</b>.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 4</span><h1>Ứng dụng thực tế của CSDL</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ví dụ</h3><ul style="gap:6px"><li><b>Trường học</b>: học sinh, điểm, thời khoá biểu.</li><li><b>Ngân hàng</b>: tài khoản, giao dịch.</li><li><b>Thương mại điện tử</b>: sản phẩm, đơn hàng, khách.</li><li><b>Bệnh viện</b>: hồ sơ bệnh án.</li><li><b>Mạng xã hội</b>: người dùng, bài đăng, bạn bè.</li></ul></div></div><div class="col"><div class="key">Mỗi hệ thống thường có <b>nhiều bảng liên kết</b> với nhau bằng <b>khoá ngoài</b> (học ở bài sau).</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · 4</span><h1>Mô hình thực thể – liên kết (ERD) sơ lược</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Sơ đồ</span><svg viewBox="0 0 520 240" style="width:100%"><g font-family="sans-serif" font-weight="800" text-anchor="middle" font-size="24"><rect x="10" y="85" width="180" height="70" fill="#B2EBF2" stroke="#00838F" stroke-width="4"/><text x="100" y="128" fill="#0B2545">HOCSINH</text><polygon points="260,70 320,120 260,170 200,120" fill="#FFF59D" stroke="#F9A825" stroke-width="4"/><text x="260" y="128" fill="#0B2545" font-size="20">học ở</text><rect x="330" y="85" width="180" height="70" fill="#B2EBF2" stroke="#00838F" stroke-width="4"/><text x="420" y="128" fill="#0B2545">LOP</text><path d="M190 120 L200 120 M320 120 L330 120" stroke="#0B2545" stroke-width="4"/><text x="196" y="105" font-size="22" fill="#C62828">N</text><text x="326" y="105" font-size="22" fill="#C62828">1</text></g><text x="260" y="215" text-anchor="middle" font-size="22" font-weight="800" fill="#00838F">Một lớp có nhiều học sinh; mỗi học sinh thuộc một lớp (1–N)</text></svg></div></div><div class="col"><div class="card"><h3>Kí hiệu</h3><ul style="gap:6px"><li><b>Hình chữ nhật</b>: thực thể (bảng).</li><li><b>Hình thoi</b>: mối liên kết.</li><li><b>1–N</b>: một – nhiều → khoá ngoài ở phía N.</li></ul></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>CSDL</b>: dữ liệu có tổ chức, dùng chung; <b>HQTCSDL</b>: phần mềm quản lí CSDL.</li><li><b>Bảng – bản ghi (hàng) – trường (cột)</b>; mỗi ô một giá trị.</li><li>Chức năng: <b>định nghĩa</b>, <b>thao tác</b>, <b>kiểm soát</b> dữ liệu.</li><li>Lợi ích: ít dư thừa, nhất quán, chia sẻ, bảo mật, truy vấn nhanh.</li><li>Người dùng: <b>quản trị</b>, <b>lập trình</b>, <b>cuối</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Phần mềm quản lí CSDL</td><td>HQTCSDL</td></tr><tr><td class="m">Một hàng của bảng</td><td>bản ghi</td></tr><tr><td class="m">Một cột của bảng</td><td>trường</td></tr><tr><td class="m">Định danh duy nhất</td><td>khoá chính</td></tr></table><div class="warn">CSDL khác HQTCSDL: CSDL là <b>dữ liệu</b>, HQTCSDL là <b>phần mềm</b>.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Excel <b>không phải</b> HQTCSDL đầy đủ.</li><li>Một ô <b>nhiều giá trị</b> vi phạm mô hình quan hệ.</li><li>Thứ tự hàng/cột <b>không có ý nghĩa</b> trong bảng quan hệ.</li><li>Dữ liệu <b>dư thừa</b> là nguyên nhân gây mâu thuẫn khi cập nhật.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li>CSDL <b>NoSQL</b> (MongoDB, Redis): không dùng bảng.</li><li><b>Kho dữ liệu</b> (data warehouse), <b>dữ liệu lớn</b>.</li><li><b>Chuẩn hoá</b> (1NF, 2NF, 3NF): tránh dư thừa.</li></ul></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Phân biệt CSDL và hệ quản trị CSDL.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Trong bảng HOCSINH ở slide trước, có mấy bản ghi, mấy trường?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Kể ba chức năng chính của hệ QTCSDL.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Nêu hai lợi ích của CSDL so với lưu trữ tệp rời rạc.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Ai là người dùng cuối trong hệ thống tra cứu điểm của trường?</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>CSDL</b>: dữ liệu. <b>HQTCSDL</b>: phần mềm quản lí dữ liệu đó.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>6</b> bản ghi và <b>5</b> trường.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Định nghĩa dữ liệu; thao tác dữ liệu; kiểm soát, điều khiển truy cập.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Giảm dư thừa, mâu thuẫn; dễ chia sẻ và bảo mật; truy vấn nhanh.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>Học sinh, phụ huynh</b> vào tra điểm.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Ô “Điện thoại” của một học sinh ghi “0901, 0912”. Vi phạm tính chất nào của mô hình quan hệ? Đề xuất cách sửa.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Một công ty lưu địa chỉ khách hàng trong bảng DONHANG cho từng đơn. Hậu quả khi khách đổi địa chỉ? Nên thiết kế thế nào?</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) MySQL là một CSDL. (b) Thứ tự các cột trong bảng không quan trọng. (c) UPDATE thuộc nhóm DDL. (d) Một bảng có thể không có khoá chính nhưng khi đó khó phân biệt các bản ghi trùng.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Phân loại lệnh theo DDL/DML/DCL: CREATE TABLE, SELECT, GRANT, DELETE, ALTER TABLE, REVOKE.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Vẽ (mô tả) bảng LOP và HOCSINH, chỉ rõ trường nào là khoá ngoài.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Vì sao nói người dùng cuối không cần biết SQL?</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Vi phạm tính <b>nguyên tử</b> của ô. Sửa: tách bảng <b>DIENTHOAI(mahs, sdt)</b>, mỗi dòng một số.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Phải sửa ở <b>nhiều đơn</b> (dư thừa); dễ mâu thuẫn. Nên tách bảng <b>KHACHHANG</b> (lưu địa chỉ một lần) và DONHANG chứa <b>makh</b> (khoá ngoài).</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b>: MySQL là HQTCSDL. (b) <b>Đúng</b>. (c) <b>Sai</b>: UPDATE là DML. (d) <b>Đúng</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>DDL: CREATE TABLE, ALTER TABLE. DML: SELECT, DELETE. DCL: GRANT, REVOKE.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">CSDL 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>LOP(malop, tenlop, gvcn) và HOCSINH(mahs, hoten, <b>lop</b>, …): trường <b>lop</b> trong HOCSINH là khoá ngoài tham chiếu LOP.malop.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Ứng dụng đã gọi hệ QTCSDL thay họ; họ chỉ thao tác trên giao diện.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

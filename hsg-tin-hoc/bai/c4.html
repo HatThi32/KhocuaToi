@@ -1,0 +1,297 @@
+<!-- HEAD -->
+<title>CSDL 4 · SQL liên kết bảng và truy vấn con</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · CƠ SỞ DỮ LIỆU 4</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>SQL: LIÊN KẾT BẢNG<br>VÀ TRUY VẤN CON</h1><p style="font-size:28px;line-height:1.5">INNER JOIN, LEFT JOIN, JOIN nhiều bảng, bí danh bảng, truy vấn con trong WHERE, IN, EXISTS, so sánh với trung bình.</p><div><span class="chip">JOIN</span><span class="chip">LEFT JOIN</span><span class="chip">ON</span><span class="chip">truy vấn con</span><span class="chip">IN</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Giải thích vì sao phải <b>liên kết bảng</b>.</li><li>Viết <b>INNER JOIN</b>, <b>LEFT JOIN</b> với điều kiện <b>ON</b>.</li><li>Dùng <b>bí danh bảng</b> và JOIN <b>nhiều bảng</b>.</li><li>Viết <b>truy vấn con</b> (subquery) trong <b>WHERE</b> với =, &gt;, <b>IN</b>.</li><li>Phân biệt kết quả các loại JOIN và tránh lỗi <b>tích Descartes</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Liên kết bảng</li><li>INNER JOIN, LEFT JOIN</li><li>Kết hợp JOIN và nhóm</li><li>Truy vấn con</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 0</span><h1>Dữ liệu dùng trong bài</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">HOCSINH</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">mahs | hoten | lop | gioitinh | diemtb
+-----+-------+-----+----------+-------
+HS01 | An    | 12A | Nam      | 8.5   
+HS02 | Binh  | 12A | Nam      | 7.0   
+HS03 | Chi   | 12B | Nu       | 9.0   
+HS04 | Dung  | 12B | Nu       | 6.5   
+HS05 | Em    | 12A | Nu       | 8.0   
+HS06 | Ha    | 12C | Nu       | 7.5   </pre></div></div><div class="col"><div class="res"><span class="lab">LOP</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">malop | tenlop     | gvcn     
+------+------------+----------
+12A   | Toan - Tin | Co Lan   
+12B   | Ly - Hoa   | Thay Minh
+12C   | Van - Su   | Co Hoa   
+12D   | Anh        | Thay Nam </pre></div><div class="key">Lớp <b>12D</b> chưa có học sinh nào: chi tiết này giúp phân biệt <b>INNER</b> và <b>LEFT JOIN</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 1</span><h1>Vì sao phải liên kết bảng?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thông tin nằm ở nhiều bảng</h3><ul style="gap:6px"><li>HOCSINH chỉ có <b>mã lớp</b> (12A…), không có <b>tên lớp, GVCN</b>.</li><li>Muốn in “học sinh – tên lớp – GVCN” phải <b>ghép</b> hai bảng.</li><li>Ghép dựa trên <b>khoá ngoài = khoá chính</b>.</li></ul></div></div><div class="col"><div class="key">Thiết kế tách bảng tránh dư thừa; khi cần thông tin đầy đủ thì dùng <b>JOIN</b> ghép lại <b>tại thời điểm truy vấn</b>.</div><div class="warn">Viết <code>FROM a, b</code> mà <b>thiếu điều kiện ghép</b> sẽ ra <b>tích Descartes</b>: mọi cặp dòng (6 × 4 = 24 dòng).</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 1</span><h1>Tích Descartes (lỗi thường gặp)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">SELECT COUNT(*) AS so_dong
+FROM hocsinh, lop</pre><div class="key">Thiếu điều kiện ghép: 6 học sinh × 4 lớp = <b>24 dòng</b> vô nghĩa.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">so_dong
+-------
+24     </pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 1</span><h1>INNER JOIN: ghép các dòng khớp</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">SELECT h.hoten, l.tenlop, l.gvcn
+FROM hocsinh h
+INNER JOIN lop l ON h.lop = l.malop</pre><div class="key"><b>INNER JOIN … ON</b> chỉ giữ cặp dòng <b>thoả điều kiện</b>. <b>h, l</b> là <b>bí danh</b> bảng cho ngắn gọn.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">hoten | tenlop     | gvcn     
+------+------------+----------
+An    | Toan - Tin | Co Lan   
+Binh  | Toan - Tin | Co Lan   
+Chi   | Ly - Hoa   | Thay Minh
+Dung  | Ly - Hoa   | Thay Minh
+Em    | Toan - Tin | Co Lan   
+Ha    | Van - Su   | Co Hoa   </pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 1</span><h1>Sơ đồ INNER JOIN</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Giao hai tập</span><svg viewBox="0 0 520 260" style="width:100%"><g font-family="sans-serif" font-weight="800" font-size="24" text-anchor="middle"><circle cx="190" cy="125" r="100" fill="#FFCCBC" fill-opacity=".8" stroke="#D84315" stroke-width="4"/><circle cx="330" cy="125" r="100" fill="#BBDEFB" fill-opacity=".8" stroke="#1565C0" stroke-width="4"/><path d="M260 38 A100 100 0 0 1 260 212 A100 100 0 0 1 260 38" fill="#FFB300" stroke="#0B2545" stroke-width="3"/><text x="130" y="130" fill="#0B2545">HOCSINH</text><text x="395" y="130" fill="#0B2545">LOP</text><text x="260" y="124" fill="#0B2545" font-size="20">khớp</text><text x="260" y="150" fill="#0B2545" font-size="20">ON</text></g><text x="260" y="250" text-anchor="middle" font-size="22" font-weight="800" fill="#D84315">INNER JOIN = phần giao</text></svg></div></div><div class="col"><div class="card"><h3>Quy tắc</h3><ul style="gap:6px"><li>Chỉ lấy dòng <b>có ở cả hai bảng</b> theo điều kiện ON.</li><li>Lớp <b>12D</b> (không có học sinh) <b>không xuất hiện</b>.</li></ul></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 2</span><h1>LEFT JOIN: giữ mọi dòng bảng trái</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">SELECT l.malop, l.tenlop, h.hoten
+FROM lop l
+LEFT JOIN hocsinh h ON h.lop = l.malop</pre><div class="key"><b>LEFT JOIN</b> giữ <b>mọi dòng bảng bên trái</b> (LOP); lớp không có học sinh vẫn hiện với giá trị <b>NULL</b> (12D).</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">malop | tenlop     | hoten
+------+------------+------
+12A   | Toan - Tin | An   
+12A   | Toan - Tin | Binh 
+12A   | Toan - Tin | Em   
+12B   | Ly - Hoa   | Chi  
+12B   | Ly - Hoa   | Dung 
+12C   | Van - Su   | Ha   
+12D   | Anh        | None </pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 2</span><h1>Tìm dòng “không có đối ứng”</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">SELECT l.malop, l.tenlop
+FROM lop l
+LEFT JOIN hocsinh h ON h.lop = l.malop
+WHERE h.mahs IS NULL</pre><div class="key">Mẹo kinh điển: <b>LEFT JOIN + WHERE … IS NULL</b> tìm bản ghi <b>không có</b> ở bảng kia (lớp chưa có học sinh).</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">malop | tenlop
+------+-------
+12D   | Anh   </pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 2</span><h1>Các loại JOIN</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Loại</th><th>Kết quả</th><th>Dòng không khớp</th></tr><tr><td><b>INNER JOIN</b></td><td>cặp dòng thoả ON</td><td>bị bỏ</td></tr><tr><td><b>LEFT JOIN</b></td><td>mọi dòng bảng trái + khớp bên phải</td><td>bên trái giữ, bên phải = NULL</td></tr><tr><td><b>RIGHT JOIN</b></td><td>mọi dòng bảng phải</td><td>bên phải giữ, bên trái = NULL</td></tr><tr><td><b>FULL JOIN</b></td><td>mọi dòng cả hai</td><td>không khớp giữ, ô thiếu = NULL</td></tr><tr><td><b>CROSS JOIN</b></td><td>tích Descartes</td><td>không có điều kiện</td></tr></table><div class="key">Đề thi thường dùng <b>INNER JOIN</b> và <b>LEFT JOIN</b>. A LEFT JOIN B tương đương B RIGHT JOIN A.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 2</span><h1>JOIN kèm lọc và sắp xếp</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">SELECT h.hoten, l.tenlop, h.diemtb
+FROM hocsinh h
+JOIN lop l ON h.lop = l.malop
+WHERE l.gvcn LIKE 'Co%'
+ORDER BY h.diemtb DESC</pre><div class="key">Có thể dùng <b>WHERE, ORDER BY</b> như bình thường sau JOIN; <b>JOIN</b> mặc định là INNER.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">hoten | tenlop     | diemtb
+------+------------+-------
+An    | Toan - Tin | 8.5   
+Em    | Toan - Tin | 8.0   
+Ha    | Van - Su   | 7.5   
+Binh  | Toan - Tin | 7.0   </pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 3</span><h1>JOIN kết hợp GROUP BY</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">SELECT l.tenlop, COUNT(h.mahs) AS so_hs,
+       ROUND(AVG(h.diemtb),2) AS tb
+FROM lop l
+LEFT JOIN hocsinh h ON h.lop = l.malop
+GROUP BY l.malop, l.tenlop</pre><div class="key">Dùng <b>LEFT JOIN + COUNT(h.mahs)</b> để lớp <b>0 học sinh</b> vẫn hiện (COUNT cột bỏ NULL → 0); <b>COUNT(*)</b> sẽ đếm sai thành 1.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">tenlop     | so_hs | tb  
+-----------+-------+-----
+Toan - Tin | 3     | 7.83
+Ly - Hoa   | 2     | 7.75
+Van - Su   | 1     | 7.5 
+Anh        | 0     | None</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 3</span><h1>Số học sinh mỗi giáo viên chủ nhiệm</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">SELECT l.gvcn, COUNT(*) AS so_hs
+FROM hocsinh h JOIN lop l ON h.lop = l.malop
+GROUP BY l.gvcn
+HAVING COUNT(*) &gt;= 2
+ORDER BY so_hs DESC</pre><div class="key">Thứ tự: ghép bảng → nhóm theo GVCN → giữ nhóm ≥ 2 → sắp xếp.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">gvcn      | so_hs
+----------+------
+Co Lan    | 3    
+Thay Minh | 2    </pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 3</span><h1>JOIN ba bảng: thư viện</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">SELECT bd.hoten, s.tensach, m.ngaymuon
+FROM muon m
+JOIN bandoc bd ON m.mabd = bd.mabd
+JOIN sach s    ON m.masach = s.masach
+WHERE m.ngaytra IS NULL;</pre></div><div class="col"><div class="card"><h3>Cách đọc</h3><ul style="gap:6px"><li><b>muon</b> là bảng trung gian chứa hai khoá ngoài.</li><li>Mỗi <b>JOIN … ON</b> thêm một bảng.</li><li><code>ngaytra IS NULL</code>: sách <b>chưa trả</b>.</li></ul></div><div class="key">JOIN nhiều bảng: ghép lần lượt, mỗi lần một điều kiện <b>ON</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 4</span><h1>Truy vấn con (subquery)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li><b>Truy vấn con</b>: câu SELECT <b>lồng trong ngoặc</b> trong câu truy vấn khác.</li><li>Chạy <b>trước</b>, kết quả dùng cho truy vấn ngoài.</li><li>Thường đặt trong <b>WHERE</b>.</li></ul></div></div><div class="col"><div class="key">Dùng khi điều kiện cần một giá trị <b>phải tính trước</b>: “điểm cao hơn trung bình”, “lớp có nhiều học sinh nhất”.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 4</span><h1>Truy vấn con trả một giá trị</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">SELECT hoten, diemtb
+FROM hocsinh
+WHERE diemtb &gt; (SELECT AVG(diemtb) FROM hocsinh)</pre><div class="key">Truy vấn trong ngoặc cho <b>7,75</b> (trung bình); truy vấn ngoài lấy học sinh <b>điểm cao hơn 7,75</b>. Hàm tổng hợp <b>không viết trực tiếp</b> trong WHERE.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">hoten | diemtb
+------+-------
+An    | 8.5   
+Chi   | 9.0   
+Em    | 8.0   </pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 4</span><h1>Học sinh có điểm cao nhất</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">SELECT hoten, diemtb FROM hocsinh
+WHERE diemtb = (SELECT MAX(diemtb) FROM hocsinh)</pre><div class="key">Có thể có <b>nhiều học sinh cùng điểm cao nhất</b>; cách này lấy tất cả (khác <code>ORDER BY … LIMIT 1</code> chỉ lấy một).</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">hoten | diemtb
+------+-------
+Chi   | 9.0   </pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 4</span><h1>Truy vấn con trả nhiều giá trị: IN</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">SELECT hoten, lop FROM hocsinh
+WHERE lop IN (SELECT malop FROM lop
+              WHERE gvcn LIKE 'Co%')</pre><div class="key"><b>IN (truy vấn con)</b>: giá trị thuộc <b>tập kết quả</b> trong ngoặc. Ở đây: học sinh thuộc lớp có <b>GVCN là cô</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">hoten | lop
+------+----
+An    | 12A
+Binh  | 12A
+Em    | 12A
+Ha    | 12C</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 4</span><h1>NOT IN: không thuộc</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">SELECT malop, tenlop FROM lop
+WHERE malop NOT IN (SELECT lop FROM hocsinh)</pre><div class="key">Lớp <b>chưa có học sinh</b>: cách khác của LEFT JOIN … IS NULL. Chú ý: nếu tập con chứa <b>NULL</b>, NOT IN có thể không trả dòng nào.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">malop | tenlop
+------+-------
+12D   | Anh   </pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 4</span><h1>EXISTS: tồn tại</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">SELECT malop, tenlop FROM lop l
+WHERE EXISTS (SELECT 1 FROM hocsinh h
+              WHERE h.lop = l.malop
+                AND h.diemtb &gt;= 9)</pre><div class="key"><b>EXISTS</b> đúng nếu truy vấn con trả về <b>ít nhất một dòng</b>: lớp có học sinh điểm ≥ 9.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">malop | tenlop  
+------+---------
+12B   | Ly - Hoa</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 4</span><h1>Truy vấn con trong FROM</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">SELECT lop, tb FROM (
+  SELECT lop, ROUND(AVG(diemtb),2) AS tb
+  FROM hocsinh GROUP BY lop
+) t
+WHERE tb &gt; 7.6</pre><div class="key">Truy vấn con làm “bảng tạm” trong <b>FROM</b>, bắt buộc có <b>bí danh</b> (t). Cho phép lọc trên cột tính toán.</div></div><div class="col"><div class="res"><span class="lab">Kết quả truy vấn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">lop | tb  
+----+-----
+12A | 7.83
+12B | 7.75</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · 4</span><h1>JOIN hay truy vấn con?</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Tình huống</th><th>Nên dùng</th></tr><tr><td>Cần cột từ <b>cả hai bảng</b></td><td><b>JOIN</b></td></tr><tr><td>Chỉ cần lọc theo bảng khác</td><td><b>IN / EXISTS</b> (hoặc JOIN)</td></tr><tr><td>So với trung bình/max toàn bảng</td><td><b>truy vấn con</b> trả một giá trị</td></tr><tr><td>Tìm bản ghi không có đối ứng</td><td><b>LEFT JOIN … IS NULL</b> hoặc NOT EXISTS</td></tr></table><div class="key">Nhiều bài làm được bằng cả hai cách; JOIN thường <b>nhanh hơn</b>, truy vấn con thường <b>dễ đọc</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>JOIN … ON khoá_ngoài = khoá_chính</b>; thiếu ON → tích Descartes.</li><li><b>INNER JOIN</b> giữ dòng khớp; <b>LEFT JOIN</b> giữ hết bảng trái (NULL nếu không khớp).</li><li><b>LEFT JOIN … WHERE x IS NULL</b> tìm bản ghi không có đối ứng.</li><li>Truy vấn con: trả một giá trị (=, &gt;), nhiều giá trị (<b>IN</b>), tồn tại (<b>EXISTS</b>).</li><li>Đếm với LEFT JOIN: dùng <b>COUNT(cột)</b> bảng phải, không dùng COUNT(*).</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Cột từ hai bảng</td><td>JOIN … ON</td></tr><tr><td class="m">Giữ mọi dòng bảng trái</td><td>LEFT JOIN</td></tr><tr><td class="m">Lớn hơn trung bình</td><td>(SELECT AVG(…))</td></tr><tr><td class="m">Thuộc tập</td><td>IN (SELECT …)</td></tr></table><div class="warn">Quên điều kiện ON hoặc điều kiện ON sai gây kết quả nhân bản.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>ON</b> lọc <b>khi ghép</b>; <b>WHERE</b> lọc <b>sau ghép</b>. Với LEFT JOIN đặt điều kiện bảng phải trong WHERE sẽ biến thành INNER.</li><li><b>NOT IN</b> với NULL cho kết quả bất ngờ; ưu tiên NOT EXISTS.</li><li>Truy vấn con tương quan chạy <b>lại cho mỗi dòng</b> ngoài.</li><li>Self-join: ghép bảng với <b>chính nó</b> (nhân viên – quản lí).</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>UNION</b> gộp kết quả hai truy vấn.</li><li><b>View</b>: lưu truy vấn thành bảng ảo.</li><li><b>CTE</b> (WITH …) làm truy vấn dễ đọc.</li></ul></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Viết truy vấn in họ tên học sinh và tên lớp.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Viết truy vấn liệt kê các lớp chưa có học sinh (hai cách).</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Viết truy vấn tìm học sinh có điểm thấp hơn điểm trung bình của cả trường.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>INNER JOIN và LEFT JOIN khác nhau thế nào?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Viết truy vấn đếm số học sinh theo tên lớp, kể cả lớp 0 học sinh.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>SELECT h.hoten, l.tenlop FROM hocsinh h JOIN lop l ON h.lop = l.malop;</code></p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>… LEFT JOIN … WHERE h.mahs IS NULL</code> hoặc <code>WHERE malop NOT IN (SELECT lop FROM hocsinh)</code> → 12D</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>WHERE diemtb &lt; (SELECT AVG(diemtb) FROM hocsinh)</code> → Binh; Dung; Ha</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>INNER chỉ giữ dòng <b>khớp</b>; LEFT giữ <b>mọi dòng bảng trái</b>, phần không khớp là NULL.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>SELECT l.tenlop, COUNT(h.mahs) FROM lop l LEFT JOIN hocsinh h ON h.lop=l.malop GROUP BY l.malop</code></p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Viết truy vấn tên lớp có điểm trung bình cao nhất (không dùng LIMIT).</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Viết truy vấn các học sinh cùng lớp với bạn “An”.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Cho 4 bảng: SV, LOP, MON, DIEM(masv, mamon, diem). Viết truy vấn tên sinh viên có điểm môn “Tin” ≥ 8.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>So sánh hai kết quả: <code>SELECT COUNT(*) FROM lop l LEFT JOIN hocsinh h ON h.lop=l.malop</code> và <code>SELECT COUNT(h.mahs) FROM …</code>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Tại sao <code>SELECT * FROM lop LEFT JOIN hocsinh h ON h.lop = lop.malop WHERE h.diemtb &gt; 8</code> không giữ được lớp 12D?</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Viết truy vấn tìm học sinh có điểm cao hơn mọi học sinh lớp 12B.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>… GROUP BY lop HAVING AVG(diemtb) = (SELECT MAX(tb) FROM (SELECT AVG(diemtb) tb FROM hocsinh GROUP BY lop) t)</code> → lớp: 12A</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>SELECT hoten FROM hocsinh WHERE lop = (SELECT lop FROM hocsinh WHERE hoten = 'An') AND hoten &lt;&gt; 'An'</code> → Binh; Em</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>SELECT s.ten FROM sv s JOIN diem d ON d.masv=s.masv JOIN mon m ON m.mamon=d.mamon WHERE m.tenmon='Tin' AND d.diem&gt;=8</code></p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Số dòng LEFT JOIN: 7 (có dòng của 12D); COUNT(h.mahs): 6 (bỏ NULL).</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">CSDL 4 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Điều kiện <code>h.diemtb &gt; 8</code> trong WHERE loại các dòng NULL (12D) → thành INNER. Muốn giữ, đưa điều kiện vào <b>ON</b>.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p><code>WHERE diemtb &gt; (SELECT MAX(diemtb) FROM hocsinh WHERE lop='12B')</code> →  (hoặc dùng <code>&gt; ALL</code> ở hệ hỗ trợ).</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
