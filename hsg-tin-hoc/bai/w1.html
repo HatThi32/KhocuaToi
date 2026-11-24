@@ -1,0 +1,522 @@
+<!-- HEAD -->
+<title>Bài giảng Trang web và HTML</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · KNTT</span></div>
+<div class="bd g21" style="align-items:center">
+<div class="col" style="gap:22px">
+<h1>TRANG WEB<br>VÀ HTML</h1>
+<p style="font-size:28px;line-height:1.5">Bài giảng chuyên sâu cho học sinh ôn thi HSG: từ khái niệm đến dạng bài khó. Bám SGK Tin học 12 (định hướng Khoa học máy tính bài 7–12, Tin học ứng dụng bài 23–28).</p>
+<div><span class="chip">1 · Web, URL, HTTP</span><span class="chip">2 · Cấu trúc HTML</span><span class="chip">3 · Liên kết, media</span><span class="chip">4 · Dạng bài khó</span></div></div>
+<svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg>
+</div></section>
+
+<section class="s"><div class="hd"><span class="k">MỞ ĐẦU</span><h1>Mục tiêu và bản đồ kiến thức</h1></div>
+<div class="bd g2">
+<div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul>
+<li>Giải thích <b>quy trình tải</b> một trang web (URL, DNS, HTTP).</li>
+<li>Viết đúng tài liệu <b>HTML5</b>, đọc <b>cây phần tử</b>, đếm con và con cháu.</li>
+<li>Phân biệt <b>block</b> và <b>inline</b>, dùng thẻ <b>ngữ nghĩa</b>.</li>
+<li>Viết <b>đường dẫn tương đối</b> đúng với mọi cây thư mục.</li>
+<li>Nhúng <b>ảnh, âm thanh, video, iframe</b> đúng thuộc tính.</li>
+<li><b>Tìm lỗi</b> trong mã HTML và <b>dự đoán kết quả</b> hiển thị.</li></ul></div>
+<div class="key">HTML mô tả <b>cấu trúc</b>; CSS mô tả <b>hình thức</b>; JavaScript mô tả <b>hành vi</b>.</div></div>
+<svg viewBox="0 0 540 480"><g font-weight="800" font-size="24" fill="#fff" text-anchor="middle">
+<rect x="20" y="10" width="500" height="92" rx="14" fill="#0B2545"/><text x="270" y="46">PHẦN 1 · WEB, URL, HTTP</text><text x="270" y="82" font-size="21" font-weight="600">trang tĩnh – động, trình duyệt tải trang</text>
+<rect x="20" y="124" width="500" height="92" rx="14" fill="#00695C"/><text x="270" y="160">PHẦN 2 · CẤU TRÚC HTML</text><text x="270" y="196" font-size="21" font-weight="600">cây phần tử, thẻ văn bản, block/inline, ngữ nghĩa</text>
+<rect x="20" y="238" width="500" height="92" rx="14" fill="#4527A0"/><text x="270" y="274">PHẦN 3 · LIÊN KẾT VÀ MEDIA</text><text x="270" y="310" font-size="21" font-weight="600">đường dẫn, ảnh, audio, video, iframe</text>
+<rect x="20" y="352" width="500" height="92" rx="14" fill="#AD1457"/><text x="270" y="388">PHẦN 4 · DẠNG BÀI KHÓ</text><text x="270" y="424" font-size="21" font-weight="600">đúng/sai, tìm lỗi, đọc mã dự đoán kết quả</text></g>
+<g fill="#F2A900"><path d="M270 104 l-14 0 l14 18 l14 -18z"/><path d="M270 218 l-14 0 l14 18 l14 -18z"/><path d="M270 332 l-14 0 l14 18 l14 -18z"/></g></svg>
+</div></section>
+
+<section class="s"><div class="hd"><span class="k">PHẦN 1</span><h1>Web, trang web, website</h1></div>
+<div class="bd g21">
+<div class="col"><table><tr><th style="width:34%">Thuật ngữ</th><th>Nghĩa chính xác</th></tr>
+<tr><td><b>Internet</b></td><td>Hạ tầng mạng toàn cầu.</td></tr>
+<tr><td><b>World Wide Web</b></td><td>Các trang web liên kết bằng <b>siêu liên kết</b>.</td></tr>
+<tr><td><b>Website</b></td><td>Nhiều trang web liên quan, chung tên miền.</td></tr>
+<tr><td><b>Trang web</b></td><td>Một tài liệu siêu văn bản (tệp HTML).</td></tr>
+<tr><td><b>Trình duyệt</b></td><td>Phần mềm <b>client</b>: yêu cầu, hiển thị trang.</td></tr>
+<tr><td><b>Máy chủ web</b></td><td>Máy <b>server</b> lưu website, trả lời yêu cầu.</td></tr></table>
+<div class="warn">Internet ≠ Web: thư điện tử, FTP là dịch vụ khác trên Internet.</div></div>
+<svg viewBox="0 0 520 470"><rect x="5" y="5" width="510" height="460" rx="20" fill="#E3F2FD" stroke="#0B2545" stroke-width="4"/><text x="260" y="40" font-size="24" font-weight="800" text-anchor="middle" fill="#0B2545">INTERNET</text>
+<rect x="30" y="56" width="460" height="290" rx="16" fill="#BBDEFB" stroke="#0B2545" stroke-width="3"/><text x="260" y="88" font-size="24" font-weight="800" text-anchor="middle" fill="#0B2545">WORLD WIDE WEB</text>
+<rect x="55" y="104" width="410" height="224" rx="14" fill="#90CAF9" stroke="#0B2545" stroke-width="3"/><text x="260" y="134" font-size="22" font-weight="800" text-anchor="middle" fill="#0B2545">WEBSITE lop12.edu.vn</text>
+<rect x="75" y="150" width="170" height="160" rx="10" fill="#fff" stroke="#0B2545" stroke-width="3"/><text x="160" y="185" font-size="21" font-weight="800" text-anchor="middle" fill="#0B2545">TRANG WEB</text><text x="160" y="215" font-size="20" class="mono" text-anchor="middle" fill="#C62828">index.html</text><text x="160" y="250" font-size="20" text-anchor="middle" fill="#0B2545">trang chủ</text>
+<rect x="275" y="150" width="170" height="160" rx="10" fill="#fff" stroke="#0B2545" stroke-width="3"/><text x="360" y="185" font-size="21" font-weight="800" text-anchor="middle" fill="#0B2545">TRANG WEB</text><text x="360" y="215" font-size="20" class="mono" text-anchor="middle" fill="#C62828">bai1.html</text><text x="360" y="250" font-size="20" text-anchor="middle" fill="#0B2545">trang con</text>
+<path d="M245 230 H275" stroke="#C62828" stroke-width="4"/><text x="260" y="222" font-size="18" text-anchor="middle" fill="#C62828" font-weight="800">link</text>
+<rect x="30" y="366" width="215" height="76" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="3"/><text x="137" y="410" font-size="22" font-weight="800" text-anchor="middle" fill="#E65100">THƯ ĐIỆN TỬ</text>
+<rect x="275" y="366" width="215" height="76" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="3"/><text x="382" y="410" font-size="22" font-weight="800" text-anchor="middle" fill="#E65100">FTP, v.v.</text></svg>
+</div></section>
+
+<section class="s"><div class="hd"><span class="k">PHẦN 1</span><h1>URL và tên miền</h1></div>
+<div class="bd" style="grid-template-rows:auto 1fr;gap:12px">
+<svg viewBox="0 0 1180 250"><g class="mono" font-size="30" text-anchor="middle" fill="#fff">
+<rect x="40" y="10" width="120" height="64" fill="#0B2545"/><text x="100" y="52">https</text>
+<rect x="160" y="10" width="62" height="64" fill="#607D8B"/><text x="191" y="52">://</text>
+<rect x="222" y="10" width="270" height="64" fill="#00695C"/><text x="357" y="52">www.example.vn</text>
+<rect x="492" y="10" width="100" height="64" fill="#E65100"/><text x="542" y="52">:443</text>
+<rect x="592" y="10" width="270" height="64" fill="#4527A0"/><text x="727" y="52">/hoc/bai1.html</text>
+<rect x="862" y="10" width="150" height="64" fill="#AD1457"/><text x="937" y="52">?lop=12</text>
+<rect x="1012" y="10" width="130" height="64" fill="#C62828"/><text x="1077" y="52">#muc2</text></g>
+<g font-size="22" text-anchor="middle" font-weight="800"><text x="100" y="116" fill="#0B2545">GIAO THỨC</text><text x="357" y="116" fill="#00695C">TÊN MIỀN</text><text x="542" y="116" fill="#E65100">CỔNG</text><text x="727" y="116" fill="#4527A0">ĐƯỜNG DẪN</text><text x="937" y="116" fill="#AD1457">TRUY VẤN</text><text x="1077" y="116" fill="#C62828">MẢNH</text></g>
+<g font-size="20" text-anchor="middle" fill="#0B2545"><text x="100" y="148">http / https</text><text x="357" y="148">→ địa chỉ IP</text><text x="542" y="148">80 / 443</text><text x="727" y="148">tệp trên máy chủ</text><text x="937" y="148">tham số gửi đi</text><text x="1077" y="148">neo trong trang</text></g>
+<path d="M357 76 V90M542 76 V90M727 76 V90M937 76 V90M1077 76 V90M100 76 V90" stroke="#0B2545" stroke-width="3"/>
+<text x="1077" y="182" font-size="20" font-weight="800" text-anchor="middle" fill="#C62828">KHÔNG gửi</text><text x="1077" y="206" font-size="20" font-weight="800" text-anchor="middle" fill="#C62828">lên máy chủ</text></svg>
+<div class="bd g3" style="gap:16px">
+<div class="card"><h3>Giao thức</h3><p><b>http</b>: không mã hoá. <b>https</b>: mã hoá (TLS) nên an toàn khi đăng nhập, thanh toán. Cổng mặc định: http 80, https 443 (thường được ẩn).</p><p style="margin-top:8px"><b>Ví dụ:</b> <code>https://</code> mã hoá, <code>http://</code> thì không.</p></div>
+<div class="card"><h3>Tên miền đọc từ phải sang trái</h3><p><code>.vn</code> miền cấp cao quốc gia → <code>example</code> tên đăng kí → <code>www</code> máy chủ con. Máy tính chỉ dùng <b>IP</b> nên cần <b>DNS</b>.</p><p style="margin-top:8px"><b>Ví dụ:</b> <code>www.example.vn</code> thuộc miền <code>.vn</code>.</p></div>
+<div class="key">Phần sau dấu <b>#</b> chỉ xử lí ở <b>trình duyệt</b> (nhảy tới phần tử có <code>id</code>), <b>không</b> gửi lên máy chủ.<p style="margin-top:8px"><b>Ví dụ:</b> máy chủ nhận <code>/hoc/bai1.html?lop=12</code>, còn <code>#muc2</code> ở lại trình duyệt.</p></div>
+</div></div></section>
+
+<section class="s"><div class="hd"><span class="k">PHẦN 1</span><h1>Trình duyệt tải trang như thế nào?</h1></div>
+<div class="bd g12">
+<div class="col"><ol style="gap:7px">
+<li>Người dùng nhập <b>URL</b> hoặc nháy liên kết.</li>
+<li>Trình duyệt hỏi <b>DNS</b> để lấy địa chỉ IP.</li>
+<li>Thiết lập kết nối tới máy chủ (https: thêm bước mã hoá).</li>
+<li>Gửi <b>yêu cầu HTTP</b>: <code>GET /hoc/bai1.html</code>.</li>
+<li>Máy chủ gửi <b>phản hồi</b>: mã trạng thái + tệp HTML.</li>
+<li>Phân tích HTML, dựng cây; gặp CSS, ảnh, script thì <b>gửi thêm yêu cầu</b>.</li>
+<li>Áp CSS, chạy script, <b>vẽ trang</b> lên màn hình.</li></ol>
+<div class="lab">Một số mã trạng thái HTTP</div><table><tr><th>Mã</th><th>Ý nghĩa</th></tr><tr><td class="m">200</td><td>OK – thành công</td></tr><tr><td class="m">301</td><td>Chuyển hướng vĩnh viễn</td></tr><tr><td class="m">404</td><td>Không tìm thấy tài nguyên</td></tr><tr><td class="m">500</td><td>Lỗi bên trong máy chủ</td></tr></table></div>
+<div class="col"><svg viewBox="0 0 560 330"><defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0B2545"/></marker></defs>
+<rect x="10" y="110" width="170" height="110" rx="12" fill="#0B2545"/><text x="95" y="158" font-size="22" font-weight="800" fill="#fff" text-anchor="middle">TRÌNH DUYỆT</text><text x="95" y="190" font-size="20" fill="#F2A900" text-anchor="middle">(client)</text>
+<rect x="380" y="10" width="170" height="90" rx="12" fill="#00695C"/><text x="465" y="52" font-size="22" font-weight="800" fill="#fff" text-anchor="middle">MÁY CHỦ DNS</text><text x="465" y="80" font-size="20" fill="#FFE082" text-anchor="middle">tên miền → IP</text>
+<rect x="380" y="230" width="170" height="90" rx="12" fill="#4527A0"/><text x="465" y="272" font-size="22" font-weight="800" fill="#fff" text-anchor="middle">MÁY CHỦ WEB</text><text x="465" y="300" font-size="20" fill="#FFE082" text-anchor="middle">lưu website</text>
+<path d="M180 135 L378 70" stroke="#0B2545" stroke-width="4" marker-end="url(#ar)"/><circle cx="265" cy="82" r="18" fill="#F2A900"/><text x="265" y="89" font-size="22" font-weight="800" text-anchor="middle">2</text>
+<path d="M180 195 L378 262" stroke="#0B2545" stroke-width="4" marker-end="url(#ar)"/><circle cx="262" cy="222" r="18" fill="#F2A900"/><text x="262" y="229" font-size="22" font-weight="800" text-anchor="middle">4</text>
+<path d="M378 290 L180 215" stroke="#C62828" stroke-width="4" stroke-dasharray="8 6" marker-end="url(#ar)"/><circle cx="330" cy="266" r="18" fill="#C62828"/><text x="330" y="273" font-size="22" font-weight="800" text-anchor="middle" fill="#fff">5</text></svg>
+<div class="warn">Một trang cần <b>nhiều</b> yêu cầu, không phải một.</div></div>
+</div></section>
+
+<section class="s"><div class="hd"><span class="k">PHẦN 1</span><h1>Trang web tĩnh và trang web động</h1></div>
+<div class="bd g2">
+<div class="col"><table><tr><th></th><th>Tĩnh</th><th>Động</th></tr>
+<tr><td><b>Nội dung</b></td><td>Có sẵn trong tệp HTML</td><td>Sinh ra khi có yêu cầu</td></tr>
+<tr><td><b>Người xem</b></td><td>Ai cũng thấy như nhau</td><td>Có thể khác nhau</td></tr>
+<tr><td><b>Cần CSDL</b></td><td>Không</td><td>Thường có</td></tr>
+<tr><td><b>Cập nhật</b></td><td>Sửa tệp thủ công</td><td>Qua giao diện quản trị</td></tr>
+<tr><td><b>Ví dụ</b></td><td>Trang giới thiệu lớp</td><td>Cổng điểm, giỏ hàng, diễn đàn</td></tr></table>
+<div class="key">“Tĩnh” nói về <b>nguồn nội dung</b>, không phải chuyển động. Trang tĩnh vẫn có thể có hiệu ứng JavaScript.</div></div>
+<svg viewBox="0 0 540 440"><g font-size="21" text-anchor="middle" font-weight="800"><text x="270" y="28" fill="#0B2545">TRANG TĨNH</text>
+<rect x="10" y="44" width="150" height="70" rx="10" fill="#0B2545"/><text x="85" y="86" fill="#fff">Trình duyệt</text>
+<rect x="190" y="44" width="150" height="70" rx="10" fill="#4527A0"/><text x="265" y="86" fill="#fff">Máy chủ</text>
+<rect x="370" y="44" width="160" height="70" rx="10" fill="#FFB300"/><text x="450" y="86" fill="#0B2545">Tệp .html</text>
+<path d="M160 79 H188M340 79 H368" stroke="#0B2545" stroke-width="4"/>
+<text x="270" y="190" fill="#C62828">TRANG ĐỘNG</text>
+<rect x="10" y="206" width="150" height="70" rx="10" fill="#0B2545"/><text x="85" y="248" fill="#fff">Trình duyệt</text>
+<rect x="180" y="206" width="170" height="70" rx="10" fill="#4527A0"/><text x="265" y="236" fill="#fff">Máy chủ</text><text x="265" y="262" fill="#FFE082" font-size="20">chạy mã</text>
+<rect x="370" y="206" width="160" height="70" rx="10" fill="#00695C"/><text x="450" y="248" fill="#fff">CSDL</text>
+<path d="M160 241 H188M340 241 H368" stroke="#0B2545" stroke-width="4"/>
+<rect x="190" y="306" width="150" height="62" rx="10" fill="#FFB300"/><text x="265" y="345" fill="#0B2545">HTML mới</text><path d="M265 276 V304" stroke="#C62828" stroke-width="4"/>
+<text x="265" y="410" fill="#0B2545" font-size="20">Phía máy chủ: PHP, Python, Node.js…</text></g></svg>
+</div></section>
+<section class="s p2"><div class="hd"><span class="k">PHẦN 2</span><h1>HTML: phần tử, thẻ, thuộc tính</h1></div>
+<div class="bd" style="grid-template-rows:auto 1fr;gap:10px">
+<svg viewBox="0 0 1180 250"><text x="60" y="64" font-size="52" class="mono" xml:space="preserve"><tspan fill="#00695C">&lt;a </tspan><tspan fill="#AD1457">href="bai2.html"</tspan><tspan fill="#00695C">&gt;</tspan><tspan fill="#0B2545">Bài 2</tspan><tspan fill="#00695C">&lt;/a&gt;</tspan></text>
+<path d="M60 84 H684" stroke="#00695C" stroke-width="5"/><text x="372" y="116" font-size="22" text-anchor="middle" font-weight="800" fill="#00695C">THẺ MỞ</text>
+<path d="M154 132 H653" stroke="#AD1457" stroke-width="5"/><text x="404" y="164" font-size="22" text-anchor="middle" font-weight="800" fill="#AD1457">THUỘC TÍNH  tên="giá trị"</text>
+<path d="M690 84 H836" stroke="#0B2545" stroke-width="5"/><text x="763" y="116" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">NỘI DUNG</text>
+<path d="M846 84 H965" stroke="#00695C" stroke-width="5"/><text x="905" y="116" font-size="22" text-anchor="middle" font-weight="800" fill="#00695C">THẺ ĐÓNG</text>
+<path d="M60 186 H965" stroke="#C62828" stroke-width="6"/><text x="512" y="222" font-size="26" text-anchor="middle" font-weight="800" fill="#C62828">PHẦN TỬ = thẻ mở + nội dung + thẻ đóng</text></svg>
+<div class="bd g3" style="gap:16px">
+<div class="card"><h3>HTML là gì?</h3><p>Ngôn ngữ <b>đánh dấu</b> siêu văn bản: dùng thẻ mô tả cấu trúc, ý nghĩa nội dung. <b>Không phải</b> ngôn ngữ lập trình (không biến, vòng lặp, rẽ nhánh).</p></div>
+<div class="card"><h3>Thẻ rỗng</h3><p>Không có nội dung, không thẻ đóng: <code>br</code> <code>hr</code> <code>img</code> <code>meta</code> <code>link</code> <code>input</code>. Phần tử chỉ có thẻ mở.</p></div>
+<div class="card"><h3>Quy tắc cú pháp</h3><ul style="gap:2px"><li>Giá trị thuộc tính trong <b>“ ”</b></li><li>Chú thích: <code>&lt;!-- … --&gt;</code></li><li>Lồng thẻ: <b>mở sau, đóng trước</b></li></ul></div>
+</div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PHẦN 2</span><h1>Cấu trúc tài liệu HTML5 tối thiểu</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code"><span style="color:#FFD54F">&lt;!DOCTYPE html&gt;</span>
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Lớp 12A1&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Chào mừng&lt;/h1&gt;
+  &lt;p&gt;Đây là trang đầu tiên.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<div class="card"><h3>head và body</h3><ul style="gap:2px"><li><b>head</b>: thông tin về trang (title, meta, link, style, script).</li><li><b>body</b>: nội dung hiển thị trong cửa sổ.</li></ul></div></div>
+<div class="col"><div class="lab">Kết quả trên trình duyệt</div>
+<div class="bwin"><div class="tab"><span>Lớp 12A1</span></div><div class="url">file:///trang.html</div><div class="page"><div style="font-size:36px;font-weight:700;font-family:Georgia,serif;margin:6px 0">Chào mừng</div><div style="font-size:23px;font-family:Georgia,serif">Đây là trang đầu tiên.</div></div></div>
+<div class="key"><code>title</code> hiện trên <b>thẻ tab</b>, không hiện trong vùng nội dung. Chỉ nội dung <b>body</b> được hiển thị.</div>
+<div class="warn">Thiếu <code>meta charset="UTF-8"</code> có thể hiện chữ lỗi: “Tin h?c”. <code>DOCTYPE</code> không phải thẻ HTML mà là khai báo dùng HTML5.</div></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PHẦN 2</span><h1>Cây phần tử HTML (DOM)</h1></div>
+<div class="bd" style="grid-template-columns:1.5fr 1fr;align-items:center">
+<svg viewBox="0 0 840 540"><g stroke="#0B2545" stroke-width="4" fill="none"><path d="M420 74 V110 H150 V150 M420 110 H547 V150"/><path d="M150 206 V236 H80 V270 M150 236 H220 V270"/><path d="M547 206 V236 H400 V270 M547 236 V270 M547 236 H700 V270"/><path d="M700 326 V356 H640 V390 M700 356 H760 V390"/></g>
+<g font-size="30" class="mono" text-anchor="middle" font-weight="700">
+<rect x="350" y="20" width="140" height="54" rx="10" fill="#C62828"/><text x="420" y="58" fill="#fff">html</text>
+<rect x="80" y="150" width="140" height="56" rx="10" fill="#00695C"/><text x="150" y="189" fill="#fff">head</text>
+<rect x="477" y="150" width="140" height="56" rx="10" fill="#00695C"/><text x="547" y="189" fill="#fff">body</text>
+<rect x="10" y="270" width="140" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="80" y="309" fill="#0B2545">title</text>
+<rect x="150" y="270" width="140" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="220" y="309" fill="#0B2545">meta</text>
+<rect x="340" y="270" width="120" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="400" y="309" fill="#0B2545">h1</text>
+<rect x="487" y="270" width="120" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="547" y="309" fill="#0B2545">p</text>
+<rect x="640" y="270" width="120" height="56" rx="10" fill="#4527A0"/><text x="700" y="309" fill="#fff">ul</text>
+<rect x="580" y="390" width="120" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="640" y="429" fill="#0B2545">li</text>
+<rect x="710" y="390" width="120" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="770" y="429" fill="#0B2545">li</text></g>
+<text x="420" y="500" font-size="26" text-anchor="middle" fill="#00695C" font-weight="800">Gốc của cây là phần tử html</text></svg>
+<div class="col"><div class="card"><h3>Quan hệ</h3><ul style="gap:4px"><li><b>Cha</b>: chứa trực tiếp. <b>Con</b>: nằm ngay bên trong.</li><li><b>Anh em</b>: cùng cha (h1, p, ul).</li><li><b>Con cháu</b>: mọi phần tử bên trong, <b>mọi cấp</b>.</li></ul></div>
+<div class="ok"><p><b>Đếm với body</b> (h1, p, ul có 2 li):<br>Con trực tiếp = <b>3</b> (h1, p, ul)<br>Con cháu = 3 + 2 li = <b>5</b></p></div>
+<div class="key">Cây này là nền của bộ chọn CSS “con cháu”, “con trực tiếp” và JavaScript.</div></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PHẦN 2</span><h1>Thẻ định dạng văn bản</h1></div>
+<div class="bd g2">
+<div class="col"><table><tr><th>Thẻ</th><th>Vai trò</th></tr>
+<tr><td class="m">h1…h6</td><td>Tiêu đề, h1 lớn nhất (mỗi trang một h1)</td></tr>
+<tr><td class="m">p</td><td>Đoạn văn, tự xuống dòng</td></tr>
+<tr><td class="m">br</td><td>Xuống dòng (thẻ rỗng)</td></tr>
+<tr><td class="m">hr</td><td>Đường kẻ ngang</td></tr>
+<tr><td class="m">strong / em</td><td>Quan trọng / nhấn giọng (<b>ngữ nghĩa</b>)</td></tr>
+<tr><td class="m">b / i</td><td>Chỉ đổi kiểu chữ (<b>hình thức</b>)</td></tr>
+<tr><td class="m">sub / sup</td><td>Chỉ số dưới / chỉ số trên</td></tr>
+<tr><td class="m">mark, small</td><td>Tô nổi, chữ nhỏ</td></tr>
+<tr><td class="m">pre, code</td><td>Giữ nguyên xuống dòng, mã nguồn</td></tr></table></div>
+<div class="col"><pre class="code">&lt;h2&gt;Hoá học&lt;/h2&gt;
+&lt;p&gt;H&lt;sub&gt;2&lt;/sub&gt;O và x&lt;sup&gt;2&lt;/sup&gt;&lt;br&gt;
+&lt;strong&gt;Quan trọng&lt;/strong&gt;, &lt;em&gt;nhấn&lt;/em&gt;&lt;/p&gt;
+&lt;pre&gt;a   b
+c&lt;/pre&gt;</pre>
+<div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:22px"><div style="font-size:32px;font-weight:700;margin:2px 0">Hoá học</div><div>H<sub>2</sub>O và x<sup>2</sup><br><strong>Quan trọng</strong>, <em>nhấn</em></div><pre style="font-size:20px;margin:6px 0 0">a   b
+c</pre></div></div>
+<div class="key"><code>pre</code> giữ nguyên dấu cách và xuống dòng; <code>p</code> thì <b>không</b>.</div></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PHẦN 2</span><h1>Khoảng trắng và ký tự đặc biệt</h1></div>
+<div class="bd g2">
+<div class="col"><div class="card"><h3>Khoảng trắng bị gộp</h3><p>Nhiều dấu cách, tab, xuống dòng liên tiếp trong mã chỉ hiển thị thành <b>MỘT dấu cách</b>. Muốn xuống dòng dùng <code>br</code> hoặc <code>p</code>.</p></div>
+<pre class="code">&lt;p&gt;Tin     học
+     12&lt;/p&gt;</pre><div class="res"><span class="lab">Kết quả hiển thị</span><p style="font-family:Georgia,serif">Tin học 12</p></div>
+<div class="warn">Viết <code>5 &lt; 7</code> trực tiếp có thể bị hiểu là bắt đầu thẻ. Phải dùng thực thể.</div></div>
+<div class="col"><table><tr><th>Viết</th><th>Hiển thị</th><th>Ý nghĩa</th></tr>
+<tr><td class="m">&amp;lt;</td><td class="m">&lt;</td><td>dấu nhỏ hơn</td></tr>
+<tr><td class="m">&amp;gt;</td><td class="m">&gt;</td><td>dấu lớn hơn</td></tr>
+<tr><td class="m">&amp;amp;</td><td class="m">&amp;</td><td>dấu và</td></tr>
+<tr><td class="m">&amp;nbsp;</td><td class="m">␣</td><td>dấu cách cứng (không gộp, không ngắt dòng)</td></tr>
+<tr><td class="m">&amp;copy;</td><td class="m">©</td><td>bản quyền</td></tr>
+<tr><td class="m">&amp;quot;</td><td class="m">"</td><td>nháy kép</td></tr></table>
+<div class="key">Dạng tổng quát: <b>&amp;tên;</b> hoặc <b>&amp;#số;</b>. Muốn hiển thị <code>5 &lt; 7</code> và <code>A &amp; B</code> viết: <code>5 &amp;lt; 7</code>, <code>A &amp;amp; B</code>.</div></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PHẦN 2</span><h1>Phần tử khối và phần tử dòng</h1></div>
+<div class="bd g2">
+<div class="col"><div class="card"><h3>Khối (block)</h3><p>Luôn <b>bắt đầu dòng mới</b>, chiếm hết chiều rộng, chứa được phần tử khác.<br><code>div p h1–h6 ul ol li table form header nav main section footer</code></p></div>
+<div class="card"><h3>Dòng (inline)</h3><p>Nằm <b>trong dòng chữ</b>, rộng bằng nội dung, không tự xuống dòng.<br><code>span a strong em img code input</code></p></div>
+<div class="key"><code>div</code> (khối) và <code>span</code> (dòng) là hai thẻ <b>vạn năng, không mang ý nghĩa</b>, dùng để nhóm cho CSS/JS. Phần tử dòng không nên chứa phần tử khối.</div></div>
+<div class="col"><pre class="code">&lt;span&gt;A&lt;/span&gt;&lt;span&gt;B&lt;/span&gt;
+&lt;div&gt;C&lt;/div&gt;
+&lt;div&gt;D&lt;/div&gt;
+&lt;p&gt;E&lt;/p&gt;&lt;p&gt;F&lt;/p&gt;</pre>
+<div class="res"><span class="lab">Kết quả (khung đỏ = vùng phần tử)</span>
+<div style="font-size:26px;font-family:Georgia,serif"><span style="outline:3px solid #C62828;padding:2px 10px">A</span><span style="outline:3px solid #C62828;padding:2px 10px;margin-left:6px">B</span>
+<div style="outline:3px solid #1565C0;margin:8px 0;padding:2px 10px">C</div><div style="outline:3px solid #1565C0;margin:8px 0;padding:2px 10px">D</div>
+<p style="outline:3px solid #2E7D32;margin:8px 0;padding:2px 10px">E</p><p style="outline:3px solid #2E7D32;margin:8px 0;padding:2px 10px">F</p></div></div>
+<div class="ok"><p><b>A B</b> cùng một dòng (span); <b>C, D, E, F</b> mỗi chữ một dòng riêng, trải hết chiều rộng.</p></div></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PHẦN 2</span><h1>Thẻ ngữ nghĩa HTML5 và bố cục trang</h1></div>
+<div class="bd g2">
+<svg viewBox="0 0 520 470"><g font-size="22" font-weight="800" text-anchor="middle" fill="#fff">
+<rect x="8" y="8" width="504" height="64" rx="8" fill="#00695C"/><text x="260" y="48">&lt;header&gt; logo, tiêu đề</text>
+<rect x="8" y="82" width="504" height="52" rx="8" fill="#4527A0"/><text x="260" y="116">&lt;nav&gt; menu: ul &gt; li &gt; a</text>
+<rect x="8" y="144" width="340" height="248" rx="8" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="178" y="174" fill="#0B2545">&lt;main&gt; nội dung chính</text>
+<rect x="24" y="190" width="308" height="82" rx="8" fill="#fff" stroke="#0B2545" stroke-width="2"/><text x="178" y="238" fill="#0B2545" font-size="21">&lt;section&gt; nhóm cùng chủ đề</text>
+<rect x="24" y="286" width="308" height="86" rx="8" fill="#fff" stroke="#0B2545" stroke-width="2"/><text x="178" y="336" fill="#0B2545" font-size="21">&lt;article&gt; bài viết độc lập</text>
+<rect x="358" y="144" width="154" height="248" rx="8" fill="#AD1457"/><text x="435" y="260">&lt;aside&gt;</text><text x="435" y="292" font-size="20">nội dung</text><text x="435" y="318" font-size="20">bên lề</text>
+<rect x="8" y="402" width="504" height="60" rx="8" fill="#0B2545"/><text x="260" y="440">&lt;footer&gt; bản quyền, liên hệ</text></g></svg>
+<div class="col"><table><tr><th>Thẻ</th><th>Vai trò</th></tr>
+<tr><td class="m">header</td><td>Đầu trang hoặc đầu mục</td></tr>
+<tr><td class="m">nav</td><td>Thanh điều hướng, các liên kết chính</td></tr>
+<tr><td class="m">main</td><td>Nội dung chính (<b>mỗi trang một</b>)</td></tr>
+<tr><td class="m">section</td><td>Nhóm nội dung cùng chủ đề, có tiêu đề</td></tr>
+<tr><td class="m">article</td><td>Bài viết có thể đứng độc lập</td></tr>
+<tr><td class="m">aside</td><td>Nội dung bên lề, quảng cáo</td></tr>
+<tr><td class="m">footer</td><td>Chân trang</td></tr></table>
+<div class="key">Thẻ ngữ nghĩa cho biết <b>vai trò</b> vùng nội dung: tốt cho tìm kiếm, người khiếm thị. <code>div</code>, <code>span</code> thì <b>không có</b> ngữ nghĩa.</div></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PHẦN 1–2</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px">
+<div class="q"><div class="n">1</div><p>Trong URL <code>https://tin.example.vn/lop12/web.html?bai=3#vd</code>, chỉ ra giao thức, tên miền, đường dẫn, truy vấn, mảnh.</p></div>
+<div class="q"><div class="n">2</div><p>Phần nào của URL <b>không</b> được gửi lên máy chủ?</p></div>
+<div class="q"><div class="n">3</div><p>body gồm: <code>h1</code>, <code>p</code>, <code>ul</code> (3 thẻ <code>li</code>), <code>p</code>. Body có bao nhiêu <b>con trực tiếp</b> và bao nhiêu <b>con cháu</b>?</p></div>
+<div class="q"><div class="n">4</div><p>Đúng hay sai: <code>&lt;p&gt;Chào &lt;b&gt;các &lt;i&gt;bạn&lt;/b&gt;&lt;/i&gt;&lt;/p&gt;</code>? Sửa lại cho đúng.</p></div>
+<div class="q"><div class="n">5</div><p>Muốn trang hiển thị đúng chuỗi <code>5 &lt; 7</code> và <code>A &amp; B</code>, phải viết mã HTML thế nào?</p></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PHẦN 1–2</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px">
+<div class="q a"><div class="n">1</div><p>Giao thức <b>https</b>; tên miền <b>tin.example.vn</b>; đường dẫn <b>/lop12/web.html</b>; truy vấn <b>bai=3</b>; mảnh <b>#vd</b>.</p></div>
+<div class="q a"><div class="n">2</div><p>Phần <b>mảnh (#vd)</b>: chỉ trình duyệt xử lí để nhảy tới phần tử có id.</p></div>
+<div class="q a"><div class="n">3</div><p>Con trực tiếp = <b>4</b> (h1, p, ul, p). Con cháu = 4 + 3 li = <b>7</b>.</p></div>
+<div class="q a"><div class="n">4</div><p><b>Sai</b>: thẻ mở sau (<code>i</code>) phải đóng trước. Đúng: <code>&lt;p&gt;Chào &lt;b&gt;các &lt;i&gt;bạn&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</code></p></div>
+<div class="q a"><div class="n">5</div><p>Viết <code>5 &amp;lt; 7</code> và <code>A &amp;amp; B</code>. Viết trực tiếp dấu <code>&lt;</code> trình duyệt có thể hiểu là mở thẻ.</p></div>
+</div></section>
+<section class="s p3"><div class="hd"><span class="k">PHẦN 3</span><h1>Siêu liên kết &lt;a&gt;</h1></div>
+<div class="bd g2">
+<div class="col"><table><tr><th>Đích</th><th>Cách viết href</th></tr>
+<tr><td>Trang khác cùng website</td><td class="m">"bai2.html"</td></tr>
+<tr><td>Website khác</td><td class="m">"https://www.example.com"</td></tr>
+<tr><td>Vị trí trong <b>cùng</b> trang</td><td class="m">"#muc2"</td></tr>
+<tr><td>Vị trí trong trang khác</td><td class="m">"bai2.html#muc2"</td></tr>
+<tr><td>Thư điện tử</td><td class="m">"mailto:a@b.vn"</td></tr>
+<tr><td>Số điện thoại</td><td class="m">"tel:0912345678"</td></tr></table>
+<div class="card"><h3>Thuộc tính khác</h3><ul style="gap:2px"><li><code>target="_blank"</code>: mở tab mới</li><li><code>title</code>: chú thích khi rê chuột</li></ul></div></div>
+<div class="col"><pre class="code">&lt;a href="bai2.html"&gt;Bài 2&lt;/a&gt;
+&lt;a href="#muc3"&gt;Nhảy tới mục 3&lt;/a&gt;
+...
+&lt;h2 id="muc3"&gt;Mục 3&lt;/h2&gt;</pre>
+<div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:23px"><a href="#" style="color:#1565C0">Bài 2</a><br><a href="#" style="color:#1565C0">Nhảy tới mục 3</a><br>…<div style="font-size:30px;font-weight:700">Mục 3 ← nhấn là nhảy xuống đây</div></div></div>
+<div class="key">Đích của neo là thuộc tính <b>id</b> (duy nhất trong trang), <b>không</b> phải <code>name</code>. Quên dấu <b>#</b> thì trình duyệt hiểu là tên tệp.</div></div>
+</div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PHẦN 3</span><h1>Đường dẫn tuyệt đối và tương đối</h1></div>
+<div class="bd g2">
+<div class="col"><div class="lab">Cây thư mục của website</div>
+<pre class="code">web/
+├─ index.html
+├─ anh/
+│   └─ logo.png
+└─ bai/
+    ├─ bai1.html
+    └─ bai2.html</pre>
+<table><tr><th>Ký hiệu</th><th>Nghĩa</th></tr><tr><td class="m">tep.html hoặc ./</td><td>cùng thư mục</td></tr><tr><td class="m">thumuc/tep</td><td>đi xuống thư mục con</td></tr><tr><td class="m">../</td><td>lên <b>một</b> cấp (thư mục cha)</td></tr><tr><td class="m">/</td><td>từ gốc website</td></tr></table></div>
+<div class="col"><table><tr><th>Đang ở tệp</th><th>Muốn tới</th><th>Viết</th></tr>
+<tr><td class="m">index.html</td><td class="m">logo.png</td><td class="m">anh/logo.png</td></tr>
+<tr><td class="m">bai/bai1.html</td><td class="m">logo.png</td><td class="m">../anh/logo.png</td></tr>
+<tr><td class="m">bai/bai1.html</td><td class="m">bai2.html</td><td class="m">bai2.html</td></tr>
+<tr><td class="m">bai/bai1.html</td><td class="m">index.html</td><td class="m">../index.html</td></tr></table>
+<div class="ok"><p><b>Tuyệt đối</b>: có giao thức và tên miền (<code>https://…</code>), dùng cho website khác. <b>Tương đối</b>: so với tệp đang viết, dùng trong cùng website, dễ di chuyển.</p></div>
+<div class="warn">Không dùng <code>C:\anh\a.png</code> (chỉ chạy trên máy bạn). Dùng <code>/</code>, không dùng <code>\</code>. Tên tệp phân biệt hoa/thường: <code>Logo.png</code> ≠ <code>logo.png</code>.</div></div>
+</div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PHẦN 3</span><h1>Ảnh với &lt;img&gt;</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code">&lt;figure&gt;
+  &lt;img src="anh/logo.png"
+       alt="Logo trường" width="200"&gt;
+  &lt;figcaption&gt;Hình 1. Logo&lt;/figcaption&gt;
+&lt;/figure&gt;</pre>
+<div class="res"><span class="lab">Kết quả hiển thị</span><div style="display:flex;gap:14px;align-items:center"><svg viewBox="0 0 120 90" style="width:150px"><rect width="120" height="90" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><circle cx="60" cy="40" r="22" fill="#0B2545"/><text x="60" y="48" text-anchor="middle" font-size="20" fill="#fff" font-weight="800">12A1</text></svg><i style="font-family:Georgia,serif;font-size:21px">Hình 1. Logo</i></div></div>
+<div class="card"><h3>Thuộc tính</h3><ul style="gap:2px"><li><b>src</b>: đường dẫn ảnh. <b>alt</b>: văn bản thay thế khi ảnh lỗi, cho người khiếm thị.</li><li><b>width, height</b>: kích thước (chỉ đặt một thì giữ tỉ lệ).</li></ul></div></div>
+<div class="col"><table><tr><th>Định dạng</th><th>Đặc điểm</th></tr>
+<tr><td class="m">JPEG</td><td>Ảnh chụp, nén mất mát, nhỏ</td></tr>
+<tr><td class="m">PNG</td><td>Không mất mát, <b>nền trong suốt</b></td></tr>
+<tr><td class="m">GIF</td><td>Ảnh <b>động</b>, ít màu</td></tr>
+<tr><td class="m">SVG</td><td>Vector, phóng to không vỡ</td></tr>
+<tr><td class="m">WebP</td><td>Hiện đại, rất nhỏ gọn</td></tr></table>
+<div class="key"><code>img</code> là thẻ <b>rỗng</b> và phần tử <b>dòng</b>.</div>
+<div class="warn">Sai <code>src</code> hoặc viết nhầm <code>scr</code> → ảnh không hiện, chỉ hiện chữ <b>alt</b>.</div></div>
+</div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PHẦN 3</span><h1>Âm thanh, video: audio, video, source</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code">&lt;video controls width="480"
+       poster="bia.jpg"&gt;
+  &lt;source src="bai.mp4"
+          type="video/mp4"&gt;
+  &lt;source src="bai.webm"
+          type="video/webm"&gt;
+  Trình duyệt không hỗ trợ.
+&lt;/video&gt;
+&lt;audio controls src="nhac.mp3"&gt;&lt;/audio&gt;</pre>
+<div class="res"><span class="lab">Kết quả hiển thị</span><div style="display:flex;gap:12px;align-items:center"><svg viewBox="0 0 240 150" style="width:200px"><rect width="240" height="150" fill="#263238"/><polygon points="95,45 95,105 150,75" fill="#fff"/><rect y="128" width="240" height="22" fill="#455A64"/><circle cx="20" cy="139" r="7" fill="#fff"/></svg><div style="background:#ECEFF1;border-radius:20px;padding:8px 16px;font-family:Arial;font-size:21px">▶ ─────○ 0:00</div></div></div></div>
+<div class="col"><table><tr><th>Thuộc tính</th><th>Tác dụng</th></tr>
+<tr><td class="m">controls</td><td>Hiện thanh điều khiển</td></tr>
+<tr><td class="m">autoplay</td><td>Tự phát (thường cần <code>muted</code>)</td></tr>
+<tr><td class="m">loop, muted</td><td>Lặp lại, tắt tiếng</td></tr>
+<tr><td class="m">poster</td><td>Ảnh bìa — <b>chỉ video</b></td></tr>
+<tr><td class="m">source type</td><td>Nhiều định dạng, chọn cái đầu tiên chạy được</td></tr></table>
+<div class="key"><code>source</code> là thẻ rỗng, đặt <b>bên trong</b> audio/video. Chữ giữa thẻ chỉ hiện khi trình duyệt <b>không hỗ trợ</b>.</div>
+<div class="warn">Thiếu <code>controls</code> → không bật được. <code>audio</code> <b>không có</b> poster.</div></div>
+</div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PHẦN 3</span><h1>Khung nội tuyến iframe và so sánh</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code">&lt;iframe src="https://www.example.com"
+        width="600" height="400"
+        title="Trang ví dụ"&gt;&lt;/iframe&gt;</pre>
+<div class="bwin"><div class="tab"><span>Trang của em</span></div><div class="page"><p style="font-family:Georgia,serif">Nội dung trang em…</p><div style="border:3px dashed #4527A0;border-radius:8px;padding:10px;margin-top:8px"><div class="lab" style="color:#4527A0">iframe: trang khác ở trong khung</div><p style="font-family:Georgia,serif">example.com hiển thị ngay đây</p></div></div></div>
+<div class="warn">Một số trang <b>cấm bị nhúng</b> nên khung trống. Nhúng YouTube phải dùng <b>mã nhúng (embed)</b>.</div></div>
+<div class="col"><table><tr><th>Thẻ</th><th>Làm gì</th></tr>
+<tr><td class="m">a</td><td>Chuyển <b>sang</b> trang mới khi nháy</td></tr>
+<tr><td class="m">img</td><td>Hiển thị ảnh tĩnh</td></tr>
+<tr><td class="m">audio/video</td><td>Phát tệp phương tiện do chính trang cung cấp</td></tr>
+<tr><td class="m">iframe</td><td>Hiển thị <b>trang khác ngay trong</b> trang này</td></tr></table>
+<div class="key">iframe nhúng <b>một trang web</b> vào khung; <code>src</code> là địa chỉ trang, <code>width</code>/<code>height</code> là kích thước khung.</div></div>
+</div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PHẦN 3</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:9px">
+<div class="q" style="padding:6px 16px"><div class="n">★</div><p>Cây thư mục: <code>web/index.html</code>, <code>web/anh/a.png</code>, <code>web/bai/b1.html</code>, <code>web/bai/b2.html</code>, <code>web/bai/tl/c.html</code></p></div>
+<div class="q" style="padding:6px 16px"><div class="n">1</div><p>Trong <code>b1.html</code>, viết đường dẫn tương đối tới <code>a.png</code>.</p></div>
+<div class="q" style="padding:6px 16px"><div class="n">2</div><p>Trong <code>c.html</code>, viết đường dẫn tới <code>b2.html</code> và tới <code>index.html</code>.</p></div>
+<div class="q" style="padding:6px 16px"><div class="n">3</div><p>Nháy chữ “Về đầu trang” để nhảy lên phần tử <code>id="top"</code> cùng trang: viết thế nào?</p></div>
+<div class="q" style="padding:6px 16px"><div class="n">4</div><p>Viết thẻ video có điều khiển, rộng 320, ảnh bìa <code>p.jpg</code>, nguồn <code>v.mp4</code>.</p></div>
+<div class="q" style="padding:6px 16px"><div class="n">5</div><p>Thẻ nào mở một trang web khác ngay trong khung của trang hiện tại?</p></div>
+</div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PHẦN 3</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:9px">
+<div class="q a" style="padding:6px 16px"><div class="n">1</div><p><code>../anh/a.png</code> — b1.html ở <code>bai/</code>, lên một cấp là <code>web/</code>, rồi vào <code>anh/</code>.</p></div>
+<div class="q a" style="padding:6px 16px"><div class="n">2</div><p>c.html ở <code>bai/tl/</code>: tới b2.html lên <b>một</b> cấp: <code>../b2.html</code>; tới index.html lên <b>hai</b> cấp: <code>../../index.html</code>.</p></div>
+<div class="q a" style="padding:6px 16px"><div class="n">3</div><p><code>&lt;a href="#top"&gt;Về đầu trang&lt;/a&gt;</code>, phần tử đích có <code>id="top"</code>.</p></div>
+<div class="q a" style="padding:6px 16px"><div class="n">4</div><p><code>&lt;video controls width="320" poster="p.jpg"&gt;&lt;source src="v.mp4" type="video/mp4"&gt;&lt;/video&gt;</code></p></div>
+<div class="q a" style="padding:6px 16px"><div class="n">5</div><p><b>iframe</b>.</p></div>
+</div></section>
+<section class="s p4"><div class="hd"><span class="k">PHẦN 4</span><h1>Đúng / sai kiểu đề thi</h1></div>
+<div class="bd g2" style="gap:10px 20px;align-content:start">
+<div class="col" style="gap:8px">
+<div class="tf"><span class="bg sa">SAI</span><p><b>(a)</b> HTML là ngôn ngữ lập trình. — Là ngôn ngữ đánh dấu, không có cấu trúc điều khiển.</p></div>
+<div class="tf"><span class="bg d">ĐÚNG</span><p><b>(b)</b> Gốc của cây phần tử HTML là phần tử <code>html</code>.</p></div>
+<div class="tf"><span class="bg sa">SAI</span><p><b>(c)</b> Mọi phần tử HTML đều có thẻ đóng. — Thẻ rỗng (<code>br</code>, <code>img</code>, <code>hr</code>) không có.</p></div>
+<div class="tf"><span class="bg sa">SAI</span><p><b>(d)</b> Hai trình duyệt luôn hiển thị một tệp HTML giống hệt nhau. — Có thể khác.</p></div></div>
+<div class="col" style="gap:8px">
+<div class="tf"><span class="bg sa">SAI</span><p><b>(e)</b> Nội dung thẻ <code>title</code> hiện trong vùng body. — Hiện trên thẻ tab.</p></div>
+<div class="tf"><span class="bg sa">SAI</span><p><b>(f)</b> Phần sau dấu # của URL được gửi lên máy chủ. — Chỉ xử lí ở trình duyệt.</p></div>
+<div class="tf"><span class="bg d">ĐÚNG</span><p><b>(g)</b> <code>iframe</code> nhúng được một trang web khác vào khung.</p></div>
+<div class="tf"><span class="bg sa">SAI</span><p><b>(h)</b> <code>alt</code> của <code>img</code> chỉ để trang trí. — Dùng cho trợ năng và khi ảnh lỗi.</p></div></div>
+<div class="key" style="grid-column:1/-1">Gặp các từ tuyệt đối <b>“luôn”, “mọi”, “chỉ”</b> trong phát biểu → nghi ngờ <b>SAI</b>, tìm ngoại lệ (thẻ rỗng, title, phần mảnh của URL).</div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PHẦN 4</span><h1>Dạng khó: tìm lỗi trong mã HTML</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:20px">&lt;html&gt;&lt;body&gt;
+&lt;h1&gt;Tin học<mark style="background:#EF5350;color:#fff">&lt;h1&gt;</mark>
+&lt;p&gt;Xin chào &lt;b&gt;các &lt;i&gt;bạn<mark style="background:#EF5350;color:#fff">&lt;/b&gt;&lt;/i&gt;</mark>&lt;/p&gt;
+&lt;img <mark style="background:#EF5350;color:#fff">scr</mark>="a.png" alt="Ảnh"&gt;
+&lt;a href=<mark style="background:#EF5350;color:#fff">muc2</mark>&gt;Mục 2&lt;/a&gt;
+&lt;h2 <mark style="background:#EF5350;color:#fff">name</mark>="muc2"&gt;Mục 2&lt;/h2&gt;
+&lt;/body&gt;&lt;/html&gt;</pre>
+<div class="key">Cách làm: đọc từ trên xuống, ghép từng thẻ mở với thẻ đóng như <b>cặp ngoặc</b>, rồi kiểm tra <b>tên thuộc tính</b>.</div></div>
+<div class="col" style="gap:9px">
+<div class="q a" style="padding:6px 14px"><div class="n">1</div><p>Thẻ đóng tiêu đề phải là <code>&lt;/h1&gt;</code>.</p></div>
+<div class="q a" style="padding:6px 14px"><div class="n">2</div><p>Lồng sai: phải là <code>&lt;/i&gt;&lt;/b&gt;</code>.</p></div>
+<div class="q a" style="padding:6px 14px"><div class="n">3</div><p><code>scr</code> phải là <code>src</code> → ảnh mới hiện.</p></div>
+<div class="q a" style="padding:6px 14px"><div class="n">4</div><p>Liên kết nội trang phải là <code>href="#muc2"</code> (thiếu <b>#</b> và nháy).</p></div>
+<div class="q a" style="padding:6px 14px"><div class="n">5</div><p>Đích neo phải dùng <code>id="muc2"</code>, không phải <code>name</code>.</p></div>
+<p style="font-size:20px">Thiếu cả DOCTYPE, head, meta charset → dễ lỗi tiếng Việt.</p></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PHẦN 4</span><h1>Dạng khó: đọc mã, dự đoán kết quả</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:20px">&lt;h2&gt;Danh sách&lt;/h2&gt;
+&lt;p&gt;Tổng: &lt;b&gt;3&lt;/b&gt; môn&lt;br&gt;Điểm: 9&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Toán&lt;/li&gt;&lt;li&gt;Tin&lt;/li&gt;&lt;/ul&gt;
+&lt;span&gt;A&lt;/span&gt;&lt;span&gt;B&lt;/span&gt;
+&lt;div&gt;C&lt;/div&gt;&lt;div&gt;D&lt;/div&gt;</pre>
+<div class="ok"><p><b>Đếm con trực tiếp của body:</b> h2, p, ul, span, span, div, div = <b>7</b>. (Không đếm li, b.)</p></div>
+<div class="key"><code>br</code> chỉ xuống dòng <b>trong cùng đoạn</b>; <code>span</code> cùng dòng; <code>div</code> khác dòng.</div></div>
+<div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:22px"><div style="font-size:30px;font-weight:700;margin:4px 0">Danh sách</div><p style="margin:8px 0;font-family:Georgia,serif">Tổng: <b style="color:#000">3</b> môn<br>Điểm: 9</p><ul style="margin:8px 0;padding-left:30px"><li style="font-family:Georgia,serif">Toán</li><li style="font-family:Georgia,serif">Tin</li></ul><span>A</span><span>B</span><div>C</div><div>D</div></div></div>
+<div class="ok"><p>Đọc kết quả: tiêu đề lớn → đoạn <b>2 dòng</b> (số 3 đậm) → 2 gạch đầu dòng → <b>AB</b> cùng dòng → <b>C</b> và <b>D</b> mỗi chữ một dòng.</p></div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">TỔNG KẾT</span><h1>Lỗi thường gặp và ghi nhớ</h1></div>
+<div class="bd g2">
+<div class="col"><div class="warn" style="padding:12px 18px"><ul style="gap:4px;margin:0"><li>Nhầm <b>Internet</b> với <b>Web</b>.</li><li>Nhầm <b>id</b> với <b>name</b>; quên dấu <b>#</b> trong href.</li><li>Nhầm <code>../</code> (lên một cấp) với <code>./</code> (cùng thư mục).</li><li>Cho rằng thẻ rỗng cần thẻ đóng.</li><li>Cho rằng nhiều dấu cách hiển thị nhiều dấu cách.</li><li>Nhầm <code>title</code> (head) với <code>h1</code> (body).</li></ul></div>
+<div class="card"><h3>4 mẹo làm bài</h3><ol style="gap:2px"><li>Vẽ <b>cây thư mục</b> trước khi viết đường dẫn.</li><li>Vẽ <b>cây phần tử</b> trước khi đếm con cháu.</li><li>Ghép thẻ mở – đóng như <b>ngoặc</b>.</li><li>Đúng/sai: soát từ <b>tuyệt đối</b>.</li></ol></div></div>
+<div class="col"><div class="card"><h3>Tổng kết bài học</h3><ul style="gap:5px"><li><b>Web</b> là dịch vụ trên Internet; <b>URL</b> xác định tài nguyên; trình duyệt gửi <b>HTTP request</b>, máy chủ trả <b>response</b>.</li><li>HTML là ngôn ngữ <b>đánh dấu</b>; tài liệu gồm <code>html</code>, <code>head</code>, <code>body</code>; phần tử tạo thành <b>cây</b>.</li><li><b>Block</b> xuống dòng, <b>inline</b> cùng dòng; thẻ <b>ngữ nghĩa</b> cho biết vai trò.</li><li>Liên kết <code>a href</code>, neo <code>#id</code>; đường dẫn <b>tương đối</b> dùng <code>../</code>.</li><li><code>img</code> (src, alt), <code>audio</code>, <code>video</code> (controls, poster), <code>iframe</code>.</li></ul></div>
+<div class="key">Bài tiếp theo: <b>bảng, danh sách và biểu mẫu</b>.</div></div>
+</div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
