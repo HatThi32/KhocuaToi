@@ -1,0 +1,230 @@
+<!-- HEAD -->
+<title>AI 2 · Học máy cơ bản</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p7"><div class="hd"><span class="k">TIN HỌC · AI 2</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>HỌC MÁY CƠ BẢN</h1><p style="font-size:28px;line-height:1.5">Ba kiểu học (có giám sát, không giám sát, tăng cường), dữ liệu có nhãn, thuật toán k-NN, hồi quy tuyến tính và phân cụm k-means; mọi phép tính đều chạy bằng Python.</p><div><span class="chip">học máy</span><span class="chip">có nhãn</span><span class="chip">k-NN</span><span class="chip">hồi quy</span><span class="chip">k-means</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">học máy</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">có nhãn</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">k-NN</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">hồi quy</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">k-means</text></svg></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Phân biệt học <b>có giám sát</b>, <b>không giám sát</b>, <b>tăng cường</b>.</li><li>Hiểu <b>đặc trưng</b> và <b>nhãn</b>; <b>phân loại</b> khác <b>hồi quy</b>.</li><li>Chạy tay <b>k-NN</b>; hiểu ảnh hưởng của <b>k</b>.</li><li>Tính <b>hồi quy tuyến tính</b> bằng bình phương tối thiểu.</li><li>Chạy một vòng <b>k-means</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Các kiểu học</li><li>k-NN</li><li>Hồi quy</li><li>k-means</li><li>Tự kiểm tra</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 1</span><h1>Học máy là gì?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Máy học từ dữ liệu</h3><p style="margin:0 0 8px"><b>Học máy</b> (machine learning): chương trình <b>tự rút quy luật từ dữ liệu</b> thay vì được viết sẵn luật.</p><p style="margin:0 0 8px">Dữ liệu gồm <b>đặc trưng</b> (đầu vào) và có thể có <b>nhãn</b> (đáp án).</p><p style="margin:0 0 8px">Giai đoạn: <b>huấn luyện</b> → <b>dự đoán</b> trên dữ liệu mới.</p></div></div><div class="col"><table><tr><th>Khái niệm</th><th>Ví dụ: dự đoán điểm thi</th></tr><tr><td>Đặc trưng</td><td>số giờ ôn</td></tr><tr><td>Nhãn</td><td>điểm thi</td></tr><tr><td>Mẫu</td><td>một học sinh</td></tr></table><div class="key">Một bảng dữ liệu = nhiều <b>mẫu</b>; mỗi mẫu có <b>đặc trưng</b> (+ nhãn).</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 1</span><h1>Ba kiểu học</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nhận ra qua dữ liệu</h3><table><tr><th>Kiểu</th><th>Dấu hiệu</th></tr><tr><td><b>Có giám sát</b></td><td>mỗi mẫu <b>có nhãn</b> (10 000 ảnh gán “mèo/chó”)</td></tr><tr><td><b>Không giám sát</b></td><td><b>không nhãn</b>; tìm cấu trúc ẩn, <b>phân cụm</b> khách hàng</td></tr><tr><td><b>Tăng cường</b></td><td>tác tử thử – nhận <b>phần thưởng</b> (tối đa hoá thưởng)</td></tr></table></div></div><div class="col"><div class="key">Có nhãn → giám sát; chia nhóm không nhãn → <b>không giám sát</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 1</span><h1>Phân loại hay hồi quy?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đầu ra quyết định</h3><p style="margin:0 0 8px"><b>Phân loại</b>: nhãn là <b>lớp rời rạc</b> (mèo/chó, spam/không).</p><p style="margin:0 0 8px"><b>Hồi quy</b>: nhãn là <b>số liên tục</b> (điểm thi, giá nhà).</p><p style="margin:0 0 8px">Cả hai đều là học <b>có giám sát</b>; <b>phân cụm</b> là không giám sát.</p></div></div><div class="col"><table><tr><th>Bài toán</th><th>Loại</th></tr><tr><td>Lọc thư rác</td><td>phân loại</td></tr><tr><td>Dự đoán điểm thi từ số giờ ôn</td><td>hồi quy</td></tr><tr><td>Chia khách thành nhóm</td><td>phân cụm</td></tr></table></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 2</span><h1>k-NN: bỏ phiếu theo láng giềng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng</h3><ol style="gap:6px"><li>Tính <b>khoảng cách</b> từ điểm mới tới mọi điểm huấn luyện (Euclid).</li><li>Chọn <b>k điểm gần nhất</b>.</li><li><b>Bỏ phiếu đa số</b> nhãn của k điểm đó.</li></ol><p style="margin:0 0 8px">k-NN <b>không có giai đoạn huấn luyện lâu</b>: chỉ lưu dữ liệu, tính khoảng cách khi dự đoán.</p></div></div><div class="col"><div class="key">Khoảng cách Euclid: <b>√((x₁−x₂)² + (y₁−y₂)²)</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 2</span><h1>Bài mẫu: dự đoán nhãn cho (4,4)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Ba điểm gần nhất: (3,3) A, (6,5) B, (6,6) B.</p><p style="margin:0 0 8px"><b>k=1</b> → A; <b>k=3</b> → B; <b>k=7</b> (toàn bộ) → A (4 A so với 3 B).</p></div><pre class="code" style="font-size:calc(16px*var(--z,1))">import math
+A=[(1,1),(2,1),(1,2),(3,3)]
+B=[(6,5),(7,7),(6,6)]
+pts=[(p,'A') for p in A]+[(p,'B') for p in B]
+q=(4,4)
+ds=sorted((math.dist(p,q),l,p) for p,l in pts)
+for d,l,p in ds[:4]: print(p,l,round(d,3))
+for k in (1,3,7):
+    from collections import Counter
+    print('k=',k,Counter(l for _,l,_ in ds[:k]).most_common(1)[0][0])</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">(3, 3) A 1.414
+(6, 5) B 2.236
+(6, 6) B 2.828
+(1, 2) A 3.606
+k= 1 A
+k= 3 B
+k= 7 A</pre></div><div class="key"><b>Đổi k</b> có thể đổi kết quả.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 2</span><h1>Chọn k thế nào?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ảnh hưởng của k</h3><table><tr><th>k</th><th>Hệ quả</th></tr><tr><td><b>k = 1</b></td><td>một điểm <b>nhiễu</b> gần nhất quyết định → dễ <b>quá khớp</b></td></tr><tr><td>k lớn</td><td>mượt hơn, có thể bỏ sót chi tiết</td></tr><tr><td>k = số mẫu</td><td>luôn ra <b>lớp đa số</b></td></tr></table><p style="margin:0 0 8px">Thường chọn k <b>lẻ</b> để tránh hoà phiếu.</p></div></div><div class="col"><div class="key">k = 1 trên dữ liệu nhiễu: rủi ro <b>quá khớp</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 3</span><h1>Hồi quy tuyến tính</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đường thẳng ŷ = w·x + b</h3><p style="margin:0 0 8px">Chọn <b>w, b</b> sao cho tổng bình phương sai số nhỏ nhất.</p><p style="margin:0 0 8px"><b>w = Σ(x−x̄)(y−ȳ) / Σ(x−x̄)²</b>; <b>b = ȳ − w·x̄</b>.</p></div></div><div class="col"><div class="key">Điểm “kéo” (ngoại lai) làm <b>đổi độ dốc</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 3</span><h1>Bài mẫu: x = 1..5, y = 3; 5; 7; 9; 11,5</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Điểm cuối 11,5 làm độ dốc <b>nhỉnh hơn 2,00</b>.</p><p style="margin:0 0 8px">Dự đoán tại x = 6 khoảng <b>13,4</b>.</p></div><pre class="code" style="font-size:calc(20px*var(--z,1))">xs=[1,2,3,4,5]; ys=[3,5,7,9,11.5]
+mx=sum(xs)/5; my=sum(ys)/5
+w=sum((x-mx)*(y-my) for x,y in zip(xs,ys))/sum((x-mx)**2 for x in xs)
+b=my-w*mx
+print('w =',round(w,3),' b =',round(b,3))
+print('y(6) =',round(w*6+b,2))</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">w = 2.1  b = 0.8
+y(6) = 13.4</pre></div><div class="key">Đáp án: <b>w ≈ 2,10; y(6) ≈ 13,4</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 4</span><h1>k-means: phân cụm không nhãn</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai bước lặp lại</h3><ol style="gap:6px"><li><b>Gán</b> mỗi điểm vào cụm có <b>tâm gần nhất</b>.</li><li><b>Cập nhật tâm</b> = trung bình toạ độ các điểm trong cụm.</li><li>Lặp đến khi tâm không đổi.</li></ol><p style="margin:0 0 8px">Cần <b>chọn k</b> trước; kết quả phụ thuộc <b>tâm ban đầu</b>. Là học <b>không giám sát</b> vì không có nhãn.</p></div></div><div class="col"><div class="key">Tâm mới = <b>trung bình</b> từng toạ độ.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 4</span><h1>Bài mẫu: k=2, tâm đầu (1,1) và (9,9)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Ba điểm đầu thuộc cụm 1; ba điểm sau thuộc cụm 2.</p><p style="margin:0 0 8px">Tâm mới: <b>(1,33; 2,00)</b> và <b>(8,33; 8,00)</b>.</p></div><pre class="code" style="font-size:calc(17px*var(--z,1))">pts=[(1,1),(2,2),(1,3),(8,8),(9,7),(8,9)]
+c=[(1,1),(9,9)]
+cl=[[],[]]
+for p in pts:
+    i=min((0,1),key=lambda j:(p[0]-c[j][0])**2+(p[1]-c[j][1])**2)
+    cl[i].append(p)
+new=[(round(sum(x for x,_ in g)/len(g),2),round(sum(y for _,y in g)/len(g),2)) for g in cl]
+print(cl)
+print(new)</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[[(1, 1), (2, 2), (1, 3)], [(8, 8), (9, 7), (8, 9)]]
+[(1.33, 2.0), (8.33, 8.0)]</pre></div><div class="key">Không nhầm thứ tự x, y.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 5</span><h1>Tự kiểm tra 1: loại học</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Công ty có hàng triệu hồ sơ khách chưa gán nhãn, muốn tự chia nhóm. Dùng kiểu học nào?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>Học không giám sát (phân cụm)</b>: không có nhãn.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 5</span><h1>Tự kiểm tra 2: k-NN</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Với k = 1 trên dữ liệu nhiều nhiễu, rủi ro nào?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>Quá khớp</b>: một điểm nhiễu gần nhất quyết định kết quả.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · 5</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) k-NN cần giai đoạn huấn luyện lâu để xây công thức. (b) k = số mẫu huấn luyện: luôn dự đoán lớp đa số. (c) k-means là học có giám sát. (d) Hồi quy dự đoán nhãn rời rạc. (e) Dự đoán điểm thi từ số giờ ôn là học có giám sát.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Sai</b>.</p><p style="margin:0 0 8px">(b) <b>Đúng</b>.</p><p style="margin:0 0 8px">(c) <b>Sai</b>: không giám sát.</p><p style="margin:0 0 8px">(d) <b>Sai</b>: số liên tục.</p><p style="margin:0 0 8px">(e) <b>Đúng</b>.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Có nhãn → <b>có giám sát</b>; không nhãn → <b>không giám sát</b>; thưởng → <b>tăng cường</b>.</li><li>Phân loại: lớp rời rạc; <b>hồi quy</b>: số liên tục.</li><li><b>k-NN</b>: k điểm gần nhất, bỏ phiếu; k=1 dễ quá khớp.</li><li>Hồi quy: <b>w = Σ(x−x̄)(y−ȳ)/Σ(x−x̄)²</b>.</li><li><b>k-means</b>: gán rồi cập nhật tâm = trung bình.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Tâm mới</td><td>trung bình toạ độ</td></tr><tr><td class="m">k = 1</td><td>dễ quá khớp</td></tr><tr><td class="m">Chia nhóm không nhãn</td><td>k-means</td></tr><tr><td class="m">Dự đoán số</td><td>hồi quy</td></tr></table><div class="warn">Nhầm hồi quy với phân loại; tính tâm bằng tổng; chọn k bằng số mẫu.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>Chuẩn hoá</b> đặc trưng trước k-NN.</li><li><b>Khoảng cách</b> Manhattan.</li><li>Chọn k bằng kiểm định chéo.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Cây quyết định</b>.</li><li><b>Mạng nơ-ron</b>.</li><li><b>Elbow method</b> cho k-means.</li></ul></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Học có nhãn?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Học tối đa thưởng?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>k-means thuộc loại?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Dự đoán điểm thi?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>k-NN dự đoán theo?</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>Có giám sát</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Tăng cường</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Không giám sát</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>Hồi quy</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>Đa số k láng giềng</b>.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Phân biệt đặc trưng và nhãn.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Lọc thư rác là phân loại hay hồi quy?</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. k-NN với k = 3 cho (4,4) ra nhãn gì?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Tính tâm mới của 3 điểm (1,1),(2,2),(1,3).</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Vì sao k = 1 dễ quá khớp?</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Hồi quy x=1..4, y=2,4,6,8: w, b?</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Đặc trưng = đầu vào; nhãn = đáp án.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Phân loại.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>B (hai trong ba láng giềng là B).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>(1,33; 2,00).</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">AI 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Một điểm nhiễu quyết định.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>w = 2.0 b = 0.0</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

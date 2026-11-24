@@ -1,5 +1,5 @@
 <!-- HEAD -->
-<title>AI 3 · Đánh giá mô hình và quá khớp</title>
+<title>AI 3 · Đánh giá mô hình, quá khớp</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
 :root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
@@ -102,133 +102,99 @@ pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px sol
 </style>
 
 <div id="wrap">
-<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · TRÍ TUỆ NHÂN TẠO 3</span></div>
-<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>ĐÁNH GIÁ MÔ HÌNH<br>VÀ HIỆN TƯỢNG QUÁ KHỚP</h1><p style="font-size:28px;line-height:1.5">Chia dữ liệu huấn luyện – kiểm tra, độ chính xác, ma trận nhầm lẫn, precision, recall, quá khớp, dưới khớp.</p><div><span class="chip">huấn luyện – kiểm tra</span><span class="chip">độ chính xác</span><span class="chip">ma trận nhầm lẫn</span><span class="chip">quá khớp</span><span class="chip">recall</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
-<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
-<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
-<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
-<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+<section class="s title-s p8"><div class="hd"><span class="k">TIN HỌC · AI 3</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>ĐÁNH GIÁ MÔ HÌNH,<br>QUÁ KHỚP</h1><p style="font-size:28px;line-height:1.5">Chia dữ liệu huấn luyện – kiểm định – kiểm tra, quá khớp và chưa khớp, rò rỉ dữ liệu, ma trận nhầm lẫn, accuracy, precision, recall, F1 và bẫy dữ liệu mất cân bằng.</p><div><span class="chip">train/test</span><span class="chip">quá khớp</span><span class="chip">rò rỉ</span><span class="chip">precision</span><span class="chip">recall</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">train/test</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">quá khớp</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">rò rỉ</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">precision</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">recall</text></svg></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3</span><h1>Mục tiêu và nội dung bài</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Giải thích vì sao phải <b>chia dữ liệu</b> huấn luyện – kiểm tra.</li><li>Tính <b>độ chính xác</b>, <b>precision</b>, <b>recall</b> từ <b>ma trận nhầm lẫn</b>.</li><li>Nhận biết <b>quá khớp</b> và <b>dưới khớp</b>.</li><li>Nêu cách <b>hạn chế quá khớp</b>.</li><li>Giải bài tập đánh giá mô hình kiểu HSG.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Chia dữ liệu</li><li>Độ chính xác</li><li>Ma trận nhầm lẫn</li><li>Quá khớp</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Giải thích vì sao <b>chia dữ liệu</b> thành 3 tập.</li><li>Nhận ra <b>quá khớp</b> và <b>chưa khớp</b> qua số liệu.</li><li>Nhận diện <b>rò rỉ dữ liệu</b>.</li><li>Đọc <b>ma trận nhầm lẫn</b>; tính <b>accuracy, precision, recall, F1</b>.</li><li>Hiểu bẫy <b>accuracy cao trên dữ liệu mất cân bằng</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Chia dữ liệu</li><li>Quá khớp</li><li>Rò rỉ dữ liệu</li><li>Ma trận nhầm lẫn</li><li>Bẫy mất cân bằng</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 1</span><h1>Vì sao phải đánh giá?</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Mục đích</h3><ul style="gap:6px"><li>Biết mô hình <b>dự đoán tốt đến đâu</b> với dữ liệu <b>chưa từng thấy</b>.</li><li>Đánh giá trên chính dữ liệu đã học sẽ cho kết quả <b>quá lạc quan</b>.</li></ul></div></div><div class="col"><div class="key">Ví dụ: học sinh <b>học thuộc đáp án</b> đề cũ thì đạt điểm tối đa đề cũ nhưng <b>chưa chắc làm được đề mới</b>.</div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 1</span><h1>Vì sao phải chia dữ liệu?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba tập với ba vai trò</h3><table><tr><th>Tập</th><th>Dùng để</th></tr><tr><td><b>Huấn luyện</b></td><td>mô hình <b>học</b></td></tr><tr><td><b>Kiểm định</b></td><td><b>chỉnh tham số</b> (ví dụ chọn k)</td></tr><tr><td><b>Kiểm tra</b></td><td>đánh giá cuối, <b>dữ liệu chưa thấy</b></td></tr></table></div></div><div class="col"><div class="key">Mục đích: đo <b>khả năng tổng quát hoá</b> trên dữ liệu chưa thấy.</div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 1</span><h1>Chia dữ liệu: huấn luyện và kiểm tra</h1></div>
-<div class="bd g2"><div class="col"><div class="res"><span class="lab">Chia dữ liệu</span><svg viewBox="0 0 520 150" style="width:100%"><rect x="10" y="40" width="330" height="70" rx="8" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="175.0" y="82.0" text-anchor="middle" font-size="22" font-weight="800" fill="#0B2545" font-family="sans-serif">Tập huấn luyện (70–80%)</text><rect x="340" y="40" width="170" height="70" rx="8" fill="#FFCCBC" stroke="#D84315" stroke-width="3"/><text x="425.0" y="82.0" text-anchor="middle" font-size="20" font-weight="800" fill="#0B2545" font-family="sans-serif">Kiểm tra (20–30%)</text></svg></div></div><div class="col"><div class="card"><h3>Quy tắc</h3><ul style="gap:6px"><li><b>Huấn luyện</b>: để mô hình học.</li><li><b>Kiểm tra</b>: chỉ dùng để <b>đánh giá cuối</b>.</li><li><b>Xáo trộn</b> dữ liệu trước khi chia.</li></ul></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 2</span><h1>Quá khớp và chưa khớp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đọc qua điểm số</h3><table><tr><th>Huấn luyện</th><th>Kiểm tra</th><th>Kết luận</th></tr><tr><td>99%</td><td>62–70%</td><td><b>quá khớp</b> (học thuộc)</td></tr><tr><td>thấp</td><td>thấp</td><td><b>chưa khớp</b> (mô hình quá đơn giản)</td></tr><tr><td>cao</td><td>cao</td><td>tốt</td></tr></table><p style="margin:0 0 8px">Hướng khắc phục quá khớp: <b>thêm dữ liệu</b>, <b>đơn giản hoá mô hình</b>, <b>kiểm định chéo</b>.</p></div></div><div class="col"><div class="key">Chênh lệch lớn giữa huấn luyện và kiểm tra là <b>dấu hiệu quá khớp</b>.</div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 1</span><h1>Ba tập: huấn luyện, kiểm định, kiểm tra</h1></div>
-<div class="bd g2"><div class="col"><table><tr><th>Tập</th><th>Dùng để</th><th>Tỉ lệ thường gặp</th></tr><tr><td><b>Huấn luyện</b></td><td>học tham số mô hình</td><td>60–70%</td></tr><tr><td><b>Kiểm định</b> (validation)</td><td>chọn siêu tham số (ví dụ k)</td><td>15–20%</td></tr><tr><td><b>Kiểm tra</b> (test)</td><td>đánh giá cuối cùng</td><td>15–20%</td></tr></table></div><div class="col"><div class="key">Tập kiểm tra phải <b>giữ kín</b> đến cuối; dùng nó để chọn mô hình thì kết quả không còn khách quan (<b>rò rỉ dữ liệu</b>).</div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 3</span><h1>Rò rỉ dữ liệu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thông tin kiểm tra lọt vào huấn luyện</h3><p style="margin:0 0 8px"><b>Chuẩn hoá cả tập</b> (trung bình, độ lệch chuẩn tính trên cả huấn luyện lẫn kiểm tra) rồi mới chia → <b>rò rỉ</b>: kết quả <b>lạc quan</b>.</p><p style="margin:0 0 8px">Dùng <b>tập kiểm tra để chỉnh tham số</b> → đánh giá không khách quan.</p><p style="margin:0 0 8px">Cách đúng: <b>chia trước</b>; tham số chuẩn hoá tính <b>chỉ trên tập huấn luyện</b>, rồi áp sang tập kiểm tra.</p></div></div><div class="col"><div class="key">Quy tắc: <b>chia tập trước, xử lí sau</b>.</div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 1</span><h1>Chia dữ liệu bằng Python</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">import random
-random.seed(1)
-data = list(range(10))
-random.shuffle(data)
-n = int(0.8 * len(data))
-train, test = data[:n], data[n:]
-print(train)
-print(test)
-print(len(train), len(test))</pre><div class="key"><b>shuffle</b> xáo trộn, rồi cắt 80% / 20%. <code>random.seed</code> giúp kết quả <b>lặp lại được</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[6, 8, 9, 7, 5, 3, 0, 4]
-[1, 2]
-8 2</pre></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 4</span><h1>Ma trận nhầm lẫn</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bốn ô</h3><table><tr><th></th><th>Dự đoán dương</th><th>Dự đoán âm</th></tr><tr><td>Thật dương</td><td><b>TP</b></td><td><b>FN</b> (bỏ sót)</td></tr><tr><td>Thật âm</td><td><b>FP</b> (báo nhầm)</td><td><b>TN</b></td></tr></table><p style="margin:0 0 8px"><b>Dương</b> là lớp ta quan tâm (thư rác, bệnh).</p></div></div><div class="col"><div class="key">FN: dương thật bị <b>bỏ sót</b>; FP: âm thật bị <b>báo nhầm</b>.</div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 2</span><h1>Độ chính xác (accuracy)</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Công thức</h3><ul style="gap:6px"><li><b>Accuracy = số dự đoán đúng / tổng số mẫu</b>.</li><li>Ví dụ: đúng 90/100 → 90%.</li></ul></div></div><div class="col"><div class="key">Cảnh báo <b>dữ liệu mất cân bằng</b>: 99% thư không rác; mô hình luôn đoán “không rác” đạt <b>99%</b> nhưng <b>vô dụng</b>.</div><div class="warn">Accuracy chưa đủ, cần thêm <b>precision, recall</b>.</div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 4</span><h1>Bốn chỉ số</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Công thức</h3><table><tr><th>Chỉ số</th><th>Công thức</th><th>Ý nghĩa</th></tr><tr><td>Accuracy</td><td>(TP+TN)/tổng</td><td>tỉ lệ đoán đúng</td></tr><tr><td>Precision</td><td>TP/(TP+FP)</td><td>trong số <b>báo dương</b>, bao nhiêu đúng</td></tr><tr><td>Recall</td><td>TP/(TP+FN)</td><td>trong số <b>dương thật</b>, bắt được bao nhiêu</td></tr><tr><td>F1</td><td>2PR/(P+R)</td><td>trung bình điều hoà</td></tr></table></div></div><div class="col"><div class="key">Recall = độ nhạy; <b>tỉ lệ âm tính giả = 1 − recall</b>.</div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 2</span><h1>Ma trận nhầm lẫn (confusion matrix)</h1></div>
-<div class="bd g2"><div class="col"><table><tr><th></th><th>Dự đoán: Có</th><th>Dự đoán: Không</th></tr><tr><td><b>Thực tế: Có</b></td><td><b>TP</b> (đúng dương)</td><td><b>FN</b> (sai âm)</td></tr><tr><td><b>Thực tế: Không</b></td><td><b>FP</b> (sai dương)</td><td><b>TN</b> (đúng âm)</td></tr></table></div><div class="col"><div class="key"><b>TP</b>: có và đoán có · <b>TN</b>: không và đoán không · <b>FP</b>: không mà đoán có · <b>FN</b>: có mà đoán không.</div><div class="ok"><p>Accuracy = <b>(TP + TN) / (TP + TN + FP + FN)</b>.</p></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 4</span><h1>Bài mẫu: TP=40, FP=10, FN=20, TN=30</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Accuracy = 70/100 = <b>70%</b>; precision = 40/50 = <b>80%</b>.</p><p style="margin:0 0 8px">Recall = 40/60 ≈ <b>66,7%</b> (không phải 80%).</p><p style="margin:0 0 8px"><b>20</b> thư rác bị bỏ sót (FN).</p></div><pre class="code" style="font-size:calc(17px*var(--z,1))">TP,FP,FN,TN=40,10,20,30
+n=TP+FP+FN+TN
+P=TP/(TP+FP); R=TP/(TP+FN)
+print('accuracy',(TP+TN)/n)
+print('precision',P)
+print('recall',round(R,3))
+print('F1',round(2*P*R/(P+R),3))
+print('bỏ sót',FN)</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">accuracy 0.7
+precision 0.8
+recall 0.667
+F1 0.727
+bỏ sót 20</pre></div><div class="key">Đừng nhầm precision với recall.</div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 2</span><h1>Precision và Recall</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Precision (độ chính xác dương)</h3><ul style="gap:6px"><li><b>TP / (TP + FP)</b></li><li>Trong số đoán “có”, bao nhiêu <b>đúng</b>.</li></ul></div><div class="card"><h3>Recall (độ phủ)</h3><ul style="gap:6px"><li><b>TP / (TP + FN)</b></li><li>Trong số thực sự “có”, tìm được <b>bao nhiêu</b>.</li></ul></div></div><div class="col"><div class="key">Lọc thư rác: ưu tiên <b>precision</b> (đừng chặn nhầm thư thật). Tầm soát bệnh: ưu tiên <b>recall</b> (đừng bỏ sót bệnh nhân).</div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 4</span><h1>Bài mẫu: 40 thư rác, báo 30, đúng 24</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Precision = 24/30 = <b>0,8</b>; recall = 24/40 = <b>0,6</b>.</p><p style="margin:0 0 8px">FN = 40 − 24 = <b>16</b>; TN = 54; accuracy = <b>0,78</b>.</p></div><pre class="code" style="font-size:calc(20px*var(--z,1))">TP=24; FP=30-24; FN=40-24; TN=100-TP-FP-FN
+print('P',TP/30,'R',TP/40)
+print('FN',FN,'TN',TN)
+print('accuracy',(TP+TN)/100)</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">P 0.8 R 0.6
+FN 16 TN 54
+accuracy 0.78</pre></div><div class="key">Accuracy không bằng precision.</div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 2</span><h1>Tính các chỉ số bằng Python</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(17px*var(--z,1))">thuc = [1,1,1,0,0,0,0,1,0,0]
-doan = [1,1,0,0,0,1,0,1,0,0]
-TP = sum(1 for t,d in zip(thuc,doan) if t==1 and d==1)
-TN = sum(1 for t,d in zip(thuc,doan) if t==0 and d==0)
-FP = sum(1 for t,d in zip(thuc,doan) if t==0 and d==1)
-FN = sum(1 for t,d in zip(thuc,doan) if t==1 and d==0)
-print(TP, TN, FP, FN)
-print("acc", (TP+TN)/len(thuc))
-print("pre", TP/(TP+FP))
-print("rec", TP/(TP+FN))</pre><div class="key">TP=3, TN=5, FP=1, FN=1 → accuracy 0,8; precision 0,75; recall 0,75.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">3 5 1 1
-acc 0.8
-pre 0.75
-rec 0.75</pre></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 5</span><h1>Bẫy: 95% âm tính, mô hình luôn đoán “âm”</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Accuracy = <b>95%</b> nhưng <b>recall = 0</b>: bỏ sót mọi ca dương.</p><p style="margin:0 0 8px">Dữ liệu <b>mất cân bằng</b> → cần xét <b>precision, recall, F1</b>.</p></div><pre class="code" style="font-size:calc(19px*var(--z,1))">n=100; pos=5
+TP=0; FN=pos; TN=n-pos; FP=0
+print('accuracy',(TP+TN)/n)
+print('recall',TP/(TP+FN))
+print('precision','không xác định (không báo dương nào)')</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">accuracy 0.95
+recall 0.0
+precision không xác định (không báo dương nào)</pre></div><div class="key">Đáp án: accuracy 95% nhưng recall lớp dương = 0.</div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 2</span><h1>F1-score</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li><b>F1 = 2·P·R / (P + R)</b>: trung bình điều hoà của precision và recall.</li><li>Cao khi <b>cả hai cùng cao</b>.</li></ul></div></div><div class="col"><div class="key">Với P = 0,75; R = 0,75 thì <b>F1 = 0,75</b>. Với P = 1, R = 0,1: F1 ≈ <b>0,18</b> (thấp) dù precision cao.</div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 5</span><h1>Chọn chỉ số theo bài toán</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cái giá của sai lầm</h3><table><tr><th>Bài toán</th><th>Ưu tiên</th></tr><tr><td>Chẩn đoán bệnh hiểm</td><td><b>recall</b> cao (đừng bỏ sót)</td></tr><tr><td>Lọc thư rác (không mất thư quan trọng)</td><td><b>precision</b> cao</td></tr><tr><td>Cân bằng hai mặt</td><td><b>F1</b></td></tr></table></div></div><div class="col"><div class="key">Chọn chỉ số theo <b>hậu quả</b> của FN và FP.</div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 3</span><h1>Quá khớp và dưới khớp</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Quá khớp (overfitting)</h3><ul style="gap:6px"><li>Mô hình <b>học thuộc</b> cả nhiễu dữ liệu huấn luyện.</li><li>Sai số huấn luyện <b>rất thấp</b> nhưng kiểm tra <b>cao</b>.</li></ul></div><div class="card"><h3>Dưới khớp (underfitting)</h3><ul style="gap:6px"><li>Mô hình <b>quá đơn giản</b>, chưa học đủ quy luật.</li><li>Sai số <b>cao cả hai</b> tập.</li></ul></div></div><div class="col"><div class="key">Mong muốn: mô hình <b>vừa khớp</b> (tổng quát hoá tốt).</div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 6</span><h1>Tự kiểm tra 1: quá khớp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Mô hình 98% trên huấn luyện, 70% trên kiểm tra. Nguyên nhân thường gặp?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>Quá khớp</b>: học thuộc dữ liệu huấn luyện, khó tổng quát hoá.</p></div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 3</span><h1>Nhận biết qua sai số</h1></div>
-<div class="bd g1"><div class="col"><table><tr><th>Tình huống</th><th>Huấn luyện</th><th>Kiểm tra</th><th>Kết luận</th></tr><tr><td>A</td><td>sai số <b>thấp</b></td><td>sai số <b>thấp</b></td><td>vừa khớp</td></tr><tr><td>B</td><td>sai số <b>thấp</b></td><td>sai số <b>cao</b></td><td><b>quá khớp</b></td></tr><tr><td>C</td><td>sai số <b>cao</b></td><td>sai số <b>cao</b></td><td><b>dưới khớp</b></td></tr><tr><td>D</td><td>sai số cao</td><td>sai số thấp</td><td>bất thường: kiểm tra lại rò rỉ dữ liệu</td></tr></table><div class="key">Quá khớp = <b>khoảng cách lớn</b> giữa kết quả huấn luyện và kiểm tra.</div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 6</span><h1>Tự kiểm tra 2: tính chỉ số</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">TP=24, FP=6, FN=16, TN=54. Tính precision, recall, accuracy.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Precision = 24/30 = <b>0,8</b>; recall = 24/40 = <b>0,6</b>; accuracy = 78/100 = <b>0,78</b>.</p></div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 3</span><h1>Minh hoạ đường cong khớp</h1></div>
-<div class="bd g2"><div class="col"><div class="res"><span class="lab">Ba mô hình</span><svg viewBox="0 0 520 260" style="width:100%"><g font-family="sans-serif" font-weight="800" font-size="20" text-anchor="middle"><rect x="2" y="2" width="166" height="200" fill="none" stroke="#0B2545" stroke-width="2"/><rect x="177" y="2" width="166" height="200" fill="none" stroke="#0B2545" stroke-width="2"/><rect x="352" y="2" width="166" height="200" fill="none" stroke="#0B2545" stroke-width="2"/><line x1="15" y1="150" x2="155" y2="60" stroke="#D84315" stroke-width="4"/><path d="M190 150 Q250 20 330 130" fill="none" stroke="#2E7D32" stroke-width="4"/><path d="M365 150 L385 60 L405 160 L425 40 L445 170 L465 50 L485 140 L505 70" fill="none" stroke="#D84315" stroke-width="4"/><g fill="#1565C0"><circle cx="35" cy="120" r="6"/><circle cx="70" cy="90" r="6"/><circle cx="100" cy="125" r="6"/><circle cx="135" cy="65" r="6"/><circle cx="210" cy="110" r="6"/><circle cx="250" cy="55" r="6"/><circle cx="290" cy="70" r="6"/><circle cx="325" cy="125" r="6"/><circle cx="385" cy="60" r="6"/><circle cx="425" cy="40" r="6"/><circle cx="465" cy="50" r="6"/><circle cx="405" cy="160" r="6"/></g><text x="85" y="235">DƯỚI KHỚP</text><text x="260" y="235" fill="#2E7D32">VỪA KHỚP</text><text x="435" y="235" fill="#D84315">QUÁ KHỚP</text></g></svg></div></div><div class="col"><div class="card"><h3>Nhận xét</h3><ul style="gap:6px"><li>Dưới khớp: <b>đường thẳng</b> bỏ lỡ xu hướng.</li><li>Quá khớp: <b>đi qua từng điểm</b>, uốn lượn theo nhiễu.</li></ul></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 6</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) Chuẩn hoá cả tập rồi chia là cách đúng. (b) Dùng tập kiểm tra chỉnh tham số giúp đánh giá khách quan. (c) Accuracy 95% luôn là mô hình tốt. (d) Recall = TP/(TP+FN). (e) 99% huấn luyện, 70% kiểm tra là dấu hiệu quá khớp.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Sai</b>: rò rỉ.</p><p style="margin:0 0 8px">(b) <b>Sai</b>: rò rỉ.</p><p style="margin:0 0 8px">(c) <b>Sai</b>: xét mất cân bằng.</p><p style="margin:0 0 8px">(d) <b>Đúng</b>.</p><p style="margin:0 0 8px">(e) <b>Đúng</b>.</p></div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 4</span><h1>Nguyên nhân quá khớp</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Thường do</h3><ul style="gap:6px"><li>Mô hình <b>quá phức tạp</b> so với lượng dữ liệu.</li><li>Dữ liệu huấn luyện <b>quá ít</b> hoặc <b>nhiễu</b>.</li><li>Huấn luyện <b>quá lâu</b>.</li></ul></div></div><div class="col"><div class="key">Ví dụ k-NN với <b>k = 1</b> luôn đúng 100% trên tập huấn luyện (mỗi điểm là láng giềng của chính nó) nhưng thường kém trên tập kiểm tra.</div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>3 tập: <b>huấn luyện / kiểm định / kiểm tra</b>.</li><li>Huấn luyện cao, kiểm tra thấp = <b>quá khớp</b>.</li><li><b>Chia trước</b>, chuẩn hoá chỉ trên huấn luyện (tránh rò rỉ).</li><li>Precision = TP/(TP+FP); recall = TP/(TP+FN); accuracy = (TP+TN)/n.</li><li>Dữ liệu mất cân bằng: accuracy <b>đánh lừa</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Bỏ sót dương thật</td><td>FN</td></tr><tr><td class="m">Báo nhầm</td><td>FP</td></tr><tr><td class="m">Tính tham số chuẩn hoá</td><td>chỉ trên huấn luyện</td></tr><tr><td class="m">95% âm, luôn đoán âm</td><td>recall = 0</td></tr></table><div class="warn">Nhầm precision và recall; chuẩn hoá trước khi chia; tin accuracy khi mất cân bằng.</div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 4</span><h1>Cách hạn chế quá khớp</h1></div>
-<div class="bd g1"><div class="col"><table><tr><th>Biện pháp</th><th>Giải thích</th></tr><tr><td><b>Thêm dữ liệu</b></td><td>nhiều mẫu hơn → khó học thuộc nhiễu</td></tr><tr><td><b>Đơn giản hoá</b> mô hình</td><td>giảm độ phức tạp (tăng k, giảm tầng)</td></tr><tr><td><b>Dừng sớm</b> (early stopping)</td><td>dừng khi sai số kiểm định tăng</td></tr><tr><td><b>Điều chuẩn</b> (regularization)</td><td>phạt mô hình phức tạp</td></tr><tr><td><b>Kiểm định chéo</b> (cross-validation)</td><td>đánh giá nhiều lần trên các phần khác nhau</td></tr><tr><td>Làm sạch dữ liệu</td><td>bỏ nhiễu, ngoại lai</td></tr></table><div class="key">Chọn mô hình đạt <b>sai số kiểm định thấp nhất</b>, không phải sai số huấn luyện thấp nhất.</div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>Kiểm định chéo</b> k-fold.</li><li><b>Đường cong ROC</b>.</li><li><b>Regularization</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>AUC</b>.</li><li><b>Học từ dữ liệu mất cân bằng</b> (lấy mẫu lại).</li><li><b>Learning curve</b>.</li></ul></div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 4</span><h1>Quá khớp với k-NN: so sánh k</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(15px*var(--z,1))">import random
-random.seed(0)
-def mau(n):
-    d=[]
-    for _ in range(n):
-        x=random.random(); y=random.random()
-        nhan = 1 if x+y+random.gauss(0,0.35)&gt;1 else 0
-        d.append(((x,y),nhan))
-    return d
-def knn(tr,p,k):
-    ds=sorted((((p[0]-q[0])**2+(p[1]-q[1])**2),l) for q,l in tr)
-    return int(sum(l for _,l in ds[:k])*2&gt;k)
-tr,te=mau(60),mau(60)
-for k in (1,5,15):
-    a=sum(knn(tr,p,k)==l for p,l in tr)/len(tr)
-    b=sum(knn(tr,p,k)==l for p,l in te)/len(te)
-    print("k=",k,"train",round(a,2),"test",round(b,2))</pre><div class="key">Quan sát: <b>k = 1</b>: train rất cao, test thấp hơn nhiều (quá khớp). k lớn hơn: hai số gần nhau hơn.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">k= 1 train 1.0 test 0.67
-k= 5 train 0.87 test 0.65
-k= 15 train 0.75 test 0.77</pre></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Báo nhầm âm thành dương?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Bỏ sót dương thật?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Chỉ số khi không được bỏ sót?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Tránh rò rỉ bằng cách?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Chênh lệch lớn huấn luyện–kiểm tra?</p></div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · 4</span><h1>Kiểm định chéo k-fold</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Cách làm</h3><ul style="gap:6px"><li>Chia dữ liệu thành <b>K phần</b> bằng nhau.</li><li>Lần lượt dùng <b>mỗi phần làm kiểm tra</b>, K−1 phần còn lại huấn luyện.</li><li>Lấy <b>trung bình</b> K kết quả.</li></ul></div></div><div class="col"><div class="key">Ưu điểm: dùng <b>mọi mẫu</b> cho cả huấn luyện lẫn kiểm tra, đánh giá <b>ổn định</b> hơn khi dữ liệu ít.</div><div class="ok"><p>Phổ biến: <b>K = 5</b> hoặc <b>10</b>.</p></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>FP</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>FN</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Recall</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>Chia trước</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>Quá khớp</b>.</p></div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Chia <b>huấn luyện</b> – <b>kiểm tra</b>; test giữ kín đến cuối.</li><li><b>Accuracy = (TP+TN)/Tổng</b>; <b>Precision = TP/(TP+FP)</b>; <b>Recall = TP/(TP+FN)</b>.</li><li><b>F1</b> là trung bình điều hoà của P và R.</li><li><b>Quá khớp</b>: huấn luyện tốt, kiểm tra kém; <b>dưới khớp</b>: cả hai kém.</li><li>Giảm quá khớp: thêm dữ liệu, đơn giản hoá, dừng sớm, kiểm định chéo.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Đúng trên tổng</td><td>accuracy</td></tr><tr><td class="m">Đoán có thì đúng</td><td>precision</td></tr><tr><td class="m">Tìm hết dương thật</td><td>recall</td></tr><tr><td class="m">Học thuộc</td><td>quá khớp</td></tr></table><div class="warn">Đánh giá mô hình trên chính dữ liệu huấn luyện.</div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Viết công thức precision và recall.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Vì sao cần tập kiểm tra riêng?</p></div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Dữ liệu <b>mất cân bằng</b> làm accuracy đánh lừa.</li><li><b>Rò rỉ dữ liệu</b>: thông tin tập kiểm tra lọt vào huấn luyện.</li><li>Precision và recall thường <b>đánh đổi</b>.</li><li>Đường cong học: sai số theo kích thước dữ liệu.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>ROC, AUC</b>.</li><li><b>MSE, MAE</b> cho hồi quy.</li><li><b>Bias – variance</b> trade-off.</li></ul></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. TP=40, FP=10, FN=20, TN=30: tính 4 chỉ số.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Nêu 3 cách giảm quá khớp.</p></div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · TẬP</span><h1>Bài tập củng cố</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Vì sao cần tập kiểm tra riêng?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Công thức tính accuracy từ TP, TN, FP, FN.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Quá khớp là gì?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Precision cho biết điều gì?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Nêu hai cách hạn chế quá khớp.</p></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Dữ liệu 95% âm, mô hình đoán toàn âm: kết luận?</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Vì sao chuẩn hoá cả tập trước khi chia gây lạc quan?</p></div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Đánh giá khách quan trên dữ liệu chưa từng thấy.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>(TP + TN) / (TP + TN + FP + FN).</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mô hình học thuộc nhiễu: tốt trên huấn luyện, kém trên kiểm tra.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Trong các mẫu được đoán dương, bao nhiêu phần đúng.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Thêm dữ liệu; đơn giản hoá mô hình (hoặc dừng sớm).</p></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>P = TP/(TP+FP); R = TP/(TP+FN).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Đánh giá trên dữ liệu chưa thấy.</p></div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mô hình: TP=40, FP=10, FN=20, TN=30. Tính accuracy, precision, recall.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mô hình đoán “không rác” cho 100 thư, trong đó 98 thật sự không rác. Accuracy? Có nên tin?</p></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>0,70; 0,80; 0,667; F1 ≈ 0,727.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Thêm dữ liệu, đơn giản hoá, kiểm định chéo.</p></div></div></div></section>
 
-<section class="s p2"><div class="hd"><span class="k">AI 3 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mô hình A: huấn luyện 99%, kiểm tra 70%. Mô hình B: 85% và 83%. Chọn mô hình nào? Vì sao?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) Dùng tập kiểm tra để chọn k là đúng chuẩn. (b) Recall cao nghĩa là ít bỏ sót. (c) Dưới khớp thường do mô hình quá phức tạp. (d) 5-fold cho 5 kết quả đánh giá.</p></div></div></div></section>
-
-<section class="s p2"><div class="hd"><span class="k">AI 3 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Nêu một ví dụ ưu tiên recall, một ví dụ ưu tiên precision.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Vì sao k-NN với k=1 luôn đạt 100% trên tập huấn luyện?</p></div></div></div></section>
-
-<section class="s p2"><div class="hd"><span class="k">AI 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Accuracy = 70/100 = <b>0,7</b>; Precision = 40/50 = <b>0,8</b>; Recall = 40/60 ≈ <b>0,667</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Accuracy 98%, nhưng mô hình không phát hiện thư rác nào (recall = 0): <b>không đáng tin</b>.</p></div></div></div></section>
-
-<section class="s p2"><div class="hd"><span class="k">AI 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Chọn <b>B</b>: A quá khớp (chênh 29%), B tổng quát hoá tốt.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b> (dùng tập kiểm định). (b) <b>Đúng</b>. (c) <b>Sai</b> (do quá đơn giản). (d) <b>Đúng</b>.</p></div></div></div></section>
-
-<section class="s p2"><div class="hd"><span class="k">AI 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Recall: tầm soát bệnh; precision: lọc thư rác.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mỗi điểm huấn luyện có chính nó là láng giềng gần nhất (khoảng cách 0).</p></div></div></div></section>
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Accuracy 95%, recall 0: vô dụng.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Thông tin tập kiểm tra ảnh hưởng huấn luyện.</p></div></div></div></section>
 </div>
 <div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
 <script>

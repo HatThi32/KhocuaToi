@@ -1,0 +1,219 @@
+<!-- HEAD -->
+<title>AI 3 · Đánh giá mô hình, quá khớp</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p8"><div class="hd"><span class="k">TIN HỌC · AI 3</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>ĐÁNH GIÁ MÔ HÌNH,<br>QUÁ KHỚP</h1><p style="font-size:28px;line-height:1.5">Chia dữ liệu huấn luyện – kiểm định – kiểm tra, quá khớp và chưa khớp, rò rỉ dữ liệu, ma trận nhầm lẫn, accuracy, precision, recall, F1 và bẫy dữ liệu mất cân bằng.</p><div><span class="chip">train/test</span><span class="chip">quá khớp</span><span class="chip">rò rỉ</span><span class="chip">precision</span><span class="chip">recall</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">train/test</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">quá khớp</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">rò rỉ</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">precision</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">recall</text></svg></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Giải thích vì sao <b>chia dữ liệu</b> thành 3 tập.</li><li>Nhận ra <b>quá khớp</b> và <b>chưa khớp</b> qua số liệu.</li><li>Nhận diện <b>rò rỉ dữ liệu</b>.</li><li>Đọc <b>ma trận nhầm lẫn</b>; tính <b>accuracy, precision, recall, F1</b>.</li><li>Hiểu bẫy <b>accuracy cao trên dữ liệu mất cân bằng</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Chia dữ liệu</li><li>Quá khớp</li><li>Rò rỉ dữ liệu</li><li>Ma trận nhầm lẫn</li><li>Bẫy mất cân bằng</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 1</span><h1>Vì sao phải chia dữ liệu?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba tập với ba vai trò</h3><table><tr><th>Tập</th><th>Dùng để</th></tr><tr><td><b>Huấn luyện</b></td><td>mô hình <b>học</b></td></tr><tr><td><b>Kiểm định</b></td><td><b>chỉnh tham số</b> (ví dụ chọn k)</td></tr><tr><td><b>Kiểm tra</b></td><td>đánh giá cuối, <b>dữ liệu chưa thấy</b></td></tr></table></div></div><div class="col"><div class="key">Mục đích: đo <b>khả năng tổng quát hoá</b> trên dữ liệu chưa thấy.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 2</span><h1>Quá khớp và chưa khớp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đọc qua điểm số</h3><table><tr><th>Huấn luyện</th><th>Kiểm tra</th><th>Kết luận</th></tr><tr><td>99%</td><td>62–70%</td><td><b>quá khớp</b> (học thuộc)</td></tr><tr><td>thấp</td><td>thấp</td><td><b>chưa khớp</b> (mô hình quá đơn giản)</td></tr><tr><td>cao</td><td>cao</td><td>tốt</td></tr></table><p style="margin:0 0 8px">Hướng khắc phục quá khớp: <b>thêm dữ liệu</b>, <b>đơn giản hoá mô hình</b>, <b>kiểm định chéo</b>.</p></div></div><div class="col"><div class="key">Chênh lệch lớn giữa huấn luyện và kiểm tra là <b>dấu hiệu quá khớp</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 3</span><h1>Rò rỉ dữ liệu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thông tin kiểm tra lọt vào huấn luyện</h3><p style="margin:0 0 8px"><b>Chuẩn hoá cả tập</b> (trung bình, độ lệch chuẩn tính trên cả huấn luyện lẫn kiểm tra) rồi mới chia → <b>rò rỉ</b>: kết quả <b>lạc quan</b>.</p><p style="margin:0 0 8px">Dùng <b>tập kiểm tra để chỉnh tham số</b> → đánh giá không khách quan.</p><p style="margin:0 0 8px">Cách đúng: <b>chia trước</b>; tham số chuẩn hoá tính <b>chỉ trên tập huấn luyện</b>, rồi áp sang tập kiểm tra.</p></div></div><div class="col"><div class="key">Quy tắc: <b>chia tập trước, xử lí sau</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 4</span><h1>Ma trận nhầm lẫn</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bốn ô</h3><table><tr><th></th><th>Dự đoán dương</th><th>Dự đoán âm</th></tr><tr><td>Thật dương</td><td><b>TP</b></td><td><b>FN</b> (bỏ sót)</td></tr><tr><td>Thật âm</td><td><b>FP</b> (báo nhầm)</td><td><b>TN</b></td></tr></table><p style="margin:0 0 8px"><b>Dương</b> là lớp ta quan tâm (thư rác, bệnh).</p></div></div><div class="col"><div class="key">FN: dương thật bị <b>bỏ sót</b>; FP: âm thật bị <b>báo nhầm</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 4</span><h1>Bốn chỉ số</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Công thức</h3><table><tr><th>Chỉ số</th><th>Công thức</th><th>Ý nghĩa</th></tr><tr><td>Accuracy</td><td>(TP+TN)/tổng</td><td>tỉ lệ đoán đúng</td></tr><tr><td>Precision</td><td>TP/(TP+FP)</td><td>trong số <b>báo dương</b>, bao nhiêu đúng</td></tr><tr><td>Recall</td><td>TP/(TP+FN)</td><td>trong số <b>dương thật</b>, bắt được bao nhiêu</td></tr><tr><td>F1</td><td>2PR/(P+R)</td><td>trung bình điều hoà</td></tr></table></div></div><div class="col"><div class="key">Recall = độ nhạy; <b>tỉ lệ âm tính giả = 1 − recall</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 4</span><h1>Bài mẫu: TP=40, FP=10, FN=20, TN=30</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Accuracy = 70/100 = <b>70%</b>; precision = 40/50 = <b>80%</b>.</p><p style="margin:0 0 8px">Recall = 40/60 ≈ <b>66,7%</b> (không phải 80%).</p><p style="margin:0 0 8px"><b>20</b> thư rác bị bỏ sót (FN).</p></div><pre class="code" style="font-size:calc(17px*var(--z,1))">TP,FP,FN,TN=40,10,20,30
+n=TP+FP+FN+TN
+P=TP/(TP+FP); R=TP/(TP+FN)
+print('accuracy',(TP+TN)/n)
+print('precision',P)
+print('recall',round(R,3))
+print('F1',round(2*P*R/(P+R),3))
+print('bỏ sót',FN)</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">accuracy 0.7
+precision 0.8
+recall 0.667
+F1 0.727
+bỏ sót 20</pre></div><div class="key">Đừng nhầm precision với recall.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 4</span><h1>Bài mẫu: 40 thư rác, báo 30, đúng 24</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Precision = 24/30 = <b>0,8</b>; recall = 24/40 = <b>0,6</b>.</p><p style="margin:0 0 8px">FN = 40 − 24 = <b>16</b>; TN = 54; accuracy = <b>0,78</b>.</p></div><pre class="code" style="font-size:calc(20px*var(--z,1))">TP=24; FP=30-24; FN=40-24; TN=100-TP-FP-FN
+print('P',TP/30,'R',TP/40)
+print('FN',FN,'TN',TN)
+print('accuracy',(TP+TN)/100)</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">P 0.8 R 0.6
+FN 16 TN 54
+accuracy 0.78</pre></div><div class="key">Accuracy không bằng precision.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 5</span><h1>Bẫy: 95% âm tính, mô hình luôn đoán “âm”</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Accuracy = <b>95%</b> nhưng <b>recall = 0</b>: bỏ sót mọi ca dương.</p><p style="margin:0 0 8px">Dữ liệu <b>mất cân bằng</b> → cần xét <b>precision, recall, F1</b>.</p></div><pre class="code" style="font-size:calc(19px*var(--z,1))">n=100; pos=5
+TP=0; FN=pos; TN=n-pos; FP=0
+print('accuracy',(TP+TN)/n)
+print('recall',TP/(TP+FN))
+print('precision','không xác định (không báo dương nào)')</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">accuracy 0.95
+recall 0.0
+precision không xác định (không báo dương nào)</pre></div><div class="key">Đáp án: accuracy 95% nhưng recall lớp dương = 0.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 5</span><h1>Chọn chỉ số theo bài toán</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cái giá của sai lầm</h3><table><tr><th>Bài toán</th><th>Ưu tiên</th></tr><tr><td>Chẩn đoán bệnh hiểm</td><td><b>recall</b> cao (đừng bỏ sót)</td></tr><tr><td>Lọc thư rác (không mất thư quan trọng)</td><td><b>precision</b> cao</td></tr><tr><td>Cân bằng hai mặt</td><td><b>F1</b></td></tr></table></div></div><div class="col"><div class="key">Chọn chỉ số theo <b>hậu quả</b> của FN và FP.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 6</span><h1>Tự kiểm tra 1: quá khớp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Mô hình 98% trên huấn luyện, 70% trên kiểm tra. Nguyên nhân thường gặp?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>Quá khớp</b>: học thuộc dữ liệu huấn luyện, khó tổng quát hoá.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 6</span><h1>Tự kiểm tra 2: tính chỉ số</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">TP=24, FP=6, FN=16, TN=54. Tính precision, recall, accuracy.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Precision = 24/30 = <b>0,8</b>; recall = 24/40 = <b>0,6</b>; accuracy = 78/100 = <b>0,78</b>.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · 6</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) Chuẩn hoá cả tập rồi chia là cách đúng. (b) Dùng tập kiểm tra chỉnh tham số giúp đánh giá khách quan. (c) Accuracy 95% luôn là mô hình tốt. (d) Recall = TP/(TP+FN). (e) 99% huấn luyện, 70% kiểm tra là dấu hiệu quá khớp.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Sai</b>: rò rỉ.</p><p style="margin:0 0 8px">(b) <b>Sai</b>: rò rỉ.</p><p style="margin:0 0 8px">(c) <b>Sai</b>: xét mất cân bằng.</p><p style="margin:0 0 8px">(d) <b>Đúng</b>.</p><p style="margin:0 0 8px">(e) <b>Đúng</b>.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>3 tập: <b>huấn luyện / kiểm định / kiểm tra</b>.</li><li>Huấn luyện cao, kiểm tra thấp = <b>quá khớp</b>.</li><li><b>Chia trước</b>, chuẩn hoá chỉ trên huấn luyện (tránh rò rỉ).</li><li>Precision = TP/(TP+FP); recall = TP/(TP+FN); accuracy = (TP+TN)/n.</li><li>Dữ liệu mất cân bằng: accuracy <b>đánh lừa</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Bỏ sót dương thật</td><td>FN</td></tr><tr><td class="m">Báo nhầm</td><td>FP</td></tr><tr><td class="m">Tính tham số chuẩn hoá</td><td>chỉ trên huấn luyện</td></tr><tr><td class="m">95% âm, luôn đoán âm</td><td>recall = 0</td></tr></table><div class="warn">Nhầm precision và recall; chuẩn hoá trước khi chia; tin accuracy khi mất cân bằng.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>Kiểm định chéo</b> k-fold.</li><li><b>Đường cong ROC</b>.</li><li><b>Regularization</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>AUC</b>.</li><li><b>Học từ dữ liệu mất cân bằng</b> (lấy mẫu lại).</li><li><b>Learning curve</b>.</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Báo nhầm âm thành dương?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Bỏ sót dương thật?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Chỉ số khi không được bỏ sót?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Tránh rò rỉ bằng cách?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Chênh lệch lớn huấn luyện–kiểm tra?</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>FP</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>FN</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Recall</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>Chia trước</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>Quá khớp</b>.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Viết công thức precision và recall.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Vì sao cần tập kiểm tra riêng?</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. TP=40, FP=10, FN=20, TN=30: tính 4 chỉ số.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Nêu 3 cách giảm quá khớp.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Dữ liệu 95% âm, mô hình đoán toàn âm: kết luận?</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Vì sao chuẩn hoá cả tập trước khi chia gây lạc quan?</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>P = TP/(TP+FP); R = TP/(TP+FN).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Đánh giá trên dữ liệu chưa thấy.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>0,70; 0,80; 0,667; F1 ≈ 0,727.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Thêm dữ liệu, đơn giản hoá, kiểm định chéo.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">AI 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Accuracy 95%, recall 0: vô dụng.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Thông tin tập kiểm tra ảnh hưởng huấn luyện.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
