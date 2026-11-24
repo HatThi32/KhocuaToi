@@ -1,0 +1,203 @@
+<!-- HEAD -->
+<title>Bài 11 · Ảnh, âm thanh, video, iframe</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · BÀI 11</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BÀI 11<br>ẢNH, ÂM THANH, VIDEO</h1><p style="font-size:28px;line-height:1.5">Chèn ảnh, âm thanh, video và nhúng trang bằng iframe.</p><div><span class="chip">img</span><span class="chip">audio, video</span><span class="chip">iframe</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 11</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Chèn <b>ảnh</b> với <code>img</code>, dùng <code>alt</code>.</li><li>Chèn <b>âm thanh, video</b> với <code>audio, video, source</code>.</li><li>Nhúng trang bằng <b>iframe</b>.</li><li>Chọn đúng thẻ cho từng nhu cầu.</li><li>Phát hiện lỗi thuộc tính, thiếu <code>controls</code>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Ảnh với img</li><li>Âm thanh, video</li><li>Khung nội tuyến iframe</li><li>Trọng tâm, nâng cao</li><li>Bài tập Bài 10–11, bài khó HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 11 · 1</span><h1>Ảnh với &lt;img&gt;</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code">&lt;figure&gt;
+  &lt;img src="anh/logo.png"
+       alt="Logo trường" width="200"&gt;
+  &lt;figcaption&gt;Hình 1. Logo&lt;/figcaption&gt;
+&lt;/figure&gt;</pre>
+<div class="res"><span class="lab">Kết quả hiển thị</span><div style="display:flex;gap:14px;align-items:center"><svg viewBox="0 0 120 90" style="width:150px"><rect width="120" height="90" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><circle cx="60" cy="40" r="22" fill="#0B2545"/><text x="60" y="48" text-anchor="middle" font-size="20" fill="#fff" font-weight="800">12A1</text></svg><i style="font-family:Georgia,serif;font-size:21px">Hình 1. Logo</i></div></div>
+<div class="card"><h3>Thuộc tính</h3><ul style="gap:2px"><li><b>src</b>: đường dẫn ảnh. <b>alt</b>: văn bản thay thế khi ảnh lỗi, cho người khiếm thị.</li><li><b>width, height</b>: kích thước (chỉ đặt một thì giữ tỉ lệ).</li></ul></div></div>
+<div class="col"><table><tr><th>Định dạng</th><th>Đặc điểm</th></tr>
+<tr><td class="m">JPEG</td><td>Ảnh chụp, nén mất mát, nhỏ</td></tr>
+<tr><td class="m">PNG</td><td>Không mất mát, <b>nền trong suốt</b></td></tr>
+<tr><td class="m">GIF</td><td>Ảnh <b>động</b>, ít màu</td></tr>
+<tr><td class="m">SVG</td><td>Vector, phóng to không vỡ</td></tr>
+<tr><td class="m">WebP</td><td>Hiện đại, rất nhỏ gọn</td></tr></table>
+<div class="key"><code>img</code> là thẻ <b>rỗng</b> và phần tử <b>dòng</b>.</div>
+<div class="warn">Sai <code>src</code> hoặc viết nhầm <code>scr</code> → ảnh không hiện, chỉ hiện chữ <b>alt</b>.</div></div>
+</div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 11 · 2</span><h1>Âm thanh, video: audio, video, source</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code">&lt;video controls width="480"
+       poster="bia.jpg"&gt;
+  &lt;source src="bai.mp4"
+          type="video/mp4"&gt;
+  &lt;source src="bai.webm"
+          type="video/webm"&gt;
+  Trình duyệt không hỗ trợ.
+&lt;/video&gt;
+&lt;audio controls src="nhac.mp3"&gt;&lt;/audio&gt;</pre>
+<div class="res"><span class="lab">Kết quả hiển thị</span><div style="display:flex;gap:12px;align-items:center"><svg viewBox="0 0 240 150" style="width:200px"><rect width="240" height="150" fill="#263238"/><polygon points="95,45 95,105 150,75" fill="#fff"/><rect y="128" width="240" height="22" fill="#455A64"/><circle cx="20" cy="139" r="7" fill="#fff"/></svg><div style="background:#ECEFF1;border-radius:20px;padding:8px 16px;font-family:Arial;font-size:21px">▶ ─────○ 0:00</div></div></div></div>
+<div class="col"><table><tr><th>Thuộc tính</th><th>Tác dụng</th></tr>
+<tr><td class="m">controls</td><td>Hiện thanh điều khiển</td></tr>
+<tr><td class="m">autoplay</td><td>Tự phát (thường cần <code>muted</code>)</td></tr>
+<tr><td class="m">loop, muted</td><td>Lặp lại, tắt tiếng</td></tr>
+<tr><td class="m">poster</td><td>Ảnh bìa — <b>chỉ video</b></td></tr>
+<tr><td class="m">source type</td><td>Nhiều định dạng, chọn cái đầu tiên chạy được</td></tr></table>
+<div class="key"><code>source</code> là thẻ rỗng, đặt <b>bên trong</b> audio/video. Chữ giữa thẻ chỉ hiện khi trình duyệt <b>không hỗ trợ</b>.</div>
+<div class="warn">Thiếu <code>controls</code> → không bật được. <code>audio</code> <b>không có</b> poster.</div></div>
+</div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 11 · 3</span><h1>Khung nội tuyến iframe và so sánh</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code">&lt;iframe src="https://www.example.com"
+        width="600" height="400"
+        title="Trang ví dụ"&gt;&lt;/iframe&gt;</pre>
+<div class="bwin"><div class="tab"><span>Trang của em</span></div><div class="page"><p style="font-family:Georgia,serif">Nội dung trang em…</p><div style="border:3px dashed #4527A0;border-radius:8px;padding:10px;margin-top:8px"><div class="lab" style="color:#4527A0">iframe: trang khác ở trong khung</div><p style="font-family:Georgia,serif">example.com hiển thị ngay đây</p></div></div></div>
+<div class="warn">Một số trang <b>cấm bị nhúng</b> nên khung trống. Nhúng YouTube phải dùng <b>mã nhúng (embed)</b>.</div></div>
+<div class="col"><table><tr><th>Thẻ</th><th>Làm gì</th></tr>
+<tr><td class="m">a</td><td>Chuyển <b>sang</b> trang mới khi nháy</td></tr>
+<tr><td class="m">img</td><td>Hiển thị ảnh tĩnh</td></tr>
+<tr><td class="m">audio/video</td><td>Phát tệp phương tiện do chính trang cung cấp</td></tr>
+<tr><td class="m">iframe</td><td>Hiển thị <b>trang khác ngay trong</b> trang này</td></tr></table>
+<div class="key">iframe nhúng <b>một trang web</b> vào khung; <code>src</code> là địa chỉ trang, <code>width</code>/<code>height</code> là kích thước khung.</div></div>
+</div></section>
+
+<section class="s p5"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><code>img</code> là thẻ <b>rỗng</b>: <code>src</code>, <code>alt</code>, <code>width</code>, <code>height</code>.</li><li><code>alt</code> hiện khi ảnh lỗi, giúp người khiếm thị.</li><li><code>audio/video</code> cần <code>controls</code> mới có thanh điều khiển.</li><li><code>source</code> khai báo nhiều định dạng; <code>poster</code> chỉ cho video.</li><li><code>iframe src</code> nhúng một trang web vào khung.</li></ul></div></div><div class="col"><table><tr><th>Thẻ</th><th>Dùng để</th></tr><tr><td class="m">a</td><td>chuyển sang trang khác</td></tr><tr><td class="m">img</td><td>hiện ảnh</td></tr><tr><td class="m">audio, video</td><td>phát phương tiện</td></tr><tr><td class="m">iframe</td><td>hiện trang khác trong khung</td></tr></table><div class="warn">Viết nhầm <code>scr</code> thay <code>src</code>: ảnh không hiện, chỉ hiện chữ <b>alt</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">NÂNG CAO</span><h1>Ảnh, phương tiện và khung nhúng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ảnh</h3><ul style="gap:6px"><li>Chỉ đặt <b>một</b> trong width/height thì ảnh giữ tỉ lệ.</li><li>JPEG: ảnh chụp. PNG: nền trong suốt. SVG: vector. GIF: ảnh động.</li><li>Ảnh làm liên kết: <code>&lt;a href="…"&gt;&lt;img …&gt;&lt;/a&gt;</code>.</li></ul></div></div><div class="col"><div class="card"><h3>Video, audio, iframe</h3><ul style="gap:6px"><li><code>autoplay</code> thường bị chặn trừ khi có <code>muted</code>.</li><li>Trình duyệt chọn <b>source đầu tiên</b> mà nó chạy được.</li><li>Chữ giữa thẻ chỉ hiện khi trình duyệt <b>không hỗ trợ</b>.</li><li>Một số trang <b>cấm nhúng</b> nên iframe trống.</li></ul></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 10–11 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:9px">
+<div class="q" style="padding:6px 16px"><div class="n">★</div><p>Cây thư mục: <code>web/index.html</code>, <code>web/anh/a.png</code>, <code>web/bai/b1.html</code>, <code>web/bai/b2.html</code>, <code>web/bai/tl/c.html</code></p></div>
+<div class="q" style="padding:6px 16px"><div class="n">1</div><p>Trong <code>b1.html</code>, viết đường dẫn tương đối tới <code>a.png</code>.</p></div>
+<div class="q" style="padding:6px 16px"><div class="n">2</div><p>Trong <code>c.html</code>, viết đường dẫn tới <code>b2.html</code> và tới <code>index.html</code>.</p></div>
+<div class="q" style="padding:6px 16px"><div class="n">3</div><p>Nháy chữ “Về đầu trang” để nhảy lên phần tử <code>id="top"</code> cùng trang: viết thế nào?</p></div>
+<div class="q" style="padding:6px 16px"><div class="n">4</div><p>Viết thẻ video có điều khiển, rộng 320, ảnh bìa <code>p.jpg</code>, nguồn <code>v.mp4</code>.</p></div>
+<div class="q" style="padding:6px 16px"><div class="n">5</div><p>Thẻ nào mở một trang web khác ngay trong khung của trang hiện tại?</p></div>
+</div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 10–11 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:9px">
+<div class="q a" style="padding:6px 16px"><div class="n">1</div><p><code>../anh/a.png</code> — b1.html ở <code>bai/</code>, lên một cấp là <code>web/</code>, rồi vào <code>anh/</code>.</p></div>
+<div class="q a" style="padding:6px 16px"><div class="n">2</div><p>c.html ở <code>bai/tl/</code>: tới b2.html lên <b>một</b> cấp: <code>../b2.html</code>; tới index.html lên <b>hai</b> cấp: <code>../../index.html</code>.</p></div>
+<div class="q a" style="padding:6px 16px"><div class="n">3</div><p><code>&lt;a href="#top"&gt;Về đầu trang&lt;/a&gt;</code>, phần tử đích có <code>id="top"</code>.</p></div>
+<div class="q a" style="padding:6px 16px"><div class="n">4</div><p><code>&lt;video controls width="320" poster="p.jpg"&gt;&lt;source src="v.mp4" type="video/mp4"&gt;&lt;/video&gt;</code></p></div>
+<div class="q a" style="padding:6px 16px"><div class="n">5</div><p><b>iframe</b>.</p></div>
+</div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 11 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Tìm lỗi mỗi dòng:</p><pre class="code" style="margin:6px 0 0;font-size:calc(20px*var(--z,1))">(a) &lt;img src="a.png"&gt;&lt;/img&gt;
+(b) &lt;img href="a.png"&gt;
+(c) &lt;video src="v.mp4"&gt;&lt;/video&gt;</pre></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Ảnh a.png bị lỗi tải: trang hiển thị gì?</p><pre class="code" style="margin:6px 0 0;font-size:calc(20px*var(--z,1))">&lt;img src="a.png" alt="Mặt Trời" width="200"&gt;</pre></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) Thiếu <code>controls</code> thì không hiện thanh điều khiển. (b) Có thể khai báo nhiều <code>source</code>. (c) <code>iframe</code> dùng thuộc tính <code>href</code>. (d) Trang nào cũng nhúng được bằng iframe.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 11 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Viết mã chèn video <code>bai.mp4</code> (dự phòng <code>bai.webm</code>), rộng 480, có điều khiển, kèm câu báo khi không hỗ trợ.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Cho ảnh <code>images/sun.png</code> rộng 100, có chữ thay thế, làm liên kết tới <code>thong_tin.html</code>.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Chọn thẻ: (a) phát nhạc nền; (b) hiện bản đồ của trang khác; (c) ảnh bìa trước khi phát.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 11 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>(a) <code>img</code> là thẻ rỗng, không có <code>&lt;/img&gt;</code>. (b) dùng <code>src</code>. (c) thiếu <code>controls</code>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Hiện chữ <b>Mặt Trời</b> (nội dung <code>alt</code>) thay cho ảnh.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Đúng</b>. (b) <b>Đúng</b>. (c) <b>Sai</b>: dùng <code>src</code>. (d) <b>Sai</b>: nhiều trang cấm nhúng.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">BÀI 11 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>&lt;video controls width="480"&gt;&lt;source src="bai.mp4" type="video/mp4"&gt;&lt;source src="bai.webm" type="video/webm"&gt;Trình duyệt không hỗ trợ.&lt;/video&gt;</code></p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>&lt;a href="thong_tin.html"&gt;&lt;img src="images/sun.png" width="100" alt="Mặt Trời"&gt;&lt;/a&gt;</code></p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>(a) <b>audio</b>; (b) <b>iframe</b>; (c) thuộc tính <b>poster</b> của <b>video</b>.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

@@ -1,0 +1,210 @@
+<!-- HEAD -->
+<title>Web, URL và trình duyệt</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · NỀN</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>WEB, URL<br>VÀ TRÌNH DUYỆT</h1><p style="font-size:28px;line-height:1.5">Kiến thức nền trước khi học HTML: Web, website, URL, DNS, HTTP, trang tĩnh và động.</p><div><span class="chip">Web</span><span class="chip">URL</span><span class="chip">HTTP</span><span class="chip">Tĩnh / động</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">MỞ ĐẦU</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Phân biệt <b>Internet, Web, website</b>.</li><li>Phân tích <b>các thành phần của URL</b>.</li><li>Mô tả các bước <b>trình duyệt tải một trang web</b>.</li><li>Đọc <b>mã trạng thái HTTP</b> (200, 301, 404, 500).</li><li>Phân biệt <b>trang tĩnh</b> và <b>trang động</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Web, trang web, website</li><li>URL và tên miền</li><li>Trình duyệt tải trang</li><li>Trang tĩnh và động</li><li>Trọng tâm và kiến thức nâng cao</li><li>Bài tập luyện HSG và đáp án</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">NỀN</span><h1>Web, trang web, website</h1></div>
+<div class="bd g21">
+<div class="col"><table><tr><th style="width:34%">Thuật ngữ</th><th>Nghĩa chính xác</th></tr>
+<tr><td><b>Internet</b></td><td>Hạ tầng mạng toàn cầu.</td></tr>
+<tr><td><b>World Wide Web</b></td><td>Các trang web liên kết bằng <b>siêu liên kết</b>.</td></tr>
+<tr><td><b>Website</b></td><td>Nhiều trang web liên quan, chung tên miền.</td></tr>
+<tr><td><b>Trang web</b></td><td>Một tài liệu siêu văn bản (tệp HTML).</td></tr>
+<tr><td><b>Trình duyệt</b></td><td>Phần mềm <b>client</b>: yêu cầu, hiển thị trang.</td></tr>
+<tr><td><b>Máy chủ web</b></td><td>Máy <b>server</b> lưu website, trả lời yêu cầu.</td></tr></table>
+<div class="warn">Internet ≠ Web: thư điện tử, FTP là dịch vụ khác trên Internet.</div></div>
+<svg viewBox="0 0 520 470"><rect x="5" y="5" width="510" height="460" rx="20" fill="#E3F2FD" stroke="#0B2545" stroke-width="4"/><text x="260" y="40" font-size="24" font-weight="800" text-anchor="middle" fill="#0B2545">INTERNET</text>
+<rect x="30" y="56" width="460" height="290" rx="16" fill="#BBDEFB" stroke="#0B2545" stroke-width="3"/><text x="260" y="88" font-size="24" font-weight="800" text-anchor="middle" fill="#0B2545">WORLD WIDE WEB</text>
+<rect x="55" y="104" width="410" height="224" rx="14" fill="#90CAF9" stroke="#0B2545" stroke-width="3"/><text x="260" y="134" font-size="22" font-weight="800" text-anchor="middle" fill="#0B2545">WEBSITE lop12.edu.vn</text>
+<rect x="75" y="150" width="170" height="160" rx="10" fill="#fff" stroke="#0B2545" stroke-width="3"/><text x="160" y="185" font-size="21" font-weight="800" text-anchor="middle" fill="#0B2545">TRANG WEB</text><text x="160" y="215" font-size="20" class="mono" text-anchor="middle" fill="#C62828">index.html</text><text x="160" y="250" font-size="20" text-anchor="middle" fill="#0B2545">trang chủ</text>
+<rect x="275" y="150" width="170" height="160" rx="10" fill="#fff" stroke="#0B2545" stroke-width="3"/><text x="360" y="185" font-size="21" font-weight="800" text-anchor="middle" fill="#0B2545">TRANG WEB</text><text x="360" y="215" font-size="20" class="mono" text-anchor="middle" fill="#C62828">bai1.html</text><text x="360" y="250" font-size="20" text-anchor="middle" fill="#0B2545">trang con</text>
+<path d="M245 230 H275" stroke="#C62828" stroke-width="4"/><text x="260" y="222" font-size="18" text-anchor="middle" fill="#C62828" font-weight="800">link</text>
+<rect x="30" y="366" width="215" height="76" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="3"/><text x="137" y="410" font-size="22" font-weight="800" text-anchor="middle" fill="#E65100">THƯ ĐIỆN TỬ</text>
+<rect x="275" y="366" width="215" height="76" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="3"/><text x="382" y="410" font-size="22" font-weight="800" text-anchor="middle" fill="#E65100">FTP, v.v.</text></svg>
+</div></section>
+
+<section class="s p0"><div class="hd"><span class="k">NỀN</span><h1>URL và tên miền</h1></div>
+<div class="bd" style="grid-template-rows:auto 1fr;gap:12px">
+<svg viewBox="0 0 1180 250"><g class="mono" font-size="30" text-anchor="middle" fill="#fff">
+<rect x="40" y="10" width="120" height="64" fill="#0B2545"/><text x="100" y="52">https</text>
+<rect x="160" y="10" width="62" height="64" fill="#607D8B"/><text x="191" y="52">://</text>
+<rect x="222" y="10" width="270" height="64" fill="#00695C"/><text x="357" y="52">www.example.vn</text>
+<rect x="492" y="10" width="100" height="64" fill="#E65100"/><text x="542" y="52">:443</text>
+<rect x="592" y="10" width="270" height="64" fill="#4527A0"/><text x="727" y="52">/hoc/bai1.html</text>
+<rect x="862" y="10" width="150" height="64" fill="#AD1457"/><text x="937" y="52">?lop=12</text>
+<rect x="1012" y="10" width="130" height="64" fill="#C62828"/><text x="1077" y="52">#muc2</text></g>
+<g font-size="22" text-anchor="middle" font-weight="800"><text x="100" y="116" fill="#0B2545">GIAO THỨC</text><text x="357" y="116" fill="#00695C">TÊN MIỀN</text><text x="542" y="116" fill="#E65100">CỔNG</text><text x="727" y="116" fill="#4527A0">ĐƯỜNG DẪN</text><text x="937" y="116" fill="#AD1457">TRUY VẤN</text><text x="1077" y="116" fill="#C62828">MẢNH</text></g>
+<g font-size="20" text-anchor="middle" fill="#0B2545"><text x="100" y="148">http / https</text><text x="357" y="148">→ địa chỉ IP</text><text x="542" y="148">80 / 443</text><text x="727" y="148">tệp trên máy chủ</text><text x="937" y="148">tham số gửi đi</text><text x="1077" y="148">neo trong trang</text></g>
+<path d="M357 76 V90M542 76 V90M727 76 V90M937 76 V90M1077 76 V90M100 76 V90" stroke="#0B2545" stroke-width="3"/>
+<text x="1077" y="182" font-size="20" font-weight="800" text-anchor="middle" fill="#C62828">KHÔNG gửi</text><text x="1077" y="206" font-size="20" font-weight="800" text-anchor="middle" fill="#C62828">lên máy chủ</text></svg>
+<div class="bd g3" style="gap:16px">
+<div class="card"><h3>Giao thức</h3><p><b>http</b>: không mã hoá. <b>https</b>: mã hoá (TLS) nên an toàn khi đăng nhập, thanh toán. Cổng mặc định: http 80, https 443 (thường được ẩn).</p><p style="margin-top:8px"><b>Ví dụ:</b> <code>https://</code> mã hoá, <code>http://</code> thì không.</p></div>
+<div class="card"><h3>Tên miền đọc từ phải sang trái</h3><p><code>.vn</code> miền cấp cao quốc gia → <code>example</code> tên đăng kí → <code>www</code> máy chủ con. Máy tính chỉ dùng <b>IP</b> nên cần <b>DNS</b>.</p><p style="margin-top:8px"><b>Ví dụ:</b> <code>www.example.vn</code> thuộc miền <code>.vn</code>.</p></div>
+<div class="key">Phần sau dấu <b>#</b> chỉ xử lí ở <b>trình duyệt</b> (nhảy tới phần tử có <code>id</code>), <b>không</b> gửi lên máy chủ.<p style="margin-top:8px"><b>Ví dụ:</b> máy chủ nhận <code>/hoc/bai1.html?lop=12</code>, còn <code>#muc2</code> ở lại trình duyệt.</p></div>
+</div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">NỀN</span><h1>Trình duyệt tải trang như thế nào?</h1></div>
+<div class="bd g12">
+<div class="col"><ol style="gap:7px">
+<li>Người dùng nhập <b>URL</b> hoặc nháy liên kết.</li>
+<li>Trình duyệt hỏi <b>DNS</b> để lấy địa chỉ IP.</li>
+<li>Thiết lập kết nối tới máy chủ (https: thêm bước mã hoá).</li>
+<li>Gửi <b>yêu cầu HTTP</b>: <code>GET /hoc/bai1.html</code>.</li>
+<li>Máy chủ gửi <b>phản hồi</b>: mã trạng thái + tệp HTML.</li>
+<li>Phân tích HTML, dựng cây; gặp CSS, ảnh, script thì <b>gửi thêm yêu cầu</b>.</li>
+<li>Áp CSS, chạy script, <b>vẽ trang</b> lên màn hình.</li></ol>
+<div class="lab">Một số mã trạng thái HTTP</div><table><tr><th>Mã</th><th>Ý nghĩa</th></tr><tr><td class="m">200</td><td>OK – thành công</td></tr><tr><td class="m">301</td><td>Chuyển hướng vĩnh viễn</td></tr><tr><td class="m">404</td><td>Không tìm thấy tài nguyên</td></tr><tr><td class="m">500</td><td>Lỗi bên trong máy chủ</td></tr></table></div>
+<div class="col"><svg viewBox="0 0 560 330"><defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0B2545"/></marker></defs>
+<rect x="10" y="110" width="170" height="110" rx="12" fill="#0B2545"/><text x="95" y="158" font-size="22" font-weight="800" fill="#fff" text-anchor="middle">TRÌNH DUYỆT</text><text x="95" y="190" font-size="20" fill="#F2A900" text-anchor="middle">(client)</text>
+<rect x="380" y="10" width="170" height="90" rx="12" fill="#00695C"/><text x="465" y="52" font-size="22" font-weight="800" fill="#fff" text-anchor="middle">MÁY CHỦ DNS</text><text x="465" y="80" font-size="20" fill="#FFE082" text-anchor="middle">tên miền → IP</text>
+<rect x="380" y="230" width="170" height="90" rx="12" fill="#4527A0"/><text x="465" y="272" font-size="22" font-weight="800" fill="#fff" text-anchor="middle">MÁY CHỦ WEB</text><text x="465" y="300" font-size="20" fill="#FFE082" text-anchor="middle">lưu website</text>
+<path d="M180 135 L378 70" stroke="#0B2545" stroke-width="4" marker-end="url(#ar)"/><circle cx="265" cy="82" r="18" fill="#F2A900"/><text x="265" y="89" font-size="22" font-weight="800" text-anchor="middle">2</text>
+<path d="M180 195 L378 262" stroke="#0B2545" stroke-width="4" marker-end="url(#ar)"/><circle cx="262" cy="222" r="18" fill="#F2A900"/><text x="262" y="229" font-size="22" font-weight="800" text-anchor="middle">4</text>
+<path d="M378 290 L180 215" stroke="#C62828" stroke-width="4" stroke-dasharray="8 6" marker-end="url(#ar)"/><circle cx="330" cy="266" r="18" fill="#C62828"/><text x="330" y="273" font-size="22" font-weight="800" text-anchor="middle" fill="#fff">5</text></svg>
+<div class="warn">Một trang cần <b>nhiều</b> yêu cầu, không phải một.</div></div>
+</div></section>
+
+<section class="s p0"><div class="hd"><span class="k">NỀN</span><h1>Trang web tĩnh và trang web động</h1></div>
+<div class="bd g2">
+<div class="col"><table><tr><th></th><th>Tĩnh</th><th>Động</th></tr>
+<tr><td><b>Nội dung</b></td><td>Có sẵn trong tệp HTML</td><td>Sinh ra khi có yêu cầu</td></tr>
+<tr><td><b>Người xem</b></td><td>Ai cũng thấy như nhau</td><td>Có thể khác nhau</td></tr>
+<tr><td><b>Cần CSDL</b></td><td>Không</td><td>Thường có</td></tr>
+<tr><td><b>Cập nhật</b></td><td>Sửa tệp thủ công</td><td>Qua giao diện quản trị</td></tr>
+<tr><td><b>Ví dụ</b></td><td>Trang giới thiệu lớp</td><td>Cổng điểm, giỏ hàng, diễn đàn</td></tr></table>
+<div class="key">“Tĩnh” nói về <b>nguồn nội dung</b>, không phải chuyển động. Trang tĩnh vẫn có thể có hiệu ứng JavaScript.</div></div>
+<svg viewBox="0 0 540 440"><g font-size="21" text-anchor="middle" font-weight="800"><text x="270" y="28" fill="#0B2545">TRANG TĨNH</text>
+<rect x="10" y="44" width="150" height="70" rx="10" fill="#0B2545"/><text x="85" y="86" fill="#fff">Trình duyệt</text>
+<rect x="190" y="44" width="150" height="70" rx="10" fill="#4527A0"/><text x="265" y="86" fill="#fff">Máy chủ</text>
+<rect x="370" y="44" width="160" height="70" rx="10" fill="#FFB300"/><text x="450" y="86" fill="#0B2545">Tệp .html</text>
+<path d="M160 79 H188M340 79 H368" stroke="#0B2545" stroke-width="4"/>
+<text x="270" y="190" fill="#C62828">TRANG ĐỘNG</text>
+<rect x="10" y="206" width="150" height="70" rx="10" fill="#0B2545"/><text x="85" y="248" fill="#fff">Trình duyệt</text>
+<rect x="180" y="206" width="170" height="70" rx="10" fill="#4527A0"/><text x="265" y="236" fill="#fff">Máy chủ</text><text x="265" y="262" fill="#FFE082" font-size="20">chạy mã</text>
+<rect x="370" y="206" width="160" height="70" rx="10" fill="#00695C"/><text x="450" y="248" fill="#fff">CSDL</text>
+<path d="M160 241 H188M340 241 H368" stroke="#0B2545" stroke-width="4"/>
+<rect x="190" y="306" width="150" height="62" rx="10" fill="#FFB300"/><text x="265" y="345" fill="#0B2545">HTML mới</text><path d="M265 276 V304" stroke="#C62828" stroke-width="4"/>
+<text x="265" y="410" fill="#0B2545" font-size="20">Phía máy chủ: PHP, Python, Node.js…</text></g></svg>
+</div></section>
+
+<section class="s p0"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Internet</b> là hệ thống mạng; <b>Web</b> là dịch vụ chạy trên Internet.</li><li><b>URL</b> = giao thức + tên miền + [cổng] + đường dẫn + [?truy vấn] + [#mảnh].</li><li><b>DNS</b> đổi tên miền thành địa chỉ IP.</li><li>Trình duyệt gửi <b>yêu cầu HTTP</b>; máy chủ trả <b>mã trạng thái</b> và nội dung.</li></ul></div></div><div class="col"><table><tr><th>Mã</th><th>Ý nghĩa</th></tr><tr><td class="m">200</td><td>Thành công</td></tr><tr><td class="m">301</td><td>Chuyển hướng vĩnh viễn</td></tr><tr><td class="m">404</td><td>Không tìm thấy tài nguyên</td></tr><tr><td class="m">500</td><td>Lỗi phía máy chủ</td></tr></table><div class="warn">Phần <code>#mảnh</code> <b>không</b> được gửi lên máy chủ; chỉ trình duyệt dùng nó để nhảy tới phần tử có <code>id</code>.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">NÂNG CAO</span><h1>URL đầy đủ và phương thức HTTP</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="overflow-wrap:anywhere;font-size:calc(20px*var(--z,1))">https://tin.edu.vn:8443/lop12/bai.html?id=5&amp;k=a#muc2</pre><table><tr><th>Thành phần</th><th>Giá trị</th></tr><tr><td class="m">Giao thức</td><td>https</td></tr><tr><td class="m">Tên miền</td><td>tin.edu.vn</td></tr><tr><td class="m">Cổng</td><td>8443</td></tr><tr><td class="m">Đường dẫn</td><td>/lop12/bai.html</td></tr><tr><td class="m">Truy vấn</td><td>id=5&amp;k=a (2 tham số)</td></tr><tr><td class="m">Mảnh</td><td>muc2</td></tr></table></div><div class="col"><div class="card"><h3>Kiến thức mở rộng</h3><ul style="gap:6px"><li>Cổng mặc định: <b>http 80</b>, <b>https 443</b> (nên không cần viết).</li><li>Truy vấn gồm các cặp <b>tên=giá trị</b> ngăn bằng <b>&amp;</b>.</li><li><b>GET</b>: dữ liệu nằm trên URL, ai cũng thấy; <b>POST</b>: dữ liệu gửi trong thân yêu cầu.</li><li><b>HTTPS</b> = HTTP có mã hoá, an toàn hơn khi gửi mật khẩu.</li></ul></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">NỀN · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Tách URL <code>https://tin.edu.vn:8443/lop12/bai.html?id=5&amp;k=a#muc2</code>: giao thức, tên miền, cổng, đường dẫn, truy vấn, mảnh. Truy vấn có mấy tham số?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Sắp xếp đúng thứ tự: (a) Trình duyệt hiển thị trang; (b) Gửi yêu cầu HTTP tới máy chủ; (c) DNS đổi tên miền ra địa chỉ IP; (d) Máy chủ trả mã trạng thái và nội dung; (e) Người dùng nhập URL.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) Web và Internet là một. (b) Phần <code>#muc2</code> được gửi lên máy chủ. (c) Mã 404 cho biết máy chủ không tìm thấy tài nguyên. (d) Trang tĩnh chỉ đổi nội dung khi người quản trị sửa tệp.</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">NỀN · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Trang hiển thị “Xin chào, &lt;tên người đăng nhập&gt;” là tĩnh hay động? Vì sao? Trang giới thiệu cố định của trường thì sao?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Gõ <code>http://tin.edu.vn/lop12</code> không nêu cổng thì trình duyệt dùng cổng nào? Với <code>https</code> thì sao?</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Phân biệt mã <b>301</b> và <b>404</b>: người dùng thấy gì?</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">NỀN · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Giao thức <b>https</b>; tên miền <b>tin.edu.vn</b>; cổng <b>8443</b>; đường dẫn <b>/lop12/bai.html</b>; truy vấn <b>id=5&amp;k=a</b> (<b>2</b> tham số); mảnh <b>muc2</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>e → c → b → d → a</b>: nhập URL, DNS tìm IP, gửi yêu cầu HTTP, máy chủ phản hồi, hiển thị.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b>: Web là dịch vụ chạy trên Internet. (b) <b>Sai</b>: mảnh chỉ trình duyệt dùng. (c) <b>Đúng</b>. (d) <b>Đúng</b>.</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">NỀN · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>Động</b>: nội dung thay đổi theo người dùng, do máy chủ tạo khi có yêu cầu. Trang giới thiệu cố định là <b>tĩnh</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Cổng <b>80</b> cho http và <b>443</b> cho https.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p><b>301</b>: trang đã chuyển vĩnh viễn, trình duyệt tự đi tới địa chỉ mới. <b>404</b>: không tìm thấy, người dùng thấy trang báo lỗi.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

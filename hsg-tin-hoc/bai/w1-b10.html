@@ -1,0 +1,253 @@
+<!-- HEAD -->
+<title>Bài 10 · Tạo liên kết</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · BÀI 10</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BÀI 10<br>TẠO LIÊN KẾT</h1><p style="font-size:28px;line-height:1.5">Siêu liên kết, đường dẫn tuyệt đối và tương đối, liên kết trong cùng trang, liên kết ảnh.</p><div><span class="chip">Thẻ a</span><span class="chip">Tuyệt đối</span><span class="chip">Tương đối</span><span class="chip">../</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Giải thích <b>siêu văn bản, siêu liên kết</b>.</li><li>Phân biệt <b>đường dẫn tuyệt đối</b> và <b>tương đối</b>.</li><li>Viết liên kết <b>ngoài</b>, <b>trong</b>, <b>cùng trang</b>, <b>ảnh</b>.</li><li>Dùng <code>../</code> đúng số mức.</li><li>Phát hiện lỗi đường dẫn.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Siêu văn bản và thẻ a</li><li>Tuyệt đối và tương đối</li><li>Các trường hợp liên kết trong</li><li>Liên kết cùng trang, liên kết ảnh</li><li>Trọng tâm, nâng cao, bài khó HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 1</span><h1>Siêu văn bản, siêu liên kết và thẻ a</h1></div>
+<div class="bd g2">
+<div class="col"><div class="card"><h3>Khái niệm (SGK)</h3><ul style="gap:5px"><li><b>Siêu văn bản</b> (hypertext): văn bản chứa chữ, ảnh, âm thanh… và các <b>siêu liên kết</b> tới siêu văn bản khác.</li><li><b>Siêu liên kết</b> (liên kết): tham chiếu tới siêu văn bản khác; nháy chuột để truy cập, <b>không cần đọc tuần tự</b>.</li></ul></div>
+<table><tr><th>Tệp</th><th>Siêu văn bản?</th></tr><tr><td class="m">.html</td><td>Có</td></tr><tr><td class="m">.docx (Word)</td><td>Có thể</td></tr><tr><td class="m">.txt (Notepad)</td><td>Không</td></tr></table></div>
+<div class="col"><div class="lab">Cấu trúc chung của thẻ a</div><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;a href="URL"&gt;Nội dung hiển thị&lt;/a&gt;</pre><div class="ok"><p><code>href</code> cung cấp <b>địa chỉ đích</b> (URL); giá trị <b>đặt trong cặp dấu nháy kép</b>. Đích thường là trang HTML, nhưng cũng có thể là <b>ảnh, âm thanh, video</b>.</p></div><div class="res"><span class="lab">Kết quả hiển thị</span><span style="font-family:Georgia,serif;font-size:23px;color:#1565C0;text-decoration:underline">Nội dung hiển thị</span> <span style="font-size:19px">(văn bản có liên kết thường gạch chân, màu xanh)</span></div><div class="key">Có <b>hai loại URL</b>: đường dẫn <b>tuyệt đối</b> và đường dẫn <b>tương đối</b>.</div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 1</span><h1>Đường dẫn tuyệt đối và tương đối</h1></div>
+<div class="bd g1">
+<div class="col"><table><tr><th></th><th>Tuyệt đối</th><th>Tương đối</th></tr>
+<tr><td><b>Giao thức, tên miền</b></td><td>Có đầy đủ</td><td>Không có</td></tr>
+<tr><td><b>Dùng khi</b></td><td>liên kết tới website <b>khác</b> (liên kết ngoài)</td><td>liên kết tới tài liệu <b>cùng website</b> (liên kết trong)</td></tr>
+<tr><td><b>Ví dụ</b></td><td class="m">https://www.nxbgd.vn/</td><td class="m">BT/bai_tap_1.html</td></tr>
+<tr><td><b>Đặc điểm</b></td><td>chính xác nhưng dài</td><td>ngắn; chuyển cả website sang nơi khác vẫn đúng</td></tr></table>
+<div style="display:grid;grid-template-columns:1.1fr 1fr;gap:16px"><div class="card"><h3>SGK: phân loại đường dẫn</h3><ul style="gap:4px"><li><code>html/cach tao lien ket.html</code>: <b>tương đối</b>.</li><li><code>http://google.com</code>: <b>tuyệt đối</b>.</li><li><code>mail.google.com/mail/u/0/#inbox/…</code>: <b>tương đối</b> (không có giao thức ở đầu).</li></ul></div>
+<div class="warn">Viết <code>href="www.google.com"</code> (thiếu <code>https://</code>) là <b>sai</b>: trình duyệt tìm tệp tên “www.google.com” trong website hiện tại và báo lỗi.</div></div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 2</span><h1>Siêu liên kết &lt;a&gt;</h1></div>
+<div class="bd g2">
+<div class="col"><table><tr><th>Đích</th><th>Cách viết href</th></tr>
+<tr><td>Trang khác cùng website</td><td class="m">"bai2.html"</td></tr>
+<tr><td>Website khác</td><td class="m">"https://www.example.com"</td></tr>
+<tr><td>Vị trí trong <b>cùng</b> trang</td><td class="m">"#muc2"</td></tr>
+<tr><td>Vị trí trong trang khác</td><td class="m">"bai2.html#muc2"</td></tr>
+<tr><td>Thư điện tử</td><td class="m">"mailto:a@b.vn"</td></tr>
+<tr><td>Số điện thoại</td><td class="m">"tel:0912345678"</td></tr></table>
+<div class="card"><h3>Thuộc tính khác</h3><ul style="gap:2px"><li><code>target="_blank"</code>: mở tab mới</li><li><code>title</code>: chú thích khi rê chuột</li></ul></div></div>
+<div class="col"><pre class="code">&lt;a href="bai2.html"&gt;Bài 2&lt;/a&gt;
+&lt;a href="#muc3"&gt;Nhảy tới mục 3&lt;/a&gt;
+...
+&lt;h2 id="muc3"&gt;Mục 3&lt;/h2&gt;</pre>
+<div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:23px"><a href="#" style="color:#1565C0">Bài 2</a><br><a href="#" style="color:#1565C0">Nhảy tới mục 3</a><br>…<div style="font-size:30px;font-weight:700">Mục 3 ← nhấn là nhảy xuống đây</div></div></div>
+<div class="key">Đích của neo là thuộc tính <b>id</b> (duy nhất trong trang), <b>không</b> phải <code>name</code>. Quên dấu <b>#</b> thì trình duyệt hiểu là tên tệp.</div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 2</span><h1>Liên kết ngoài: tới trang web khác</h1></div>
+<div class="bd g2">
+<div class="col"><div class="card"><h3>Liên kết ngoài</h3><p>Liên kết từ một trang web tới trang web khác trên Internet. Dùng thẻ <code>a</code> với <b>đường dẫn tuyệt đối</b> trong <code>href</code>.</p></div><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;p&gt;
+ &lt;a href="https://hanhtrangso.nxbgd.vn
+ /sach-dien-tu?book_active=9"&gt;
+  Sách điện tử Kết nối tri thức
+  với cuộc sống
+ &lt;/a&gt;
+&lt;/p&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><span style="font-family:Georgia,serif;font-size:25px;color:#1565C0;text-decoration:underline">Sách điện tử Kết nối tri thức với cuộc sống</span></div><div class="ok"><p><b>Khi nháy chuột</b> vào liên kết, trình duyệt gọi tới trang web Sách điện tử và hiển thị nội dung trang đó.</p></div>
+<table><tr><th>Mở rộng</th><th>Cách viết</th></tr><tr><td>Mở ở tab mới</td><td class="m">target="_blank"</td></tr><tr><td>Gửi thư</td><td class="m">href="mailto:a@b.vn"</td></tr></table></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 2</span><h1>Liên kết trong website: đường dẫn tương đối</h1></div>
+<div class="bd g2">
+<div class="col"><div class="lab">Cấu trúc website (SGK Hình 10.1)</div>
+<pre class="code">web/
+├─ index.html
+├─ thong_tin.html
+├─ images/
+│   └─ sun.png
+└─ bai_tap/
+    ├─ bai_tap_1.html
+    ├─ bai_tap_2.html
+    └─ on_tap/
+        └─ bai_tap_on_tap.html</pre>
+<div class="ok"><p><b>Tuyệt đối</b>: có giao thức + tên miền, dùng cho website khác. <b>Tương đối</b>: không có giao thức, tên miền, chỉ cần tên đường dẫn, dùng trong cùng website.</p></div></div>
+<div class="col"><table><tr><th>Từ tệp</th><th>Tới</th><th>Viết href</th></tr>
+<tr><td class="m">index.html</td><td class="m">thong_tin.html</td><td class="m">thong_tin.html</td></tr>
+<tr><td class="m">index.html</td><td class="m">bai_tap_1.html</td><td class="m">bai_tap/bai_tap_1.html</td></tr>
+<tr><td class="m">index.html</td><td class="m">bai_tap_on_tap</td><td class="m">bai_tap/on_tap/bai_tap_on_tap.html</td></tr>
+<tr><td class="m">bai_tap_1.html</td><td class="m">index.html</td><td class="m">../index.html</td></tr>
+<tr><td class="m">bai_tap_1.html</td><td class="m">sun.png</td><td class="m">../images/sun.png</td></tr></table>
+<div class="key"><code>../</code> = trở lại thư mục trên <b>một mức</b>; số cụm <code>../</code> bằng số mức quay lại. Mỗi cấp thư mục ngăn cách bởi <b>dấu /</b>.</div>
+<div class="warn">Không dùng <code>C:\anh\a.png</code> hay dấu <code>\</code>. Tên tệp có thể phân biệt hoa/thường.</div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 2</span><h1>Liên kết trong website: các trường hợp</h1></div>
+<div class="bd g2" style="grid-template-rows:1fr 1fr">
+<div class="card"><h3>1 · Cùng thư mục</h3><p>Chỉ cần tên tệp. Từ <b>index.html</b> tới <b>thong_tin.html</b>:</p><pre class="code" style="margin-top:6px">&lt;a href="thong_tin.html"&gt;Giới thiệu&lt;/a&gt;</pre></div>
+<div class="card"><h3>2 · Thư mục con, một cấp</h3><p>Tên thư mục, dấu <b>/</b>, tên tệp. Từ <b>index.html</b> tới <b>bai_tap_1.html</b>:</p><pre class="code" style="margin-top:6px">&lt;a href="bai_tap/bai_tap_1.html"&gt;Bài 1&lt;/a&gt;</pre></div>
+<div class="card"><h3>3 · Thư mục con, hai cấp trở lên</h3><p>Liệt kê lần lượt từ trên xuống, ngăn bằng <b>/</b>:</p><pre class="code" style="margin-top:6px;font-size:calc(18px*var(--z,1))">&lt;a href="bai_tap/on_tap/
+bai_tap_on_tap.html"&gt;Ôn tập&lt;/a&gt;</pre></div>
+<div class="card"><h3>4 · Lên thư mục mẹ: ../</h3><p>Mỗi <b>../</b> lùi một mức. Từ <b>bai_tap_1.html</b> về <b>index.html</b>:</p><pre class="code" style="margin-top:6px">&lt;a href="../index.html"&gt;Trang chủ&lt;/a&gt;</pre><p style="margin-top:6px">Từ <b>bai_tap_on_tap.html</b> về index: <code>../../index.html</code></p></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 2</span><h1>Liên kết trong cùng trang và liên kết ảnh</h1></div>
+<div class="bd g2">
+<div class="col"><div class="card"><h3>Hai bước (như “cắm cờ”)</h3><ol style="gap:4px"><li>Đặt thuộc tính <b>id</b> tại vị trí đích.</li><li>Tạo liên kết <code>href="#mã_định_danh"</code>.</li></ol></div>
+<pre class="code">&lt;table id="Thong_tin"&gt; ... &lt;/table&gt;
+&lt;a href="#Thong_tin"&gt;Thông tin chi tiết&lt;/a&gt;</pre>
+<div class="key">id phải <b>duy nhất</b> trong cả trang (mã định danh đoạn).</div></div>
+<div class="col"><pre class="code">&lt;a href="thong_tin.html"&gt;
+  &lt;img src="images/sun.png"&gt;
+&lt;/a&gt;</pre>
+<div class="res"><span class="lab">Kết quả hiển thị</span><div style="display:flex;gap:12px;align-items:center"><svg viewBox="0 0 80 80" style="width:80px"><circle cx="40" cy="40" r="22" fill="#FFB300"/></svg><span style="font-family:Georgia,serif;font-size:21px">Nháy vào ảnh Mặt Trời → mở <b>thong_tin.html</b></span></div></div>
+<div class="warn">Ảnh dùng <b>đường dẫn tương đối</b> để tránh lỗi khi ảnh trên mạng bị đổi. Liên kết còn trỏ được tới <b>ảnh, âm thanh, video, tệp PDF</b>, không chỉ trang HTML.</div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 3</span><h1>Thực hành 1: liên kết trong cùng trang</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;table id="CLBTT" border="1"&gt;
+  &lt;caption&gt;Lịch hoạt động
+    các CLB Thể thao&lt;/caption&gt;
+  ...
+&lt;/table&gt;
+...
+&lt;a href="#CLBTT"&gt;Theo dõi lịch
+  hoạt động các CLB Thể thao&lt;/a&gt;</pre></div><div class="col"><div class="ok"><p><b>Hai bước:</b></p><ol style="gap:4px"><li>Đặt thuộc tính <code>id="CLBTT"</code> (duy nhất) cho bảng đích.</li><li>Viết liên kết <code>href="#CLBTT"</code> ở nơi cần nhấn.</li></ol></div><div class="warn">Giá trị <code>id</code> phải <b>duy nhất</b> trong cả trang (mã định danh đoạn); hai phần tử trùng id làm liên kết nhảy sai chỗ.</div><div class="key">Nháy vào liên kết, trang <b>cuộn tới bảng</b> có id tương ứng. Giá trị href phải có dấu <b>#</b> ở đầu.</div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · 3</span><h1>Thực hành 2: liên kết sang trang khác</h1></div>
+<div class="bd g2">
+<div class="col"><div class="lab">Trang chủ CLB.html</div><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;ul&gt;
+  &lt;li&gt;&lt;a href="thong_tin.html"&gt;
+    Thông tin các CLB&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="bai_tap_1.html"&gt;
+    Bài tập 1&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</pre><div class="res"><span class="lab">Kết quả hiển thị</span><ul><li style="color:#1565C0;text-decoration:underline">Thông tin các CLB</li><li style="color:#1565C0;text-decoration:underline">Bài tập 1</li></ul></div></div><div class="col"><div class="lab">Trang thong_tin.html (quay về)</div><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;a href="CLB.html"&gt;Về trang chủ&lt;/a&gt;</pre><div class="ok"><p>Hai tệp <b>cùng thư mục</b> nên chỉ cần tên tệp. Nếu ở thư mục con thì thêm <code>../</code> để lùi một mức.</p></div></div>
+</div></section>
+
+<section class="s p4"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><code>&lt;a href="URL"&gt;nội dung&lt;/a&gt;</code>, giá trị trong <b>nháy kép</b>.</li><li><b>Tuyệt đối</b>: có giao thức, tên miền; dùng cho website khác.</li><li><b>Tương đối</b>: không có giao thức; dùng trong cùng website.</li><li>Cùng thư mục: <b>tên tệp</b>. Con: <b>thư_mục/tệp</b>. Lên một mức: <b>../</b>.</li><li>Cùng trang: đặt <code>id</code> rồi <code>href="#id"</code>.</li></ul></div></div><div class="col"><table><tr><th>Từ → Tới</th><th>Viết href</th></tr><tr><td class="m">index → thong_tin</td><td>thong_tin.html</td></tr><tr><td class="m">index → bai_tap_1</td><td>bai_tap/bai_tap_1.html</td></tr><tr><td class="m">bai_tap_1 → index</td><td>../index.html</td></tr></table><div class="warn">Dùng <b>/</b> ngăn cấp thư mục, không dùng <b>\</b>. Quên <code>https://</code> thì thành đường dẫn tương đối.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NÂNG CAO</span><h1>Các dạng href mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Giá trị href</h3><ul style="gap:6px"><li><code>bai2.html#muc3</code>: tới vị trí <b>trong trang khác</b>.</li><li><code>mailto:a@b.vn</code>: soạn thư. <code>tel:0912345678</code>: gọi.</li><li><code>target="_blank"</code>: mở <b>tab mới</b>.</li><li>Số cụm <code>../</code> = số mức cần lùi.</li></ul></div></div><div class="col"><div class="card"><h3>Bẫy</h3><ul style="gap:6px"><li><b>id phân biệt hoa thường</b>: <code>#muc2</code> không nhảy tới <code>id="Muc2"</code>.</li><li>Tên tệp trên máy chủ Linux cũng phân biệt hoa thường.</li><li>Tên tệp có dấu cách dễ lỗi: dùng <code>_</code> hoặc viết <code>%20</code>.</li><li>Thuộc tính của <code>a</code> là <b>href</b>, của <code>img</code> là <b>src</b>.</li></ul></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g12"><div class="col"><div class="lab">SGK Hình 10.1 · cấu trúc website</div><pre class="code" style="font-size:calc(21px*var(--z,1))">web/
+├─ index.html
+├─ thong_tin.html
+├─ images/
+│   └─ sun.png
+└─ bai_tap/
+    ├─ bai_tap_1.html
+    ├─ bai_tap_2.html
+    └─ on_tap/
+        └─ bai_tap_on_tap.html</pre><div class="key">Mọi câu hỏi dùng cây thư mục này.</div></div><div class="col" style="gap:10px"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Từ <code>bai_tap_on_tap.html</code>, viết đường dẫn tới <code>sun.png</code>.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Từ <code>bai_tap_on_tap.html</code>, viết đường dẫn tới <code>index.html</code> và tới <code>bai_tap_2.html</code>.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Từ <code>index.html</code>, viết liên kết “Ôn tập” tới <code>bai_tap_on_tap.html</code>.</p></div></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · HSG</span><h1>Bài tập luyện HSG</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Phân loại tuyệt đối / tương đối: (a) <code>images/sun.png</code> (b) <code>https://tin.vn/a.html</code> (c) <code>../index.html</code> (d) <code>www.tin.vn</code></p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Tìm lỗi mỗi dòng:</p><pre class="code" style="margin:6px 0 0;font-size:calc(20px*var(--z,1))">(a) &lt;a src="bai1.html"&gt;Bài 1&lt;/a&gt;
+(b) &lt;a href="#muc2"&gt;…&lt;/a&gt; ... &lt;h2 id="Muc2"&gt;
+(c) &lt;a href="bai_tap\bai_tap_1.html"&gt;</pre></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Trang ở <code>web/bai_tap/on_tap/</code> cần mấy cụm <code>../</code> để tới thư mục <code>web</code>?</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>../../images/sun.png</code>: lùi 2 mức (on_tap, bai_tap) rồi vào images.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>../../index.html</code> và <code>../bai_tap_2.html</code>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>&lt;a href="bai_tap/on_tap/bai_tap_on_tap.html"&gt;Ôn tập&lt;/a&gt;</code></p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">BÀI 10 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>(a) <b>tương đối</b>; (b) <b>tuyệt đối</b>; (c) <b>tương đối</b>; (d) <b>tương đối</b> (thiếu giao thức nên trình duyệt coi là tên tệp).</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>(a) dùng <code>src</code> thay vì <code>href</code>. (b) <code>muc2</code> khác <code>Muc2</code> (hoa/thường). (c) dùng <code>\</code> thay vì <code>/</code>.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p><b>2</b> cụm: <code>../../</code>.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

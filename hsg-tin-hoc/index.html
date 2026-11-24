@@ -355,7 +355,7 @@ function progressCard(){
  return card}
 
 /* Liên kết bài giảng Canva theo mã bài */
-const DECK={w1:'https://hatthi32.github.io/KhocuaToi/hsg-tin-hoc/bai/w1.html'};
+const DECK={w1:[['Toàn bộ bài (54 slide)','https://hatthi32.github.io/KhocuaToi/hsg-tin-hoc/bai/w1.html'],['Nền: Web, URL, trình duyệt','https://hatthi32.github.io/KhocuaToi/hsg-tin-hoc/bai/w1-nen.html'],['Bài 7: Trang web và HTML','https://hatthi32.github.io/KhocuaToi/hsg-tin-hoc/bai/w1-b7.html'],['Bài 8: Định dạng văn bản','https://hatthi32.github.io/KhocuaToi/hsg-tin-hoc/bai/w1-b8.html'],['Bài 9: Danh sách và bảng','https://hatthi32.github.io/KhocuaToi/hsg-tin-hoc/bai/w1-b9.html'],['Bài 10: Tạo liên kết','https://hatthi32.github.io/KhocuaToi/hsg-tin-hoc/bai/w1-b10.html'],['Bài 11: Ảnh, âm thanh, video, iframe','https://hatthi32.github.io/KhocuaToi/hsg-tin-hoc/bai/w1-b11.html'],['Ôn tập HSG Bài 7–11','https://hatthi32.github.io/KhocuaToi/hsg-tin-hoc/bai/w1-hsg.html']]};
 const CANVA={w2:'https://canva.link/qd54uhmu0ugxy0j',w3:'https://canva.link/2zohrw3mep9m7sb',w4:'https://canva.link/64oj985vrmyxzei',w5:'https://canva.link/s0mrvywbw2cq1y8',w6:'https://canva.link/3fmb0kdzaoai8pu',p2:'https://canva.link/hvcwl669b1f7c29',p3:'https://canva.link/5utkig0m1ztbfq6',p4:'https://canva.link/nk49u4e9bqre93k',p5:'https://canva.link/cmwscx2ff1ma4qp',p6:'https://canva.link/4ruykvgu288j3zs',p7:'https://canva.link/xsdmpml41beal8x',p8:'https://canva.link/ozqwus2rxgicwuz',c1:'https://canva.link/i8qdqy7y1j2607j',c2:'https://canva.link/7lbqco5m3qqc2ga',c3:'https://canva.link/q126u86t1vp4mx8',c4:'https://canva.link/0padvb34g9n0rag',c5:'https://canva.link/o40nlaje6m0awxd',m1:'https://canva.link/lhvxv8lnk2telhy',m2:'https://canva.link/o4iloisjgch7g76',m4:'https://canva.link/afnfp848qfla2py',a1:'https://canva.link/88kle9pg3ejfnms',a3:'https://canva.link/g40vmxw4xdah11q',a4:'https://canva.link/0p599ve7qr7prj0',n1:'https://canva.link/d9fmcl2damutxfe',n2:'https://canva.link/yigl7xguu7muz9n',p1:'https://canva.link/h0xftjrxhzdo365',m3:'https://canva.link/rxsonk5w08h3n8i',a2:'https://canva.link/9g0jxr8q9kyj45p'};
 /* ---------- HỌC THEO CHỦ ĐỀ ---------- */
 let UNI=null;
@@ -390,7 +390,7 @@ function vUnit(){
  root.append(h('h2',{text:u.t,style:'margin:10px 0 12px'}));
  const card=h('div',{class:'card'});
  if(pg.k==='intro'){
-  if(DECK[id])card.append(h('a',{class:'btn',href:DECK[id],target:'_blank',rel:'noopener',style:'display:inline-block;margin:0 8px 10px 0;text-decoration:none',text:'📽 Xem bài giảng chuyên sâu (slide)'}));
+  if(DECK[id]){card.append(h('p',{class:'lab',text:'📽 Bài giảng chuyên sâu (slide) theo từng bài SGK'}));DECK[id].forEach(d=>card.append(h('a',{class:'btn'+(d[1].endsWith('w1.html')?' sec':''),href:d[1],target:'_blank',rel:'noopener',style:'display:inline-block;margin:0 8px 8px 0;text-decoration:none',text:d[0]})))}
   if(CANVA[id])card.append(h('a',{class:'btn',href:CANVA[id],target:'_blank',rel:'noopener',style:'display:inline-block;margin-bottom:10px;text-decoration:none',text:'🎨 Bản Canva (tóm tắt)'}));
   card.append(h('p',{class:'lab',text:'Mục tiêu bài học ('+u.min+' phút)'}),h('ul',{style:'margin:0 0 10px;padding-left:20px'},u.goals.map(g=>h('li',{text:g}))),
    h('p',{class:'lab',text:'Nội dung'}),h('ol',{style:'margin:0 0 8px;padding-left:20px'},u.secs.map(s=>h('li',{text:s.h})),h('li',{text:'Kiểm tra cuối bài (5 câu)'})))}

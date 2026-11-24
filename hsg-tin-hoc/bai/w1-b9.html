@@ -1,0 +1,280 @@
+<!-- HEAD -->
+<title>Bài 9 · Danh sách và bảng</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · BÀI 9</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BÀI 9<br>DANH SÁCH VÀ BẢNG</h1><p style="font-size:28px;line-height:1.5">Danh sách ol, ul, dl, danh sách lồng nhau; bảng và gộp ô.</p><div><span class="chip">ol, ul, dl</span><span class="chip">Bảng</span><span class="chip">rowspan</span><span class="chip">colspan</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Tạo <b>danh sách</b> ol, ul, dl, danh sách lồng nhau.</li><li>Tạo <b>bảng</b> với table, tr, th, td, caption.</li><li>Đặt <b>khung, kích thước</b> cho bảng.</li><li><b>Gộp ô</b> bằng rowspan, colspan.</li><li>Đếm ô, đọc kết quả của bảng gộp.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Danh sách có thứ tự, không thứ tự</li><li>Danh sách mô tả, danh sách lồng</li><li>Bảng và định dạng bảng</li><li>Thực hành CLB</li><li>Trọng tâm, nâng cao, bài khó HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 1</span><h1>Danh sách có thứ tự: thẻ ol</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;ol type="i" start="3"&gt;
+  &lt;li&gt;Nếu &lt;b&gt;delta&lt;/b&gt; &amp;lt; 0: ...&lt;/li&gt;
+  &lt;li&gt;Nếu &lt;b&gt;delta&lt;/b&gt; = 0: ...&lt;/li&gt;
+  &lt;li&gt;Nếu &lt;b&gt;delta&lt;/b&gt; &amp;gt; 0: ...&lt;/li&gt;
+&lt;/ol&gt;</pre><div class="res"><span class="lab">Kết quả hiển thị</span><ol type="i" start="3"><li>Nếu <b style="color:#000">delta</b> &lt; 0: ...</li><li>Nếu <b style="color:#000">delta</b> = 0: ...</li><li>Nếu <b style="color:#000">delta</b> &gt; 0: ...</li></ol></div><div class="key"><code>start</code> là <b>số bắt đầu</b> đánh (ở đây 3, kiểu i nên hiện iii).</div></div>
+<div class="col"><table><tr><th>type</th><th>Kiểu đánh</th></tr><tr><td class="m">"1"</td><td>1, 2, 3 (mặc định)</td></tr><tr><td class="m">"a"</td><td>a, b, c</td></tr><tr><td class="m">"A"</td><td>A, B, C</td></tr><tr><td class="m">"i"</td><td>i, ii, iii</td></tr><tr><td class="m">"I"</td><td>I, II, III</td></tr></table><div class="warn"><code>ol</code> và <code>ul</code> chỉ chứa các thẻ <code>li</code>; mỗi mục là một <code>li</code>.</div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 1</span><h1>Danh sách không có thứ tự: thẻ ul</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;ul style="list-style-type: square"&gt;
+  &lt;li&gt;Nếu delta &amp;lt; 0: ...&lt;/li&gt;
+  &lt;li&gt;Nếu delta = 0: ...&lt;/li&gt;
+  &lt;li&gt;Nếu delta &amp;gt; 0: ...&lt;/li&gt;
+&lt;/ul&gt;</pre><div class="res"><span class="lab">Kết quả hiển thị</span><ul style="list-style-type:square"><li>Nếu delta &lt; 0: ...</li><li>Nếu delta = 0: ...</li><li>Nếu delta &gt; 0: ...</li></ul></div></div>
+<div class="col"><table><tr><th>list-style-type</th><th>Kí tự đầu dòng</th></tr><tr><td class="m">disc</td><td>chấm tròn đặc ●</td></tr><tr><td class="m">circle</td><td>vòng tròn rỗng ○</td></tr><tr><td class="m">square</td><td>hình vuông ■</td></tr><tr><td class="m">none</td><td>không có kí tự</td></tr></table><div class="key">Kí tự đầu dòng đặt bằng <b>list-style-type</b> trong thuộc tính <b>style</b> của thẻ ul.</div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 1</span><h1>Danh sách mô tả: dl, dt, dd</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;dl&gt;
+  &lt;dt&gt;Kem&lt;/dt&gt;
+  &lt;dd&gt;Món ăn ngọt, dạng
+      đông lạnh.&lt;/dd&gt;
+  &lt;dt&gt;Trà sữa&lt;/dt&gt;
+  &lt;dd&gt;Đồ uống làm từ trà
+      và sữa.&lt;/dd&gt;
+&lt;/dl&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><dl><dt>Kem</dt><dd>Món ăn ngọt, dạng đông lạnh.</dd><dt>Trà sữa</dt><dd>Đồ uống làm từ trà và sữa.</dd></dl></div><table><tr><th>Thẻ</th><th>Vai trò</th></tr><tr><td class="m">dl</td><td>bao toàn bộ danh sách</td></tr><tr><td class="m">dt</td><td>tên mục (thuật ngữ, nhãn)</td></tr><tr><td class="m">dd</td><td>mô tả của mục đó</td></tr></table><div class="key">Mặc định <code>dd</code> được <b>thụt vào</b> so với <code>dt</code>.</div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 1</span><h1>Danh sách lồng nhau</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;ol&gt;
+  &lt;li&gt;Thể thao
+    &lt;ol type="a"&gt;
+      &lt;li&gt;Bóng đá&lt;/li&gt;
+      &lt;li&gt;Bơi&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Nghệ thuật&lt;/li&gt;
+&lt;/ol&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><ol><li>Thể thao<ol type="a"><li>Bóng đá</li><li>Bơi</li></ol></li><li>Nghệ thuật</li></ol></div><div class="key">Danh sách con đặt <b>bên trong thẻ li</b> của mục cha (trước <code>&lt;/li&gt;</code>). Mức 1 đánh 1, 2, 3; mức 2 dùng <code>type="a"</code> để đánh a, b, c.</div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 2</span><h1>Bảng: table, tr, th, td, caption</h1></div>
+<div class="bd g2">
+<div class="col"><table><tr><th>Thẻ</th><th>Tạo ra</th></tr>
+<tr><td class="m">table</td><td>cả bảng</td></tr>
+<tr><td class="m">tr</td><td>một <b>hàng</b></td></tr>
+<tr><td class="m">th</td><td>ô <b>tiêu đề</b> (đậm, giữa ô)</td></tr>
+<tr><td class="m">td</td><td>ô <b>dữ liệu</b></td></tr>
+<tr><td class="m">caption</td><td>tiêu đề bảng (ngay sau table, trước tr đầu)</td></tr></table>
+<div class="key">Bảng được xây từ các <b>hàng</b>; mỗi hàng chứa các ô. Không có thẻ tạo “cột”: số cột là số ô của hàng.</div>
+<div class="warn">Thứ tự đọc mã: <b>từ trên xuống, từ trái sang phải</b>. Thẻ <code>td</code>, <code>th</code> phải nằm trong <code>tr</code>.</div></div>
+<div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">&lt;table border="1"&gt;
+  &lt;caption&gt;Hoá đơn&lt;/caption&gt;
+  &lt;tr&gt;&lt;th&gt;Món&lt;/th&gt;&lt;th&gt;Giá&lt;/th&gt;&lt;th&gt;SL&lt;/th&gt;&lt;th&gt;Tiền&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Thịt xiên&lt;/td&gt;&lt;td&gt;10K&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;&lt;td&gt;30&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Cá viên&lt;/td&gt;&lt;td&gt;5K&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;&lt;td&gt;30&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre><div class="res"><span class="lab">Kết quả hiển thị</span><table class="rt"><caption style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#000">Hoá đơn</caption><tr><th>Món</th><th>Giá</th><th>SL</th><th>Tiền</th></tr><tr><td>Thịt xiên</td><td>10K</td><td>3</td><td>30</td></tr><tr><td>Cá viên</td><td>5K</td><td>6</td><td>30</td></tr></table></div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 2</span><h1>Định dạng bảng: tiêu đề, khung, kích thước</h1></div>
+<div class="bd g2">
+<div class="col"><table><tr><th>Việc cần làm</th><th>Cách viết</th></tr>
+<tr><td>Tiêu đề bảng</td><td class="m">&lt;caption&gt;</td></tr>
+<tr><td>Khung viền</td><td class="m">border: 1px solid black</td></tr>
+<tr><td>Chiều rộng, cao</td><td class="m">width:80%; height:400px</td></tr></table>
+<div class="warn">Nên dùng <b>%</b> cho kích thước, tránh <b>px</b>: thiết bị hiển thị có số điểm ảnh khác nhau nên bảng có thể không hiển thị như mong đợi.</div></div>
+<div class="col"><div class="card"><h3>Thuộc tính border</h3><p>Ba phần, cách nhau bằng dấu cách:</p><p><code>độ dày</code> · <code>kiểu viền</code> · <code>màu</code></p><ul style="gap:3px"><li>Kiểu: <b>solid, dotted, double, none</b>.</li><li>Màu mặc định là đen, có thể bỏ qua.</li></ul></div><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;table style="width:80%;
+  border:1px solid blue"&gt;</pre></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 2</span><h1>Gộp ô: rowspan và colspan</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;table border="1"&gt;
+ &lt;tr&gt;
+  &lt;th rowspan="2"&gt;Họ và tên&lt;/th&gt;
+  &lt;th colspan="3"&gt;Điểm thi&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+  &lt;th&gt;Toán&lt;/th&gt;&lt;th&gt;Vật lí&lt;/th&gt;
+  &lt;th&gt;Hoá học&lt;/th&gt;
+ &lt;/tr&gt;
+&lt;/table&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><table class="rt"><tr><th rowspan="2">Họ và tên</th><th colspan="3">Điểm thi</th></tr><tr><th>Toán</th><th>Vật lí</th><th>Hoá học</th></tr></table></div><div class="key"><b>rowspan</b> gộp các hàng, <b>colspan</b> gộp các cột. Lưới 2 hàng × 4 cột; hàng 2 chỉ viết <b>3 ô</b> vì ô “Họ và tên” đã chiếm cột 1.</div></div><div class="ok"><p><b>Cách đếm:</b> số ô cần viết ở một hàng = số cột của bảng − số ô bị gộp từ các hàng trên xuống cột đó.</p></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 3</span><h1>Thực hành 1: danh sách câu lạc bộ</h1></div>
+<div class="bd g2">
+<div class="col"><div class="lab">Phân tích và mã HTML</div><pre class="code" style="font-size:calc(17px*var(--z,1))">&lt;h2&gt;Danh sách Câu lạc bộ&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;THỂ THAO
+    &lt;ol&gt;
+      &lt;li&gt;Bóng đá&lt;/li&gt;
+      &lt;li&gt;Bóng chuyền&lt;/li&gt;
+      &lt;li&gt;Bơi&lt;/li&gt;
+      &lt;li&gt;Võ thuật
+        &lt;ol type="a"&gt;
+          &lt;li&gt;Karatedo&lt;/li&gt;
+          &lt;li&gt;Taekwondo&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;NGHỆ THUẬT ... (làm tương tự)&lt;/li&gt;
+&lt;/ul&gt;</pre></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><div style="font-family:Georgia,serif;font-size:25px;font-weight:700">Danh sách Câu lạc bộ</div><ul><li>THỂ THAO<ol><li>Bóng đá</li><li>Bóng chuyền</li><li>Bơi</li><li>Võ thuật<ol type="a"><li>Karatedo</li><li>Taekwondo</li></ol></li></ol></li><li>NGHỆ THUẬT …</li></ul></div><div class="ok"><p><b>Các bước (SGK):</b> 1) tách thành phần: một tiêu đề và một danh sách lồng nhau; 2) tiêu đề dùng <code>h2</code>; 3) danh sách ngoài là <code>ul</code>; 4) mục THỂ THAO chứa <code>ol</code>, mục thứ tư của <code>ol</code> chứa <code>ol type="a"</code>.</p></div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · 3</span><h1>Thực hành 2: bảng lịch hoạt động</h1></div>
+<div class="bd g2">
+<div class="col"><div class="lab">Hai hàng đầu (gộp ô)</div><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;table border="1"&gt;
+ &lt;caption&gt;Lịch hoạt động
+   CLB Thể thao&lt;/caption&gt;
+ &lt;tr&gt;
+  &lt;th rowspan="2"&gt;Bộ môn&lt;/th&gt;
+  &lt;th rowspan="2"&gt;GV phụ trách&lt;/th&gt;
+  &lt;th colspan="5"&gt;Ngày&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;&lt;th&gt;Thứ 2&lt;/th&gt; ...
+     &lt;th&gt;Thứ 6&lt;/th&gt;&lt;/tr&gt;</pre><div class="key">Hàng 1: 3 ô (<b>rowspan 2, rowspan 2, colspan 5</b>); hàng 2: <b>5 ô</b>; mỗi hàng dữ liệu: <b>7 ô td</b>. Bảng có 7 hàng, 7 cột.</div></div><div class="col"><div class="res"><span class="lab">Kết quả hiển thị</span><table class="rt"><caption style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#000">Lịch hoạt động CLB Thể thao</caption><tr><th rowspan="2">Bộ môn</th><th rowspan="2">GV phụ trách</th><th colspan="5">Ngày</th></tr><tr><th>Thứ 2</th><th>Thứ 3</th><th>Thứ 4</th><th>Thứ 5</th><th>Thứ 6</th></tr><tr><td>Bóng đá</td><td>Thầy Hùng</td><td>x</td><td></td><td>x</td><td></td><td>x</td></tr><tr><td>Bóng chuyền</td><td>Cô Lan</td><td></td><td>x</td><td></td><td>x</td><td></td></tr><tr><td>Karatedo</td><td>Thầy Hoàng</td><td>x</td><td></td><td></td><td>x</td><td></td></tr><tr><td>Taekwondo</td><td>Thầy Đức</td><td></td><td>x</td><td></td><td></td><td>x</td></tr><tr><td>Vovinam</td><td>Thầy Thắng</td><td>x</td><td>x</td><td></td><td></td><td></td></tr></table></div></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><code>ol</code>: có thứ tự (<code>type</code>, <code>start</code>); <code>ul</code>: không thứ tự (<code>list-style-type</code>); <code>dl</code>: <code>dt</code> tên, <code>dd</code> mô tả.</li><li>Mỗi mục là <code>li</code>; danh sách con đặt <b>trong li</b>.</li><li>Bảng: <code>table</code> &gt; <code>tr</code> &gt; <code>th/td</code>.</li><li><code>caption</code> đặt <b>ngay sau</b> <code>table</code>.</li><li><b>rowspan</b> gộp hàng, <b>colspan</b> gộp cột.</li></ul></div></div><div class="col"><table><tr><th>type</th><th>Kiểu số</th></tr><tr><td class="m">"1"</td><td>1, 2, 3</td></tr><tr><td class="m">"a" / "A"</td><td>a, b / A, B</td></tr><tr><td class="m">"i" / "I"</td><td>i, ii / I, II</td></tr></table><div class="warn"><code>li</code> đặt ngoài <code>ol/ul</code>, hoặc <code>td</code> đặt ngoài <code>tr</code> là <b>sai</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">NÂNG CAO</span><h1>Đếm ô khi gộp</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;table border="1"&gt;
+&lt;tr&gt;&lt;th rowspan="2"&gt;A&lt;/th&gt;
+    &lt;th colspan="2"&gt;B&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre><div class="res"><span class="lab">Kết quả hiển thị</span><table class="rt"><tr><th rowspan="2">A</th><th colspan="2">B</th></tr><tr><td>1</td><td>2</td></tr><tr><td>3</td><td>4</td><td>5</td></tr></table></div></div><div class="col"><div class="card"><h3>Quy tắc đếm</h3><ul style="gap:6px"><li>Số cột = tổng <b>colspan</b> trên một hàng đầy đủ (ở đây <b>3</b>).</li><li>Ô viết ở một hàng = số cột <b>trừ</b> số ô bị <b>rowspan</b> từ hàng trên chiếm.</li><li>Hàng 2 chỉ viết <b>2 td</b> vì A đã chiếm cột 1.</li><li>Bảng 3 hàng × 3 cột: <b>7 ô viết</b> (2 th, 5 td).</li></ul></div><div class="key">SGK dùng <b>CSS</b> để bố cục trang; bảng chỉ để trình bày dữ liệu dạng hàng, cột.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px">
+<div class="q"><div class="n">1</div><p>Viết mã tạo danh sách có thứ tự đánh số <b>a, b, c</b> nhưng bắt đầu từ <b>c</b> với 3 mục tuỳ ý.</p></div>
+<div class="q"><div class="n">2</div><p>Chọn <code>ul</code>, <code>ol</code> hay <code>dl</code> cho: (a) các bước giải bài toán; (b) bảng thuật ngữ kèm giải nghĩa; (c) danh sách đồ dùng cần mang.</p></div>
+<div class="q"><div class="n">3</div><p>Bảng có 3 hàng: hàng 1 một ô <code>th colspan="3"</code>; hàng 2 và 3 mỗi hàng 3 ô <code>td</code>. Có mấy cột? Mã có bao nhiêu thẻ <code>th</code>, <code>td</code>?</p></div>
+<div class="q"><div class="n">4</div><p>Hàng 1: <code>&lt;th rowspan="2"&gt;A&lt;/th&gt;&lt;th&gt;B&lt;/th&gt;&lt;th&gt;C&lt;/th&gt;</code>. Hàng 2 cần viết mấy ô? Nếu viết 3 ô thì điều gì xảy ra?</p></div>
+<div class="q"><div class="n">5</div><p>Sửa lỗi: <code>&lt;ul&gt;&lt;li&gt;A&lt;/li&gt;&lt;ol&gt;&lt;li&gt;a1&lt;/li&gt;&lt;/ol&gt;&lt;/ul&gt;</code> để a1 là mục con của A.</p></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px">
+<div class="q a"><div class="n">1</div><p><code>&lt;ol type="a" start="3"&gt;</code> rồi 3 thẻ <code>li</code>: hiển thị <b>c, d, e</b>.</p></div>
+<div class="q a"><div class="n">2</div><p>(a) <b>ol</b> (có thứ tự); (b) <b>dl</b> với dt là thuật ngữ, dd là giải nghĩa; (c) <b>ul</b> (không cần thứ tự).</p></div>
+<div class="q a"><div class="n">3</div><p><b>3 cột</b> (ô gộp chiếm 3 cột). Có <b>1 th</b> và <b>6 td</b> = 7 ô được viết, nhưng lưới có 3 × 3 = 9 ô.</p></div>
+<div class="q a"><div class="n">4</div><p>Chỉ cần <b>2 ô</b> (cho cột 2 và 3). Viết 3 ô thì ô thừa bị đẩy sang <b>cột thứ 4</b>, bảng bị lệch và dư một cột.</p></div>
+<div class="q a"><div class="n">5</div><p>Đặt <code>ol</code> <b>bên trong li</b> của A: <code>&lt;li&gt;A&lt;ol&gt;&lt;li&gt;a1&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;</code>.</p></div>
+</div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Với mã bảng sau, cho biết số hàng, số cột, số thẻ <code>th</code>, số thẻ <code>td</code>:</p><pre class="code" style="margin:6px 0 0;font-size:calc(20px*var(--z,1))">&lt;table border="1"&gt;
+&lt;tr&gt;&lt;th rowspan="2"&gt;A&lt;/th&gt;
+    &lt;th colspan="2"&gt;B&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Trình duyệt hiển thị danh sách như thế nào:</p><pre class="code" style="margin:6px 0 0;font-size:calc(20px*var(--z,1))">&lt;ol type="a" start="2"&gt;&lt;li&gt;X&lt;/li&gt;
+&lt;li&gt;Y&lt;ul&gt;&lt;li&gt;Z&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ol&gt;</pre></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Bảng 4 hàng × 5 cột: hàng 1 chỉ một <code>th colspan="5"</code>; hàng 2 có 5 <code>th</code>; hàng 3, 4 mỗi hàng 5 <code>td</code>. Tổng số thẻ <code>th</code> và <code>td</code>?</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) <code>li</code> đặt trực tiếp trong <code>div</code>. (b) <code>dt</code> là mô tả, <code>dd</code> là tên mục. (c) <code>th</code> mặc định đậm, căn giữa. (d) <code>caption</code> đặt trước <code>tr</code> đầu tiên.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Tìm lỗi:</p><pre class="code" style="margin:6px 0 0;font-size:calc(20px*var(--z,1))">&lt;ul&gt;&lt;li&gt;A&lt;/li&gt;&lt;li&gt;B&lt;ul&gt;&lt;li&gt;C&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+&lt;table&gt;&lt;td&gt;1&lt;/td&gt;&lt;/table&gt;</pre></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Bảng 2 cột: hàng 1 là <code>&lt;th rowspan="3"&gt;A&lt;/th&gt;&lt;th&gt;B&lt;/th&gt;</code>. Hàng 2 và hàng 3 mỗi hàng cần mấy ô? Viết thừa thì sao?</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>3 hàng, 3 cột</b>; <b>2 th</b> (A, B) và <b>5 td</b> (1, 2, 3, 4, 5).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>b. X</b> / <b>c. Y</b> với mục con <b>• Z</b> thụt vào (danh sách ul lồng trong mục Y).</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>16 thẻ</b>: 1 + 5 th, 10 td.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">BÀI 9 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b>. (b) <b>Sai</b>: dt là tên, dd là mô tả. (c) <b>Đúng</b>. (d) <b>Đúng</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>(1) Thiếu <code>&lt;/li&gt;</code> đóng mục B sau danh sách con. (2) <code>td</code> phải nằm trong <code>tr</code>.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mỗi hàng cần <b>1 ô</b> (cho cột 2). Viết 2 ô thì ô thừa bị đẩy sang <b>cột 3</b>, bảng lệch.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

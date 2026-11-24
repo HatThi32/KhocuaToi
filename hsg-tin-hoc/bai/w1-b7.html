@@ -1,0 +1,259 @@
+<!-- HEAD -->
+<title>Bài 7 · Trang web và HTML</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC 12 · BÀI 7</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BÀI 7<br>TRANG WEB VÀ HTML</h1><p style="font-size:28px;line-height:1.5">Thẻ, phần tử, thuộc tính, cấu trúc HTML5 tối thiểu, cây phần tử.</p><div><span class="chip">Thẻ, phần tử</span><span class="chip">Cấu trúc</span><span class="chip">Cây DOM</span><span class="chip">Đếm, đọc mã</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Phân biệt <b>thẻ, phần tử, thuộc tính</b>.</li><li>Viết <b>cấu trúc HTML5 tối thiểu</b>.</li><li>Đọc <b>cây phần tử</b>: cha, con, anh em.</li><li>Dùng <b>thực thể</b> &amp;lt; &amp;gt; &amp;amp;.</li><li><b>Đếm phần tử</b>, dự đoán hiển thị.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Trang web và ngôn ngữ HTML</li><li>Cấu trúc tài liệu, cây phần tử</li><li>Soạn thảo và lịch sử HTML</li><li>Trọng tâm và nâng cao</li><li>Bài tập, bài khó HSG và đáp án</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · 1</span><h1>HTML: phần tử, thẻ, thuộc tính</h1></div>
+<div class="bd" style="grid-template-rows:auto 1fr;gap:10px">
+<svg viewBox="0 0 1180 250"><text x="60" y="64" font-size="52" class="mono" xml:space="preserve"><tspan fill="#00695C">&lt;a </tspan><tspan fill="#AD1457">href="bai2.html"</tspan><tspan fill="#00695C">&gt;</tspan><tspan fill="#0B2545">Bài 2</tspan><tspan fill="#00695C">&lt;/a&gt;</tspan></text>
+<path d="M60 84 H684" stroke="#00695C" stroke-width="5"/><text x="372" y="116" font-size="22" text-anchor="middle" font-weight="800" fill="#00695C">THẺ MỞ</text>
+<path d="M154 132 H653" stroke="#AD1457" stroke-width="5"/><text x="404" y="164" font-size="22" text-anchor="middle" font-weight="800" fill="#AD1457">THUỘC TÍNH  tên="giá trị"</text>
+<path d="M690 84 H836" stroke="#0B2545" stroke-width="5"/><text x="763" y="116" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">NỘI DUNG</text>
+<path d="M846 84 H965" stroke="#00695C" stroke-width="5"/><text x="905" y="116" font-size="22" text-anchor="middle" font-weight="800" fill="#00695C">THẺ ĐÓNG</text>
+<path d="M60 186 H965" stroke="#C62828" stroke-width="6"/><text x="512" y="222" font-size="26" text-anchor="middle" font-weight="800" fill="#C62828">PHẦN TỬ = thẻ mở + nội dung + thẻ đóng</text></svg>
+<div class="bd g3" style="gap:16px">
+<div class="card"><h3>HTML là gì?</h3><p>Ngôn ngữ <b>đánh dấu</b> siêu văn bản: dùng thẻ mô tả cấu trúc, ý nghĩa nội dung. <b>Không phải</b> ngôn ngữ lập trình (không biến, vòng lặp, rẽ nhánh).</p></div>
+<div class="card"><h3>Thẻ rỗng</h3><p>Không có nội dung, không thẻ đóng: <code>br</code> <code>hr</code> <code>img</code> <code>meta</code> <code>link</code> <code>input</code>. Phần tử chỉ có thẻ mở.</p></div>
+<div class="card"><h3>Quy tắc cú pháp</h3><ul style="gap:2px"><li>Giá trị thuộc tính trong <b>“ ”</b></li><li>Chú thích: <code>&lt;!-- … --&gt;</code></li><li>Lồng thẻ: <b>mở sau, đóng trước</b></li></ul></div>
+</div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · 1</span><h1>Trang web và ngôn ngữ HTML</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Tên trang Web&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;h1&gt;Trang Web và HTML&lt;/h1&gt;
+    &lt;p&gt;Đây là dòng đầu tiên&lt;/p&gt;
+    &lt;hr&gt; &lt;!-- dòng kẻ ngang --&gt;
+    &lt;p&gt;Đây là dòng cuối cùng&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<div class="key">SGK Hình 7.1 · Tệp văn bản này là <b>trang nguồn</b> (mã nguồn) của trang web; trình duyệt đọc nó rồi hiển thị.</div></div>
+<div class="col"><div class="card"><h3>Hai khái niệm dễ nhầm</h3><ul style="gap:5px"><li><b>Thẻ (tag)</b>: kí tự đánh dấu nằm trong <b>&lt; &gt;</b>, ví dụ <code>&lt;p&gt;</code>, <code>&lt;/p&gt;</code>.</li><li><b>Phần tử (element)</b>: thẻ bắt đầu + nội dung + thẻ kết thúc. Thẻ đơn cùng nội dung của nó cũng là phần tử.</li></ul></div>
+<div class="ok"><p><b>Đếm phần tử ở Hình 7.1:</b> html, head, title, body, div, h1, p, hr, p = <b>9</b>.<br>Dòng <code>&lt;!DOCTYPE html&gt;</code> <b>không</b> phải phần tử. Chú thích là phần tử đặc biệt (SGK).</p></div>
+<div class="warn">Trang html là tệp văn bản đuôi <code>.html</code> hoặc <code>.htm</code>. Phần mềm hiển thị nó là <b>trình duyệt</b>.</div></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · 1</span><h1>Khoảng trắng và ký tự đặc biệt</h1></div>
+<div class="bd g2">
+<div class="col"><div class="card"><h3>Khoảng trắng bị gộp</h3><p>Nhiều dấu cách, tab, xuống dòng liên tiếp trong mã chỉ hiển thị thành <b>MỘT dấu cách</b>. Muốn xuống dòng dùng <code>br</code> hoặc <code>p</code>.</p></div>
+<pre class="code">&lt;p&gt;Tin     học
+     12&lt;/p&gt;</pre><div class="res"><span class="lab">Kết quả hiển thị</span><p style="font-family:Georgia,serif">Tin học 12</p></div>
+<div class="warn">Viết <code>5 &lt; 7</code> trực tiếp có thể bị hiểu là bắt đầu thẻ. Phải dùng thực thể.</div></div>
+<div class="col"><table><tr><th>Viết</th><th>Hiển thị</th><th>Ý nghĩa</th></tr>
+<tr><td class="m">&amp;lt;</td><td class="m">&lt;</td><td>dấu nhỏ hơn</td></tr>
+<tr><td class="m">&amp;gt;</td><td class="m">&gt;</td><td>dấu lớn hơn</td></tr>
+<tr><td class="m">&amp;amp;</td><td class="m">&amp;</td><td>dấu và</td></tr>
+<tr><td class="m">&amp;nbsp;</td><td class="m">␣</td><td>dấu cách cứng (không gộp, không ngắt dòng)</td></tr>
+<tr><td class="m">&amp;copy;</td><td class="m">©</td><td>bản quyền</td></tr>
+<tr><td class="m">&amp;quot;</td><td class="m">"</td><td>nháy kép</td></tr></table>
+<div class="key">Dạng tổng quát: <b>&amp;tên;</b> hoặc <b>&amp;#số;</b>. Muốn hiển thị <code>5 &lt; 7</code> và <code>A &amp; B</code> viết: <code>5 &amp;lt; 7</code>, <code>A &amp;amp; B</code>.</div></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · 2</span><h1>Cấu trúc tài liệu HTML5 tối thiểu</h1></div>
+<div class="bd g2">
+<div class="col"><pre class="code"><span style="color:#FFD54F">&lt;!DOCTYPE html&gt;</span>
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Lớp 12A1&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Chào mừng&lt;/h1&gt;
+  &lt;p&gt;Đây là trang đầu tiên.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<div class="card"><h3>head và body</h3><ul style="gap:2px"><li><b>head</b>: thông tin về trang (title, meta, link, style, script).</li><li><b>body</b>: nội dung hiển thị trong cửa sổ.</li></ul></div></div>
+<div class="col"><div class="lab">Kết quả trên trình duyệt</div>
+<div class="bwin"><div class="tab"><span>Lớp 12A1</span></div><div class="url">file:///trang.html</div><div class="page"><div style="font-size:36px;font-weight:700;font-family:Georgia,serif;margin:6px 0">Chào mừng</div><div style="font-size:23px;font-family:Georgia,serif">Đây là trang đầu tiên.</div></div></div>
+<div class="key"><code>title</code> hiện trên <b>thẻ tab</b>, không hiện trong vùng nội dung. Chỉ nội dung <b>body</b> được hiển thị.</div>
+<div class="warn">Thiếu <code>meta charset="UTF-8"</code> có thể hiện chữ lỗi: “Tin h?c”. <code>DOCTYPE</code> không phải thẻ HTML mà là khai báo dùng HTML5.</div></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · 2</span><h1>Cây phần tử HTML (DOM)</h1></div>
+<div class="bd" style="grid-template-columns:1.5fr 1fr;align-items:center">
+<svg viewBox="0 0 840 540"><g stroke="#0B2545" stroke-width="4" fill="none"><path d="M420 74 V110 H150 V150 M420 110 H547 V150"/><path d="M150 206 V236 H80 V270 M150 236 H220 V270"/><path d="M547 206 V236 H400 V270 M547 236 V270 M547 236 H700 V270"/><path d="M700 326 V356 H640 V390 M700 356 H760 V390"/></g>
+<g font-size="30" class="mono" text-anchor="middle" font-weight="700">
+<rect x="350" y="20" width="140" height="54" rx="10" fill="#C62828"/><text x="420" y="58" fill="#fff">html</text>
+<rect x="80" y="150" width="140" height="56" rx="10" fill="#00695C"/><text x="150" y="189" fill="#fff">head</text>
+<rect x="477" y="150" width="140" height="56" rx="10" fill="#00695C"/><text x="547" y="189" fill="#fff">body</text>
+<rect x="10" y="270" width="140" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="80" y="309" fill="#0B2545">title</text>
+<rect x="150" y="270" width="140" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="220" y="309" fill="#0B2545">meta</text>
+<rect x="340" y="270" width="120" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="400" y="309" fill="#0B2545">h1</text>
+<rect x="487" y="270" width="120" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="547" y="309" fill="#0B2545">p</text>
+<rect x="640" y="270" width="120" height="56" rx="10" fill="#4527A0"/><text x="700" y="309" fill="#fff">ul</text>
+<rect x="580" y="390" width="120" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="640" y="429" fill="#0B2545">li</text>
+<rect x="710" y="390" width="120" height="56" rx="10" fill="#FFE082" stroke="#0B2545" stroke-width="3"/><text x="770" y="429" fill="#0B2545">li</text></g>
+<text x="420" y="500" font-size="26" text-anchor="middle" fill="#00695C" font-weight="800">Gốc của cây là phần tử html</text></svg>
+<div class="col"><div class="card"><h3>Quan hệ</h3><ul style="gap:4px"><li><b>Cha</b>: chứa trực tiếp. <b>Con</b>: nằm ngay bên trong.</li><li><b>Anh em</b>: cùng cha (h1, p, ul).</li><li><b>Con cháu</b>: mọi phần tử bên trong, <b>mọi cấp</b>.</li></ul></div>
+<div class="ok"><p><b>Đếm với body</b> (h1, p, ul có 2 li):<br>Con trực tiếp = <b>3</b> (h1, p, ul)<br>Con cháu = 3 + 2 li = <b>5</b></p></div>
+<div class="key">Cây này là nền của bộ chọn CSS “con cháu”, “con trực tiếp” và JavaScript.</div></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · 3</span><h1>Soạn thảo HTML và lịch sử HTML</h1></div>
+<div class="bd g2">
+<div class="col"><table><tr><th>Phần mềm</th><th>Đặc điểm</th></tr>
+<tr><td><b>Notepad</b></td><td>Có sẵn trên Windows, soạn thảo không định dạng (macOS: TextEdit)</td></tr>
+<tr><td><b>Notepad++</b></td><td>Miễn phí, mã nguồn mở; chọn <code>Language → H → HTML</code></td></tr>
+<tr><td><b>Sublime Text</b></td><td>Bản cơ bản miễn phí; chọn <code>View → Syntax → HTML</code></td></tr>
+<tr><td><b>Trang trực tuyến</b></td><td>Cần máy tính có kết nối Internet</td></tr></table>
+<div class="key">Lưu tệp với đuôi <b>.html</b> rồi mở bằng trình duyệt để xem kết quả.</div></div>
+<div class="col"><svg viewBox="0 0 560 330"><path d="M40 70 V290" stroke="#0B2545" stroke-width="6"/>
+<g font-size="22"><circle cx="40" cy="70" r="14" fill="#F2A900" stroke="#0B2545" stroke-width="3"/><text x="70" y="64" font-weight="800" fill="#00695C">Những năm 1990</text><text x="70" y="92" fill="#0B2545">Tim Berners-Lee (CERN) đề xuất</text>
+<circle cx="40" cy="160" r="14" fill="#F2A900" stroke="#0B2545" stroke-width="3"/><text x="70" y="154" font-weight="800" fill="#00695C">Cuối năm 1991</text><text x="70" y="182" fill="#0B2545">Phiên bản đầu tiên “Các thẻ HTML”</text>
+<circle cx="40" cy="250" r="14" fill="#C62828" stroke="#0B2545" stroke-width="3"/><text x="70" y="244" font-weight="800" fill="#C62828">Năm 2014</text><text x="70" y="272" fill="#0B2545">HTML5 – phiên bản hiện tại</text></g></svg>
+<div class="ok"><p>Ý tưởng ban đầu: một chuẩn chung để <b>thể hiện và chia sẻ văn bản</b> trong CERN. Cụm từ “hypertext” (siêu văn bản) xuất hiện lần đầu trong sơ đồ này.</p></div></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Phần tử = <b>thẻ mở + nội dung + thẻ đóng</b>.</li><li><b>Thẻ rỗng</b> (br, hr, img, meta) không có thẻ đóng.</li><li><code>&lt;!DOCTYPE html&gt;</code> <b>không</b> phải phần tử.</li><li><code>html</code> chứa <code>head</code> và <code>body</code>; <code>title</code> nằm trong <code>head</code>.</li><li>Thẻ lồng nhau phải đóng đúng thứ tự: <b>mở sau, đóng trước</b>.</li></ul></div></div><div class="col"><table><tr><th>Muốn hiển thị</th><th>Viết</th></tr><tr><td class="m">&lt;</td><td>&amp;lt;</td></tr><tr><td class="m">&gt;</td><td>&amp;gt;</td></tr><tr><td class="m">&amp;</td><td>&amp;amp;</td></tr><tr><td class="m">Dấu cách cứng</td><td>&amp;nbsp;</td></tr></table><div class="warn">Nhiều dấu cách và xuống dòng trong mã nguồn chỉ hiển thị thành <b>một</b> dấu cách.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">NÂNG CAO</span><h1>Cây DOM và những điều dễ nhầm</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;body&gt;
+  &lt;h1&gt;A&lt;/h1&gt;
+  &lt;p&gt;B &lt;b&gt;C&lt;/b&gt;&lt;/p&gt;
+  &lt;ul&gt;&lt;li&gt;D&lt;/li&gt;&lt;li&gt;E&lt;/li&gt;&lt;/ul&gt;
+&lt;/body&gt;</pre><div class="card"><h3>Đọc cây</h3><ul style="gap:4px"><li><code>body</code> có <b>3 con trực tiếp</b>: h1, p, ul.</li><li><b>6 hậu duệ</b>: h1, p, b, ul, li, li.</li><li>Hai <code>li</code> là <b>anh em</b>; <code>b</code> là cháu của body.</li><li>Chữ (văn bản) <b>không</b> tính là phần tử.</li></ul></div></div><div class="col"><div class="card"><h3>Bẫy hay gặp</h3><ul style="gap:6px"><li>Tên thẻ <b>không phân biệt hoa thường</b>, nhưng nên viết thường.</li><li>Thiếu <code>DOCTYPE</code>: trình duyệt hiển thị theo chế độ cũ (tương thích).</li><li><code>&lt;meta charset="UTF-8"&gt;</code> để hiển thị đúng tiếng Việt.</li><li>Chú thích <code>&lt;!-- --&gt;</code> không hiển thị nhưng vẫn nằm trong mã.</li><li>Trình duyệt tự sửa lỗi nhẹ nên mã sai vẫn chạy, nhưng <b>không chuẩn</b>.</li></ul></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px">
+<div class="q"><div class="n">1</div><p>Trong URL <code>https://tin.example.vn/lop12/web.html?bai=3#vd</code>, chỉ ra giao thức, tên miền, đường dẫn, truy vấn, mảnh.</p></div>
+<div class="q"><div class="n">2</div><p>Phần nào của URL <b>không</b> được gửi lên máy chủ?</p></div>
+<div class="q"><div class="n">3</div><p>body gồm: <code>h1</code>, <code>p</code>, <code>ul</code> (3 thẻ <code>li</code>), <code>p</code>. Body có bao nhiêu <b>con trực tiếp</b> và bao nhiêu <b>con cháu</b>?</p></div>
+<div class="q"><div class="n">4</div><p>Đúng hay sai: <code>&lt;p&gt;Chào &lt;b&gt;các &lt;i&gt;bạn&lt;/b&gt;&lt;/i&gt;&lt;/p&gt;</code>? Sửa lại cho đúng.</p></div>
+<div class="q"><div class="n">5</div><p>Muốn trang hiển thị đúng chuỗi <code>5 &lt; 7</code> và <code>A &amp; B</code>, phải viết mã HTML thế nào?</p></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px">
+<div class="q a"><div class="n">1</div><p>Giao thức <b>https</b>; tên miền <b>tin.example.vn</b>; đường dẫn <b>/lop12/web.html</b>; truy vấn <b>bai=3</b>; mảnh <b>#vd</b>.</p></div>
+<div class="q a"><div class="n">2</div><p>Phần <b>mảnh (#vd)</b>: chỉ trình duyệt xử lí để nhảy tới phần tử có id.</p></div>
+<div class="q a"><div class="n">3</div><p>Con trực tiếp = <b>4</b> (h1, p, ul, p). Con cháu = 4 + 3 li = <b>7</b>.</p></div>
+<div class="q a"><div class="n">4</div><p><b>Sai</b>: thẻ mở sau (<code>i</code>) phải đóng trước. Đúng: <code>&lt;p&gt;Chào &lt;b&gt;các &lt;i&gt;bạn&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</code></p></div>
+<div class="q a"><div class="n">5</div><p>Viết <code>5 &amp;lt; 7</code> và <code>A &amp;amp; B</code>. Viết trực tiếp dấu <code>&lt;</code> trình duyệt có thể hiểu là mở thẻ.</p></div>
+</div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Đếm số <b>phần tử</b> của trang:</p><pre class="code" style="margin:6px 0 0;font-size:calc(20px*var(--z,1))">&lt;html&gt;&lt;head&gt;&lt;title&gt;T&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;&lt;h1&gt;A&lt;/h1&gt;&lt;p&gt;B &lt;b&gt;C&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;D&lt;/li&gt;&lt;li&gt;E&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</pre></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Với mã trên: <code>body</code> có bao nhiêu con trực tiếp, bao nhiêu hậu duệ? Cây có mấy mức (html là mức 1)?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Trình duyệt hiển thị gì:</p><pre class="code" style="margin:6px 0 0;font-size:calc(20px*var(--z,1))">&lt;p&gt;Xin     chào
+      các   bạn&lt;/p&gt;</pre></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Trình duyệt hiển thị gì: <code>&lt;p&gt;a &amp;lt; b &amp;amp;&amp;amp; c &amp;gt; d&lt;/p&gt;</code></p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Tìm ít nhất <b>2 lỗi</b>:</p><pre class="code" style="margin:6px 0 0;font-size:calc(20px*var(--z,1))">&lt;html&gt;&lt;body&gt;&lt;title&gt;Trang&lt;/title&gt;
+&lt;p&gt;Chào &lt;b&gt;các &lt;i&gt;bạn&lt;/b&gt;&lt;/i&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</pre></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) <code>&lt;br&gt;</code> cần thẻ đóng <code>&lt;/br&gt;</code>. (b) <code>&lt;!DOCTYPE html&gt;</code> là một phần tử. (c) Nội dung <code>title</code> hiển thị trong thân trang. (d) Đặt <code>p</code> trực tiếp trong <code>body</code> là hợp lệ.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>10</b> phần tử: html, head, title, body, h1, p, b, ul, li, li.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>3</b> con trực tiếp (h1, p, ul); <b>6</b> hậu duệ (h1, p, b, ul, li, li); cây có <b>4 mức</b> (html, body, ul, li).</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Xin chào các bạn</b> trên <b>một dòng</b>: dấu cách và xuống dòng liên tiếp gộp thành một.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">BÀI 7 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>a &lt; b &amp;&amp; c &gt; d</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>(1) <code>title</code> phải nằm trong <code>head</code>, thiếu <code>head</code>. (2) Lồng sai: phải <code>&lt;i&gt;bạn&lt;/i&gt;&lt;/b&gt;</code>. (Thiếu cả DOCTYPE.)</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b>: br là thẻ rỗng. (b) <b>Sai</b>. (c) <b>Sai</b>: hiện trên thanh tab. (d) <b>Đúng</b>.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
