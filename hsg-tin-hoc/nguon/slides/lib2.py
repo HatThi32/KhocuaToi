@@ -24,8 +24,17 @@ def mkdeck(fn,title_,secs):
     open(fn,'w',encoding='utf-8').write(h+'\n<div id="wrap">\n'+'\n\n'.join(secs)+'\n</div>\n'+t)
     print(fn,len(secs))
 SVG0=re.search(r'<svg.*?</svg>',open('deck.html',encoding='utf-8').read(),re.S).group(0)
+def SVGCHIPS(chips):
+    cols=['#FFD54F','#80DEEA','#A5D6A7','#F48FB1','#CE93D8']
+    s='<svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/>'
+    for i,c in enumerate(chips[:5]):
+        y=122+i*64
+        s+='<text x="36" y="%d" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">%d</text><text x="84" y="%d" font-size="34" font-weight="800" fill="%s" font-family="monospace">%s</text>'%(y,i+1,y,cols[i%5],c)
+    return s+'</svg>'
 def TITLE(tag,h1,sub,chips,svg=None):
-    return '<section class="s title-s"><div class="hd"><span class="k">%s</span></div>\n<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>%s</h1><p style="font-size:28px;line-height:1.5">%s</p><div>%s</div></div>%s</div></section>'%(tag,h1,sub,''.join('<span class="chip">%s</span>'%c for c in chips),svg or SVG0)
+    pc=globals().get('c','')
+    pc=pc if isinstance(pc,str) and pc[:1]=='p' and pc[1:].isdigit() else ''
+    return '<section class="s title-s %s">'%pc+'<div class="hd"><span class="k">%s</span></div>\n<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>%s</h1><p style="font-size:28px;line-height:1.5">%s</p><div>%s</div></div>%s</div></section>'%(tag,h1,sub,''.join('<span class="chip">%s</span>'%c for c in chips),svg or SVGCHIPS(chips))
 def FLOW(boxes,w=520,col='#4527A0',fs=22):
     """boxes: list of (label, sub). horizontal flow SVG"""
     n=len(boxes);bw=(w-20*(n-1))//n;h=150

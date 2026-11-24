@@ -1,0 +1,27 @@
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
