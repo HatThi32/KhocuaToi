@@ -76,194 +76,235 @@ body.m .wide{overflow-x:auto}
 
 <div id="wrap">
 <section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 5</span></div>
-<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>ĐỘ PHỨC TẠP<br>THUẬT TOÁN</h1><p style="font-size:28px;line-height:1.5">Đếm phép toán, kí hiệu O, so sánh O(1), O(log n), O(n), O(n log n), O(n²), O(2ⁿ).</p><div><span class="chip">O(1)</span><span class="chip">O(n)</span><span class="chip">O(n²)</span><span class="chip">O(log n)</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>ĐỘ PHỨC TẠP<br>THUẬT TOÁN</h1><p style="font-size:28px;line-height:1.5">Đếm phép toán, kí hiệu O, các lớp độ phức tạp, vòng lặp lồng nhau, vòng lặp nhân đôi, tổng điều hoà, trường hợp xấu nhất, bộ nhớ, chọn thuật toán theo giới hạn đề.</p><div><span class="chip">O(n)</span><span class="chip">O(n²)</span><span class="chip">O(log n)</span><span class="chip">n log n</span><span class="chip">2ⁿ</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
 <rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
 <rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
 <rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
 <rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5</span><h1>Mục tiêu và nội dung bài</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Hiểu <b>độ phức tạp thời gian</b> là tốc độ tăng số phép toán theo n.</li><li>Nhận biết <b>O(1), O(log n), O(n), O(n log n), O(n²), O(2ⁿ)</b>.</li><li><b>Đếm phép toán</b> trong vòng lặp đơn, lồng, chia đôi.</li><li>Ước lượng <b>thời gian chạy</b> với n = 10⁵, 10⁶, 10⁹.</li><li>Chọn thuật toán <b>phù hợp giới hạn</b> đề bài.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Độ phức tạp là gì</li><li>Nhận biết qua mã</li><li>Bảng so sánh tốc độ tăng</li><li>Đếm phép toán</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Hiểu <b>độ phức tạp</b> đo số phép toán theo cỡ dữ liệu n.</li><li>Đếm <b>số lần chạy</b> của vòng lặp đơn, lồng, nhân đôi, phụ thuộc.</li><li>Dùng <b>kí hiệu O</b> và quy tắc bỏ hằng số, bỏ số hạng thấp.</li><li>Ước lượng <b>thời gian chạy</b> từ giới hạn đề bài (≈ 10⁸ phép/giây).</li><li>Phân biệt <b>trường hợp tốt nhất, trung bình, xấu nhất</b>; <b>độ phức tạp bộ nhớ</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Khái niệm</li><li>Đếm phép toán</li><li>Các lớp độ phức tạp</li><li>Chọn thuật toán theo đề</li><li>Tự kiểm tra, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Vì sao cần đo độ phức tạp?</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Vấn đề</h3><ul style="gap:6px"><li>Một bài toán có <b>nhiều thuật toán</b>; thuật toán nào <b>nhanh hơn</b>?</li><li>Đo bằng giây phụ thuộc <b>máy, ngôn ngữ</b>.</li><li>Cần thước đo <b>độc lập máy</b>: đếm <b>số phép toán cơ bản</b> theo <b>cỡ dữ liệu n</b>.</li></ul></div></div><div class="col"><div class="key"><b>Độ phức tạp thời gian</b>: số phép toán cần thực hiện <b>tăng thế nào khi n tăng</b>, bỏ qua hằng số và số hạng bé.</div><div class="ok"><p>Quan tâm n <b>rất lớn</b>: 3n + 100 và 5n đều coi là <b>O(n)</b>.</p></div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Đếm phép toán: vòng lặp đơn</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def dem(n):
-    d = 0
-    for i in range(n):
-        d += 1
-    return d
-
-for n in [10, 100, 1000]:
-    print(n, dem(n))</pre><div class="key">Một vòng lặp chạy <b>n lần</b> → <b>O(n)</b>: n tăng gấp 10 thì số phép tăng gấp 10.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">10 10
-100 100
-1000 1000</pre></div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Đếm phép toán: hai vòng lồng</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def dem(n):
-    d = 0
-    for i in range(n):
-        for j in range(n):
-            d += 1
-    return d
-
-for n in [10, 100, 1000]:
-    print(n, dem(n))</pre><div class="key">Hai vòng lồng nhau đều chạy n lần → <b>n × n = O(n²)</b>: n tăng 10 lần thì số phép tăng <b>100 lần</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">10 100
-100 10000
-1000 1000000</pre></div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Đếm phép toán: vòng lặp chia đôi</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def dem(n):
-    d = 0
-    while n &gt; 1:
-        n //= 2
-        d += 1
-    return d
-
-for n in [8, 1024, 10**6, 10**9]:
-    print(n, dem(n))</pre><div class="key">Mỗi lần giảm một nửa → số lần lặp ≈ <b>log₂ n</b> → <b>O(log n)</b>. Với n = 10⁹ chỉ cần khoảng <b>30</b> lượt!</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">8 3
-1024 10
-1000000 19
-1000000000 29</pre></div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Vòng lặp lồng nhưng không phải n²</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def dem(n):
-    d = 0
-    for i in range(n):
-        for j in range(i):
-            d += 1
-    return d
-
-for n in [10, 100]:
-    print(n, dem(n), n * (n - 1) // 2)</pre><div class="key">Tổng 0 + 1 + … + (n-1) = n(n-1)/2 ≈ n²/2 → vẫn là <b>O(n²)</b> (bỏ hệ số 1/2).</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">10 45 45
-100 4950 4950</pre></div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Các lớp độ phức tạp thường gặp</h1></div>
-<div class="bd g1"><div class="col"><table><tr><th>Kí hiệu</th><th>Tên</th><th>Ví dụ</th></tr><tr><td class="m"><b>O(1)</b></td><td>hằng số</td><td>truy cập <code>a[i]</code>, <code>a + b</code></td></tr><tr><td class="m"><b>O(log n)</b></td><td>logarit</td><td>tìm kiếm nhị phân, chia đôi</td></tr><tr><td class="m"><b>O(n)</b></td><td>tuyến tính</td><td>duyệt dãy, tìm max, tìm tuần tự</td></tr><tr><td class="m"><b>O(n log n)</b></td><td>—</td><td>sắp xếp trộn, sort() của Python</td></tr><tr><td class="m"><b>O(n²)</b></td><td>bình phương</td><td>sắp xếp chọn, nổi bọt, chèn</td></tr><tr><td class="m"><b>O(2ⁿ)</b></td><td>mũ</td><td>duyệt mọi tập con, Fibonacci đệ quy ngây thơ</td></tr></table><div class="key">Thứ tự tăng dần: <b>1 &lt; log n &lt; n &lt; n log n &lt; n² &lt; 2ⁿ</b>.</div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Quy tắc rút gọn kí hiệu O</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Cách rút gọn</h3><ul style="gap:6px"><li>Bỏ <b>hằng số nhân</b>: 5n → O(n).</li><li>Bỏ <b>số hạng bậc thấp</b>: n² + 3n + 7 → O(n²).</li><li>Hai đoạn <b>nối tiếp</b>: <b>cộng</b>, lấy phần lớn: O(n) + O(n²) = O(n²).</li><li>Hai vòng <b>lồng nhau</b>: <b>nhân</b>: O(n) × O(m) = O(nm).</li></ul></div></div><div class="col"><table><tr><th>Phép toán</th><th>Độ phức tạp</th></tr><tr><td class="m">3n + 100</td><td>O(n)</td></tr><tr><td class="m">n² + n log n</td><td>O(n²)</td></tr><tr><td class="m">vòng n lồng vòng log n</td><td>O(n log n)</td></tr><tr><td class="m">2n + n²/2</td><td>O(n²)</td></tr></table></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>So sánh tốc độ tăng</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">import math
-print("n        logn     n*logn      n^2")
-for n in [10, 100, 1000, 10**6]:
-    print(n, round(math.log2(n)), round(n*math.log2(n)), n*n)</pre><div class="key">Khi n = 10⁶: <b>n log n</b> khoảng 2·10⁷ (chạy trong giây), còn <b>n²</b> = 10¹² (không thể chạy trong thời gian cho phép).</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">n        logn     n*logn      n^2
-10 3 33 100
-100 7 664 10000
-1000 10 9966 1000000
-1000000 20 19931569 1000000000000</pre></div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Ước lượng thời gian chạy</h1></div>
-<div class="bd g1"><div class="col"><table><tr><th>n lớn nhất</th><th>Độ phức tạp chấp nhận được</th><th>Ghi chú</th></tr><tr><td>n ≤ 10</td><td>O(n!), O(2ⁿ · n)</td><td>vét cạn, hoán vị</td></tr><tr><td>n ≤ 20–25</td><td>O(2ⁿ)</td><td>duyệt tập con</td></tr><tr><td>n ≤ 5 000</td><td>O(n²)</td><td>hai vòng lồng</td></tr><tr><td>n ≤ 10⁵</td><td>O(n log n)</td><td>sắp xếp, nhị phân</td></tr><tr><td>n ≤ 10⁶–10⁷</td><td>O(n)</td><td>duyệt một lần</td></tr><tr><td>n ≤ 10⁹ trở lên</td><td>O(log n), O(1)</td><td>công thức, chia đôi</td></tr></table><div class="key">Quy ước thực tế: máy thực hiện khoảng <b>10⁷ – 10⁸ phép tính cơ bản mỗi giây</b> (Python chậm hơn, khoảng 10⁷).</div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Tính tổng 1..n: ba cách</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def c1(n):
-    s = 0
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Vì sao cần đo độ phức tạp?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai chương trình đúng, một cái quá chậm</h3><p style="margin:0 0 8px">Cùng một bài, <b>hai thuật toán đều đúng</b> nhưng một cái chạy 1 giây, cái kia chạy cả giờ khi n lớn.</p><p style="margin:0 0 8px">Đo bằng giây <b>phụ thuộc máy</b>; nên ta đếm <b>số phép toán cơ bản</b> theo cỡ dữ liệu <b>n</b>.</p><p style="margin:0 0 8px"><b>Độ phức tạp thời gian</b> = cách số phép toán <b>tăng</b> khi n tăng.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def tong_cap(n):
+    t = 0
     for i in range(1, n + 1):
-        s += i
-    return s
+        t += i
+    return t
 
-def c2(n):
+def tong_ct(n):
     return n * (n + 1) // 2
 
-print(c1(100), c2(100))
-print(c2(10**12))</pre><div class="key">Cách 1: <b>O(n)</b>. Cách 2 dùng công thức: <b>O(1)</b>. Với n = 10¹², cách 1 không chạy nổi, cách 2 xong tức thì.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5050 5050
-500000000000500000000000</pre></div></div></div></section>
+print(tong_cap(10**6), tong_ct(10**6))</pre><div class="res"><span class="lab">Cùng kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">500000500000 500000500000</pre></div><div class="key">Cách 1: <b>n</b> phép cộng (O(n)). Cách 2: <b>vài</b> phép tính (O(1)). Với n = 10¹⁸, cách 1 không thể chạy xong.</div></div></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Số nguyên tố: thử đến n hay đến √n</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def thu(n):
-    d = 0
-    i = 2
-    while i * i &lt;= n:
-        d += 1
-        i += 1
-    return d
-
-n = 1000003
-print("đến n-1:", n - 2)
-print("đến √n:", thu(n))</pre><div class="key">Thử đến <b>n-1</b>: O(n) ≈ 10⁶ lượt. Thử đến <b>√n</b>: O(√n) ≈ <b>10³</b> lượt, cho cùng kết luận n = 1000003 là số nguyên tố.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">đến n-1: 1000001
-đến √n: 999</pre></div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Tìm tuần tự và tìm nhị phân</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">def nhi_phan(a, x):
-    l, r, d = 0, len(a) - 1, 0
-    while l &lt;= r:
-        d += 1
-        m = (l + r) // 2
-        if a[m] &lt; x:
-            l = m + 1
-        else:
-            r = m - 1
-    return d
-
-a = list(range(1, 100001))
-print("tuần tự:", len(a))
-print("nhị phân:", nhi_phan(a, 100000))</pre><div class="key">Trường hợp xấu nhất với 10⁵ phần tử: tuần tự <b>100 000</b> bước, nhị phân chỉ khoảng <b>17</b> bước.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">tuần tự: 100000
-nhị phân: 17</pre></div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Độ phức tạp theo trường hợp</h1></div>
-<div class="bd g2"><div class="col"><table><tr><th>Trường hợp</th><th>Ý nghĩa</th><th>Tìm tuần tự</th></tr><tr><td>Tốt nhất</td><td>dữ liệu thuận lợi</td><td>x ở đầu: O(1)</td></tr><tr><td>Trung bình</td><td>dữ liệu ngẫu nhiên</td><td>khoảng n/2: O(n)</td></tr><tr><td><b>Xấu nhất</b></td><td>dữ liệu bất lợi nhất</td><td>x ở cuối/không có: O(n)</td></tr></table></div><div class="col"><div class="key">Khi nói “độ phức tạp” mặc định là <b>trường hợp xấu nhất</b>, vì đó là mức <b>đảm bảo</b> không vượt quá.</div><div class="ok"><p>Đề thi HSG thường hỏi: “Đánh giá độ phức tạp của đoạn mã sau”: đếm vòng lặp, xét xem biến lặp tăng hay giảm đều.</p></div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Độ phức tạp bộ nhớ</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">n = 10**6
-m1 = [0] * n
-m2 = [[0] * 1000 for _ in range(1000)]
-print(len(m1), len(m2) * len(m2[0]))</pre><div class="key"><b>Độ phức tạp không gian</b>: lượng bộ nhớ cần. Mảng n phần tử: O(n); ma trận n×n: <b>O(n²)</b>. Giới hạn bộ nhớ đề bài thường 256 MB.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1000000 1000000</pre></div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Fibonacci: O(2ⁿ) và O(n)</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">def fib1(n):
-    global dem
-    dem += 1
-    return n if n &lt; 2 else fib1(n - 1) + fib1(n - 2)
-
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Đếm số phép toán: vòng lặp đơn</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy tắc</h3><p style="margin:0 0 8px">Vòng <code>for i in range(n)</code> chạy <b>n lần</b>; mỗi lần thực hiện số phép không đổi → tổng <b>≈ n</b>.</p><p style="margin:0 0 8px">Hai vòng lặp <b>nối tiếp</b> (không lồng): <b>cộng</b> số lần: n + n = 2n.</p><p style="margin:0 0 8px">Hai vòng <b>lồng nhau</b>: <b>nhân</b>: n × n = n².</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">n = 1000
 dem = 0
-print(fib1(20), dem)
+for i in range(n):
+    dem += 1
+for i in range(n):
+    dem += 1
+print(dem)
+dem = 0
+for i in range(n):
+    for j in range(n):
+        dem += 1
+print(dem)</pre><div class="res"><span class="lab">Nối tiếp: 2n; lồng nhau: n²</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">2000
+1000000</pre></div></div></div></section>
 
-def fib2(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
-print(fib2(20), fib2(90))</pre><div class="key">Đệ quy ngây thơ gọi <b>21 891</b> lần cho n = 20 (tăng gần 1,6ⁿ); vòng lặp chỉ <b>n</b> bước.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">6765 21891
-6765 2880067194370816120</pre></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Kí hiệu O: bỏ hằng số và số hạng thấp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy tắc đơn giản hoá</h3><p style="margin:0 0 8px">Chỉ giữ <b>số hạng lớn nhất</b> khi n lớn và <b>bỏ hệ số</b>.</p><p style="margin:0 0 8px">3n² + 5n + 20 → <b>O(n²)</b>; 100n → <b>O(n)</b>; n + log n → <b>O(n)</b>; n log n + n² → <b>O(n²)</b>.</p><p style="margin:0 0 8px">O là <b>cận trên</b>: nói thuật toán “không chậm hơn cỡ” đó.</p></div></div><div class="col"><table><tr><th>Số phép đếm được</th><th>Độ phức tạp</th></tr><tr><td>5n + 3</td><td><b>O(n)</b></td></tr><tr><td>n² + 1000n</td><td><b>O(n²)</b></td></tr><tr><td>2n + n²/2</td><td><b>O(n²)</b></td></tr><tr><td>7</td><td><b>O(1)</b></td></tr><tr><td>n log n + n</td><td><b>O(n log n)</b></td></tr></table><div class="key">Hệ số 100 hay 1000 không đổi <b>cấp</b> độ phức tạp: khi n đủ lớn, n² luôn lấn át 1000n.</div></div></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Độ phức tạp = tốc độ tăng số phép toán theo <b>n</b>; bỏ hằng số và số hạng bé.</li><li>Vòng đơn <b>O(n)</b>; lồng nhau <b>O(n²)</b>; chia đôi <b>O(log n)</b>.</li><li>Thứ tự: <b>1 &lt; log n &lt; n &lt; n log n &lt; n² &lt; 2ⁿ</b>.</li><li>Nối tiếp thì <b>cộng</b> (lấy lớn), lồng nhau thì <b>nhân</b>.</li><li>Máy làm khoảng <b>10⁸</b> phép/giây: chọn thuật toán theo giới hạn n.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">n ≤ 10⁵</td><td>O(n log n)</td></tr><tr><td class="m">n ≤ 10⁶</td><td>O(n)</td></tr><tr><td class="m">n ≤ 5000</td><td>O(n²)</td></tr><tr><td class="m">n ≤ 25</td><td>O(2ⁿ)</td></tr></table><div class="warn">Không bỏ qua vòng lặp ẩn: <code>in</code> trên list, <code>sum</code>, <code>.index</code> đều là O(n).</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Vòng lặp lồng phụ thuộc: n(n+1)/2</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Tính tay</h3><p style="margin:0 0 8px"><code>for i in range(n): for j in range(i, n)</code>: vòng j chạy <b>n − i</b> lần.</p><p style="margin:0 0 8px">Tổng = n + (n−1) + … + 1 = <b>n(n+1)/2</b>. Với n = 10: <b>55</b>.</p><p style="margin:0 0 8px">Bậc vẫn là <b>O(n²)</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">n = 10
+dem = 0
+for i in range(n):
+    for j in range(i, n):
+        dem += 1
+print(dem)
+s = 0
+for i in range(1, 6):
+    for j in range(i):
+        s += 1
+print(s)</pre><div class="res"><span class="lab">55 và 15</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">55
+15</pre></div><div class="key">Vòng thứ hai: 1 + 2 + 3 + 4 + 5 = 15.</div></div></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><code>x in list</code> là <b>O(n)</b> nhưng <code>x in set</code> là <b>O(1)</b> (trung bình).</li><li><code>a.append</code> O(1) nhưng <code>a.insert(0, x)</code> <b>O(n)</b>.</li><li><code>sorted</code> là <b>O(n log n)</b>.</li><li>Cắt lát <code>a[i:j]</code> tốn <b>O(j-i)</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Ω, Θ</b>: cận dưới và cận chặt (mở rộng).</li><li><b>Độ phức tạp trung bình</b> khác xấu nhất (Quick sort).</li><li><b>Đánh đổi thời gian và bộ nhớ</b> (bảng băm, bảng tính trước).</li></ul></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Bảng đếm: j chạy từ i đến n − 1 (n = 5)</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>i</th><th>j chạy</th><th>số lần</th><th>cộng dồn</th></tr><tr><td>0</td><td>0,1,2,3,4</td><td>5</td><td>5</td></tr><tr><td>1</td><td>1,2,3,4</td><td>4</td><td>9</td></tr><tr><td>2</td><td>2,3,4</td><td>3</td><td>12</td></tr><tr><td>3</td><td>3,4</td><td>2</td><td>14</td></tr><tr><td>4</td><td>4</td><td>1</td><td>15</td></tr></table><div class="key">15 = 5×6/2. Mẹo: <b>nửa hình vuông</b> n × n (tam giác) → n²/2.</div></div></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · TẬP</span><h1>Bài tập củng cố</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Đánh giá độ phức tạp: <code>for i in range(n): s += i</code>.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Đánh giá: <code>for i in range(n): for j in range(n): pass</code>.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đánh giá: <code>while n &gt; 0: n //= 10</code> (n có k chữ số).</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Đánh giá: <code>for i in range(n): for j in range(5): pass</code>.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Rút gọn: <code>5n² + 3n log n + 100</code>.</p></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Vòng lặp nhân đôi: log n</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>i *= 2 hay n //= 2</h3><p style="margin:0 0 8px">Mỗi vòng, i <b>gấp đôi</b> (hoặc n giảm một nửa) → chỉ cần <b>log₂ n</b> vòng để đạt n.</p><p style="margin:0 0 8px">n = 16: i = 1, 2, 4, 8 → <b>4 vòng</b> (i = 16 không còn &lt; n).</p><p style="margin:0 0 8px">n = 10⁹ chỉ cần <b>30</b> vòng: lí do tìm kiếm nhị phân rất nhanh.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">n = 16
+dem = 0
+i = 1
+while i &lt; n:
+    dem += 1
+    i *= 2
+print(dem)
+m = 10**9
+k = 0
+while m &gt; 0:
+    m //= 2
+    k += 1
+print(k)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">4
+30</pre></div></div></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>O(n)</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>O(n²)</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>O(k)</b> = O(log₁₀ n) (mỗi lần bớt một chữ số).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>O(5n) = O(n)</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>O(n²)</b>.</p></div></div></div></section>
-
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Đánh giá độ phức tạp:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">for i in range(1, n):
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Vòng lặp lồng: n lần log n</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>n log n</h3><p style="margin:0 0 8px">Vòng ngoài n lần, vòng trong <b>nhân đôi</b> j: mỗi lượt log n → tổng <b>O(n log n)</b>.</p><p style="margin:0 0 8px">Đặc trưng của <b>sắp xếp trộn, sắp xếp nhanh, heapsort</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">n = 1024
+ops = 0
+for i in range(n):
     j = 1
     while j &lt; n:
-        j *= 2</pre></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Đánh giá độ phức tạp:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">for i in range(n):
-    for j in range(i, n):
-        for k in range(3):
-            pass</pre></div></div></div></section>
+        ops += 1
+        j *= 2
+print(ops, n * 10)</pre><div class="res"><span class="lab">Kết quả (log₂1024 = 10)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">10240 10240</pre></div></div></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Một thuật toán O(n²) mất 1 giây với n = 10⁴. Ước lượng thời gian với n = 10⁵.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Một thuật toán O(n log n) mất 1 giây với n = 10⁵. Ước lượng với n = 10⁶ (xấp xỉ).</p></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Tổng điều hoà: n/1 + n/2 + … = n log n</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Vòng lặp bước nhảy</h3><p style="margin:0 0 8px"><code>for j in range(i, n+1, i)</code> chạy <b>n / i</b> lần.</p><p style="margin:0 0 8px">Tổng qua mọi i: <b>n(1 + 1/2 + 1/3 + … + 1/n) ≈ n ln n</b> → <b>O(n log n)</b>.</p><p style="margin:0 0 8px">Gặp ở <b>sàng Eratosthenes</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">n = 12
+dem = 0
+for i in range(1, n + 1):
+    for j in range(i, n + 1, i):
+        dem += 1
+print(dem)
+print(sum(n // i for i in range(1, n + 1)))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">35
+35</pre></div><div class="key">12 + 6 + 4 + 3 + 2 + 2 + 1 + 1 + 1 + 1 + 1 + 1 = <b>35</b>. Cũng là tổng số ước của 1..12.</div></div></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) O(n) luôn nhanh hơn O(n²). (b) <code>x in set</code> nhanh hơn <code>x in list</code> khi dữ liệu lớn. (c) 3n + 1000 là O(n). (d) Hằng số nhân bị bỏ nên 1000n tốt hơn n².</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Cho n = 10⁶: nên chọn thuật toán O(n²), O(n log n) hay O(n)? Vì sao?</p></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Lồng nhau mà vẫn O(n): kĩ thuật hai con trỏ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đừng kết luận vội</h3><p style="margin:0 0 8px">Có <b>vòng while trong vòng for</b> nhưng biến j <b>chỉ tăng, không quay lại</b>: tổng số lần j tăng không quá n.</p><p style="margin:0 0 8px">Tổng: <b>O(n)</b> chứ không phải O(n²).</p><p style="margin:0 0 8px">Cần xem <b>tổng số lần thực hiện</b>, đừng chỉ nhìn hình dạng mã.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">n = 1000
+ops = 0
+j = 0
+for i in range(n):
+    while j &lt; i:
+        j += 1
+        ops += 1
+    ops += 1
+print(ops)</pre><div class="res"><span class="lab">Kết quả: gần 2n, không phải n²</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1999</pre></div></div></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Vòng ngoài n lần, vòng trong log n lần → <b>O(n log n)</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Ba vòng lồng nhưng vòng trong cùng chạy hằng số (3): <b>O(n²)</b>.</p></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Vòng lặp trong vòng lặp có điều kiện</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bài HSG: số lần phép d += 1</h3><p style="margin:0 0 8px">Vòng ngoài: i = n, n/2, n/4, … → <b>log₂ n + 1</b> vòng. Mỗi vòng, vòng trong luôn chạy <b>n lần</b>.</p><p style="margin:0 0 8px">Tổng ≈ <b>n × (số lần chia đôi)</b> → <b>O(n log n)</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">def dem_phep(n):
+    d = 0
+    i = n
+    while i &gt; 0:
+        j = 0
+        while j &lt; n:
+            d += 1
+            j += 1
+        i //= 2
+    return d
+print(dem_phep(8), dem_phep(16), dem_phep(32))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">32 80 192</pre></div><div class="key">n = 8: i = 8, 4, 2, 1 → 4 vòng × 8 = <b>32</b>. n = 16: 5 × 16 = <b>80</b>. n = 32: 6 × 32 = <b>192</b>.</div></div></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Tăng n lên 10 lần → thời gian tăng 10² = 100 lần: khoảng <b>100 giây</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Khoảng 10 × (20/17) ≈ <b>11–12 giây</b> (n tăng 10 lần, log n tăng nhẹ).</p></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Các lớp độ phức tạp thường gặp</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Lớp</th><th>Tên</th><th>Ví dụ</th><th>n = 10⁵: số phép</th></tr><tr><td>O(1)</td><td>hằng</td><td>công thức, truy cập a[i]</td><td>1</td></tr><tr><td>O(log n)</td><td>logarit</td><td>tìm kiếm nhị phân</td><td>≈ 17</td></tr><tr><td>O(n)</td><td>tuyến tính</td><td>duyệt dãy, tìm max</td><td>10⁵</td></tr><tr><td>O(n log n)</td><td>n log n</td><td>sắp xếp trộn, sort() của Python</td><td>≈ 1,7·10⁶</td></tr><tr><td>O(n²)</td><td>bình phương</td><td>hai vòng lồng, sắp xếp chọn</td><td>10¹⁰</td></tr><tr><td>O(2ⁿ)</td><td>mũ</td><td>liệt kê mọi tập con</td><td>không thể (n ≥ 40)</td></tr><tr><td>O(n!)</td><td>giai thừa</td><td>liệt kê mọi hoán vị</td><td>không thể (n ≥ 12)</td></tr></table><div class="key">Thứ tự tăng: <b>1 &lt; log n &lt; n &lt; n log n &lt; n² &lt; n³ &lt; 2ⁿ &lt; n!</b>. Ba hàng cuối là “bùng nổ”.</div></div></div></section>
 
-<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b> với n nhỏ hoặc hằng số lớn. (b) <b>Đúng</b>. (c) <b>Đúng</b>. (d) <b>Sai</b>: với n &lt; 1000 thì n² còn nhỏ hơn 1000n; kí hiệu O chỉ nói về n rất lớn.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Với 10⁶: O(n²) = 10¹² (quá chậm), O(n log n) ≈ 2·10⁷ (được), O(n) tốt nhất. Chọn <b>O(n) hoặc O(n log n)</b>.</p></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Ước lượng thời gian chạy từ giới hạn đề</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy tắc kinh nghiệm</h3><p style="margin:0 0 8px">Python làm khoảng <b>10⁷ phép/giây</b> (vòng lặp thuần), C++ khoảng <b>10⁸–10⁹</b>. Đề HSG thường cho <b>1–2 giây</b>.</p><p style="margin:0 0 8px">Tính <b>số phép = độ phức tạp(n)</b>: nếu <b>vượt ~10⁷</b> với Python thì cần thuật toán tốt hơn.</p><p style="margin:0 0 8px">Ví dụ n = 10⁵, O(n²) = <b>10¹⁰</b> → quá chậm; O(n log n) ≈ 1,7·10⁶ → được.</p></div></div><div class="col"><table><tr><th>Giới hạn n</th><th>Thuật toán tối đa chấp nhận được</th></tr><tr><td>n ≤ 20</td><td>O(2ⁿ) hoặc O(n!) nhỏ</td></tr><tr><td>n ≤ 1000</td><td><b>O(n²)</b></td></tr><tr><td>n ≤ 10⁵</td><td><b>O(n log n)</b></td></tr><tr><td>n ≤ 10⁶</td><td><b>O(n)</b></td></tr><tr><td>n ≤ 10¹⁸</td><td><b>O(log n)</b> hoặc O(1)</td></tr></table><div class="key">Đọc <b>giới hạn n</b> trong đề là bước đầu tiên để chọn thuật toán.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Ví dụ: bài toán cặp tổng k</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba cách giải một bài</h3><p style="margin:0 0 8px">Đếm cặp (i &lt; j) có a[i] + a[j] = k.</p><p style="margin:0 0 8px"><b>Cách 1</b> hai vòng lồng: O(n²).</p><p style="margin:0 0 8px"><b>Cách 2</b> sắp xếp + hai con trỏ: O(n log n).</p><p style="margin:0 0 8px"><b>Cách 3</b> dùng dict đếm: O(n).</p></div></div><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">import time
+def c1(a, k):
+    return sum(1 for i in range(len(a)) for j in range(i+1, len(a)) if a[i]+a[j]==k)
+def c3(a, k):
+    d = {}; t = 0
+    for x in a:
+        t += d.get(k - x, 0)
+        d[x] = d.get(x, 0) + 1
+    return t
+a = list(range(3000)) * 2
+print(c1(a, 3000) == c3(a, 3000))</pre><div class="res"><span class="lab">Hai cách cho cùng kết quả (n = 600)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">597 597</pre></div><div class="key">Với n = 10⁵: cách 1 mất ≈ 10¹⁰ phép — không kịp; cách 3 chỉ ≈ 10⁵.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Vì sao “x in list” chậm, “x in set” nhanh?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Chi phí các thao tác</h3><table><tr><th>Thao tác</th><th>list</th><th>set / dict</th></tr><tr><td><code>x in …</code></td><td>O(n)</td><td>O(1) trung bình</td></tr><tr><td>thêm cuối</td><td>O(1)</td><td>O(1)</td></tr><tr><td><code>a.pop(0)</code></td><td>O(n)</td><td>—</td></tr></table><p style="margin:0 0 8px">“Có phần tử trùng”: set cho O(n), list cho O(n²).</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">def trung(a, dung_set):
+    seen = set() if dung_set else []
+    for x in a:
+        if x in seen:
+            return True
+        seen.add(x) if dung_set else seen.append(x)
+    return False
+print(trung([1, 2, 3, 1], True), trung([1, 2, 3], False))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">True False</pre></div><div class="key">Dùng list: O(n²); dùng set: O(n).</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Tốt nhất, trung bình, xấu nhất</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba trường hợp</h3><p style="margin:0 0 8px">Tìm tuần tự x trong dãy n phần tử: <b>tốt nhất</b> 1 phép (x ở đầu); <b>trung bình</b> ≈ n/2; <b>xấu nhất</b> n (ở cuối hoặc không có).</p><p style="margin:0 0 8px">Thường đánh giá theo <b>trường hợp xấu nhất</b> vì đó là <b>cận trên đảm bảo</b>.</p><p style="margin:0 0 8px"><b>n/2 và n cùng bậc O(n)</b>: không phải hai độ phức tạp khác nhau.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">a = [7, 3, 9, 3, 5, 8]
+def tim(a, k):
+    dem = 0
+    for i in range(len(a)):
+        dem += 1
+        if a[i] == k:
+            return i, dem
+    return -1, dem
+print(tim(a, 7), tim(a, 3), tim(a, 8), tim(a, 4))</pre><div class="res"><span class="lab">(vị trí, số lần so sánh)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">(0, 1) (1, 2) (5, 6) (-1, 6)</pre></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Độ phức tạp bộ nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Không gian phụ</h3><p style="margin:0 0 8px">Đo lượng <b>bộ nhớ thêm</b> ngoài dữ liệu vào, theo n.</p><p style="margin:0 0 8px"><b>O(1)</b>: chỉ vài biến (đảo danh sách bằng <b>hai chỉ số đổi chỗ</b> tại chỗ).</p><p style="margin:0 0 8px"><b>O(n)</b>: tạo danh sách mới cùng cỡ; <b>đệ quy sâu n</b> cũng tốn O(n) ngăn xếp.</p><p style="margin:0 0 8px">Đổi <b>thời gian lấy bộ nhớ</b> hoặc ngược lại (ví dụ dùng set để nhanh hơn).</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def dao_tai_cho(a):
+    i, j = 0, len(a) - 1
+    while i &lt; j:
+        a[i], a[j] = a[j], a[i]
+        i += 1
+        j -= 1
+    return a
+print(dao_tai_cho([1, 2, 3, 4, 5]))
+b = [1, 2, 3][::-1]
+print(b)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[5, 4, 3, 2, 1]
+[3, 2, 1]</pre></div><div class="key"><code>a[::-1]</code> tạo bản sao nên tốn <b>O(n)</b> bộ nhớ; hai chỉ số chỉ <b>O(1)</b>.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Bùng nổ tổ hợp: 2ⁿ và n!</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Vì sao vét cạn thất bại</h3><p style="margin:0 0 8px">Số tập con của n phần tử: <b>2ⁿ</b>. Với n = 40: <b>≈ 1,1 × 10¹²</b> (cần hàng giờ).</p><p style="margin:0 0 8px">Số hoán vị: <b>n!</b>. Với n = 12: 479 001 600 (đã quá chậm với Python).</p><p style="margin:0 0 8px">Giải pháp: <b>quy hoạch động</b>, <b>tham lam</b>, <b>chia để trị</b> hay <b>cắt tỉa</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">print(2 ** 40)
+import math
+print(math.factorial(12), math.factorial(20))
+from itertools import combinations
+print(sum(1 for r in range(5) for _ in combinations(range(4), r)))</pre><div class="res"><span class="lab">Kết quả (cuối: số tập con của 4 phần tử = 2⁴)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1099511627776
+479001600 2432902008176640000
+16</pre></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 4</span><h1>Tự kiểm tra: đếm số lần lặp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Tính dem (không chạy máy) rồi kiểm tra.</p><pre class="code" style="font-size:calc(22px*var(--z,1))">n = 16
+dem = 0
+i = 1
+while i &lt; n:
+    dem += 1
+    i *= 2
+print(dem)</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">i nhận lần lượt 1, 2, 4, 8 (i &lt; 16 đúng); sau khi i = 8, i *= 2 → 16 không &lt; 16 nên dừng.</p><p style="margin:0 0 8px">Vậy <b>dem = 4</b> (= log₂ 16). Độ phức tạp <b>O(log n)</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">4</pre></div></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 4</span><h1>Tự kiểm tra (HSG): khoảng cách giá trị</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Đoạn mã sau chạy bao nhiêu lần phép <code>ops += 1</code> với n = 12? Độ phức tạp là gì?</p><pre class="code" style="font-size:calc(22px*var(--z,1))">n = 12
+ops = 0
+for i in range(1, n + 1):
+    for j in range(i, n + 1, i):
+        ops += 1
+print(ops)</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Với mỗi i, vòng j chạy <b>⌊n / i⌋</b> lần: 12, 6, 4, 3, 2, 2, 1, 1, 1, 1, 1, 1.</p><p style="margin:0 0 8px">Tổng = <b>35</b>. Tổng điều hoà ≈ n ln n → <b>O(n log n)</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">35</pre></div></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · 4</span><h1>Tự kiểm tra (HSG): chọn thuật toán</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">n = 10⁵ phần tử, giá trị a[i] ≤ 10⁴. Quy hoạch động f[i][v] (xét i phần tử, phần tử thứ i đặt thành v) cần khoảng bao nhiêu thao tác? Có chạy kịp 1–2 giây không?</p><pre class="code" style="font-size:calc(22px*var(--z,1))">n = 10**5
+V = 10**4
+print(n * V)</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Số trạng thái = n × V = 10⁵ × 10⁴ = <b>10⁹</b> thao tác.</p><p style="margin:0 0 8px">Python chỉ làm khoảng 10⁷ phép/giây (kể cả C++ chỉ ≈ 10⁸–10⁹) nên <b>không kịp</b>; cần <b>cải tiến</b> (tối ưu chuyển trạng thái, nén trạng thái, đổi hướng thuật toán).</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1000000000</pre></div></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Độ phức tạp là cách số phép toán <b>tăng theo n</b>; kí hiệu <b>O</b> giữ số hạng lớn nhất, bỏ hệ số.</li><li>Nối tiếp thì <b>cộng</b>, lồng nhau thì <b>nhân</b>; vòng nhân đôi cho <b>log n</b>.</li><li>Vòng lồng phụ thuộc: tổng <b>n(n+1)/2</b> (O(n²)); bước nhảy i cho <b>n log n</b>.</li><li><b>Hai con trỏ</b> có thể O(n) dù lồng nhau.</li><li>Đánh giá theo <b>trường hợp xấu nhất</b>; n/2 và n cùng bậc.</li><li>Ước lượng thời gian: Python ≈ 10⁷ phép/giây → chọn thuật toán theo <b>giới hạn n</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Nhân đôi</td><td>O(log n)</td></tr><tr><td class="m">Hai vòng lồng</td><td>O(n²)</td></tr><tr><td class="m">Mọi tập con</td><td>2ⁿ</td></tr><tr><td class="m">x in set</td><td>O(1)</td></tr></table><div class="warn">Kết luận lồng nhau là O(n²) mà không đếm tổng; quên <b>log</b> của vòng nhân đôi.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><code>a.pop(0)</code>, <code>a.insert(0, x)</code> là O(n).</li><li><code>x in list</code> là O(n), <code>x in set</code> là O(1).</li><li><code>sorted</code> là O(n log n).</li><li>Nên giữ <b>bộ nhớ</b> trong giới hạn đề (thường 256 MB).</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Độ phức tạp khấu hao</b> (amortized) của append.</li><li><b>Định lí thợ</b> (Master theorem) cho đệ quy.</li><li><b>NP-đầy đủ</b> và lớp bài khó.</li></ul></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Một vòng for n lần chứa một vòng for n lần: độ phức tạp?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>i *= 2</code> từ 1 đến n: bao nhiêu lần?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Độ phức tạp của sort() Python?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>n = 40: O(2ⁿ) có chạy kịp không?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>3n² + 5n: viết bằng O?</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>O(n²)</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>log₂ n</b> lần.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>O(n log n)</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>Không</b> (≈ 10¹²).</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>O(n²)</b>.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Đếm số lần <code>dem += 1</code> với n = 7: <code>for i in range(n): for j in range(n): dem += 1</code>.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Độ phức tạp của đoạn tính tổng 1..n bằng vòng lặp và bằng công thức?</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Đếm số lần chạy: <code>for i in range(1, n+1): j = i; while j &lt; n: j *= 2</code> (n = 64) và ước lượng độ phức tạp.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Bài “đếm phần tử khác nhau” với n = 10⁵ dùng list hay set? Giải thích.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Với n = 20, đoạn <code>for i in range(n): for j in range(i+1, n): for k in range(j+1, n)</code> chạy bao nhiêu lần? Công thức tổng quát.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Tính số lần chạy <code>s += 1</code>: <code>i = 1; while i &lt;= n: for j in range(i): s += 1; i *= 2</code> với n = 64, và độ phức tạp.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>49</b> lần (7²).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Vòng lặp: <b>O(n)</b>; công thức: <b>O(1)</b>.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>120 lần; ≈ n log n (cận trên).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Dùng <b>set</b> → O(n); dùng list <code>in</code> → O(n²).</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">PYTHON 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>1140 = C(20,3); tổng quát n(n−1)(n−2)/6 → O(n³).</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>127 = 1 + 2 + 4 + … + 64 = 2n − 1 → O(n).</p></div></div></div></section>
 </div>
 <div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
 <script>

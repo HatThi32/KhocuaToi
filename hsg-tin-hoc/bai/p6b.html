@@ -1,0 +1,308 @@
+<!-- HEAD -->
+<title>Python 6B · Thuật toán sắp xếp</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 6B</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>THUẬT TOÁN<br>SẮP XẾP</h1><p style="font-size:28px;line-height:1.5">Sắp xếp chọn, nổi bọt (dừng sớm), chèn, tính ổn định, đếm phép so sánh và đổi chỗ, sắp xếp trộn, đếm phân phối, sort() của Python, ứng dụng.</p><div><span class="chip">chọn</span><span class="chip">nổi bọt</span><span class="chip">chèn</span><span class="chip">ổn định</span><span class="chip">sort</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Mô tả và <b>chạy tay</b> ba thuật toán: <b>chọn, nổi bọt, chèn</b>.</li><li>Theo dõi <b>trạng thái mảng sau từng lượt</b> (đề rất hay hỏi).</li><li>Đếm <b>số phép so sánh, đổi chỗ</b>; nhận biết trường hợp tốt nhất, xấu nhất.</li><li>Hiểu <b>tính ổn định</b> và nhận biết thuật toán ổn định.</li><li>Biết <b>sắp xếp trộn</b> O(n log n), <b>đếm phân phối</b> O(n + V), và dùng <b>sort/sorted</b> với key.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Sắp xếp chọn</li><li>Nổi bọt</li><li>Chèn</li><li>Ổn định, so sánh</li><li>Trộn, đếm, sort</li><li>Tự kiểm tra, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 1</span><h1>Bài toán sắp xếp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Vì sao quan trọng?</h3><p style="margin:0 0 8px">Sắp xếp là <b>bước chuẩn bị</b> cho nhiều bài: tìm nhị phân, ghép cặp, tham lam, loại trùng, tìm trung vị.</p><p style="margin:0 0 8px">Quy ước: sắp xếp <b>tăng dần</b> (không giảm). Kết quả cùng các phần tử, chỉ đổi thứ tự.</p><p style="margin:0 0 8px">Ba thuật toán cơ bản O(n²) dễ hiểu; thuật toán nhanh O(n log n).</p></div></div><div class="col"><div class="res"><span class="lab">Ví dụ</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">Truoc: [29, 10, 14, 37, 13]
+Sau  : [10, 13, 14, 29, 37]</pre></div><div class="key">Giá trị cần quan sát khi học: <b>trạng thái mảng sau mỗi lượt</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 2</span><h1>Sắp xếp chọn (Selection sort)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng</h3><ol style="gap:6px"><li>Với mỗi vị trí <b>i</b> từ đầu: tìm phần tử <b>nhỏ nhất</b> trong đoạn [i..cuối].</li><li><b>Đổi chỗ</b> nó với a[i].</li><li>Phần đầu mảng đã <b>đúng vị trí</b> tăng dần.</li></ol><div class="key">Số phép so sánh <b>luôn n(n−1)/2</b> (không phụ thuộc dữ liệu); đổi chỗ <b>tối đa n − 1</b>.</div></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">def chon(a):
+    for i in range(len(a) - 1):
+        m = i
+        for j in range(i + 1, len(a)):
+            if a[j] &lt; a[m]:
+                m = j
+        a[i], a[m] = a[m], a[i]
+    return a</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[10, 13, 14, 29, 37]</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 2</span><h1>Theo dõi sắp xếp chọn a = [29, 10, 14, 37, 13]</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Lượt i</th><th>Nhỏ nhất ở đoạn</th><th>Đổi chỗ</th><th>Mảng sau lượt</th></tr><tr><td>0</td><td>10 (vị trí 1)</td><td>a[0] ↔ a[1]</td><td>[10, 29, 14, 37, 13]</td></tr><tr><td>1</td><td>13 (vị trí 4)</td><td>a[1] ↔ a[4]</td><td>[10, 13, 14, 37, 29]</td></tr><tr><td>2</td><td>14 (vị trí 2)</td><td>tự đổi</td><td>[10, 13, 14, 37, 29]</td></tr><tr><td>3</td><td>29 (vị trí 4)</td><td>a[3] ↔ a[4]</td><td>[10, 13, 14, 29, 37]</td></tr></table><div class="key">Sau <b>2 lượt</b> (i = 0, 1) mảng là <b>[10, 13, 14, 37, 29]</b>: đúng đề kiểu “trạng thái sau k lượt”.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 2</span><h1>Trạng thái sau đúng 2 lượt</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đề thường hỏi</h3><p style="margin:0 0 8px">Chạy <b>chỉ 2 lượt</b> của sắp xếp chọn trên [29, 10, 14, 37, 13].</p><p style="margin:0 0 8px">Chỉ cần thực hiện đúng hai giá trị i, không chạy hết.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">a = [29, 10, 14, 37, 13]
+for i in range(2):
+    m = i
+    for j in range(i + 1, len(a)):
+        if a[j] &lt; a[m]:
+            m = j
+    a[i], a[m] = a[m], a[i]
+    print(i, a)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">0 [10, 29, 14, 37, 13]
+1 [10, 13, 14, 37, 29]</pre></div><div class="key">Hai phần tử nhỏ nhất (10, 13) đã về đúng chỗ ở đầu mảng.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 3</span><h1>Sắp xếp nổi bọt (Bubble sort)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng</h3><ol style="gap:6px"><li>Duyệt các cặp <b>kề nhau</b> (j, j+1).</li><li>Nếu <b>sai thứ tự</b> thì đổi chỗ.</li><li>Sau mỗi lượt, phần tử <b>lớn nhất “nổi” về cuối</b> đoạn xét.</li><li>Có <b>cờ dừng sớm</b>: nếu một lượt không đổi chỗ thì xong.</li></ol></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">def noi_bot(a):
+    dem = 0
+    for i in range(len(a) - 1):
+        doi = False
+        for j in range(len(a) - 1 - i):
+            dem += 1
+            if a[j] &gt; a[j + 1]:
+                a[j], a[j + 1] = a[j + 1], a[j]
+                doi = True
+        if not doi:
+            break
+    return dem</pre><div class="res"><span class="lab">Số phép so sánh: đã sắp xếp; ngược hoàn toàn</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5 15</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 3</span><h1>Đếm số phép so sánh của nổi bọt có dừng sớm</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Mảng</th><th>Số lượt chạy</th><th>Số so sánh</th><th>Giải thích</th></tr><tr><td>[1, 2, 3, 4, 5, 6]</td><td>1</td><td><b>5</b></td><td>không đổi chỗ → dừng sau lượt 1</td></tr><tr><td>[6, 5, 4, 3, 2, 1]</td><td>5</td><td><b>15</b></td><td>xấu nhất: 5+4+3+2+1</td></tr><tr><td>[2, 1, 3, 4, 5, 6]</td><td>2</td><td><b>9</b></td><td>lượt 1: 5 (đổi 2,1); lượt 2: 4 (không đổi) → dừng</td></tr><tr><td>[1, 2, 3, 4, 6, 5]</td><td>2</td><td><b>9</b></td><td>lượt 1: 5 (đổi 6,5); lượt 2: 4 → dừng</td></tr></table><div class="key">Đáp án: <b>5 15 9 9</b>. Tốt nhất O(n) khi đã sắp xếp (nhờ cờ dừng sớm); xấu nhất O(n²).</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 3</span><h1>Kiểm chứng bằng chương trình</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Số phép so sánh bốn mảng</h3><p style="margin:0 0 8px">Đây là câu trong đề: kết quả <b>5 15 9 9</b>.</p><p style="margin:0 0 8px">Chú ý: phiên bản <b>không có cờ dừng sớm</b> luôn tốn n(n−1)/2 = 15 phép dù mảng đã sắp xếp.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))"># dùng hàm noi_bot (có cờ dừng sớm)
+for a in ([1,2,3,4,5,6], [6,5,4,3,2,1],
+          [2,1,3,4,5,6], [1,2,3,4,6,5]):
+    print(noi_bot(a), end=" ")</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5 15 9 9</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 4</span><h1>Sắp xếp chèn (Insertion sort)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Như xếp bài trên tay</h3><ol style="gap:6px"><li>Phần đầu <b>a[0..i−1]</b> đã sắp xếp.</li><li>Lấy <b>x = a[i]</b>, dịch các phần tử <b>lớn hơn x</b> sang phải một bước.</li><li>Chèn x vào chỗ trống.</li></ol><div class="key">Tốt nhất O(n) (đã sắp xếp); xấu nhất O(n²) (ngược). <b>Ổn định</b> và rất nhanh với mảng gần sắp xếp.</div></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">def chen(a):
+    for i in range(1, len(a)):
+        x = a[i]
+        j = i - 1
+        while j &gt;= 0 and a[j] &gt; x:
+            a[j + 1] = a[j]
+            j -= 1
+        a[j + 1] = x
+    return a</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[10, 13, 14, 29, 37]</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 4</span><h1>Theo dõi chèn a = [29, 10, 14, 37, 13]</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>i</th><th>x</th><th>dịch</th><th>mảng sau lượt</th></tr><tr><td>1</td><td>10</td><td>29 sang phải</td><td>[10, 29, 14, 37, 13]</td></tr><tr><td>2</td><td>14</td><td>29 sang phải</td><td>[10, 14, 29, 37, 13]</td></tr><tr><td>3</td><td>37</td><td>không dịch</td><td>[10, 14, 29, 37, 13]</td></tr><tr><td>4</td><td>13</td><td>37, 29, 14 sang phải</td><td>[10, 13, 14, 29, 37]</td></tr></table><div class="key">Phần đầu mảng <b>luôn được sắp xếp</b> sau mỗi lượt (khác chọn: ở chọn, phần đầu là các giá trị <b>cuối cùng</b> đúng chỗ).</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 5</span><h1>Tính ổn định (stable)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Định nghĩa</h3><p style="margin:0 0 8px">Sắp xếp <b>ổn định</b>: hai phần tử có <b>khoá bằng nhau</b> giữ nguyên <b>thứ tự ban đầu</b>.</p><p style="margin:0 0 8px">Quan trọng khi sắp xếp theo <b>nhiều tiêu chí lần lượt</b> (ví dụ: theo điểm, bằng điểm thì giữ thứ tự theo tên đã xếp trước).</p><p style="margin:0 0 8px">Ổn định: <b>chèn, nổi bọt (với &gt;), trộn, sort() của Python, đếm phân phối</b>. Không ổn định: <b>chọn (đổi chỗ xa)</b>, nhanh, vun đống.</p></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">a = [(2, "a"), (2, "b"), (1, "c")]
+b = a[:]
+for i in range(len(b)):
+    m = i
+    for j in range(i + 1, len(b)):
+        if b[j][0] &lt; b[m][0]:
+            m = j
+    b[i], b[m] = b[m], b[i]
+print(b)
+c = sorted(a, key=lambda p: p[0])
+print(c)</pre><div class="res"><span class="lab">Chọn: (2,a) và (2,b) bị đảo; sorted: giữ thứ tự</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[(1, 'c'), (2, 'b'), (2, 'a')]
+[(1, 'c'), (2, 'a'), (2, 'b')]</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 5</span><h1>Vì sao chọn mất ổn định?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phân tích từng bước</h3><p style="margin:0 0 8px">[(2,a), (2,b), (1,c)]: lượt i = 0: nhỏ nhất là (1,c) ở vị trí 2; <b>đổi a[0] ↔ a[2]</b> → [(1,c), (2,b), (2,a)].</p><p style="margin:0 0 8px">Phần tử (2,a) bị <b>đưa ra sau</b> (2,b): thứ tự tương đối của hai khoá 2 đã bị đảo.</p><p style="margin:0 0 8px">Sắp xếp <b>chèn</b> chỉ dịch các phần tử <b>lớn hơn hẳn</b> (&gt;), nên giữ nguyên thứ tự khi bằng nhau.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">a = [(2, "a"), (2, "b"), (1, "c")]
+c = a[:]
+for i in range(1, len(c)):
+    x = c[i]
+    j = i - 1
+    while j &gt;= 0 and c[j][0] &gt; x[0]:
+        c[j + 1] = c[j]
+        j -= 1
+    c[j + 1] = x
+print(c)</pre><div class="res"><span class="lab">Chèn: ổn định</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[(1, 'c'), (2, 'a'), (2, 'b')]</pre></div><div class="key">Đáp án đề: chọn → c, b, a; chèn → c, a, b.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 5</span><h1>So sánh ba thuật toán cơ bản</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>Chọn</th><th>Nổi bọt (dừng sớm)</th><th>Chèn</th></tr><tr><td>Tốt nhất</td><td>O(n²)</td><td><b>O(n)</b></td><td><b>O(n)</b></td></tr><tr><td>Xấu nhất</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td></tr><tr><td>So sánh (n = 6, xấu nhất)</td><td>15</td><td>15</td><td>15</td></tr><tr><td>Số lần đổi chỗ</td><td>≤ n − 1</td><td>đến n(n−1)/2</td><td>dịch ≈ n(n−1)/2</td></tr><tr><td>Ổn định</td><td>không</td><td>có</td><td>có</td></tr><tr><td>Bộ nhớ phụ</td><td>O(1)</td><td>O(1)</td><td>O(1)</td></tr></table><div class="key">Cả ba đều <b>sắp xếp tại chỗ</b> (O(1) bộ nhớ). Với n = 10⁵: n² = 10¹⁰ → quá chậm; cần O(n log n).</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 6</span><h1>Sắp xếp trộn (Merge sort): chia để trị</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng</h3><ol style="gap:6px"><li><b>Chia</b> mảng làm hai nửa.</li><li><b>Sắp xếp</b> từng nửa (đệ quy).</li><li><b>Trộn</b> hai nửa đã sắp xếp thành một (so sánh đầu hai dãy).</li></ol><div class="key">Chiều sâu <b>log₂ n</b>, mỗi tầng trộn <b>O(n)</b> → <b>O(n log n)</b> luôn luôn. Ổn định; bộ nhớ phụ O(n).</div></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">def tron(a):
+    if len(a) &lt;= 1:
+        return a
+    m = len(a) // 2
+    t, p = tron(a[:m]), tron(a[m:])
+    kq = []
+    while t and p:
+        nua = t if t[0] &lt;= p[0] else p
+        kq.append(nua.pop(0))
+    return kq + t + p
+print(tron([29, 10, 14, 37, 13, 5]))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[5, 10, 13, 14, 29, 37]</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 6</span><h1>Sắp xếp đếm phân phối (Counting sort)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khi giá trị nhỏ</h3><p style="margin:0 0 8px">Nếu giá trị nguyên nằm trong <b>[0, V]</b> và V không quá lớn: đếm số lần xuất hiện từng giá trị rồi <b>xuất ra theo thứ tự</b>.</p><p style="margin:0 0 8px">Thời gian <b>O(n + V)</b> — nhanh hơn O(n log n) khi V nhỏ (ví dụ điểm 0..10, tuổi 0..120).</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">a = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+V = 9
+cnt = [0] * (V + 1)
+for x in a:
+    cnt[x] += 1
+kq = []
+for v in range(V + 1):
+    kq += [v] * cnt[v]
+print(cnt)
+print(kq)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[0, 2, 1, 2, 1, 3, 1, 0, 0, 1]
+[1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]</pre></div><div class="key">Không dựa trên so sánh nên <b>vượt giới hạn n log n</b> của sắp xếp so sánh.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 7</span><h1>sort() và sorted() trong Python</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cách dùng chuyên nghiệp</h3><p style="margin:0 0 8px"><b>a.sort()</b>: sửa tại chỗ, trả <b>None</b>; <b>sorted(a)</b>: danh sách mới.</p><p style="margin:0 0 8px">Thuật toán <b>Timsort</b>: <b>O(n log n)</b> xấu nhất, <b>O(n)</b> khi đã gần sắp xếp, <b>ổn định</b>.</p><p style="margin:0 0 8px"><b>key</b>: hàm cho khoá; <b>reverse=True</b>: giảm dần.</p><p style="margin:0 0 8px">Sắp xếp theo <b>nhiều tiêu chí</b>: key trả về <b>tuple</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">hs = [("An", 8), ("Binh", 9), ("Chi", 8), ("Dung", 9)]
+print(sorted(hs, key=lambda p: (-p[1], p[0])))
+print(sorted(hs, key=lambda p: p[1], reverse=True))
+ds = ["b2", "a10", "a2"]
+print(sorted(ds))
+print(sorted(ds, key=lambda s: (s[0], int(s[1:]))))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[('Binh', 9), ('Dung', 9), ('An', 8), ('Chi', 8)]
+[('Binh', 9), ('Dung', 9), ('An', 8), ('Chi', 8)]
+['a10', 'a2', 'b2']
+['a2', 'a10', 'b2']</pre></div><div class="key">Dòng 2: <b>reverse=True</b> vẫn giữ thứ tự ban đầu khi bằng điểm (An, Chi) vì ổn định.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 7</span><h1>Ứng dụng: sắp xếp rồi xử lí</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba mẫu hay dùng</h3><p style="margin:0 0 8px"><b>Loại trùng</b>: sắp xếp rồi so sánh phần tử kề nhau.</p><p style="margin:0 0 8px"><b>Trung vị</b>: phần tử giữa của dãy đã sắp xếp.</p><p style="margin:0 0 8px"><b>Cặp gần nhất / hiệu nhỏ nhất</b>: chỉ cần xét <b>các cặp kề nhau</b> sau khi sắp xếp.</p></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">a = [31, 4, 15, 9, 26, 5, 35]
+b = sorted(a)
+print(b[len(b) // 2])
+print(min(b[i + 1] - b[i] for i in range(len(b) - 1)))
+c = [3, 1, 3, 2, 1]
+print(sum(1 for i in range(1, len(c)) if sorted(c)[i] != sorted(c)[i - 1]) + 1)</pre><div class="res"><span class="lab">Trung vị, hiệu nhỏ nhất, số giá trị khác nhau</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">15
+1
+3</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 7</span><h1>Tham lam sau khi sắp xếp: ghép cặp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bài toán</h3><p style="margin:0 0 8px">n bạn có chiều cao h[i]; ghép thành các cặp sao cho tổng chênh lệch chiều cao của các cặp <b>nhỏ nhất</b>.</p><p style="margin:0 0 8px">Sắp xếp rồi ghép <b>các phần tử kề nhau</b> (1–2, 3–4, …): đây là cách tối ưu.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">h = [160, 172, 158, 175, 165, 169]
+h.sort()
+t = sum(h[i + 1] - h[i] for i in range(0, len(h), 2))
+print(h)
+print(t)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[158, 160, 165, 169, 172, 175]
+9</pre></div><div class="key">Sắp xếp: 158, 160, 165, 169, 172, 175 → (2) + (4) + (3) = <b>9</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 8</span><h1>Tự kiểm tra: sau 2 lượt của sắp xếp chọn</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Với a = [29, 10, 14, 37, 13], sau đúng 2 lượt (i = 0 và i = 1) của sắp xếp chọn, a bằng gì?</p><pre class="code" style="font-size:calc(20px*var(--z,1))">a = [29, 10, 14, 37, 13]
+for i in range(2):
+    m = i
+    for j in range(i + 1, len(a)):
+        if a[j] &lt; a[m]:
+            m = j
+    a[i], a[m] = a[m], a[i]
+print(a)</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Lượt 0: nhỏ nhất 10 (vị trí 1); đổi a[0] ↔ a[1] → [10, 29, 14, 37, 13].</p><p style="margin:0 0 8px">Lượt 1: nhỏ nhất trong [29, 14, 37, 13] là 13 (vị trí 4); đổi a[1] ↔ a[4] → <b>[10, 13, 14, 37, 29]</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[10, 13, 14, 37, 29]</pre></div></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 8</span><h1>Tự kiểm tra: số so sánh nổi bọt</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Đếm số phép so sánh của nổi bọt có dừng sớm cho [2, 1, 3, 4, 5, 6].</p><pre class="code" style="font-size:calc(20px*var(--z,1))">a = [2, 1, 3, 4, 5, 6]
+# dùng hàm noi_bot ở trên
+print(noi_bot(a))</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>Lượt 1</b>: j = 0..4 → 5 so sánh; (2,1) đổi chỗ → [1,2,3,4,5,6], doi = True.</p><p style="margin:0 0 8px"><b>Lượt 2</b>: j = 0..3 → 4 so sánh; không đổi → doi = False → <b>dừng</b>.</p><p style="margin:0 0 8px">Tổng: 5 + 4 = <b>9</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">9</pre></div></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · 8</span><h1>Tự kiểm tra (HSG): đếm cặp nghịch thế</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Cặp (i &lt; j) mà a[i] &gt; a[j] gọi là <b>nghịch thế</b>. Với a = [3, 1, 4, 2], có bao nhiêu? Liên hệ số lần đổi chỗ của sắp xếp nổi bọt/chèn.</p><pre class="code" style="font-size:calc(20px*var(--z,1))">a = [3, 1, 4, 2]
+t = sum(1 for i in range(4) for j in range(i + 1, 4) if a[i] &gt; a[j])
+print(t)</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Các nghịch thế: (3,1), (3,2), (4,2) → <b>3</b>.</p><p style="margin:0 0 8px">Mỗi lần đổi hai phần tử <b>kề</b> sai thứ tự loại đúng một nghịch thế, nên <b>số lần đổi chỗ của nổi bọt = số nghịch thế</b>; số phần tử dịch của chèn cũng bằng nó.</p><p style="margin:0 0 8px">Mảng ngược hoàn toàn n phần tử có n(n−1)/2 nghịch thế (xấu nhất).</p><div class="res"><span class="lab">Số nghịch thế và số lần đổi của nổi bọt</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">3
+3</pre></div></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Chọn</b>: mỗi lượt đưa phần tử nhỏ nhất về đầu; so sánh luôn n(n−1)/2; không ổn định.</li><li><b>Nổi bọt</b>: đổi các cặp kề; có <b>cờ dừng sớm</b> nên tốt nhất O(n).</li><li><b>Chèn</b>: giữ phần đầu đã sắp xếp; tốt với mảng gần sắp xếp; ổn định.</li><li>Ba thuật toán trên O(n²), bộ nhớ phụ O(1).</li><li><b>Trộn</b> O(n log n) ổn định; <b>đếm phân phối</b> O(n + V).</li><li><b>sort/sorted</b>: Timsort O(n log n), ổn định, có <b>key</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Số nghịch thế</td><td>= số lần đổi nổi bọt</td></tr><tr><td class="m">Ổn định</td><td>chèn, nổi bọt, trộn</td></tr><tr><td class="m">Không ổn định</td><td>chọn</td></tr><tr><td class="m">Nhanh</td><td>O(n log n)</td></tr></table><div class="warn">Quên cờ dừng sớm; nhầm trạng thái sau k lượt; nhầm tính ổn định của chọn.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Chạy <b>đúng số lượt</b> đề yêu cầu, không chạy hết.</li><li>Số so sánh nổi bọt có dừng sớm phụ thuộc dữ liệu.</li><li><code>sorted(..., reverse=True)</code> vẫn giữ tính ổn định.</li><li>n = 10⁵ phải dùng <b>sort()</b>, không tự viết O(n²).</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Sắp xếp nhanh (quicksort)</b>, <b>vun đống (heapsort)</b>.</li><li><b>Radix sort</b>.</li><li><b>Sắp xếp ngoài</b> (dữ liệu lớn hơn RAM).</li></ul></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Sắp xếp nào có số phép so sánh luôn n(n−1)/2?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Sắp xếp nào ổn định: chọn hay chèn?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>[3,1,2].sort()</code> trả về?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Độ phức tạp của <code>sorted</code>?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mảng đã sắp xếp: nổi bọt có dừng sớm làm mấy so sánh (n phần tử)?</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>Chọn</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Chèn</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>None</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>O(n log n)</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>n − 1</b>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Sắp xếp giảm dần danh sách không dùng sort. Thử [4, 9, 2, 7].</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. In danh sách sau từng lượt của sắp xếp chèn cho [5, 2, 4, 6, 1, 3].</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Đếm số lần đổi chỗ của sắp xếp nổi bọt cho [5, 1, 4, 2, 8].</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Sắp xếp học sinh theo điểm giảm dần, bằng điểm theo tên tăng dần. Thử [("An",8),("Binh",9),("Chi",8)].</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Đếm số cặp nghịch thế của dãy n = 10⁵ bằng sắp xếp trộn trong O(n log n) (sửa bước trộn).</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Cho n đoạn [l, r]; hợp các đoạn chồng nhau và in tổng độ dài phần được phủ. Thử [(1,3),(2,6),(8,10),(15,18)].</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>[9, 7, 4, 2].</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Đặt <code>print(a)</code> ở cuối mỗi lượt i của vòng for ngoài.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>4 lần (= số nghịch thế).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>sorted(hs, key=lambda p: (-p[1], p[0]))</code> → [('Binh', 9), ('An', 8), ('Chi', 8)].</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">PYTHON 6B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Khi lấy phần tử từ nửa phải trước phần tử còn lại nửa trái, cộng thêm <b>số phần tử còn lại của nửa trái</b> vào đáp án.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Sắp xếp theo l; duyệt, gộp nếu l ≤ r hiện tại → 10.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

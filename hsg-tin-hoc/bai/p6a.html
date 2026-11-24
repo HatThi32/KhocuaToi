@@ -1,0 +1,280 @@
+<!-- HEAD -->
+<title>Python 6A · Thuật toán tìm kiếm</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 6A</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>THUẬT TOÁN<br>TÌM KIẾM</h1><p style="font-size:28px;line-height:1.5">Tìm kiếm tuần tự, tìm kiếm nhị phân, đếm số lần so sánh, vị trí đầu – cuối, tìm theo đáp án, ứng dụng bisect.</p><div><span class="chip">tuần tự</span><span class="chip">nhị phân</span><span class="chip">log n</span><span class="chip">bisect</span><span class="chip">đáp án</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Cài đặt <b>tìm kiếm tuần tự</b> và đánh giá O(n).</li><li>Cài đặt <b>tìm kiếm nhị phân</b> đúng, tránh <b>lặp vô hạn</b> và <b>lệch một</b>.</li><li><b>Đếm số lần so sánh</b> của nhị phân theo từng bước.</li><li>Tìm <b>vị trí đầu tiên / cuối cùng</b> khi có giá trị trùng.</li><li>Hiểu <b>nhị phân trên đáp án</b>; dùng <code>bisect</code>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Tìm tuần tự</li><li>Tìm nhị phân</li><li>Biến thể</li><li>Nhị phân trên đáp án</li><li>Tự kiểm tra, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 1</span><h1>Bài toán tìm kiếm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phát biểu</h3><p style="margin:0 0 8px">Cho dãy <b>a</b> có n phần tử và giá trị <b>k</b>. Tìm <b>vị trí</b> của k trong a, hoặc báo <b>không có</b> (thường trả <b>−1</b>).</p><p style="margin:0 0 8px">Hai phương pháp chính: <b>tuần tự</b> (dãy bất kì) và <b>nhị phân</b> (dãy <b>đã sắp xếp</b>).</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a = [7, 3, 9, 3, 5, 8]
+print(a.index(9))
+print(3 in a, a.count(3))
+print(a.index(3))
+print(a.index(4))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">2
+True 2
+1</pre></div><div class="res"><span class="lab">index báo lỗi nếu không có</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">ValueError: 4 is not in list</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 1</span><h1>Tìm kiếm tuần tự</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng</h3><ol style="gap:6px"><li>Xét lần lượt <b>từng phần tử từ đầu</b>.</li><li>Gặp phần tử <b>bằng k</b>: trả vị trí, <b>dừng</b>.</li><li>Hết dãy mà chưra gặp: trả <b>−1</b>.</li></ol><div class="key">Tốt nhất 1 lần, xấu nhất <b>n</b> lần: <b>O(n)</b>. Không yêu cầu dãy sắp xếp.</div></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">def tim_tt(a, k):
+    dem = 0
+    for i in range(len(a)):
+        dem += 1
+        if a[i] == k:
+            return i, dem
+    return -1, dem
+
+a = [7, 3, 9, 3, 5, 8]
+print(tim_tt(a, 7), tim_tt(a, 3))
+print(tim_tt(a, 8), tim_tt(a, 4))</pre><div class="res"><span class="lab">(vị trí, số lần so sánh)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">(0, 1) (1, 2)
+(5, 6) (-1, 6)</pre></div><div class="key">Phần tử 3 xuất hiện hai lần: tìm tuần tự trả vị trí <b>đầu tiên</b> (1).</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 2</span><h1>Ý tưởng tìm nhị phân</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Như đoán số trong trò chơi</h3><p style="margin:0 0 8px">Dãy <b>đã sắp xếp tăng</b>. So k với <b>phần tử giữa</b>:</p><p style="margin:0 0 8px">• bằng → <b>tìm thấy</b>;</p><p style="margin:0 0 8px">• k nhỏ hơn → chỉ còn <b>nửa trái</b>;</p><p style="margin:0 0 8px">• k lớn hơn → chỉ còn <b>nửa phải</b>.</p><p style="margin:0 0 8px">Mỗi lần so sánh <b>loại một nửa</b> → chỉ cần <b>≈ log₂ n</b> lần.</p></div></div><div class="col"><div class="res"><span class="lab">Mỗi bước giảm một nửa</span><svg viewBox="0 0 560 220" style="width:100%"><g font-family="sans-serif" font-weight="800" font-size="22" text-anchor="middle"><rect x="10" y="20" width="540" height="52" rx="8" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="280" y="55" fill="#0B2545">cả dãy: n phần tử</text><rect x="10" y="90" width="270" height="52" rx="8" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="145" y="125" fill="#0B2545">còn n / 2</text><rect x="10" y="160" width="135" height="52" rx="8" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="78" y="195" fill="#0B2545">n / 4</text><text x="400" y="125" fill="#D84315">⌊log₂ n⌋ + 1 lần</text><text x="400" y="195" fill="#D84315">n = 10⁶ → 20</text></g></svg></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 2</span><h1>Cài đặt tìm kiếm nhị phân</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba biến l, r, m</h3><p style="margin:0 0 8px"><b>l, r</b>: hai đầu miền còn có thể chứa k. <b>m = (l + r) // 2</b>.</p><p style="margin:0 0 8px"><b>a[m] &lt; k</b> → <b>l = m + 1</b>; <b>a[m] &gt; k</b> → <b>r = m − 1</b>.</p><p style="margin:0 0 8px">Điều kiện lặp: <b>l ≤ r</b> (miền còn phần tử).</p><div class="key"><b>±1</b> là bắt buộc: m đã xét, bỏ đi. Thiếu thì <b>lặp vô hạn</b>.</div></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">def tim(a, k):
+    l, r = 0, len(a) - 1
+    dem = 0
+    while l &lt;= r:
+        m = (l + r) // 2
+        dem += 1
+        if a[m] == k:
+            return m, dem
+        elif a[m] &lt; k:
+            l = m + 1
+        else:
+            r = m - 1
+    return -1, dem</pre><div class="res"><span class="lab">Kết quả (m, số lần so sánh)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">(5, 2) (0, 3) (-1, 3)</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 2</span><h1>Theo dõi tìm k = 31 trong [3, 8, 12, 17, 25, 31, 40]</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Lần</th><th>l</th><th>r</th><th>m</th><th>a[m]</th><th>so với 31</th><th>hành động</th></tr><tr><td>1</td><td>0</td><td>6</td><td>3</td><td>17</td><td>17 &lt; 31</td><td>l = 4</td></tr><tr><td>2</td><td>4</td><td>6</td><td>5</td><td>31</td><td><b>bằng</b></td><td>trả m = 5</td></tr></table><div class="key">Chỉ <b>2 lần</b> so sánh. Mảng 1000 phần tử: tối đa <b>⌊log₂ 1000⌋ + 1 = 10</b> lần.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 2</span><h1>Đếm số lần so sánh trên mảng 15 phần tử</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Dãy a (15 phần tử)</h3><p style="margin:0 0 8px"><b>a</b> = 2, 5, 8, 12, 16, 23, 38, 56, 72, 91, 95, 99, 104, 110, 120.</p><p style="margin:0 0 8px">Mọi phần tử tìm được sau <b>tối đa 4</b> lần so sánh (2⁴ − 1 = 15).</p><p style="margin:0 0 8px">Hàm <b>tim</b> như slide trước (trả vị trí và số lần so sánh).</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">for k in (95, 23, 56, 100):
+    print(k, tim(a, k)[1])</pre><div class="res"><span class="lab">Số lần so sánh cho 95, 23, 56, 100</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[4, 3, 1, 4]</pre></div><div class="key">56 nằm <b>chính giữa</b> (chỉ số 7): <b>1 lần</b>. 100 không có: duyệt hết nhánh, <b>4 lần</b> rồi trả −1.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 2</span><h1>Điều kiện: dãy phải được sắp xếp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nhị phân trên dãy chưa sắp xếp sai!</h3><p style="margin:0 0 8px">Loại một nửa dựa trên giả thiết <b>nửa kia chắc chắn không chứa k</b> — đúng chỉ khi dãy tăng.</p><p style="margin:0 0 8px">Dãy <b>giảm</b> thì đổi chiều so sánh. Dãy bất kì phải <b>sắp xếp trước</b> (O(n log n)).</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))"># hàm tim như slide trước
+b = [5, 1, 9, 3, 7]
+print(tim(b, 7), tim(sorted(b), 7))</pre><div class="res"><span class="lab">Dãy chưa sắp xếp: không tìm thấy 7 dù có</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">(-1, 3) (3, 2)</pre></div><div class="key">Nên tìm <b>một lần</b> thì tuần tự rẻ hơn; tìm <b>nhiều lần</b> thì sắp xếp một lần rồi nhị phân.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 3</span><h1>Vị trí đầu tiên khi có giá trị trùng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Không dừng khi gặp</h3><p style="margin:0 0 8px">Khi a[m] == k, ta chưa chắc m là <b>đầu tiên</b>. Ghi nhận <b>kq = m</b> rồi <b>tiếp tục tìm bên trái</b> (<code>r = m − 1</code>).</p><p style="margin:0 0 8px">Tìm <b>cuối cùng</b>: ghi nhận rồi tìm bên phải (<code>l = m + 1</code>).</p><p style="margin:0 0 8px">Đếm số lần xuất hiện = cuối − đầu + 1.</p></div></div><div class="col"><pre class="code" style="font-size:calc(17px*var(--z,1))">def dau(a, k):
+    l, r, kq = 0, len(a) - 1, -1
+    while l &lt;= r:
+        m = (l + r) // 2
+        if a[m] == k:
+            kq = m
+            r = m - 1
+        elif a[m] &lt; k:
+            l = m + 1
+        else:
+            r = m - 1
+    return kq
+a = [1, 2, 2, 2, 3, 5]
+print(dau(a, 2), dau(a, 4))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1 -1</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 3</span><h1>Thư viện bisect</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Có sẵn trong Python</h3><p style="margin:0 0 8px"><b>bisect_left(a, k)</b>: vị trí <b>đầu tiên</b> có thể chèn k (= vị trí đầu của k nếu có).</p><p style="margin:0 0 8px"><b>bisect_right(a, k)</b>: vị trí <b>sau phần tử k cuối</b>.</p><p style="margin:0 0 8px">Số lần k xuất hiện: <code>bisect_right − bisect_left</code>. Số phần tử &lt; k: <code>bisect_left</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">from bisect import bisect_left, bisect_right
+a = [1, 2, 2, 2, 3, 5]
+print(bisect_left(a, 2), bisect_right(a, 2))
+print(bisect_right(a, 2) - bisect_left(a, 2))
+print(bisect_left(a, 4), bisect_left(a, 0))
+print(bisect_right(a, 5) - bisect_left(a, 2))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1 4
+3
+5 0
+5</pre></div><div class="key">Dòng cuối: số phần tử trong đoạn [2, 5] = 5.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 3</span><h1>Tìm phần tử gần nhất và các biến thể</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ứng dụng của bisect</h3><p style="margin:0 0 8px">Phần tử <b>nhỏ nhất ≥ k</b> (lower bound): <code>a[bisect_left(a, k)]</code> nếu chỉ số hợp lệ.</p><p style="margin:0 0 8px">Phần tử <b>lớn nhất ≤ k</b>: <code>a[bisect_right(a, k) − 1]</code> nếu ≥ 0.</p><p style="margin:0 0 8px">Nhờ vậy xử lí <b>hàng nghìn truy vấn</b> trong O(log n) mỗi truy vấn.</p></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">from bisect import bisect_left, bisect_right
+a = [3, 8, 12, 17, 25, 31, 40]
+def gan_nhat(a, k):
+    i = bisect_left(a, k)
+    ung = []
+    if i &lt; len(a): ung.append(a[i])
+    if i &gt; 0: ung.append(a[i - 1])
+    return min(ung, key=lambda v: abs(v - k))
+print(gan_nhat(a, 20), gan_nhat(a, 100), gan_nhat(a, 1))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">17 40 3</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 4</span><h1>Nhị phân trên đáp án</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng “mở rộng”</h3><p style="margin:0 0 8px">Không tìm trong mảng mà tìm trong <b>miền đáp án</b> khi bài toán có tính <b>đơn điệu</b>: nếu x thoả thì mọi x lớn hơn cũng thoả (hoặc ngược lại).</p><p style="margin:0 0 8px">Hàm <b>kiểm tra(x)</b> trả đúng/sai; nhị phân tìm <b>x nhỏ nhất thoả</b>.</p><p style="margin:0 0 8px">Ví dụ: tìm <b>căn bậc hai nguyên</b>; chia dây cho k người; số ngày xong việc…</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">def isqrt(n):
+    l, r = 0, n
+    while l &lt; r:
+        m = (l + r + 1) // 2
+        if m * m &lt;= n:
+            l = m
+        else:
+            r = m - 1
+    return l
+print(isqrt(99), isqrt(100), isqrt(10**18))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">9 10 1000000000</pre></div><div class="key">Dạng <b>l = m</b> cần <b>m = (l + r + 1) // 2</b> (lệch lên) để tránh lặp vô hạn.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 4</span><h1>Bài toán: cắt dây</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đề bài</h3><p style="margin:0 0 8px">Có n sợi dây dài a[i]. Cần cắt ra <b>ít nhất k đoạn bằng nhau</b> (mỗi đoạn dài nguyên L). Tìm <b>L lớn nhất</b>.</p><p style="margin:0 0 8px">Kiểm tra(L): tổng <code>a[i] // L</code> ≥ k? L <b>càng nhỏ càng dễ thoả</b> → đơn điệu.</p><p style="margin:0 0 8px">Nhị phân L từ 1 đến max(a): <b>O(n log max)</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def cat(a, k):
+    l, r = 0, max(a)
+    while l &lt; r:
+        m = (l + r + 1) // 2
+        if sum(x // m for x in a) &gt;= k:
+            l = m
+        else:
+            r = m - 1
+    return l
+print(cat([802, 743, 457, 539], 11))
+print(cat([5, 5], 20))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">200
+0</pre></div><div class="key">Dây dài 802, 743, 457, 539 cắt đoạn 200: 4 + 3 + 2 + 2 = 11 đoạn → L = 200.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 4</span><h1>Các lỗi phổ biến của nhị phân</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bốn lỗi kinh điển</h3><ul style="gap:7px"><li><b>l = m</b> hoặc <b>r = m</b> (thiếu ±1) → lặp vô hạn.</li><li>Điều kiện lặp <b>l &lt; r</b> thay vì <b>l ≤ r</b> → bỏ sót.</li><li>Dãy chưa sắp xếp.</li><li>Với chặn dưới/trên: sai lệch khi tìm <b>đầu tiên/cuối cùng</b>.</li></ul><div class="warn">Khi thi, tự thử với dãy <b>1 phần tử</b>, <b>2 phần tử</b>, k nhỏ nhất, k lớn nhất, k không có.</div></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">def tim_sai(a, k):
+    l, r = 0, len(a) - 1
+    while l &lt;= r:
+        m = (l + r) // 2
+        if a[m] == k:
+            return m
+        elif a[m] &lt; k:
+            l = m + 1
+        else:
+            r = m
+    return -1
+print(tim_sai([1, 3, 5], 5))
+print(tim_sai([1, 3, 5], 0))</pre><div class="res"><span class="lab">Không chạy thử vì treo</span><div style="font-size:22px">Với k = 0 (nhỏ hơn mọi phần tử): chương trình <b>lặp vô hạn</b> vì r = m không thu hẹp khi l = r = 0.</div></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 5</span><h1>Tự kiểm tra: số lần so sánh</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Mảng tăng 15 phần tử như trên. Tìm 95, 23, 56, 100 cần bao nhiêu lần so sánh?</p><pre class="code" style="font-size:calc(20px*var(--z,1))">a = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91, 95, 99, 104, 110, 120]
+# dùng hàm tim ở trên
+print([tim(a, k)[1] for k in (95, 23, 56, 100)])</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Dãy có 15 phần tử, m đầu = 7 (giá trị 56).</p><p style="margin:0 0 8px"><b>56</b>: bằng ngay → <b>1 lần</b>.</p><p style="margin:0 0 8px"><b>23</b>: 23 &lt; 56 → trái [0..6], m = 3 (12) &lt; 23 → [4..6], m = 5 = 23: <b>3 lần</b>.</p><p style="margin:0 0 8px"><b>95</b>: phải [8..14], m = 11 (99) &gt; 95 → [8..10], m = 9 (91) &lt; 95 → [10..10], m = 10: <b>4 lần</b>.</p><p style="margin:0 0 8px"><b>100</b>: không có, tới khi l &gt; r: <b>4 lần</b>. Đáp án <b>4 3 1 4</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[4, 3, 1, 4]</pre></div></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · 5</span><h1>Tự kiểm tra (HSG): phát biểu đúng sai</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Với a = [3, 8, 12, 17, 25, 31, 40], k = 31: (a) vị trí tìm thấy? (b) số lần so sánh? (c) vẫn đúng nếu dãy chưa sắp xếp? (d) mảng 1000 phần tử cần tối đa bao nhiêu lần?</p><pre class="code" style="font-size:calc(20px*var(--z,1))">a = [3, 8, 12, 17, 25, 31, 40]
+print(tim(a, 31))</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) chỉ số <b>5</b>. (b) <b>2 lần</b> (m = 3 rồi m = 5). (c) <b>Sai</b>: nhị phân chỉ đúng với dãy đã sắp xếp. (d) ⌊log₂ 1000⌋ + 1 = <b>10</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">(5, 2)
+10</pre></div></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Tuần tự</b>: duyệt từng phần tử, O(n), không cần sắp xếp.</li><li><b>Nhị phân</b>: dãy đã sắp xếp, loại một nửa mỗi lần, O(log n).</li><li>Cập nhật <b>l = m + 1</b>, <b>r = m − 1</b>; điều kiện <b>l ≤ r</b>.</li><li>Số lần so sánh tối đa: <b>⌊log₂ n⌋ + 1</b>.</li><li>Vị trí đầu/cuối: ghi nhận kết quả rồi tìm tiếp một phía; <b>bisect_left/right</b>.</li><li><b>Nhị phân trên đáp án</b> khi điều kiện đơn điệu.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Tìm tuần tự</td><td>O(n)</td></tr><tr><td class="m">Tìm nhị phân</td><td>O(log n)</td></tr><tr><td class="m">Vị trí đầu</td><td>bisect_left</td></tr><tr><td class="m">Điều kiện</td><td>dãy đã sắp xếp</td></tr></table><div class="warn">Thiếu ±1; quên sắp xếp trước; nhầm đầu/cuối khi có trùng.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Tìm 1 lần: tuần tự rẻ hơn sắp xếp + nhị phân.</li><li><code>l = m</code> cần <code>m = (l + r + 1) // 2</code>.</li><li><code>a.index</code> báo lỗi nếu không có.</li><li>Nhị phân trên đáp án: xác định <b>đơn điệu</b> trước.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Tìm kiếm tam phân</b> cho hàm lồi.</li><li><b>Nhị phân trên số thực</b>.</li><li><b>Fractional cascading</b>.</li></ul></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mảng 1 000 000 phần tử: nhị phân tối đa mấy lần so sánh?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Dãy phải thoả điều kiện gì?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>bisect_left([1,2,2,3], 2)</code>?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>bisect_right([1,2,2,3], 2)</code>?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Tìm tuần tự trả vị trí đầu hay cuối khi có trùng?</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>20</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Đã sắp xếp</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>1</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>3</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>Đầu tiên</b>.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Viết tìm kiếm tuần tự trả vị trí <b>cuối cùng</b> của k. Thử [7,3,9,3,5,8], k = 3.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Dùng nhị phân kiểm tra k có trong dãy tăng. Thử [2,5,8,12], k = 8 và 9.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Đếm số lần k xuất hiện trong dãy tăng bằng bisect. Thử [1,2,2,2,3,5], k = 2.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Tìm phần tử <b>nhỏ nhất ≥ k</b>. Thử [3,8,12,17], k = 10.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Cắt dây: n dây, cần ≥ k đoạn bằng nhau, tìm L lớn nhất. Thử [802,743,457,539], k = 11.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Cho dãy tăng và q truy vấn (l, r): đếm số phần tử trong [l, r] bằng bisect. n = 10⁵, q = 10⁵.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>3.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>True False .</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>3.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>12.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 6A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Đáp án 200 (xem slide “Cắt dây”).</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p><code>bisect_right(a, r) − bisect_left(a, l)</code>: O(log n) mỗi truy vấn; tổng O(q log n).</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
