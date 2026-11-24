@@ -372,13 +372,15 @@ function unitQuiz(id){const tags=UNITS.u[id].tags;let pool=Q.filter(q=>q.type===
 function liveEl(o){const d=h('div',{class:'live'});const r=d.attachShadow?d.attachShadow({mode:'open'}):null;
  if(r)r.innerHTML='<style>:host{display:block;padding:10px;font:16px system-ui,sans-serif;color:#222;background:#fff;border-radius:8px}'+o.css+'</style>'+o.body;else d.innerHTML=o.body;return d}
 function resTable(r){const t=h('table',{class:'rt'});t.append(h('thead',null,h('tr',null,r.cols.map(c=>h('th',{text:c})))));t.append(h('tbody',null,r.rows.map(x=>h('tr',null,x.map(v=>h('td',{text:String(v)}))))));return h('div',{class:'tscroll'},t)}
+function NO(id){const u=UNITS.u[id];const ti=UNITS.top.findIndex(x=>x[0]===u.topic)+1;return ti+'.'+(UNITS.order.filter(i=>UNITS.u[i].topic===u.topic).indexOf(id)+1)}
+function DT(id,d,n,len){return 'Bài '+NO(id)+(len>1?String.fromCharCode(97+n):'')+' · '+(d[0].indexOf(': ')>0?d[0].split(': ').slice(1).join(': '):d[0])}
 function vLearn(){
  const root=h('div',{class:'lv'});const all=UNITS.order;const done=all.filter(i=>uState(i).k==='good').length;
  root.append(h('h2',{text:'Học theo chủ đề'}),h('p',{class:'note',text:'Mỗi bài có mục tiêu, lý thuyết ngắn gọn, ví dụ có kết quả chạy thật, sơ đồ và bài kiểm tra cuối bài. Đã nắm '+done+'/'+all.length+' bài.'}));
- UNITS.top.forEach(([k,name,ic])=>{const ids=all.filter(i=>UNITS.u[i].topic===k);const dn=ids.filter(i=>uState(i).k==='good').length;
-  const card=h('div',{class:'card'},h('div',{class:'row',style:'justify-content:space-between;gap:8px'},h('h3',{text:ic+' '+name}),h('span',{class:'note',text:dn+'/'+ids.length+' bài'})),h('div',{class:'lvbar','aria-hidden':'true',style:'margin:6px 0 8px'},ids.map(i=>h('i',{class:uState(i).k==='good'?'d':''}))));
+ UNITS.top.forEach(([k,name,ic],ti)=>{const ids=all.filter(i=>UNITS.u[i].topic===k);const dn=ids.filter(i=>uState(i).k==='good').length;
+  const card=h('div',{class:'card'},h('div',{class:'row',style:'justify-content:space-between;gap:8px'},h('h3',{text:ic+' Chủ đề '+(ti+1)+'. '+name}),h('span',{class:'note',text:dn+'/'+ids.length+' bài'})),h('div',{class:'lvbar','aria-hidden':'true',style:'margin:6px 0 8px'},ids.map(i=>h('i',{class:uState(i).k==='good'?'d':''}))));
   ids.forEach((i,n)=>{const u=UNITS.u[i],st=uState(i),col={good:'ok',mid:'warn',weak:'bad',new:'muted'}[st.k];const L=LU()[i];
-   card.append(h('div',{class:'lrow'},h('div',{style:'min-width:0'},h('b',{text:u.t}),h('div',{class:'note',text:u.min+' phút · '+u.secs.length+' phần'+(L&&L.quiz&&L.quiz.length?' · kiểm tra gần nhất '+L.quiz[L.quiz.length-1].c+'/'+L.quiz[L.quiz.length-1].n:'')})),
+   card.append(h('div',{class:'lrow'},h('div',{style:'min-width:0'},h('b',{text:'Bài '+NO(i)+'. '+u.t}),h('div',{class:'note',text:u.min+' phút · '+u.secs.length+' phần'+(L&&L.quiz&&L.quiz.length?' · kiểm tra gần nhất '+L.quiz[L.quiz.length-1].c+'/'+L.quiz[L.quiz.length-1].n:'')})),
     h('div',{class:'row',style:'gap:8px'},h('span',{class:'chip',style:'color:var(--'+col+')',text:st.t}),h('button',{class:'btn'+(L?' sec':'')+' sm',type:'button',text:L?'Học lại':'Học',onclick:()=>openUnit(i)}))))});
   root.append(card)});
  return root}
@@ -387,10 +389,10 @@ function vUnit(){
  const root=h('div',{class:'lv'});
  root.append(h('div',{class:'row',style:'justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px'},h('button',{class:'btn sec sm',type:'button',text:'‹ Danh sách bài học',onclick:closeUnit}),h('span',{class:'note',text:'Bước '+(UNI.page+1)+'/'+pages.length})));
  root.append(h('div',{class:'lvbar','aria-hidden':'true'},pages.map((p,i)=>h('i',{class:i<UNI.page?'d':i===UNI.page?'c':''}))));
- root.append(h('h2',{text:u.t,style:'margin:10px 0 12px'}));
+ root.append(h('h2',{text:'Bài '+NO(id)+'. '+u.t,style:'margin:10px 0 12px'}));
  const card=h('div',{class:'card'});
  if(pg.k==='intro'){
-  if(DECK[id]){card.append(h('p',{class:'lab',text:'📽 Bài giảng chuyên sâu (slide) theo từng bài SGK'}));DECK[id].forEach(d=>card.append(h('a',{class:'btn'+(d[1].endsWith('w1.html')?' sec':''),href:d[1],onclick:()=>{STAT.dk=STAT.dk||{};STAT.dk[id]=(STAT.dk[id]||0)+1;save()},target:'_blank',rel:'noopener',style:'display:inline-block;margin:0 8px 8px 0;text-decoration:none',text:d[0]})))}
+  if(DECK[id]){card.append(h('p',{class:'lab',text:'📽 Bài giảng chuyên sâu (slide) theo từng bài SGK'}));DECK[id].forEach((d,dn)=>card.append(h('a',{class:'btn'+(d[1].endsWith('w1.html')?' sec':''),href:d[1],onclick:()=>{STAT.dk=STAT.dk||{};STAT.dk[id]=(STAT.dk[id]||0)+1;save()},target:'_blank',rel:'noopener',style:'display:inline-block;margin:0 8px 8px 0;text-decoration:none',text:DT(id,d,dn,DECK[id].length)})))}
   if(CANVA[id])card.append(h('a',{class:'btn',href:CANVA[id],target:'_blank',rel:'noopener',style:'display:inline-block;margin-bottom:10px;text-decoration:none',text:'🎨 Bản Canva (tóm tắt)'}));
   card.append(h('p',{class:'lab',text:'Mục tiêu bài học ('+u.min+' phút)'}),h('ul',{style:'margin:0 0 10px;padding-left:20px'},u.goals.map(g=>h('li',{text:g}))),
    h('p',{class:'lab',text:'Nội dung'}),h('ol',{style:'margin:0 0 8px;padding-left:20px'},u.secs.map(s=>h('li',{text:s.h})),h('li',{text:'Kiểm tra cuối bài (5 câu)'})))}
@@ -424,7 +426,7 @@ function vUnit(){
   card.append(h('p',{style:'margin-top:10px',text:lv.k==='good'?'Bạn đã nắm bài này. Sang bài tiếp theo hoặc làm đề thi thử.':lv.k==='mid'?'Đọc lại phần "Kiến thức khó" rồi kiểm tra lại.':'Hãy học lại chậm từng phần, chú ý sơ đồ và kết quả chạy.'}));
   const acts=h('div',{class:'row',style:'gap:8px;flex-wrap:wrap;margin-top:8px'});
   const ord=UNITS.order,nx=ord[ord.indexOf(id)+1];
-  if(nx)acts.append(h('button',{class:'btn',type:'button',text:'Bài tiếp: '+UNITS.u[nx].t,onclick:()=>openUnit(nx)}));
+  if(nx)acts.append(h('button',{class:'btn',type:'button',text:'Bài tiếp: Bài '+NO(nx)+'. '+UNITS.u[nx].t,onclick:()=>openUnit(nx)}));
   acts.append(h('button',{class:'btn sec',type:'button',text:'Học lại',onclick:()=>openUnit(id)}),h('button',{class:'btn sec',type:'button',text:'Về danh sách',onclick:closeUnit}));
   card.append(acts)}
  root.append(card);
