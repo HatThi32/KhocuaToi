@@ -1,0 +1,336 @@
+<!-- HEAD -->
+<title>Python 2 · Rẽ nhánh và vòng lặp</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 2</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>RẼ NHÁNH VÀ<br>VÒNG LẶP</h1><p style="font-size:28px;line-height:1.5">if – elif – else, for với range, while, break, continue, vòng lặp lồng, kĩ thuật trace.</p><div><span class="chip">if</span><span class="chip">for</span><span class="chip">while</span><span class="chip">break</span><span class="chip">trace</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Viết cấu trúc <b>rẽ nhánh</b> if, if-else, if-elif-else.</li><li>Dùng <b>for … in range</b> và <b>while</b> đúng số lần lặp.</li><li>Dùng <b>break, continue</b>; viết <b>vòng lặp lồng</b>.</li><li>Thành thạo <b>kĩ thuật trace</b> (theo dõi bảng giá trị).</li><li>Giải các bài toán đếm, tổng, tìm max, kiểm tra tính chất.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Rẽ nhánh</li><li>Vòng lặp for và range</li><li>Vòng lặp while</li><li>break, continue, lồng nhau</li><li>Trace, bài toán mẫu, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 1</span><h1>Rẽ nhánh if – else</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">x = int(input())
+if x % 2 == 0:
+    print("chẵn")
+else:
+    print("lẻ")</pre><div class="key">Sau <b>if điều_kiện:</b> và <b>else:</b> phải có <b>dấu hai chấm</b>; khối lệnh <b>thụt lề</b> đều nhau (thường 4 dấu cách).</div></div><div class="col"><div class="res"><span class="lab">Kết quả (nhập 7)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">7
+lẻ</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 1</span><h1>if – elif – else</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">d = float(input())
+if d &gt;= 8:
+    print("Giỏi")
+elif d &gt;= 6.5:
+    print("Khá")
+elif d &gt;= 5:
+    print("Trung bình")
+else:
+    print("Yếu")</pre><div class="key">Các nhánh được xét <b>từ trên xuống</b>; gặp nhánh đúng đầu tiên thì <b>bỏ qua</b> các nhánh còn lại.</div><div class="warn">Thứ tự điều kiện rất quan trọng: đặt <code>d &gt;= 5</code> lên đầu thì mọi điểm từ 5 trở lên đều thành “Trung bình”.</div></div><div class="col"><div class="res"><span class="lab">Kết quả (nhập 7.2)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">7.2
+Khá</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 1</span><h1>Thụt lề quyết định khối lệnh</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">x = 5
+if x &gt; 3:
+    print("A")
+    print("B")
+print("C")</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">A
+B
+C</pre></div><div class="warn"><code>print("C")</code> <b>không thụt lề</b> nên nằm ngoài if và luôn được chạy. Thụt sai là lỗi <b>IndentationError</b> hoặc sai kết quả.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 1</span><h1>Điều kiện ghép và lồng nhau</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a, b, c = 3, 4, 5
+if a + b &gt; c and b + c &gt; a and a + c &gt; b:
+    print("là 3 cạnh tam giác")
+x = 12
+if x &gt; 0:
+    if x % 2 == 0:
+        print("dương chẵn")
+    else:
+        print("dương lẻ")</pre><div class="key">Dùng <b>and, or, not</b> để ghép điều kiện; if có thể <b>lồng</b> trong if.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">là 3 cạnh tam giác
+dương chẵn</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 2</span><h1>for với range(n)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">for i in range(5):
+    print(i, end=" ")
+print()
+for i in range(3):
+    print("Tin học")</pre><div class="key"><code>range(n)</code> tạo dãy <b>0, 1, …, n-1</b> (n số, <b>không có n</b>); vòng lặp chạy <b>đúng n lần</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">0 1 2 3 4 
+Tin học
+Tin học
+Tin học</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 2</span><h1>Ba dạng của range</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Dạng</th><th>Dãy tạo ra</th><th>Ví dụ</th></tr><tr><td class="m"><code>range(n)</code></td><td>0, 1, …, n-1</td><td><code>range(4)</code> → 0 1 2 3</td></tr><tr><td class="m"><code>range(a, b)</code></td><td>a, a+1, …, <b>b-1</b></td><td><code>range(2, 6)</code> → 2 3 4 5</td></tr><tr><td class="m"><code>range(a, b, k)</code></td><td>a, a+k, … (<b>trước b</b>)</td><td><code>range(1, 10, 3)</code> → 1 4 7</td></tr><tr><td class="m">bước âm</td><td>giảm dần</td><td><code>range(5, 0, -2)</code> → 5 3 1</td></tr></table><div class="key">Số lần lặp của <code>range(a, b)</code> là <b>b - a</b> (nếu b &gt; a). Giá trị <b>b không bao giờ được lấy</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 2</span><h1>Tổng và đếm bằng for</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">s = 0
+for i in range(1, 101):
+    s += i
+print(s)
+
+d = 0
+for i in range(1, 101):
+    if i % 3 == 0:
+        d += 1
+print(d)</pre><div class="key">Mẫu <b>cộng dồn</b>: khởi tạo <code>s = 0</code> trước vòng lặp, rồi <code>s += …</code>. Mẫu <b>đếm</b>: <code>d += 1</code> khi thoả điều kiện.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5050
+33</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 2</span><h1>Vòng for duyệt xâu và danh sách</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">for ch in "Tin":
+    print(ch)
+for x in [4, 9, 2]:
+    print(x * 2, end=" ")
+print()
+for i, x in enumerate(["a", "b"]):
+    print(i, x)</pre><div class="key"><code>for … in</code> duyệt trực tiếp từng phần tử của xâu, danh sách. <b>enumerate</b> cho cả chỉ số và giá trị.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">T
+i
+n
+8 18 4 
+0 a
+1 b</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 3</span><h1>Vòng lặp while</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">n = 1
+while n &lt; 100:
+    n = n * 2
+    print(n, end=" ")
+print()
+print("n =", n)</pre><div class="key"><b>while điều_kiện:</b> lặp khi điều kiện còn <b>đúng</b>; dùng khi <b>chưa biết trước số lần lặp</b>.</div><div class="warn">Phải có lệnh làm điều kiện <b>thay đổi</b> trong thân, nếu không sẽ lặp <b>vô hạn</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">2 4 8 16 32 64 128 
+n = 128</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 3</span><h1>while: tách chữ số</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">n = 5729
+s = 0
+while n &gt; 0:
+    s += n % 10
+    n //= 10
+print(s)</pre><div class="key">Mẫu kinh điển: lấy <b>n % 10</b> rồi <b>n //= 10</b> cho đến khi n = 0. Ở đây tổng chữ số 5+7+2+9 = 23.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">23</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 3</span><h1>while với điều kiện dừng nhập</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">tong = 0
+x = int(input())
+while x != 0:
+    tong += x
+    x = int(input())
+print("Tổng:", tong)</pre><div class="key">Nhập dãy số kết thúc bằng <b>0</b>: đọc trước vòng lặp, đọc tiếp ở cuối thân (kĩ thuật <b>lính canh</b>).</div></div><div class="col"><div class="res"><span class="lab">Kết quả (nhập 5, 8, -2, 0)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5
+8
+-2
+0
+Tổng: 11</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 3</span><h1>So sánh for và while</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>for</th><th>while</th></tr><tr><td>Dùng khi</td><td>biết trước số lần lặp hoặc duyệt dãy</td><td>chưa biết số lần, lặp theo điều kiện</td></tr><tr><td>Biến đếm</td><td>tự cập nhật theo range</td><td><b>tự viết</b> lệnh cập nhật</td></tr><tr><td>Nguy cơ</td><td>ít</td><td><b>lặp vô hạn</b> nếu quên cập nhật</td></tr><tr><td>Ví dụ</td><td>tính tổng 1..n</td><td>tách chữ số, đọc đến khi gặp 0</td></tr></table><div class="key">Mọi vòng for đều viết được bằng while; ngược lại không phải lúc nào cũng gọn bằng for.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 4</span><h1>break: thoát vòng lặp</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">for i in range(2, 20):
+    if i * i &gt; 50:
+        print("dừng ở", i)
+        break
+else:
+    print("không dừng")</pre><div class="key"><b>break</b> thoát <b>ngay</b> khỏi vòng lặp <b>trong cùng</b> chứa nó. Khối <code>else</code> của vòng lặp chỉ chạy khi vòng lặp <b>kết thúc bình thường</b> (không break).</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">dừng ở 8</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 4</span><h1>continue: bỏ qua lượt này</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">for i in range(1, 11):
+    if i % 3 == 0:
+        continue
+    print(i, end=" ")
+print()</pre><div class="key"><b>continue</b> bỏ phần còn lại của lượt lặp hiện tại và <b>sang lượt kế tiếp</b>, không thoát vòng lặp.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1 2 4 5 7 8 10 </pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 4</span><h1>Kiểm tra số nguyên tố</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">n = int(input())
+laNT = n &gt; 1
+for i in range(2, int(n ** 0.5) + 1):
+    if n % i == 0:
+        laNT = False
+        break
+print("nguyên tố" if laNT else "hợp số")</pre><div class="key">Chỉ cần thử ước <b>đến √n</b>; gặp ước thì <b>break</b>. Biến <b>cờ</b> <code>laNT</code> ghi lại kết quả.</div></div><div class="col"><div class="res"><span class="lab">Kết quả (nhập 29)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">29
+nguyên tố</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 4</span><h1>Vòng lặp lồng nhau: hình sao</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">for i in range(1, 5):
+    for j in range(i):
+        print("*", end="")
+    print()</pre><div class="key">Vòng <b>ngoài</b> chạy i = 1..4 (số dòng); với mỗi i vòng <b>trong</b> chạy i lần. Tổng số lần in = 1+2+3+4 = <b>10</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">*
+**
+***
+****</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 4</span><h1>Lồng nhau: bảng cửu chương</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">for i in range(2, 5):
+    for j in range(1, 4):
+        print(f"{i}x{j}={i*j}", end="  ")
+    print()</pre><div class="key">Số lần chạy thân vòng trong = (số lần vòng ngoài) × (số lần vòng trong) = 3 × 3 = <b>9</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">2x1=2  2x2=4  2x3=6  
+3x1=3  3x2=6  3x3=9  
+4x1=4  4x2=8  4x3=12  </pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 5</span><h1>Kĩ thuật trace: bảng theo dõi</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">s = 0
+for i in range(1, 5):
+    if i % 2 == 1:
+        s += i
+    else:
+        s -= i
+print(s)</pre></div><div class="col"><table><tr><th>i</th><th>i%2</th><th>s sau lượt</th></tr><tr><td>1</td><td>1</td><td>0+1 = 1</td></tr><tr><td>2</td><td>0</td><td>1−2 = −1</td></tr><tr><td>3</td><td>1</td><td>−1+3 = 2</td></tr><tr><td>4</td><td>0</td><td>2−4 = −2</td></tr></table><div class="key">Kết quả in ra: <b>-2</b>. Mỗi lượt ghi lại <b>giá trị biến</b>; đây là cách kiểm tra bài “đoán kết quả”.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 5</span><h1>Trace vòng while có chia dư</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">a, b = 48, 18
+while b != 0:
+    a, b = b, a % b
+print(a)</pre></div><div class="col"><table><tr><th>Lượt</th><th>a</th><th>b</th></tr><tr><td>đầu</td><td>48</td><td>18</td></tr><tr><td>1</td><td>18</td><td>48%18 = 12</td></tr><tr><td>2</td><td>12</td><td>18%12 = 6</td></tr><tr><td>3</td><td>6</td><td>12%6 = 0</td></tr></table><div class="key">Dừng khi b = 0, in <b>a = 6</b>: đây là thuật toán <b>Euclid</b> tìm ƯCLN(48, 18).</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · 5</span><h1>Bài toán mẫu: tìm max và vị trí</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a = [4, 9, 2, 9, 7]
+m = a[0]
+vt = 0
+for i in range(1, len(a)):
+    if a[i] &gt; m:
+        m = a[i]
+        vt = i
+print(m, vt)</pre><div class="key">Mẫu <b>tìm lớn nhất</b>: khởi tạo bằng phần tử đầu, so sánh <b>&gt;</b> thì cập nhật. Vì dùng <b>&gt;</b> (không phải &gt;=) nên giữ vị trí <b>đầu tiên</b> của 9 (vt = 1).</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">9 1</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>if / elif / else</b>: thụt lề và dấu <b>:</b>; xét nhánh từ trên xuống.</li><li><code>range(a, b, k)</code>: <b>không lấy b</b>; số lần = (b-a)/k làm tròn lên.</li><li><b>for</b> biết số lần; <b>while</b> theo điều kiện, nhớ cập nhật biến.</li><li><b>break</b> thoát vòng trong cùng; <b>continue</b> sang lượt kế tiếp.</li><li>Vòng lồng: số lần = tích; <b>trace</b> bằng bảng giá trị.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Cộng dồn</td><td>s = 0; s += x</td></tr><tr><td class="m">Đếm</td><td>d = 0; d += 1</td></tr><tr><td class="m">Tìm max</td><td>m = a[0]</td></tr><tr><td class="m">Thoát sớm</td><td>break</td></tr></table><div class="warn">Vòng lặp vô hạn khi quên cập nhật biến trong while; thụt lề sai.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><code>range(5)</code> có 5 số nhưng <b>không có 5</b>.</li><li><code>for … else</code>: else chạy khi <b>không</b> break.</li><li><code>break</code> chỉ thoát vòng <b>trong cùng</b>, không thoát cả hai vòng lồng.</li><li>Đếm số lần lặp của vòng <code>for i in range(1, n): for j in range(i, n)</code> cần tính tổng.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Biến cờ</b> (flag) ghi nhớ sự kiện trong vòng lặp.</li><li><b>Lính canh</b> (sentinel): giá trị đặc biệt kết thúc nhập.</li><li><b>Độ phức tạp</b>: vòng lồng hai lớp ~ n² phép (học ở Python 5).</li></ul></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>for i in range(2, 10, 3)</code> in ra những số nào?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Có bao nhiêu lần chạy thân vòng lặp: <code>for i in range(3): for j in range(4): pass</code>?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Viết chương trình nhập n, in tổng các số chẵn từ 1 đến n.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Viết chương trình đếm số chữ số của n bằng while.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Khác nhau giữa break và continue?</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>2 5 8 (2, 5, 8)</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>3 × 4 = <b>12</b> lần.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>n=int(input()); s=0\nfor i in range(2, n+1, 2): s += i\nprint(s)</code></p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>n=abs(int(input())); d=0\nwhile n&gt;0: d+=1; n//=10</code> (cần xử lí riêng n = 0).</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>break</b> thoát hẳn vòng lặp; <b>continue</b> bỏ lượt hiện tại rồi tiếp tục lượt sau.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Trace, cho biết kết quả in ra:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">s = 0
+for i in range(1, 6):
+    if i % 2 == 0:
+        continue
+    s += i * i
+print(s)</pre></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Trace:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">a, b = 0, 1
+for _ in range(6):
+    a, b = b, a + b
+print(a)</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Trace:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">n, d = 36, 0
+while n % 2 == 0:
+    n //= 2
+    d += 1
+print(n, d)</pre></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Có bao nhiêu dấu * được in?</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">for i in range(1, 6):
+    for j in range(i, 6):
+        print('*', end='')
+    print()</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Viết chương trình in tất cả số có 3 chữ số mà tổng lập phương các chữ số bằng chính nó (Armstrong).</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Đoạn sau in ra gì và vì sao?</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">for i in range(3):
+    print(i)
+else:
+    print('xong')</pre></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>35 (1+9+25)</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>8 (dãy Fibonacci: 0,1,1,2,3,5,8)</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>9 2 (36→18→9)</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>*****/****/***/**/* → 5+4+3+2+1 = <b>15</b></p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">PYTHON 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>for n in range(100, 1000): a,b,c=n//100,n//10%10,n%10\n if a**3+b**3+c**3==n: print(n)</code> → 153 370 371 407</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>0, 1, 2, xong: vòng for kết thúc bình thường (không break) nên else chạy.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

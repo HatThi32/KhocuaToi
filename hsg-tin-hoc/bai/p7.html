@@ -1,0 +1,354 @@
+<!-- HEAD -->
+<title>Python 7 · Đệ quy và chia để trị</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 7</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>ĐỆ QUY VÀ<br>CHIA ĐỂ TRỊ</h1><p style="font-size:28px;line-height:1.5">Hàm gọi chính nó: điều kiện dừng, cây gọi, giai thừa, Fibonacci, Hà Nội, tìm nhị phân, sắp xếp trộn.</p><div><span class="chip">đệ quy</span><span class="chip">cơ sở</span><span class="chip">chia để trị</span><span class="chip">merge sort</span><span class="chip">Tháp Hà Nội</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Giải thích <b>đệ quy</b>, <b>trường hợp cơ sở</b>, <b>bước đệ quy</b>.</li><li>Viết và <b>trace</b> hàm đệ quy: giai thừa, tổng, Fibonacci, luỹ thừa.</li><li>Vẽ <b>cây gọi hàm</b>, đếm số lần gọi.</li><li>Hiểu phương pháp <b>chia để trị</b> và thuật toán <b>sắp xếp trộn</b>.</li><li>Nhận biết lỗi <b>tràn ngăn xếp</b>, đệ quy <b>vô hạn</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Đệ quy cơ bản</li><li>Cây gọi hàm, Fibonacci</li><li>Đệ quy trên dãy, Tháp Hà Nội</li><li>Chia để trị</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 1</span><h1>Đệ quy là gì?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li><b>Đệ quy</b>: hàm <b>gọi lại chính nó</b> với bài toán <b>nhỏ hơn</b>.</li><li>Cần <b>hai phần</b>: <b>trường hợp cơ sở</b> (dừng) và <b>bước đệ quy</b> (gọi tiếp).</li><li>Thiếu cơ sở → gọi mãi → <b>RecursionError</b>.</li></ul></div></div><div class="col"><div class="key">Công thức: <b>n! = n × (n-1)!</b> và <b>0! = 1</b>. “0! = 1” là cơ sở; “n × (n-1)!” là bước đệ quy.</div><div class="ok"><p>Ví dụ đời thường: hai tấm gương đối diện; búp bê Nga lồng nhau.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 1</span><h1>Giai thừa bằng đệ quy</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">def gt(n):
+    if n == 0:
+        return 1
+    return n * gt(n - 1)
+
+print(gt(5))
+print(gt(10))</pre><div class="key"><code>gt(5)</code> = 5·gt(4) = 5·4·gt(3) = … = 5·4·3·2·1·gt(0) = <b>120</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">120
+3628800</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 1</span><h1>Trace lời gọi giai thừa</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">def gt(n):
+    print("vào gt", n)
+    if n == 0:
+        print("cơ sở, trả 1")
+        return 1
+    r = n * gt(n - 1)
+    print("ra gt", n, "=", r)
+    return r
+
+gt(3)</pre><div class="key">Các lời gọi <b>xếp chồng</b> (ngăn xếp): vào sâu đến cơ sở rồi <b>trả kết quả ngược lại</b> từng tầng.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">vào gt 3
+vào gt 2
+vào gt 1
+vào gt 0
+cơ sở, trả 1
+ra gt 1 = 1
+ra gt 2 = 2
+ra gt 3 = 6</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 1</span><h1>Tổng 1..n và luỹ thừa</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def tong(n):
+    return 0 if n == 0 else n + tong(n - 1)
+
+def luythua(a, n):
+    if n == 0:
+        return 1
+    return a * luythua(a, n - 1)
+
+print(tong(100), luythua(2, 10))</pre><div class="key">Luôn tự hỏi: <b>(1) khi nào dừng? (2) bài toán nhỏ hơn là gì? (3) kết hợp kết quả thế nào?</b></div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5050 1024</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 1</span><h1>Lỗi: thiếu trường hợp cơ sở</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def f(n):
+    return n + f(n - 1)
+
+try:
+    f(5)
+except RecursionError:
+    print("RecursionError: tràn ngăn xếp")
+import sys
+print(sys.getrecursionlimit())</pre><div class="key">Python giới hạn độ sâu đệ quy (mặc định <b>1000</b>). Vượt quá hoặc thiếu cơ sở → <b>RecursionError</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">RecursionError: tràn ngăn xếp
+1000</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 2</span><h1>Fibonacci đệ quy</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">def fib(n):
+    if n &lt; 2:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+print([fib(i) for i in range(10)])</pre><div class="key"><b>F(0) = 0, F(1) = 1, F(n) = F(n-1) + F(n-2)</b>. Hai lời gọi đệ quy → cây gọi <b>phân nhánh</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 2</span><h1>Cây gọi hàm của fib(4)</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Cây gọi</span><svg viewBox="0 0 520 300" style="width:100%"><g font-family="monospace" font-weight="800" font-size="22" text-anchor="middle"><g fill="#FFCCBC" stroke="#D84315" stroke-width="3"><rect x="215" y="8" width="90" height="38" rx="8"/><rect x="105" y="85" width="90" height="38" rx="8"/><rect x="325" y="85" width="90" height="38" rx="8"/><rect x="45" y="165" width="90" height="38" rx="8"/><rect x="165" y="165" width="90" height="38" rx="8"/><rect x="285" y="165" width="90" height="38" rx="8"/><rect x="395" y="165" width="90" height="38" rx="8"/><rect x="5" y="245" width="90" height="38" rx="8"/><rect x="105" y="245" width="90" height="38" rx="8"/></g><g fill="#0B2545"><text x="260" y="35">fib(4)</text><text x="150" y="112">fib(3)</text><text x="370" y="112">fib(2)</text><text x="90" y="192">fib(2)</text><text x="210" y="192">fib(1)</text><text x="330" y="192">fib(1)</text><text x="440" y="192">fib(0)</text><text x="50" y="272">fib(1)</text><text x="150" y="272">fib(0)</text></g></g><g stroke="#0B2545" stroke-width="3"><path d="M240 46 L165 85 M280 46 L355 85 M130 123 L95 165 M170 123 L205 165 M350 123 L330 165 M390 123 L430 165 M70 203 L55 245 M110 203 L150 245"/></g></svg></div></div><div class="col"><div class="card"><h3>Nhận xét</h3><ul style="gap:6px"><li><b>fib(2)</b> được tính <b>2 lần</b>, fib(1) 3 lần: <b>lặp lại việc</b>.</li><li>Tổng số lần gọi tăng gần <b>1,6ⁿ</b> → <b>O(2ⁿ)</b>.</li></ul></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 2</span><h1>Đếm số lần gọi và ghi nhớ</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">from functools import lru_cache
+dem = 0
+def fib(n):
+    global dem
+    dem += 1
+    return n if n &lt; 2 else fib(n - 1) + fib(n - 2)
+
+print(fib(25), dem)
+
+@lru_cache(None)
+def fibm(n):
+    return n if n &lt; 2 else fibm(n - 1) + fibm(n - 2)
+
+print(fibm(90))</pre><div class="key">fib(25) gọi <b>242 785</b> lần. Thêm <b>ghi nhớ</b> (memoization, <code>lru_cache</code>) mỗi giá trị chỉ tính <b>1 lần</b> → O(n).</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">75025 242785
+2880067194370816120</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 2</span><h1>Đệ quy ƯCLN (Euclid)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">def ucln(a, b):
+    if b == 0:
+        return a
+    return ucln(b, a % b)
+
+print(ucln(48, 18))
+print(ucln(1071, 462))</pre><div class="key">Cơ sở: <b>b = 0 → a</b>. Bước đệ quy: <b>ucln(b, a % b)</b>; b giảm rất nhanh nên độ phức tạp <b>O(log n)</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">6
+21</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 2</span><h1>Đệ quy với xâu: đảo ngược và đối xứng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">def dao(s):
+    if len(s) &lt;= 1:
+        return s
+    return dao(s[1:]) + s[0]
+
+def doi_xung(s):
+    if len(s) &lt; 2:
+        return True
+    return s[0] == s[-1] and doi_xung(s[1:-1])
+
+print(dao("Python"), doi_xung("radar"), doi_xung("abca"))</pre><div class="key">Bài toán nhỏ hơn: <b>bỏ một kí tự đầu</b> hoặc <b>hai đầu</b>. Cơ sở: xâu rỗng hoặc 1 kí tự.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">nohtyP True False</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 3</span><h1>Đệ quy trên danh sách: tổng và max</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">def tong(a):
+    if not a:
+        return 0
+    return a[0] + tong(a[1:])
+
+def lon_nhat(a):
+    if len(a) == 1:
+        return a[0]
+    m = lon_nhat(a[1:])
+    return a[0] if a[0] &gt; m else m
+
+print(tong([3, 1, 4, 1, 5]), lon_nhat([3, 1, 4, 1, 5]))</pre><div class="key">Cắt lát <code>a[1:]</code> tạo danh sách mới nên mỗi lần tốn O(n); dùng <b>chỉ số</b> để đỡ sao chép nếu cần tối ưu.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">14 5</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 3</span><h1>Số cách chia: hoán vị (liệt kê)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">def hoan_vi(s, cur=""):
+    if not s:
+        print(cur)
+        return
+    for i in range(len(s)):
+        hoan_vi(s[:i] + s[i+1:], cur + s[i])
+
+hoan_vi("abc")</pre><div class="key">Chọn từng phần tử làm đầu rồi <b>hoán vị phần còn lại</b>. Có n! kết quả → <b>O(n!)</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">abc
+acb
+bac
+bca
+cab
+cba</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 3</span><h1>Tháp Hà Nội: ý tưởng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Luật chơi</h3><ul style="gap:6px"><li>3 cọc A, B, C; <b>n đĩa</b> xếp từ lớn đến bé trên A.</li><li>Chuyển hết sang C, mỗi lần <b>một đĩa</b>.</li><li><b>Không đặt đĩa lớn lên đĩa bé</b>.</li></ul></div></div><div class="col"><div class="key">Chia nhỏ: (1) chuyển <b>n-1</b> đĩa từ A sang B (qua C); (2) chuyển đĩa lớn nhất A→C; (3) chuyển <b>n-1</b> đĩa từ B sang C (qua A).</div><div class="ok"><p>Số lần chuyển: <b>T(n) = 2·T(n-1) + 1 = 2ⁿ - 1</b>.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 3</span><h1>Tháp Hà Nội: cài đặt</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">def hanoi(n, a, b, c):
+    if n == 0:
+        return
+    hanoi(n - 1, a, c, b)
+    print(a, "-&gt;", c)
+    hanoi(n - 1, b, a, c)
+
+hanoi(3, "A", "B", "C")</pre><div class="key"><code>hanoi(n, nguồn, trung gian, đích)</code>. Với n = 3 có <b>7</b> bước; n = 10 có 1023; n = 64 là 1,8·10¹⁹.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">A -&gt; C
+A -&gt; B
+C -&gt; B
+A -&gt; C
+B -&gt; A
+B -&gt; C
+A -&gt; C</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 4</span><h1>Chia để trị (divide and conquer)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba bước</h3><ul style="gap:6px"><li><b>Chia</b>: tách bài toán thành các bài toán con <b>nhỏ hơn, cùng dạng</b>.</li><li><b>Trị</b>: giải từng bài toán con (thường bằng đệ quy).</li><li><b>Kết hợp</b>: ghép kết quả thành lời giải bài toán lớn.</li></ul></div></div><div class="col"><table><tr><th>Bài toán</th><th>Chia</th><th>Kết hợp</th></tr><tr><td>Tìm nhị phân</td><td>nửa dãy</td><td>không cần</td></tr><tr><td>Sắp trộn</td><td>hai nửa</td><td>trộn hai dãy đã sắp</td></tr><tr><td>Max của dãy</td><td>hai nửa</td><td>so sánh hai max</td></tr><tr><td>Luỹ thừa nhanh</td><td>a^(n/2)</td><td>bình phương</td></tr></table></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 4</span><h1>Luỹ thừa nhanh</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def mu(a, n):
+    if n == 0:
+        return 1
+    t = mu(a, n // 2)
+    return t * t if n % 2 == 0 else t * t * a
+
+print(mu(2, 10), mu(3, 13))
+print(mu(2, 100) == 2 ** 100)</pre><div class="key">a^n = (a^(n/2))² (n chẵn) hoặc (a^(n/2))²·a (n lẻ): chỉ <b>O(log n)</b> phép nhân thay vì O(n).</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1024 1594323
+True</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 4</span><h1>Sắp xếp trộn (merge sort)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(17px*var(--z,1))">def tron(x, y):
+    r, i, j = [], 0, 0
+    while i &lt; len(x) and j &lt; len(y):
+        if x[i] &lt;= y[j]:
+            r.append(x[i]); i += 1
+        else:
+            r.append(y[j]); j += 1
+    return r + x[i:] + y[j:]
+
+def sap(a):
+    if len(a) &lt;= 1:
+        return a
+    m = len(a) // 2
+    return tron(sap(a[:m]), sap(a[m:]))
+
+print(sap([38, 27, 43, 3, 9, 82, 10]))</pre><div class="key">Chia đôi → sắp từng nửa → <b>trộn</b> hai dãy đã sắp. Độ phức tạp <b>O(n log n)</b> mọi trường hợp.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[3, 9, 10, 27, 38, 43, 82]</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 4</span><h1>Sơ đồ sắp xếp trộn</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Minh hoạ</span><svg viewBox="0 0 520 300" style="width:100%"><g font-family="monospace" font-weight="800" font-size="20" text-anchor="middle"><rect x="95" y="5" width="330" height="40" rx="8" fill="#FFCCBC" stroke="#D84315" stroke-width="3"/><text x="260" y="32" fill="#0B2545">[38 27 43 3 9 82 10]</text><rect x="20" y="85" width="210" height="38" rx="8" fill="#FFE0B2" stroke="#E65100" stroke-width="3"/><text x="125" y="111" fill="#0B2545">[38 27 43]</text><rect x="290" y="85" width="210" height="38" rx="8" fill="#FFE0B2" stroke="#E65100" stroke-width="3"/><text x="395" y="111" fill="#0B2545">[3 9 82 10]</text><rect x="20" y="170" width="210" height="38" rx="8" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="125" y="196" fill="#0B2545">[27 38 43]</text><rect x="290" y="170" width="210" height="38" rx="8" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="395" y="196" fill="#0B2545">[3 9 10 82]</text><rect x="75" y="250" width="370" height="40" rx="8" fill="#2E7D32"/><text x="260" y="277" fill="#fff">[3 9 10 27 38 43 82]</text></g><g stroke="#0B2545" stroke-width="3"><path d="M200 46 L140 84 M320 46 L380 84 M125 124 L125 169 M395 124 L395 169 M140 209 L220 250 M380 209 L300 250"/></g><text x="260" y="148" text-anchor="middle" font-size="20" font-weight="800" fill="#C62828">sắp từng nửa (đệ quy)</text><text x="260" y="238" text-anchor="middle" font-size="20" font-weight="800" fill="#2E7D32">trộn</text></svg></div></div><div class="col"><div class="card"><h3>Độ phức tạp</h3><ul style="gap:6px"><li>Chia đôi: <b>log₂ n</b> tầng.</li><li>Mỗi tầng trộn: <b>O(n)</b>.</li><li>Tổng: <b>O(n log n)</b>.</li></ul></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · 4</span><h1>Tìm max bằng chia để trị</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def lon(a, l, r):
+    if l == r:
+        return a[l]
+    m = (l + r) // 2
+    return max(lon(a, l, m), lon(a, m + 1, r))
+
+a = [3, 17, 4, 9, 11, 2]
+print(lon(a, 0, len(a) - 1))</pre><div class="key">Chia dãy thành hai nửa, lấy <b>max của hai max</b>. Cơ sở: đoạn có <b>một</b> phần tử (l == r).</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">17</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Đệ quy</b> = cơ sở (dừng) + bước đệ quy (bài toán nhỏ hơn).</li><li>Thiếu cơ sở hoặc không thu nhỏ → <b>RecursionError</b> (giới hạn ≈ 1000).</li><li>Fibonacci đệ quy <b>O(2ⁿ)</b>; ghi nhớ hoặc vòng lặp → <b>O(n)</b>.</li><li><b>Chia để trị</b>: chia – trị – kết hợp; ví dụ merge sort <b>O(n log n)</b>, luỹ thừa nhanh <b>O(log n)</b>.</li><li>Tháp Hà Nội: <b>2ⁿ - 1</b> lần chuyển.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">n! (n ≥ 0)</td><td>n * gt(n-1); gt(0)=1</td></tr><tr><td class="m">ƯCLN</td><td>ucln(b, a % b)</td></tr><tr><td class="m">Luỹ thừa nhanh</td><td>O(log n)</td></tr><tr><td class="m">Sắp nhanh</td><td>merge sort</td></tr></table><div class="warn">Không có trường hợp cơ sở, hoặc bước đệ quy không thu nhỏ bài toán.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Mỗi lời gọi tốn <b>bộ nhớ ngăn xếp</b>: độ sâu n → O(n) bộ nhớ.</li><li><code>fib(n)</code> ngây thơ gọi lại cùng giá trị nhiều lần.</li><li>Mọi hàm đệ quy đều có thể khử bằng <b>vòng lặp + ngăn xếp</b>.</li><li><code>sys.setrecursionlimit()</code> tăng giới hạn nhưng có thể gây lỗi bộ nhớ.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Quay lui</b> (backtracking): thử – sai – lùi (N quân hậu, hoán vị).</li><li><b>Quy hoạch động</b> = đệ quy + ghi nhớ.</li><li><b>Quick sort</b>: chia theo điểm chốt.</li></ul></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Tính <code>gt(4)</code> và liệt kê các lời gọi.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Viết hàm đệ quy tính tổng chữ số của n.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Cần bao nhiêu lần chuyển đĩa để giải Tháp Hà Nội với 5 đĩa?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Điều kiện dừng của hàm đệ quy dùng để làm gì?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Fibonacci đệ quy thiếu hiệu quả vì sao?</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>gt(4) → 4·gt(3) → 4·3·gt(2) → 4·3·2·gt(1) → 4·3·2·1·gt(0). Kết quả <b>24</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>def tcs(n):\n if n&lt;10: return n\n return n%10 + tcs(n//10)</code></p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>2⁵ - 1 = <b>31</b> lần.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Ngăn đệ quy <b>vô hạn</b>; cho giá trị trả về trực tiếp ở bài toán nhỏ nhất.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Tính lặp lại cùng các giá trị con nhiều lần (fib(2), fib(1)…) → O(2ⁿ).</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Dự đoán kết quả:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">def f(n):
+    if n &lt;= 0:
+        return 0
+    return n % 10 + f(n // 10)
+print(f(12345), f(100))</pre></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Dự đoán kết quả và số lần gọi f:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">dem = 0
+def f(n):
+    global dem
+    dem += 1
+    if n &lt;= 1:
+        return 1
+    return f(n - 1) + f(n - 2)
+print(f(5), dem)</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Dự đoán:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">def g(n):
+    if n == 0:
+        return
+    g(n - 1)
+    print(n, end=' ')
+    g(n - 1)
+g(3)</pre></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Viết hàm đệ quy kiểm tra dãy có tăng dần không.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Viết hàm đệ quy chuyển số n sang hệ nhị phân (trả về xâu).</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Số lần gọi và độ sâu tối đa khi tính <code>gt(1000)</code> bằng đệ quy trong Python mặc định?</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>15 1</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>8 15 (f(5)=8; 15 lần gọi)</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>1 2 1 3 1 2 1  (đây chính là thứ tự chuyển đĩa theo cỡ)</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>def tang(a):\n return len(a)&lt;2 or (a[0]&lt;a[1] and tang(a[1:]))</code></p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 7 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>def nhi(n):\n return str(n) if n&lt;2 else nhi(n//2)+str(n%2)</code></p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>1001 lời gọi (gt(1000), gt(999), …, gt(0)) với độ sâu 1001, vượt giới hạn mặc định ≈ 1000, nên <b>gây RecursionError</b> (kiểm tra thực tế). Cách khắc phục: dùng vòng lặp hoặc tăng <code>sys.setrecursionlimit</code>.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

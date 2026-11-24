@@ -1,0 +1,288 @@
+<!-- HEAD -->
+<title>Python 5 · Độ phức tạp thuật toán</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 5</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>ĐỘ PHỨC TẠP<br>THUẬT TOÁN</h1><p style="font-size:28px;line-height:1.5">Đếm phép toán, kí hiệu O, so sánh O(1), O(log n), O(n), O(n log n), O(n²), O(2ⁿ).</p><div><span class="chip">O(1)</span><span class="chip">O(n)</span><span class="chip">O(n²)</span><span class="chip">O(log n)</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Hiểu <b>độ phức tạp thời gian</b> là tốc độ tăng số phép toán theo n.</li><li>Nhận biết <b>O(1), O(log n), O(n), O(n log n), O(n²), O(2ⁿ)</b>.</li><li><b>Đếm phép toán</b> trong vòng lặp đơn, lồng, chia đôi.</li><li>Ước lượng <b>thời gian chạy</b> với n = 10⁵, 10⁶, 10⁹.</li><li>Chọn thuật toán <b>phù hợp giới hạn</b> đề bài.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Độ phức tạp là gì</li><li>Nhận biết qua mã</li><li>Bảng so sánh tốc độ tăng</li><li>Đếm phép toán</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Vì sao cần đo độ phức tạp?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Vấn đề</h3><ul style="gap:6px"><li>Một bài toán có <b>nhiều thuật toán</b>; thuật toán nào <b>nhanh hơn</b>?</li><li>Đo bằng giây phụ thuộc <b>máy, ngôn ngữ</b>.</li><li>Cần thước đo <b>độc lập máy</b>: đếm <b>số phép toán cơ bản</b> theo <b>cỡ dữ liệu n</b>.</li></ul></div></div><div class="col"><div class="key"><b>Độ phức tạp thời gian</b>: số phép toán cần thực hiện <b>tăng thế nào khi n tăng</b>, bỏ qua hằng số và số hạng bé.</div><div class="ok"><p>Quan tâm n <b>rất lớn</b>: 3n + 100 và 5n đều coi là <b>O(n)</b>.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Đếm phép toán: vòng lặp đơn</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def dem(n):
+    d = 0
+    for i in range(n):
+        d += 1
+    return d
+
+for n in [10, 100, 1000]:
+    print(n, dem(n))</pre><div class="key">Một vòng lặp chạy <b>n lần</b> → <b>O(n)</b>: n tăng gấp 10 thì số phép tăng gấp 10.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">10 10
+100 100
+1000 1000</pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Đếm phép toán: hai vòng lồng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def dem(n):
+    d = 0
+    for i in range(n):
+        for j in range(n):
+            d += 1
+    return d
+
+for n in [10, 100, 1000]:
+    print(n, dem(n))</pre><div class="key">Hai vòng lồng nhau đều chạy n lần → <b>n × n = O(n²)</b>: n tăng 10 lần thì số phép tăng <b>100 lần</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">10 100
+100 10000
+1000 1000000</pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Đếm phép toán: vòng lặp chia đôi</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def dem(n):
+    d = 0
+    while n &gt; 1:
+        n //= 2
+        d += 1
+    return d
+
+for n in [8, 1024, 10**6, 10**9]:
+    print(n, dem(n))</pre><div class="key">Mỗi lần giảm một nửa → số lần lặp ≈ <b>log₂ n</b> → <b>O(log n)</b>. Với n = 10⁹ chỉ cần khoảng <b>30</b> lượt!</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">8 3
+1024 10
+1000000 19
+1000000000 29</pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 1</span><h1>Vòng lặp lồng nhưng không phải n²</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def dem(n):
+    d = 0
+    for i in range(n):
+        for j in range(i):
+            d += 1
+    return d
+
+for n in [10, 100]:
+    print(n, dem(n), n * (n - 1) // 2)</pre><div class="key">Tổng 0 + 1 + … + (n-1) = n(n-1)/2 ≈ n²/2 → vẫn là <b>O(n²)</b> (bỏ hệ số 1/2).</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">10 45 45
+100 4950 4950</pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Các lớp độ phức tạp thường gặp</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Kí hiệu</th><th>Tên</th><th>Ví dụ</th></tr><tr><td class="m"><b>O(1)</b></td><td>hằng số</td><td>truy cập <code>a[i]</code>, <code>a + b</code></td></tr><tr><td class="m"><b>O(log n)</b></td><td>logarit</td><td>tìm kiếm nhị phân, chia đôi</td></tr><tr><td class="m"><b>O(n)</b></td><td>tuyến tính</td><td>duyệt dãy, tìm max, tìm tuần tự</td></tr><tr><td class="m"><b>O(n log n)</b></td><td>—</td><td>sắp xếp trộn, sort() của Python</td></tr><tr><td class="m"><b>O(n²)</b></td><td>bình phương</td><td>sắp xếp chọn, nổi bọt, chèn</td></tr><tr><td class="m"><b>O(2ⁿ)</b></td><td>mũ</td><td>duyệt mọi tập con, Fibonacci đệ quy ngây thơ</td></tr></table><div class="key">Thứ tự tăng dần: <b>1 &lt; log n &lt; n &lt; n log n &lt; n² &lt; 2ⁿ</b>.</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Quy tắc rút gọn kí hiệu O</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cách rút gọn</h3><ul style="gap:6px"><li>Bỏ <b>hằng số nhân</b>: 5n → O(n).</li><li>Bỏ <b>số hạng bậc thấp</b>: n² + 3n + 7 → O(n²).</li><li>Hai đoạn <b>nối tiếp</b>: <b>cộng</b>, lấy phần lớn: O(n) + O(n²) = O(n²).</li><li>Hai vòng <b>lồng nhau</b>: <b>nhân</b>: O(n) × O(m) = O(nm).</li></ul></div></div><div class="col"><table><tr><th>Phép toán</th><th>Độ phức tạp</th></tr><tr><td class="m">3n + 100</td><td>O(n)</td></tr><tr><td class="m">n² + n log n</td><td>O(n²)</td></tr><tr><td class="m">vòng n lồng vòng log n</td><td>O(n log n)</td></tr><tr><td class="m">2n + n²/2</td><td>O(n²)</td></tr></table></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>So sánh tốc độ tăng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">import math
+print("n        logn     n*logn      n^2")
+for n in [10, 100, 1000, 10**6]:
+    print(n, round(math.log2(n)), round(n*math.log2(n)), n*n)</pre><div class="key">Khi n = 10⁶: <b>n log n</b> khoảng 2·10⁷ (chạy trong giây), còn <b>n²</b> = 10¹² (không thể chạy trong thời gian cho phép).</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">n        logn     n*logn      n^2
+10 3 33 100
+100 7 664 10000
+1000 10 9966 1000000
+1000000 20 19931569 1000000000000</pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 2</span><h1>Ước lượng thời gian chạy</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>n lớn nhất</th><th>Độ phức tạp chấp nhận được</th><th>Ghi chú</th></tr><tr><td>n ≤ 10</td><td>O(n!), O(2ⁿ · n)</td><td>vét cạn, hoán vị</td></tr><tr><td>n ≤ 20–25</td><td>O(2ⁿ)</td><td>duyệt tập con</td></tr><tr><td>n ≤ 5 000</td><td>O(n²)</td><td>hai vòng lồng</td></tr><tr><td>n ≤ 10⁵</td><td>O(n log n)</td><td>sắp xếp, nhị phân</td></tr><tr><td>n ≤ 10⁶–10⁷</td><td>O(n)</td><td>duyệt một lần</td></tr><tr><td>n ≤ 10⁹ trở lên</td><td>O(log n), O(1)</td><td>công thức, chia đôi</td></tr></table><div class="key">Quy ước thực tế: máy thực hiện khoảng <b>10⁷ – 10⁸ phép tính cơ bản mỗi giây</b> (Python chậm hơn, khoảng 10⁷).</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Tính tổng 1..n: ba cách</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def c1(n):
+    s = 0
+    for i in range(1, n + 1):
+        s += i
+    return s
+
+def c2(n):
+    return n * (n + 1) // 2
+
+print(c1(100), c2(100))
+print(c2(10**12))</pre><div class="key">Cách 1: <b>O(n)</b>. Cách 2 dùng công thức: <b>O(1)</b>. Với n = 10¹², cách 1 không chạy nổi, cách 2 xong tức thì.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5050 5050
+500000000000500000000000</pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Số nguyên tố: thử đến n hay đến √n</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def thu(n):
+    d = 0
+    i = 2
+    while i * i &lt;= n:
+        d += 1
+        i += 1
+    return d
+
+n = 1000003
+print("đến n-1:", n - 2)
+print("đến √n:", thu(n))</pre><div class="key">Thử đến <b>n-1</b>: O(n) ≈ 10⁶ lượt. Thử đến <b>√n</b>: O(√n) ≈ <b>10³</b> lượt, cho cùng kết luận n = 1000003 là số nguyên tố.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">đến n-1: 1000001
+đến √n: 999</pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Tìm tuần tự và tìm nhị phân</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">def nhi_phan(a, x):
+    l, r, d = 0, len(a) - 1, 0
+    while l &lt;= r:
+        d += 1
+        m = (l + r) // 2
+        if a[m] &lt; x:
+            l = m + 1
+        else:
+            r = m - 1
+    return d
+
+a = list(range(1, 100001))
+print("tuần tự:", len(a))
+print("nhị phân:", nhi_phan(a, 100000))</pre><div class="key">Trường hợp xấu nhất với 10⁵ phần tử: tuần tự <b>100 000</b> bước, nhị phân chỉ khoảng <b>17</b> bước.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">tuần tự: 100000
+nhị phân: 17</pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Độ phức tạp theo trường hợp</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th>Trường hợp</th><th>Ý nghĩa</th><th>Tìm tuần tự</th></tr><tr><td>Tốt nhất</td><td>dữ liệu thuận lợi</td><td>x ở đầu: O(1)</td></tr><tr><td>Trung bình</td><td>dữ liệu ngẫu nhiên</td><td>khoảng n/2: O(n)</td></tr><tr><td><b>Xấu nhất</b></td><td>dữ liệu bất lợi nhất</td><td>x ở cuối/không có: O(n)</td></tr></table></div><div class="col"><div class="key">Khi nói “độ phức tạp” mặc định là <b>trường hợp xấu nhất</b>, vì đó là mức <b>đảm bảo</b> không vượt quá.</div><div class="ok"><p>Đề thi HSG thường hỏi: “Đánh giá độ phức tạp của đoạn mã sau”: đếm vòng lặp, xét xem biến lặp tăng hay giảm đều.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Độ phức tạp bộ nhớ</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">n = 10**6
+m1 = [0] * n
+m2 = [[0] * 1000 for _ in range(1000)]
+print(len(m1), len(m2) * len(m2[0]))</pre><div class="key"><b>Độ phức tạp không gian</b>: lượng bộ nhớ cần. Mảng n phần tử: O(n); ma trận n×n: <b>O(n²)</b>. Giới hạn bộ nhớ đề bài thường 256 MB.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1000000 1000000</pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · 3</span><h1>Fibonacci: O(2ⁿ) và O(n)</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">def fib1(n):
+    global dem
+    dem += 1
+    return n if n &lt; 2 else fib1(n - 1) + fib1(n - 2)
+
+dem = 0
+print(fib1(20), dem)
+
+def fib2(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+print(fib2(20), fib2(90))</pre><div class="key">Đệ quy ngây thơ gọi <b>21 891</b> lần cho n = 20 (tăng gần 1,6ⁿ); vòng lặp chỉ <b>n</b> bước.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">6765 21891
+6765 2880067194370816120</pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Độ phức tạp = tốc độ tăng số phép toán theo <b>n</b>; bỏ hằng số và số hạng bé.</li><li>Vòng đơn <b>O(n)</b>; lồng nhau <b>O(n²)</b>; chia đôi <b>O(log n)</b>.</li><li>Thứ tự: <b>1 &lt; log n &lt; n &lt; n log n &lt; n² &lt; 2ⁿ</b>.</li><li>Nối tiếp thì <b>cộng</b> (lấy lớn), lồng nhau thì <b>nhân</b>.</li><li>Máy làm khoảng <b>10⁸</b> phép/giây: chọn thuật toán theo giới hạn n.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">n ≤ 10⁵</td><td>O(n log n)</td></tr><tr><td class="m">n ≤ 10⁶</td><td>O(n)</td></tr><tr><td class="m">n ≤ 5000</td><td>O(n²)</td></tr><tr><td class="m">n ≤ 25</td><td>O(2ⁿ)</td></tr></table><div class="warn">Không bỏ qua vòng lặp ẩn: <code>in</code> trên list, <code>sum</code>, <code>.index</code> đều là O(n).</div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><code>x in list</code> là <b>O(n)</b> nhưng <code>x in set</code> là <b>O(1)</b> (trung bình).</li><li><code>a.append</code> O(1) nhưng <code>a.insert(0, x)</code> <b>O(n)</b>.</li><li><code>sorted</code> là <b>O(n log n)</b>.</li><li>Cắt lát <code>a[i:j]</code> tốn <b>O(j-i)</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Ω, Θ</b>: cận dưới và cận chặt (mở rộng).</li><li><b>Độ phức tạp trung bình</b> khác xấu nhất (Quick sort).</li><li><b>Đánh đổi thời gian và bộ nhớ</b> (bảng băm, bảng tính trước).</li></ul></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Đánh giá độ phức tạp: <code>for i in range(n): s += i</code>.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Đánh giá: <code>for i in range(n): for j in range(n): pass</code>.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đánh giá: <code>while n &gt; 0: n //= 10</code> (n có k chữ số).</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Đánh giá: <code>for i in range(n): for j in range(5): pass</code>.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Rút gọn: <code>5n² + 3n log n + 100</code>.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>O(n)</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>O(n²)</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>O(k)</b> = O(log₁₀ n) (mỗi lần bớt một chữ số).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>O(5n) = O(n)</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>O(n²)</b>.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Đánh giá độ phức tạp:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">for i in range(1, n):
+    j = 1
+    while j &lt; n:
+        j *= 2</pre></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Đánh giá độ phức tạp:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">for i in range(n):
+    for j in range(i, n):
+        for k in range(3):
+            pass</pre></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Một thuật toán O(n²) mất 1 giây với n = 10⁴. Ước lượng thời gian với n = 10⁵.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Một thuật toán O(n log n) mất 1 giây với n = 10⁵. Ước lượng với n = 10⁶ (xấp xỉ).</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) O(n) luôn nhanh hơn O(n²). (b) <code>x in set</code> nhanh hơn <code>x in list</code> khi dữ liệu lớn. (c) 3n + 1000 là O(n). (d) Hằng số nhân bị bỏ nên 1000n tốt hơn n².</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Cho n = 10⁶: nên chọn thuật toán O(n²), O(n log n) hay O(n)? Vì sao?</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Vòng ngoài n lần, vòng trong log n lần → <b>O(n log n)</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Ba vòng lồng nhưng vòng trong cùng chạy hằng số (3): <b>O(n²)</b>.</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Tăng n lên 10 lần → thời gian tăng 10² = 100 lần: khoảng <b>100 giây</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Khoảng 10 × (20/17) ≈ <b>11–12 giây</b> (n tăng 10 lần, log n tăng nhẹ).</p></div></div></div></section>
+
+<section class="s p9"><div class="hd"><span class="k">PYTHON 5 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b> với n nhỏ hoặc hằng số lớn. (b) <b>Đúng</b>. (c) <b>Đúng</b>. (d) <b>Sai</b>: với n &lt; 1000 thì n² còn nhỏ hơn 1000n; kí hiệu O chỉ nói về n rất lớn.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Với 10⁶: O(n²) = 10¹² (quá chậm), O(n log n) ≈ 2·10⁷ (được), O(n) tốt nhất. Chọn <b>O(n) hoặc O(n log n)</b>.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
