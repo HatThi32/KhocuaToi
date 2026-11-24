@@ -27,3 +27,11 @@ Chủ dự án là giáo viên Tin học (Việt Nam): **mọi nội dung và gi
 
 ## Triển khai
 GitHub Pages: `https://hatthi32.github.io/KhocuaToi/hsg-tin-hoc/`. Bản trên claude.ai (artifact) chỉ là `index.html` một tệp; slide ở Pages.
+
+## CHUẨN BÀI GIẢNG MỚI (đang viết lại từng đợt; Python 1A/1B/1C là bản mẫu)
+Phản hồi của giáo viên: slide cũ quá ngắn, học sinh không tự học được. Mọi bài phải **dạy đủ những gì đề và câu hỏi hỏi**.
+- Dùng `slides/lib5.py` (P, STEPS, MEM, SELF, NUMLINE, ERR) + `lib3/lib2`. Xem `slides/d_p1a.py`, `d_p1b.py`, `d_p1c.py`.
+- Mỗi khái niệm: (1) vì sao cần/ví dụ đời thường → (2) giải thích bằng lời, từng bước → (3) bảng theo dõi hoặc sơ đồ → (4) ví dụ chạy thật → (5) lỗi thường gặp → (6) câu tự kiểm tra có đáp án giải thích từng bước.
+- **Phủ nội dung**: trước khi viết bài, liệt kê câu hỏi trong `bank.json` thuộc bài đó (theo `topic`, `tags`, từ khoá) và bảo đảm mỗi khái niệm các câu đó kiểm tra đều có slide dạy (kể cả mục NÂNG CAO kiểu HSG: số âm với // và %, round chẵn, ** phải sang trái, đoản mạch...).
+- Mỗi bài có thể gồm nhiều bộ (1A, 1B, 1C...), mỗi bộ 30–45 slide; nối vào `DECK` trong `learnui.js`.
+- Làm theo từng đợt nhỏ, gửi giáo viên duyệt trước khi sang bài kế tiếp.

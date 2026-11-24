@@ -1,0 +1,316 @@
+<!-- HEAD -->
+<title>Python 1B · Toán tử và biểu thức</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 1B</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>TOÁN TỬ VÀ BIỂU THỨC</h1><p style="font-size:28px;line-height:1.5">Toán tử số học, chia nguyên và chia dư (kể cả số âm), luỹ thừa, thứ tự ưu tiên, hàm toán học, so sánh, logic, đoản mạch, phép toán bit.</p><div><span class="chip">//  %</span><span class="chip">**</span><span class="chip">ưu tiên</span><span class="chip">and  or  not</span><span class="chip">bit</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Nêu được <b>biểu thức, toán hạng, toán tử</b>.</li><li>Tính đúng <b>//</b> và <b>%</b> với số dương <b>và số âm</b>.</li><li>Tính <b>luỹ thừa</b>, nắm quy tắc <b>kết hợp phải sang trái</b> của <code>**</code>.</li><li>Tính biểu thức theo <b>thứ tự ưu tiên</b>, từng bước.</li><li>Dùng <b>round, abs, divmod, math</b> đúng cách.</li><li>Tính biểu thức <b>so sánh và logic</b>, hiểu <b>đoản mạch</b>.</li><li>Làm quen phép toán <b>bit</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Biểu thức, toán tử</li><li>// và %</li><li>Luỹ thừa, ưu tiên</li><li>So sánh, logic</li><li>Phép bit, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 1</span><h1>Biểu thức, toán hạng và toán tử</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Gọi tên các thành phần</h3><p style="margin:0 0 8px"><b>Biểu thức</b> là một dãy gồm giá trị, biến và các phép toán, mà máy <b>tính ra một giá trị</b>.</p><p style="margin:0 0 8px">Trong <code>a + 3 * 2</code>: <code>a, 3, 2</code> là các <b>toán hạng</b>; <code>+</code> và <code>*</code> là các <b>toán tử</b>.</p><p style="margin:0 0 8px">Muốn biết kết quả, ta phải biết <b>tính cái nào trước</b> (thứ tự ưu tiên) và <b>kết quả thuộc kiểu nào</b>.</p></div></div><div class="col"><table><tr><th>Biểu thức</th><th>Giá trị</th></tr><tr><td><code>2 + 3 * 4</code></td><td>14</td></tr><tr><td><code>(2 + 3) * 4</code></td><td>20</td></tr><tr><td><code>"ab" + "c"</code></td><td>abc</td></tr><tr><td><code>5 &gt; 3</code></td><td>True</td></tr></table><div class="key">Biểu thức không chỉ là số: nối xâu và so sánh cũng là biểu thức.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 1</span><h1>Bảy toán tử số học</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Toán tử</th><th>Tên</th><th>Ví dụ</th><th>Kết quả</th><th>Kiểu</th></tr><tr><td><code>+</code></td><td>cộng</td><td><code>7 + 2</code></td><td>9</td><td>int</td></tr><tr><td><code>-</code></td><td>trừ</td><td><code>7 - 2</code></td><td>5</td><td>int</td></tr><tr><td><code>*</code></td><td>nhân</td><td><code>7 * 2</code></td><td>14</td><td>int</td></tr><tr><td><code>/</code></td><td>chia (số thực)</td><td><code>7 / 2</code></td><td>3.5</td><td>float</td></tr><tr><td><code>//</code></td><td>chia lấy <b>phần nguyên</b></td><td><code>7 // 2</code></td><td>3</td><td>int</td></tr><tr><td><code>%</code></td><td>chia lấy <b>phần dư</b></td><td><code>7 % 2</code></td><td>1</td><td>int</td></tr><tr><td><code>**</code></td><td>luỹ thừa</td><td><code>2 ** 3</code></td><td>8</td><td>int</td></tr></table><div class="key">Nhớ: <b>/</b> luôn ra số thực. Muốn thương <b>nguyên</b> dùng <b>//</b>. Muốn <b>dư</b> dùng <b>%</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 1</span><h1>Chia nguyên và chia dư: nhìn như phép chia ở tiểu học</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>17 chia 5</h3><p style="margin:0 0 8px">Chia 17 kẹo cho 5 bạn: mỗi bạn được <b>3</b> cái, còn <b>dư 2</b> cái.</p><p style="margin:0 0 8px"><b>17 // 5 = 3</b> (thương) và <b>17 % 5 = 2</b> (số dư).</p><p style="margin:0 0 8px">Hai kết quả liên hệ bằng đẳng thức <b>luôn đúng</b>:</p><div class="key" style="text-align:center;font-size:26px"><b>a = (a // b) × b + a % b</b></div><p style="margin:0 0 8px">Kiểm tra: 3 × 5 + 2 = <b>17</b> ✓.</p></div></div><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">print(17 // 5, 17 % 5)
+print(20 // 5, 20 % 5)
+print(3 // 5, 3 % 5)
+print(17 / 5)</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">3 2
+4 0
+0 3
+3.4</pre></div><div class="key">Số bé chia số lớn: thương <b>0</b>, dư <b>chính số bé</b> (3 // 5 = 0, 3 % 5 = 3).</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 1</span><h1>Bốn công dụng của % và //</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ như “công cụ”</h3><ul style="gap:8px"><li><b>n % 2 == 0</b>: n <b>chẵn</b>; <b>n % 2 == 1</b>: n lẻ.</li><li><b>n % k == 0</b>: n <b>chia hết</b> cho k.</li><li><b>n % 10</b>: <b>chữ số cuối</b> của n.</li><li><b>n // 10</b>: n <b>bỏ chữ số cuối</b>.</li><li><b>(h + 5) % 24</b>: quay vòng (giờ, thứ trong tuần).</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(23px*var(--z,1))">n = 4729
+print(n % 10, n // 10)
+print((n // 10) % 10, n // 100)
+print(4729 % 2, 4729 % 7)
+print((22 + 5) % 24)</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">9 472
+2 47
+1 4
+3</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 1</span><h1>Tách các chữ số của 4729: bảng theo dõi</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Bước</th><th>n</th><th>n % 10 (chữ số cuối)</th><th>n // 10 (số mới)</th></tr><tr><td>1</td><td>4729</td><td>9</td><td>472</td></tr><tr><td>2</td><td>472</td><td>2</td><td>47</td></tr><tr><td>3</td><td>47</td><td>7</td><td>4</td></tr><tr><td>4</td><td>4</td><td>4</td><td>0</td></tr></table><div class="key">Lặp lại hai thao tác này đến khi n = 0 sẽ <b>lấy hết các chữ số từ phải sang trái</b>. Đây là kĩ thuật nền cho bài tính tổng chữ số, đảo số, kiểm tra số đối xứng (sẽ học ở bài lặp).</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 2</span><h1>// với số âm: làm tròn về phía “nhỏ hơn”</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy tắc của Python</h3><p style="margin:0 0 8px"><b>a // b</b> là <b>⌊a / b⌋</b>: lấy thương thực rồi <b>làm tròn xuống</b> (về phía −∞), <b>không phải</b> bỏ phần thập phân.</p><p style="margin:0 0 8px">Với số dương hai cách cho cùng kết quả, nhưng với số âm thì <b>khác</b>.</p><p style="margin:0 0 8px"><b>-7 / 2 = -3,5</b>. Làm tròn xuống: <b>-4</b>. Vậy <b>-7 // 2 = -4</b>.</p></div></div><div class="col"><div class="res"><span class="lab">Làm tròn xuống: -3,5 → -4</span><svg viewBox="0 0 520 130" style="width:100%"><line x1="20" y1="70" x2="500" y2="70" stroke="#0B2545" stroke-width="4"/><line x1="20" y1="62" x2="20" y2="78" stroke="#0B2545" stroke-width="3"/><text x="20" y="104" text-anchor="middle" font-size="22" font-weight="800" font-family="monospace" fill="#0B2545">-5</text><line x1="180" y1="62" x2="180" y2="78" stroke="#0B2545" stroke-width="3"/><text x="180" y="104" text-anchor="middle" font-size="22" font-weight="800" font-family="monospace" fill="#0B2545">-4</text><line x1="340" y1="62" x2="340" y2="78" stroke="#0B2545" stroke-width="3"/><text x="340" y="104" text-anchor="middle" font-size="22" font-weight="800" font-family="monospace" fill="#0B2545">-3</text><line x1="500" y1="62" x2="500" y2="78" stroke="#0B2545" stroke-width="3"/><text x="500" y="104" text-anchor="middle" font-size="22" font-weight="800" font-family="monospace" fill="#0B2545">-2</text><circle cx="260.0" cy="70" r="9" fill="#D84315" stroke="#0B2545" stroke-width="2"/><text x="260.0" y="42" text-anchor="middle" font-size="21" font-weight="800" font-family="sans-serif" fill="#D84315">-3,5</text><circle cx="180.0" cy="70" r="9" fill="#2E7D32" stroke="#0B2545" stroke-width="2"/><text x="180.0" y="42" text-anchor="middle" font-size="21" font-weight="800" font-family="sans-serif" fill="#2E7D32">-4</text></svg></div><div class="key">Hãy nhớ: <b>xuống</b> nghĩa là về bên <b>trái</b> trên trục số. Không phải “bỏ phần lẻ”.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 2</span><h1>% với số âm: dư luôn cùng dấu với số chia</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cách tính an toàn</h3><p style="margin:0 0 8px">Dùng đẳng thức: <b>a % b = a − (a // b) × b</b>.</p><p style="margin:0 0 8px">Ví dụ <b>-7 % 2</b>: -7 // 2 = -4, nên -7 % 2 = -7 − (−4)×2 = -7 + 8 = <b>1</b>.</p><p style="margin:0 0 8px">Quy tắc rút gọn: <b>kết quả % luôn nằm từ 0 đến b−1 khi b dương</b> (và cùng dấu với b khi b âm).</p></div></div><div class="col"><pre class="code" style="font-size:calc(23px*var(--z,1))">print(-7 // 2, -7 % 2)
+print(7 // -2, 7 % -2)
+print(-7 // -2, -7 % -2)
+print(-7 % 3, -8 % 3, -9 % 3)</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:23px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">-4 1
+-4 -1
+3 -1
+2 1 0</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 2</span><h1>Bảng so sánh: chia nguyên của Python và cắt cụt</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Phép tính</th><th>Thương thực</th><th>// (làm tròn xuống)</th><th>int() (cắt cụt)</th><th>%</th></tr><tr><td>7 và 2</td><td>3,5</td><td>3</td><td>3</td><td>1</td></tr><tr><td>−7 và 2</td><td>−3,5</td><td><b>−4</b></td><td>−3</td><td><b>1</b></td></tr><tr><td>7 và −2</td><td>−3,5</td><td><b>−4</b></td><td>−3</td><td><b>−1</b></td></tr><tr><td>−7 và −2</td><td>3,5</td><td>3</td><td>3</td><td>−1</td></tr><tr><td>−7 và 3</td><td>−2,33…</td><td><b>−3</b></td><td>−2</td><td><b>2</b></td></tr></table><div class="warn">Nhiều ngôn ngữ khác (C, Java) cho <code>-7 / 2 = -3</code>, dư <code>-1</code>. <b>Python khác</b>: -7 // 2 = -4, dư 1. Đề thi hay kiểm tra điểm này.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 2</span><h1>Tự kiểm tra: tính tay // và %</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Tính không chạy máy: <code>-17 // 5</code>, <code>-17 % 5</code>, <code>17 // -5</code>, <code>17 % -5</code>. Kiểm tra bằng đẳng thức.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>-17 // 5</b>: -17/5 = -3,4 → làm tròn xuống <b>-4</b>. <b>-17 % 5</b> = -17 − (−4)×5 = <b>3</b>.</p><p style="margin:0 0 8px"><b>17 // -5</b>: 17/(-5) = -3,4 → <b>-4</b>. <b>17 % -5</b> = 17 − (−4)(−5) = 17 − 20 = <b>-3</b>.</p><p style="margin:0 0 8px">Kiểm chứng: (−4)×5 + 3 = −17 ✓.</p><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">-4 3 -4 -3</pre></div></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 3</span><h1>Luỹ thừa **</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các cách dùng</h3><ul style="gap:7px"><li><code>2 ** 10</code> = 1024 (số nguyên cho kết quả nguyên).</li><li><code>9 ** 0.5</code> = 3.0: <b>căn bậc hai</b> = mũ 0,5.</li><li><code>2 ** -1</code> = 0.5: mũ âm cho <b>số thực</b>.</li><li><code>0 ** 0</code> = 1 (quy ước của Python).</li><li>Số nguyên Python <b>không giới hạn</b> độ lớn: <code>2 ** 100</code> vẫn đúng.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">print(2 ** 10, 9 ** 0.5, 2 ** -1)
+print(2 ** 100)
+print(10 ** 3 + 1)</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1024 3.0 0.5
+1267650600228229401496703205376
+1001</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 3</span><h1>** kết hợp từ PHẢI sang TRÁI</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đề thi hay hỏi</h3><p style="margin:0 0 8px">Các phép <b>+ − × / // %</b> cùng mức ưu tiên thì tính <b>trái sang phải</b>.</p><p style="margin:0 0 8px">Riêng <b>**</b> tính <b>phải sang trái</b>:</p><div class="key" style="font-size:25px"><b>2 ** 3 ** 2 = 2 ** (3 ** 2) = 2 ** 9 = 512</b><br>chứ <b>không</b> phải (2 ** 3) ** 2 = 64.</div><p style="margin:0 0 8px">Dấu trừ đứng trước: <b>-3 ** 2 = -(3 ** 2) = -9</b>, còn <code>(-3) ** 2 = 9</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">print(2 ** 3 ** 2)
+print((2 ** 3) ** 2)
+print(-3 ** 2)
+print((-3) ** 2)
+print(10 - 2 - 3)
+print(100 / 10 / 2)</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">512
+64
+-9
+9
+5
+5.0</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 3</span><h1>Thứ tự ưu tiên các toán tử (từ cao xuống thấp)</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Mức</th><th>Toán tử</th><th>Chiều tính</th></tr><tr><td>1</td><td><code>( )</code> ngoặc</td><td>trong ra ngoài</td></tr><tr><td>2</td><td><code>**</code></td><td><b>phải sang trái</b></td></tr><tr><td>3</td><td><code>-x</code> (dấu âm đứng trước)</td><td>—</td></tr><tr><td>4</td><td><code>*  /  //  %</code></td><td>trái sang phải</td></tr><tr><td>5</td><td><code>+  -</code></td><td>trái sang phải</td></tr><tr><td>6</td><td><code>&lt;  &lt;=  &gt;  &gt;=  ==  !=</code></td><td>so sánh</td></tr><tr><td>7</td><td><code>not</code></td><td>—</td></tr><tr><td>8</td><td><code>and</code></td><td>—</td></tr><tr><td>9</td><td><code>or</code></td><td>thấp nhất</td></tr></table><div class="key">Không chắc thì <b>dùng ngoặc</b>: ngoặc luôn làm rõ ý và không làm chậm chương trình.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 3</span><h1>Tính từng bước: 3 + 4 * 2 ** 2 // 3 - 1</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Bước</th><th>Biểu thức còn lại</th><th>Phép vừa tính</th></tr><tr><td>0</td><td>3 + 4 * 2 ** 2 // 3 - 1</td><td>—</td></tr><tr><td>1</td><td>3 + 4 * <b>4</b> // 3 - 1</td><td>2 ** 2 = 4</td></tr><tr><td>2</td><td>3 + <b>16</b> // 3 - 1</td><td>4 * 4 = 16 (trái sang phải)</td></tr><tr><td>3</td><td>3 + <b>5</b> - 1</td><td>16 // 3 = 5</td></tr><tr><td>4</td><td><b>8</b> - 1</td><td>3 + 5 = 8</td></tr><tr><td>5</td><td><b>7</b></td><td>8 - 1 = 7</td></tr></table><div class="key">Cách làm bài: viết lại biểu thức sau <b>mỗi bước</b>, chỉ tính <b>một phép</b>. Kiểm tra bằng máy: </div><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">7</pre></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 3</span><h1>Hàm toán học có sẵn</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th>Hàm</th><th>Ý nghĩa</th><th>Ví dụ</th></tr><tr><td><code>abs(x)</code></td><td>giá trị tuyệt đối</td><td>abs(-7) = 7</td></tr><tr><td><code>round(x, k)</code></td><td>làm tròn đến k chữ số</td><td>round(3.567, 2) = 3.57</td></tr><tr><td><code>divmod(a, b)</code></td><td>trả cả (thương, dư)</td><td>divmod(17, 5) = (3, 2)</td></tr><tr><td><code>pow(a, b)</code></td><td>a ** b</td><td>pow(2, 5) = 32</td></tr><tr><td><code>max, min, sum</code></td><td>lớn nhất, nhỏ nhất, tổng</td><td>max(4, 9, 2) = 9</td></tr><tr><td><code>math.sqrt, floor, ceil</code></td><td>căn, làm tròn xuống/lên</td><td>cần <code>import math</code></td></tr></table></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">import math
+print(abs(-7), divmod(17, 5))
+print(math.sqrt(16), math.floor(3.9), math.ceil(3.1))
+print(max(4, 9, 2), min(4, 9, 2), sum([1, 2, 3]))
+print(math.floor(-3.1), math.ceil(-3.9))</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">7 (3, 2)
+4.0 3 4
+9 2 6
+-4 -3</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 3</span><h1>round(): làm tròn về số chẵn khi đúng giữa</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Điều khác với toán học phổ thông</h3><p style="margin:0 0 8px">Khi giá trị ở <b>chính giữa</b> hai số nguyên (…<b>,5</b>), <b>round</b> chọn số <b>chẵn</b> gần nhất, gọi là “làm tròn chẵn”.</p><p style="margin:0 0 8px"><b>round(2.5) = 2</b>, <b>round(3.5) = 4</b>, <b>round(0.5) = 0</b>, <b>round(1.5) = 2</b>.</p><p style="margin:0 0 8px">Các trường hợp khác làm tròn bình thường: round(2.6) = 3, round(2.4) = 2.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">print(round(2.5), round(3.5), round(4.5))
+print(round(-2.5), round(2.6), round(2.4))
+print(round(3.567, 2), round(1234, -2))</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">2 4 4
+-2 3 2
+3.57 1200</pre></div><div class="key">Muốn làm tròn “từ .5 lên” kiểu toán học: <code>int(x + 0.5)</code> (với x ≥ 0).</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 4</span><h1>Toán tử so sánh</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Kết quả luôn là True hoặc False</h3><ul style="gap:7px"><li><code>==</code> bằng · <code>!=</code> khác.</li><li><code>&lt;  &lt;=  &gt;  &gt;=</code>.</li><li>Có thể <b>viết dây</b>: <code>1 &lt; x &lt; 10</code> nghĩa là <code>1 &lt; x and x &lt; 10</code>.</li><li>Chú ý: <b>==</b> so sánh, <b>=</b> gán.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a, b = 5, 8
+print(a == b, a != b, a &lt; b)
+print(1 &lt; 5 &lt; 3, 1 &lt; 5 &lt; 9)
+print(3 == 3.0, "3" == 3)
+print(0.1 + 0.2 == 0.3)</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">False True True
+False True
+True False
+False</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 4</span><h1>So sánh xâu: theo thứ tự từ điển (mã kí tự)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cách so sánh</h3><p style="margin:0 0 8px">So từng kí tự từ trái sang phải, kí tự nào có <b>mã nhỏ hơn</b> thì xâu đó nhỏ hơn.</p><p style="margin:0 0 8px">Mã (ASCII/Unicode): <b>chữ số</b> (48–57) &lt; <b>chữ HOA</b> (65–90) &lt; <b>chữ thường</b> (97–122).</p><p style="margin:0 0 8px">Vì vậy <b>"Z" &lt; "a"</b> và <b>"10" &lt; "9"</b> (so kí tự đầu: "1" &lt; "9").</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">print("an" &lt; "binh", "Z" &lt; "a")
+print("10" &lt; "9", 10 &lt; 9)
+print(ord("A"), ord("a"), ord("0"))
+print(chr(66), chr(98))
+print("abc" &lt; "abd", "ab" &lt; "abc")</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:21px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">True True
+True False
+65 97 48
+B b
+True True</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 5</span><h1>Toán tử logic: and, or, not</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>A</th><th>B</th><th>A and B</th><th>A or B</th><th>not A</th></tr><tr><td class="m">True</td><td>True</td><td>True</td><td>True</td><td>False</td></tr><tr><td class="m">True</td><td>False</td><td>False</td><td>True</td><td>False</td></tr><tr><td class="m">False</td><td>True</td><td>False</td><td>True</td><td>True</td></tr><tr><td class="m">False</td><td>False</td><td>False</td><td>False</td><td>True</td></tr></table><div class="key"><b>and</b>: <b>cả hai</b> đúng mới đúng. <b>or</b>: <b>ít nhất một</b> đúng là đúng. <b>not</b>: đảo ngược. Ưu tiên: <b>not › and › or</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 5</span><h1>Tính biểu thức logic từng bước</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ví dụ: True or False and False</h3><p style="margin:0 0 8px">Ưu tiên <b>and</b> trước <b>or</b>: ta nhóm thành <code>True or (False and False)</code>.</p><p style="margin:0 0 8px"><code>False and False</code> = False. Rồi <code>True or False</code> = <b>True</b>.</p><p style="margin:0 0 8px">Nếu cố tính <code>(True or False) and False</code> sẽ được False: <b>khác nhau</b> vì thứ tự ưu tiên.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">print(True or False and False)
+print((True or False) and False)
+print(not True or True)
+print(not (True or True))</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">True
+False
+True
+False</pre></div><div class="warn"><code>not True or True</code> = (not True) or True = <b>True</b>, khác <code>not (True or True)</code>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 5</span><h1>Điều kiện thường gặp (viết đúng cú pháp)</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th>Yêu cầu</th><th>Cách viết</th></tr><tr><td>x thuộc đoạn [3; 10]</td><td><code>3 &lt;= x &lt;= 10</code></td></tr><tr><td>x nằm <b>ngoài</b> đoạn [3; 10]</td><td><code>x &lt; 3 or x &gt; 10</code></td></tr><tr><td>x là số chẵn dương</td><td><code>x &gt; 0 and x % 2 == 0</code></td></tr><tr><td>x chia hết cho 3 hoặc 5</td><td><code>x % 3 == 0 or x % 5 == 0</code></td></tr><tr><td>x chia hết cho cả 3 và 5</td><td><code>x % 15 == 0</code></td></tr><tr><td>năm n nhuận</td><td><code>n % 400 == 0 or (n % 4 == 0 and n % 100 != 0)</code></td></tr></table></div><div class="col"><div class="warn">Sai kiểu toán học: <code>x == 3 or 5</code> luôn đúng vì <b>5</b> (khác 0) là True. Phải viết <code>x == 3 or x == 5</code>.</div><pre class="code" style="font-size:calc(20px*var(--z,1))">x = 12
+print(3 &lt;= x &lt;= 10, x &lt; 3 or x &gt; 10)
+print(x % 3 == 0 or x % 5 == 0)
+print(2024 % 4 == 0 and 2024 % 100 != 0)</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">False True
+True
+True</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 5</span><h1>Đoản mạch: and, or trả về chính toán hạng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai quy tắc</h3><p style="margin:0 0 8px"><b>A or B</b>: nếu A đúng (“thật”) thì trả về <b>A</b> và <b>bỏ qua B</b>; ngược lại trả về <b>B</b>.</p><p style="margin:0 0 8px"><b>A and B</b>: nếu A sai (“giả”) thì trả về <b>A</b> và bỏ qua B; ngược lại trả về <b>B</b>.</p><p style="margin:0 0 8px">Giá trị “giả”: 0, 0.0, "" , danh sách rỗng, False.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">print(0 or 5, 3 or 5)
+print(3 and 4, 0 and 4)
+print("" or "mac dinh")
+print(1 / 1 or 1 / 0)</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5 3
+4 0
+mac dinh
+1.0</pre></div><div class="key">Dòng cuối không lỗi chia 0 vì <b>vế trái đã đúng</b> nên vế phải <b>không được tính</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 5</span><h1>Phân tích: not 0 or 0 and 1</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Bước</th><th>Biểu thức còn lại</th><th>Lí do</th></tr><tr><td>0</td><td>not 0 or 0 and 1</td><td>—</td></tr><tr><td>1</td><td><b>True</b> or 0 and 1</td><td>not 0 = True (0 là giả)</td></tr><tr><td>2</td><td>True or <b>0</b></td><td>0 and 1: vế trái 0 là giả → trả về 0</td></tr><tr><td>3</td><td><b>True</b></td><td>True or …: vế trái đúng → True, bỏ qua vế phải</td></tr></table><div class="key">Ưu tiên <b>not › and › or</b>, và <b>and/or trả về toán hạng quyết định</b>. In thật: </div><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">True</pre></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 6</span><h1>Phép toán trên bit (nâng cao)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Làm việc với dãy 0 và 1</h3><ul style="gap:7px"><li><code>a &amp; b</code> (và): bit nào <b>cả hai</b> là 1 thì ra 1.</li><li><code>a | b</code> (hoặc): ra 1 nếu <b>ít nhất một</b> là 1.</li><li><code>a ^ b</code> (xor): ra 1 nếu hai bit <b>khác nhau</b>.</li><li><code>a &gt;&gt; k</code>: dịch phải k bit = <b>a // 2<sup>k</sup></b>.</li><li><code>a &lt;&lt; k</code>: dịch trái k bit = <b>a × 2<sup>k</sup></b>.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">print(37 &amp; 12, 37 | 12, 37 ^ 12)
+print(37 &gt;&gt; 2, 37 &lt;&lt; 1)
+print(bin(37), bin(12))</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">4 45 41
+9 74
+0b100101 0b1100</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 6</span><h1>Tính tay 37 & 12 và 37 >> 2</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>Bit 5</th><th>Bit 4</th><th>Bit 3</th><th>Bit 2</th><th>Bit 1</th><th>Bit 0</th><th>Giá trị</th></tr><tr><td class="m">37</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>37</td></tr><tr><td class="m">12</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>12</td></tr><tr><td class="m"><b>37 &amp; 12</b></td><td>0</td><td>0</td><td>0</td><td><b>1</b></td><td>0</td><td>0</td><td><b>4</b></td></tr><tr><td class="m"><b>37 &gt;&gt; 2</b></td><td></td><td></td><td>1</td><td>0</td><td>0</td><td>1</td><td><b>9</b></td></tr></table><div class="key"><b>&amp;</b>: chỉ bit 2 cùng là 1 → 100₂ = 4. <b>&gt;&gt; 2</b> bỏ 2 bit cuối (01), còn 1001₂ = 9 = 37 // 4. Mẹo: <b>n &amp; 1</b> cho bit cuối (chẵn/lẻ).</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 7</span><h1>Bài mẫu: đổi số giây ra giờ – phút – giây</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phân tích</h3><ol style="gap:6px"><li>Đầu vào: số giây <b>s</b> (ví dụ 3725).</li><li>Giờ = <b>s // 3600</b>; còn lại <b>s % 3600</b> giây.</li><li>Phút = (s % 3600) <b>// 60</b>; giây = <b>s % 60</b>.</li></ol><p style="margin:0 0 8px">Kiểm tra: 3725 = 1×3600 + 2×60 + 5.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">s = 3725
+gio = s // 3600
+phut = s % 3600 // 60
+giay = s % 60
+print(gio, phut, giay)
+print(f"{gio}:{phut}:{giay}")
+print(divmod(s, 3600))</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1 2 5
+1:2:5
+(1, 125)</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 7</span><h1>Bài mẫu: số có ba chữ số</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Tách và đảo số 523</h3><ol style="gap:6px"><li>Trăm = <b>n // 100</b> = 5.</li><li>Chục = <b>n // 10 % 10</b> = 2.</li><li>Đơn vị = <b>n % 10</b> = 3.</li><li>Số đảo = đv × 100 + chục × 10 + trăm.</li></ol></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">n = 523
+tram, chuc, dv = n // 100, n // 10 % 10, n % 10
+print(tram, chuc, dv)
+print(tram + chuc + dv)
+print(dv * 100 + chuc * 10 + tram)</pre><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5 2 3
+10
+325</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 7</span><h1>Tự kiểm tra: tính biểu thức (HSG)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Không chạy máy, tính từng bước: <code>print(-7 // 2, -7 % 3, round(2.5), round(3.5), 2 ** 3 ** 2, 10 - 2 - 3, not 0 or 0 and 1)</code></p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>-7 // 2</b> = −4 (làm tròn xuống). <b>-7 % 3</b> = −7 − (−3)×3 = <b>2</b>.</p><p style="margin:0 0 8px"><b>round(2.5)</b> = 2; <b>round(3.5)</b> = 4 (chẵn).</p><p style="margin:0 0 8px"><b>2 ** 3 ** 2</b> = 2 ** 9 = <b>512</b>. <b>10 − 2 − 3</b> = 5 (trái sang phải).</p><p style="margin:0 0 8px"><b>not 0 or 0 and 1</b> = True or 0 = <b>True</b>.</p><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">-4 2 2 4 512 5 True</pre></div></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · 7</span><h1>Tự kiểm tra: kiểu và giá trị</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Cho biết kết quả: <code>print(7 / 2, 7 // 2, 7 % 2, 2 ** -1, int("12") + 3, str(12) + "3", "12" * 2, 10 / 5)</code></p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>3.5</b> (float), <b>3</b> (int), <b>1</b>, <b>0.5</b> (mũ âm → float), <b>15</b>, <b>"123"</b> (nối xâu), <b>"1212"</b> (lặp), <b>2.0</b> (/ luôn float).</p><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">3.5 3 1 0.5 15 123 1212 2.0</pre></div><div class="key">In ra <b>12 123</b> khác nhau về kiểu: một số, một xâu, nhưng nhìn giống nhau.</div></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>//</b> làm tròn <b>xuống</b> (−7 // 2 = −4); <b>a = (a // b)·b + a % b</b>.</li><li><b>%</b>: dư; dương khi chia cho số dương: −7 % 3 = 2.</li><li><b>**</b> kết hợp <b>phải sang trái</b>: 2 ** 3 ** 2 = 512; −3 ** 2 = −9.</li><li>Ưu tiên: <b>( ) › ** › × / // % › + − › so sánh › not › and › or</b>.</li><li><b>round</b> làm tròn <b>chẵn</b> ở giữa: round(2.5) = 2.</li><li><b>and/or</b> đoản mạch, trả về <b>toán hạng quyết định</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">−7 // 2</td><td>−4</td></tr><tr><td class="m">−7 % 3</td><td>2</td></tr><tr><td class="m">2 ** 3 ** 2</td><td>512</td></tr><tr><td class="m">not 0 or 0 and 1</td><td>True</td></tr></table><div class="warn">Nhầm <b>//</b> với cắt cụt; nhầm thứ tự <b>and/or</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>n % 2 == 1</b> đúng với số lẻ dương <b>và âm</b> trong Python (−3 % 2 = 1).</li><li><b>x == 3 or 5</b> luôn đúng.</li><li><b>n &amp; 1</b> kiểm tra chẵn lẻ nhanh; <b>n &gt;&gt; 1</b> = n // 2.</li><li><b>0.1 + 0.2 != 0.3</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Số dư toán học</b> luôn không âm (vì sao Python chọn vậy).</li><li><b>Số tuần hoàn</b> trong biểu diễn số thực.</li><li>Dịch bit và <b>nhân/chia nhanh</b> cho luỹ thừa của 2.</li></ul></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>25 // 7</code> và <code>25 % 7</code>?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>-25 // 7</code> và <code>-25 % 7</code>?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Tính <code>2 ** 2 ** 3</code>.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>round(5.5)</code> và <code>round(6.5)</code>?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>not 1 and 0 or 7</code>?</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>3</b> và <b>4</b> (3×7+4 = 25).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>-4</b> và <b>3</b> (−4×7+3 = −25).</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>2 ** 8 = <b>256</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>6</b> và <b>6</b> (làm tròn chẵn).</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>(not 1) and 0 = False; False or 7 = <b>7</b>.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Cho <code>a = 17, b = 5</code>. Tính <code>a // b * b + a % b</code>, <code>-a // b</code>, <code>-a % b</code>.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Nhập số giây s (≤ 86399). Viết biểu thức giờ, phút, giây. Với s = 86399 cho kết quả gì?</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) <code>-9 % 4 == 3</code>. (b) <code>1 &lt; 2 &lt; 3</code> là True. (c) <code>"B" &lt; "a"</code> là True. (d) <code>bool(0 or "")</code> là False.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Viết biểu thức kiểm tra n là số có ba chữ số.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Viết biểu thức (không dùng if) cho kết quả 1 nếu n chẵn, 0 nếu lẻ.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Giải thích vì sao <code>0.1 * 3 &gt; 0.3</code> là True.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>17 -4 3 (đúng 17; dư −17 % 5 = 3).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>h = s // 3600; m = s % 3600 // 60; g = s % 60. s = 86399 → 23 59 59.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Đúng</b>: −9 // 4 = −3, dư −9 − (−3)×4 = 3. (b) <b>Đúng</b>. (c) <b>Đúng</b> (mã 66 &lt; 97). (d) <b>Đúng</b> ("" là giả, 0 or "" trả "" → False).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>100 &lt;= abs(n) &lt;= 999</code> hoặc <code>99 &lt; n &lt; 1000</code> (n dương).</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 1B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>1 - n % 2</code> hoặc <code>int(n % 2 == 0)</code>.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>0.1 × 3 = 0.30000000000000004 &gt; 0.3 do <b>sai số biểu diễn nhị phân</b>.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
