@@ -1,0 +1,361 @@
+<!-- HEAD -->
+<title>Python 2A · Cấu trúc rẽ nhánh</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 2A</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>CẤU TRÚC RẼ NHÁNH<br>IF – ELIF – ELSE</h1><p style="font-size:28px;line-height:1.5">Điều kiện, if / if-else / if-elif-else, if lồng nhau, điều kiện phức, biểu thức điều kiện, các bài toán mẫu và lỗi thường gặp.</p><div><span class="chip">if</span><span class="chip">elif</span><span class="chip">else</span><span class="chip">điều kiện</span><span class="chip">thụt lề</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Giải thích vì sao chương trình cần <b>rẽ nhánh</b>.</li><li>Viết đúng <b>if, if-else, if-elif-else</b> và <b>thụt lề</b>.</li><li>Biết nhánh nào được chạy, theo <b>thứ tự từ trên xuống</b>.</li><li>Viết <b>điều kiện phức</b> bằng and, or, not và so sánh dây.</li><li>Dùng <b>biểu thức điều kiện</b> <code>a if đk else b</code>.</li><li>Giải bài toán có <b>nhiều trường hợp</b> (phương trình, tam giác, ngày tháng…).</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Rẽ nhánh là gì</li><li>if-elif-else</li><li>Điều kiện phức, lồng nhau</li><li>Bài toán mẫu</li><li>Lỗi, bài tập tăng dần</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 1</span><h1>Vì sao cần rẽ nhánh?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Tình huống đời thường</h3><p style="margin:0 0 8px">“<b>Nếu</b> trời mưa thì mang ô, <b>nếu không</b> thì thôi.” Cuộc sống luôn có <b>lựa chọn tuỳ điều kiện</b>.</p><p style="margin:0 0 8px">Chương trình cũng vậy: tuỳ <b>dữ liệu</b> mà làm việc này hay việc khác. Đó là <b>cấu trúc rẽ nhánh</b>.</p><p style="margin:0 0 8px">Máy kiểm tra một <b>điều kiện</b>: kết quả <b>True</b> thì chạy nhánh này, <b>False</b> thì chạy nhánh khác.</p></div></div><div class="col"><div class="res"><span class="lab">Sơ đồ khối: hình thoi là điều kiện</span><svg viewBox="0 0 520 250" style="width:100%"><defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#0B2545"/></marker></defs><polygon points="260,10 370,65 260,120 150,65" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="260" y="72" text-anchor="middle" font-size="22" font-weight="800" fill="#0B2545" font-family="sans-serif">x &gt; 0 ?</text><rect x="10" y="170" width="180" height="60" rx="8" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="100" y="207" text-anchor="middle" font-size="20" font-weight="800" fill="#0B2545" font-family="sans-serif">Nhánh ĐÚNG</text><rect x="330" y="170" width="180" height="60" rx="8" fill="#FFCCBC" stroke="#D84315" stroke-width="3"/><text x="420" y="207" text-anchor="middle" font-size="20" font-weight="800" fill="#0B2545" font-family="sans-serif">Nhánh SAI</text><line x1="150" y1="65" x2="100" y2="170" stroke="#0B2545" stroke-width="3" marker-end="url(#a)"/><text x="60" y="120" font-size="20" font-weight="800" fill="#D84315" font-family="sans-serif">True</text><line x1="370" y1="65" x2="420" y2="170" stroke="#0B2545" stroke-width="3" marker-end="url(#a)"/><text x="400" y="120" font-size="20" font-weight="800" fill="#D84315" font-family="sans-serif">False</text></svg></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 1</span><h1>Câu lệnh if: làm khi điều kiện đúng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(23px*var(--z,1))">x = int(input())
+if x &gt; 0:
+    print("x duong")
+print("Xong")</pre><p style="margin:0 0 8px;font-size:calc(21px*var(--z,1))">Cú pháp: <code>if điều_kiện:</code> rồi các lệnh <b>thụt vào</b> (4 dấu cách).</p><p style="margin:0 0 8px;font-size:calc(21px*var(--z,1))">Điều kiện <b>đúng</b>: chạy khối thụt lề. <b>Sai</b>: bỏ qua khối đó.</p><p style="margin:0 0 8px;font-size:calc(21px*var(--z,1))">Dòng <code>print("Xong")</code> <b>không thụt lề</b> nên <b>luôn chạy</b>.</p></div><div class="col"><div class="res"><span class="lab">Kết quả (nhập 5)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5
+x duong
+Xong</pre></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 1</span><h1>Thụt lề và dấu hai chấm là bắt buộc</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy tắc</h3><ul style="gap:7px"><li>Cuối dòng <b>if</b> phải có dấu <b>:</b>.</li><li>Các lệnh thuộc if phải <b>thụt vào cùng một mức</b> (chuẩn: <b>4 dấu cách</b>).</li><li>Thụt lề <b>chính là cú pháp</b> của Python, không chỉ để đẹp.</li><li>Không trộn tab với dấu cách.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">x = 5
+if x &gt; 0
+    print("duong")</pre><div class="res"><span class="lab">Thiếu dấu hai chấm</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">SyntaxError: expected ':'</pre></div><pre class="code" style="font-size:calc(21px*var(--z,1))">x = 5
+if x &gt; 0:
+print("duong")</pre><div class="res"><span class="lab">Quên thụt lề</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">IndentationError: expected an indented block after 'if' statement on line 2</pre></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 1</span><h1>if-else: hai nhánh loại trừ nhau</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cú pháp</h3><pre class="code" style="font-size:calc(22px*var(--z,1))">if điều_kiện:
+    lệnh khi đúng
+else:
+    lệnh khi sai</pre><p style="margin:0 0 8px"><b>Đúng một</b> trong hai khối được chạy, <b>không bao giờ cả hai</b>, <b>không bao giờ không khối nào</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">x = int(input())
+if x % 2 == 0:
+    print(x, "chan")
+else:
+    print(x, "le")</pre><div class="res"><span class="lab">Kết quả (nhập 7, rồi chạy lại với 10)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">7
+7 le</pre><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">10
+10 chan</pre></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 1</span><h1>if-elif-else: nhiều trường hợp, xét từ trên xuống</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cách máy làm</h3><ol style="gap:6px"><li>Xét điều kiện <b>if</b> đầu tiên.</li><li>Nếu sai, xét <b>elif</b> thứ nhất, rồi thứ hai…</li><li><b>Gặp điều kiện đúng đầu tiên</b>: chạy khối đó rồi <b>thoát hết</b>, bỏ qua các nhánh còn lại.</li><li>Không điều kiện nào đúng: chạy <b>else</b> (nếu có).</li></ol><div class="key">Điều kiện ở dưới <b>chỉ được xét khi mọi điều kiện ở trên sai</b>.</div></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">d = float(input())
+if d &gt;= 8:
+    print("Gioi")
+elif d &gt;= 6.5:
+    print("Kha")
+elif d &gt;= 5:
+    print("Trung binh")
+else:
+    print("Yeu")</pre><div class="res"><span class="lab">Kết quả (nhập 7.2)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">7.2
+Kha</pre></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 1</span><h1>Theo dõi xếp loại: vì sao điểm 7.2 được “Khá”?</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Điều kiện được xét</th><th>d = 7.2</th><th>Kết quả</th><th>Hành động</th></tr><tr><td><code>d &gt;= 8</code></td><td>7.2 ≥ 8</td><td>False</td><td>bỏ qua</td></tr><tr><td><code>d &gt;= 6.5</code></td><td>7.2 ≥ 6.5</td><td><b>True</b></td><td>in “Kha”, <b>thoát</b></td></tr><tr><td><code>d &gt;= 5</code></td><td>—</td><td>không xét</td><td>—</td></tr><tr><td><code>else</code></td><td>—</td><td>không chạy</td><td>—</td></tr></table><div class="key">Nhờ <b>điều kiện trên đã loại trừ</b> các trường hợp lớn hơn, ở <code>elif d &gt;= 6.5</code> ta <b>không cần viết thêm</b> <code>and d &lt; 8</code>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 1</span><h1>Bẫy: sai thứ tự các điều kiện</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">d = 9
+if d &gt;= 5:
+    print("Trung binh")
+elif d &gt;= 6.5:
+    print("Kha")
+elif d &gt;= 8:
+    print("Gioi")</pre><div class="res"><span class="lab">Điểm 9 mà lại “Trung binh”!</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">Trung binh</pre></div></div><div class="col"><div class="card"><h3>Giải thích</h3><p style="margin:0 0 8px">Điểm 9 thoả <b>d &gt;= 5</b> ngay từ điều kiện đầu, nên chạy nhánh “Trung bình” rồi <b>thoát</b>. Hai nhánh sau <b>không bao giờ</b> được xét.</p><p style="margin:0 0 8px">Nguyên tắc: khi các điều kiện <b>chồng lên nhau</b>, đặt điều kiện <b>hẹp nhất (khó nhất)</b> lên trước, hoặc thêm cận trên bằng <code>and</code>.</p><div class="warn">Đây là <b>lỗi logic</b>: máy không báo lỗi nhưng kết quả sai.</div></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 2</span><h1>Điều kiện phức: and, or, not</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nhắc lại và dùng trong if</h3><ul style="gap:7px"><li><b>and</b>: cả hai cùng đúng.</li><li><b>or</b>: ít nhất một đúng.</li><li><b>not</b>: phủ định.</li><li>So sánh dây: <code>3 &lt;= x &lt;= 10</code>.</li><li>Ưu tiên: <b>not › and › or</b>; nghi ngờ thì <b>dùng ngoặc</b>.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">x = int(input())
+if 3 &lt;= x &lt;= 10:
+    print("trong doan")
+if x &lt; 3 or x &gt; 10:
+    print("ngoai doan")
+if x &gt; 0 and x % 2 == 0:
+    print("chan duong")</pre><div class="res"><span class="lab">Kết quả (nhập 8)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">8
+trong doan
+chan duong</pre></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 2</span><h1>Hai if rời nhau khác if-elif</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Điểm khác nhau quan trọng</h3><p style="margin:0 0 8px"><b>if – if</b>: <b>mỗi if được xét độc lập</b>, có thể cả hai cùng chạy.</p><p style="margin:0 0 8px"><b>if – elif</b>: <b>tối đa một</b> khối chạy.</p></div><div class="key">Cặp thứ nhất in <b>A và B</b>; cặp thứ hai chỉ in <b>C</b>. Đề thi rất hay hỏi chỗ này.</div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">x = 8
+if x &gt; 5:
+    print("A")
+if x &gt; 3:
+    print("B")
+print("--")
+if x &gt; 5:
+    print("C")
+elif x &gt; 3:
+    print("D")</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">A
+B
+--
+C</pre></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 2</span><h1>if lồng nhau và cách viết gọn bằng and</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai cách viết tương đương</h3><pre class="code" style="font-size:calc(21px*var(--z,1))"># lồng nhau
+if x &gt; 0:
+    if x % 2 == 0:
+        print("chan duong")
+
+# dùng and
+if x &gt; 0 and x % 2 == 0:
+    print("chan duong")</pre><p style="margin:0 0 8px">Chỉ khi <b>cả hai</b> điều kiện đúng mới in. Viết <b>and</b> gọn hơn, dễ đọc hơn.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">x = int(input())
+if x &gt; 0:
+    if x % 2 == 0:
+        print("chan duong")
+    else:
+        print("le duong")
+else:
+    print("khong duong")</pre><div class="res"><span class="lab">Kết quả (nhập 7)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">7
+le duong</pre></div><div class="key"><b>else</b> thuộc về <b>if gần nó nhất</b> cùng mức thụt lề.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 2</span><h1>Dùng giá trị “thật/giả” làm điều kiện</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Python chấp nhận mọi giá trị trong if</h3><p style="margin:0 0 8px">Giá trị <b>giả</b> (coi như False): <b>0, 0.0, "", [], {}, None</b>. Mọi giá trị khác là <b>thật</b>.</p><p style="margin:0 0 8px">Vì vậy <code>if x:</code> nghĩa là “x khác 0 / khác rỗng”; <code>if not s:</code> nghĩa là “xâu s rỗng”.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">for v in [0, 5, "", "a", [], [0]]:
+    if v:
+        print(repr(v), "that")
+    else:
+        print(repr(v), "gia")</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">0 gia
+5 that
+'' gia
+'a' that
+[] gia
+[0] that</pre></div><div class="warn"><code>if x == 3 or 5:</code> <b>luôn đúng</b> (vì 5 là thật). Phải viết <code>x == 3 or x == 5</code>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 2</span><h1>Biểu thức điều kiện: a if đk else b</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Chọn giá trị trong một dòng</h3><p style="margin:0 0 8px">Cú pháp: <code>giá_trị_1 if điều_kiện else giá_trị_2</code>.</p><p style="margin:0 0 8px">Nếu điều kiện <b>đúng</b> thì lấy giá trị 1, ngược lại lấy giá trị 2.</p><p style="margin:0 0 8px">Dùng khi chỉ cần <b>chọn một giá trị</b> (gán, in), không dùng cho nhiều lệnh.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">a, b = 4, 9
+m = a if a &gt; b else b
+print(m)
+x = -5
+print(x if x &gt;= 0 else -x)
+n = 7
+print("chan" if n % 2 == 0 else "le")
+print("Dat" if 6.5 &gt;= 5 else "Truot")</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">9
+5
+le
+Dat</pre></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 3</span><h1>Bài mẫu 1: giải phương trình bậc nhất ax + b = 0</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phân tích đủ các trường hợp</h3><table><tr><th>Điều kiện</th><th>Kết luận</th></tr><tr><td>a ≠ 0</td><td>nghiệm x = −b / a</td></tr><tr><td>a = 0 và b = 0</td><td>vô số nghiệm</td></tr><tr><td>a = 0 và b ≠ 0</td><td>vô nghiệm</td></tr></table><p style="margin:0 0 8px"><b>Tính tay</b> (a=2, b=−6): x = 3. (a=0, b=5): vô nghiệm.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">a = float(input())
+b = float(input())
+if a != 0:
+    print(f"x = {-b / a:.2f}")
+elif b == 0:
+    print("Vo so nghiem")
+else:
+    print("Vo nghiem")</pre><div class="res"><span class="lab">Kết quả (a = 2, b = −6)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">2
+-6
+x = 3.00</pre></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 3</span><h1>Bài mẫu 2: phương trình bậc hai</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phân tích</h3><p style="margin:0 0 8px">Với a ≠ 0, tính <b>Δ = b² − 4ac</b>.</p><p style="margin:0 0 8px"><b>Δ &lt; 0</b>: vô nghiệm; <b>Δ = 0</b>: nghiệm kép x = −b/(2a); <b>Δ &gt; 0</b>: hai nghiệm x = (−b ± √Δ)/(2a).</p><p style="margin:0 0 8px">Cần <b>import math</b> để dùng <code>math.sqrt</code>.</p><p style="margin:0 0 8px">Tính tay x² − 5x + 6 = 0: Δ = 1 → x = 3 và 2.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">import math
+a, b, c = map(float, input().split())
+d = b * b - 4 * a * c
+if d &lt; 0:
+    print("Vo nghiem")
+elif d == 0:
+    print("Nghiem kep", -b / (2 * a))
+else:
+    r = math.sqrt(d)
+    print((-b + r) / (2 * a), (-b - r) / (2 * a))</pre><div class="res"><span class="lab">Kết quả (1 −5 6)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1 -5 6
+3.0 2.0</pre></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 3</span><h1>Bài mẫu 3: phân loại tam giác</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phân tích</h3><ol style="gap:6px"><li><b>Có là tam giác?</b> Cả ba cạnh &gt; 0 và tổng hai cạnh bất kì &gt; cạnh còn lại.</li><li>Nếu hợp lệ: <b>đều</b> (ba cạnh bằng nhau), <b>cân</b> (có hai cạnh bằng nhau), <b>vuông</b> (a² + b² = c² với c lớn nhất), còn lại <b>thường</b>.</li><li>Sắp xếp ba cạnh trước để c là lớn nhất.</li></ol></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">a, b, c = sorted(map(int, input().split()))
+if a &lt;= 0 or a + b &lt;= c:
+    print("Khong phai tam giac")
+elif a == b == c:
+    print("Deu")
+elif a == b or b == c:
+    print("Can")
+elif a * a + b * b == c * c:
+    print("Vuong")
+else:
+    print("Thuong")</pre><div class="res"><span class="lab">Kết quả (5 3 4)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5 3 4
+Vuong</pre></div><div class="key">Sau <code>sorted</code>: a ≤ b ≤ c nên chỉ cần kiểm <code>a + b &gt; c</code>. Thứ tự các nhánh quan trọng: <b>đều</b> trước <b>cân</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 3</span><h1>Bài mẫu 4: tiền điện bậc thang</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đề bài và phân tích</h3><p style="margin:0 0 8px">Giá: <b>100 kWh đầu</b> 2000 đ/kWh; <b>từ 101 đến 200</b> 2500 đ/kWh; <b>trên 200</b> 3000 đ/kWh. Nhập số kWh k, tính tiền.</p><p style="margin:0 0 8px">Mỗi bậc chỉ tính cho <b>phần điện nằm trong bậc đó</b>. Tính tay k = 250: 100×2000 + 100×2500 + 50×3000 = 200 000 + 250 000 + 150 000 = <b>600 000</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">k = int(input())
+if k &lt;= 100:
+    t = k * 2000
+elif k &lt;= 200:
+    t = 100 * 2000 + (k - 100) * 2500
+else:
+    t = 100 * 2000 + 100 * 2500 + (k - 200) * 3000
+print(t)</pre><div class="res"><span class="lab">Kết quả (k = 250)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">250
+600000</pre></div><div class="warn">Sai thường gặp: tính <code>k * 3000</code> cho cả 250 kWh. Phải tách theo bậc.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 3</span><h1>Bài mẫu 5: số ngày trong tháng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phân tích</h3><p style="margin:0 0 8px">Tháng <b>1, 3, 5, 7, 8, 10, 12</b>: 31 ngày. Tháng <b>4, 6, 9, 11</b>: 30 ngày.</p><p style="margin:0 0 8px">Tháng <b>2</b>: 29 ngày nếu năm nhuận, ngược lại 28.</p><p style="margin:0 0 8px"><b>Năm nhuận</b>: chia hết cho 400, hoặc chia hết cho 4 mà không chia hết cho 100. Ví dụ 2000, 2024 nhuận; 1900, 2023 không nhuận.</p></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">t, n = map(int, input().split())
+if t in (1, 3, 5, 7, 8, 10, 12):
+    print(31)
+elif t in (4, 6, 9, 11):
+    print(30)
+elif n % 400 == 0 or (n % 4 == 0 and n % 100 != 0):
+    print(29)
+else:
+    print(28)</pre><div class="res"><span class="lab">Kết quả (tháng 2, năm 1900)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">2 1900
+28</pre></div><div class="key"><code>t in (1, 3, 5)</code> kiểm tra t có <b>nằm trong tập</b> các giá trị: gọn hơn nhiều chữ <b>or</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 3</span><h1>Bài mẫu 6: tìm số lớn nhất, nhỏ nhất của ba số</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai cách</h3><p style="margin:0 0 8px"><b>Cách 1</b>: dùng hàm <code>max</code>, <code>min</code>.</p><p style="margin:0 0 8px"><b>Cách 2</b>: so sánh bằng if (kĩ năng cơ bản): giả sử a lớn nhất, rồi so sánh với b, c.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a, b, c = map(int, input().split())
+lon = a
+if b &gt; lon:
+    lon = b
+if c &gt; lon:
+    lon = c
+print(lon, max(a, b, c))</pre><div class="res"><span class="lab">Kết quả (4 9 7)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">4 9 7
+9 9</pre></div><div class="key">Dùng <b>hai if rời nhau</b> (không elif) vì mỗi số đều phải được so với giá trị lớn nhất hiện tại.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 4</span><h1>Lỗi thường gặp với rẽ nhánh</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Lỗi</th><th>Ví dụ sai</th><th>Cách sửa</th></tr><tr><td>Dùng <b>=</b> thay <b>==</b></td><td><code>if x = 5:</code> (SyntaxError)</td><td><code>if x == 5:</code></td></tr><tr><td>Thiếu dấu <b>:</b></td><td><code>if x &gt; 0</code></td><td><code>if x &gt; 0:</code></td></tr><tr><td>Sai thụt lề</td><td>lệnh của if không thụt vào</td><td>thụt 4 dấu cách</td></tr><tr><td>So sánh xâu với số</td><td><code>x = input(); if x &gt; 5</code> (TypeError)</td><td><code>if int(x) &gt; 5</code></td></tr><tr><td><code>x == 3 or 5</code></td><td>luôn đúng</td><td><code>x == 3 or x == 5</code> hoặc <code>x in (3, 5)</code></td></tr><tr><td>Sai thứ tự elif</td><td>điều kiện rộng đặt trước</td><td>đặt điều kiện hẹp trước</td></tr></table><div class="key">Chạy thử <b>mọi nhánh</b>: mỗi nhánh một bộ dữ liệu, kể cả các giá trị <b>biên</b> (bằng đúng mốc).</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 4</span><h1>Tự kiểm tra: if – if và if – elif</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Chương trình in ra gì với x = 6? Với x = 12?</p><pre class="code" style="font-size:calc(19px*var(--z,1))">x = int(input())
+if x % 2 == 0:
+    print("A")
+if x % 3 == 0:
+    print("B")
+elif x % 4 == 0:
+    print("C")
+else:
+    print("D")</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>x = 6</b>: <b>if</b> đầu: 6 chẵn → in <b>A</b>. Cặp <b>if–elif–else</b> thứ hai: 6 % 3 == 0 → in <b>B</b> (bỏ qua elif, else). Kết quả: <b>A B</b>.</p><p style="margin:0 0 8px"><b>x = 12</b>: A (12 chẵn). 12 % 3 == 0 → B. Dù 12 cũng chia hết cho 4, nhánh <b>elif không được xét</b>. Kết quả: <b>A B</b>.</p><div class="res"><span class="lab">Chạy với x = 12</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">A
+B</pre></div></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · 4</span><h1>Tự kiểm tra (HSG): thứ tự điều kiện và biên</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Với điểm d = 8, 6.5, 5, 4.99, hãy cho biết xếp loại của chương trình sau. Có chỗ nào chương trình bỏ sót không?</p><pre class="code" style="font-size:calc(19px*var(--z,1))">if d &gt; 8:
+    print("Gioi")
+elif d &gt; 6.5:
+    print("Kha")
+elif d &gt;= 5:
+    print("TB")
+else:
+    print("Yeu")</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>d = 8</b>: 8 &gt; 8 sai; 8 &gt; 6.5 đúng → <b>Kha</b> (đáng lẽ là Giỏi nếu quy định ≥ 8).</p><p style="margin:0 0 8px"><b>d = 6.5</b>: 6.5 &gt; 6.5 sai; 6.5 ≥ 5 đúng → <b>TB</b> (đáng lẽ Khá).</p><p style="margin:0 0 8px"><b>d = 5</b> → TB; <b>d = 4.99</b> → Yeu.</p><div class="key">Lỗi ở các điểm <b>biên</b>: dùng <b>&gt;</b> thay vì <b>&gt;=</b>. Luôn thử đúng các mốc 8, 6.5, 5.</div><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">8 Kha
+6.5 TB
+5 TB
+4.99 Yeu</pre></div></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>if</b> làm khi đúng; <b>if-else</b> chọn một trong hai; <b>if-elif-else</b> chọn <b>một</b> trong nhiều.</li><li>Thụt lề 4 dấu cách và dấu <b>:</b> là bắt buộc.</li><li>Gặp điều kiện <b>đúng đầu tiên</b> thì thoát: <b>thứ tự</b> các điều kiện rất quan trọng.</li><li><b>if – if</b> xét độc lập; <b>if – elif</b> tối đa một nhánh.</li><li>Điều kiện phức: and, or, not; <code>a &lt;= x &lt;= b</code>; <code>x in (…)</code>.</li><li><code>a if đk else b</code> chọn giá trị gọn.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Cuối dòng if</td><td>dấu :</td></tr><tr><td class="m">Một trong nhiều</td><td>elif</td></tr><tr><td class="m">x == 3 or x == 5</td><td>x in (3, 5)</td></tr><tr><td class="m">Chọn giá trị</td><td>a if đk else b</td></tr></table><div class="warn">Nhầm <b>=</b> với <b>==</b>; sai thứ tự elif; sai ở giá trị <b>biên</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><code>x == 3 or 5</code> luôn đúng.</li><li>Giá trị biên: &gt; khác &gt;=.</li><li><b>else</b> thuộc về <b>if gần nhất</b> cùng mức thụt lề.</li><li>Sắp xếp ba cạnh trước khi xét tam giác vuông.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>match – case</b> (Python 3.10) cho nhiều giá trị.</li><li><b>Bảng quyết định</b> thay chuỗi elif dài.</li><li>Toán tử <b>:=</b> (walrus) trong điều kiện.</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Viết điều kiện: x là số chẵn có hai chữ số.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>print("A" if 7 > 5 else "B")</code> in gì?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Với <code>x = 0</code>, <code>if x:</code> chạy nhánh nào?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Điều kiện kiểm tra n là bội của cả 4 và 6?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Năm 2100 có nhuận không?</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>10 &lt;= x &lt;= 99 and x % 2 == 0</code> (hoặc <code>abs(x)</code> nếu cho số âm).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>A</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Nhánh <b>else</b> (0 là giả).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>n % 12 == 0</code> (bội chung nhỏ nhất của 4 và 6 là 12).</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>Không</b>: chia hết cho 100 mà không chia hết cho 400.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Nhập số nguyên n. In “Duong”, “Am” hoặc “Khong”. Thử n = −3.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Nhập ba số a, b, c. In số <b>ở giữa</b> (trung vị) mà không dùng sort. Thử 5 9 7.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Nhập thu nhập. Thuế: ≤ 10 triệu: 5%; phần từ 10 đến 30 triệu: 10%; phần trên 30 triệu: 20%. Tính thuế cho 45 triệu.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Nhập ngày, tháng, năm. Cho biết ngày đó <b>có hợp lệ</b> không (kể cả năm nhuận). Thử 29 2 2023 và 29 2 2024.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Nhập giờ h, phút m. Tính góc nhỏ (độ) giữa kim giờ và kim phút. Thử 3 00, 12 30, 6 15.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Nhập 4 số. In YES nếu <b>có thể</b> chọn ba số làm độ dài ba cạnh một tam giác vuông. Thử 3 4 5 9 và 5 12 13 14 và 2 3 4 5.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Am (biểu thức điều kiện lồng nhau).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Sắp xếp rồi lấy giữa là cách gọn; nếu không dùng sort: <code>a + b + c - max(a,b,c) - min(a,b,c)</code> = 7.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Thuế = 10×5% + 20×10% + 15×20% = 0,5 + 2 + 3 = <b>5,5 triệu</b>. Kiểm: 5.5.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Hợp lệ khi 1 ≤ tháng ≤ 12 và 1 ≤ ngày ≤ số ngày trong tháng. 29/2/2023: 2023 không nhuận → <b>không hợp lệ</b>; 29/2/2024: hợp lệ.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">PYTHON 2A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Góc kim giờ = (h % 12) × 30 + m × 0,5; góc kim phút = m × 6; góc = |hiệu|, rồi lấy <code>min(g, 360 − g)</code>. 3:00 → 90.0; 12:30 → 165.0; 6:15 → 97.5.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Thử từng bộ ba (có 4 bộ), sắp xếp rồi kiểm tra a² + b² = c². 3 4 5 9 → YES (3,4,5); 5 12 13 14 → YES; 2 3 4 5 → NO (kiểm: YES YES YES ).</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
