@@ -1,0 +1,545 @@
+[
+ {
+  "id": "h-sql-31",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6"
+  ],
+  "db": "thuvien",
+  "why": "Muốn giữ cả độc giả chưa mượn phải dùng LEFT JOIN từ bảng DocGia; điều kiện trên hàm tổng hợp đặt ở HAVING (WHERE chạy trước khi gom nhóm).",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Điền vào chỗ trống để câu lệnh liệt kê MỌI độc giả (kể cả người chưa mượn) đã mượn ÍT HƠN 2 cuốn sách khác nhau (kể cả 0 cuốn):",
+  "options": [
+   "(1) RIGHT JOIN; (2) HAVING",
+   "(1) LEFT JOIN; (2) HAVING",
+   "(1) LEFT JOIN; (2) WHERE",
+   "(1) INNER JOIN; (2) HAVING"
+  ],
+  "key": 1,
+  "optWhy": [
+   "Sai: chạy được nhưng kết quả khác yêu cầu.",
+   "Điền đúng: chạy ra kết quả yêu cầu.",
+   "Sai: câu lệnh báo lỗi cú pháp.",
+   "Sai: chạy được nhưng kết quả khác yêu cầu."
+  ],
+  "cl": 2001,
+  "v2": true,
+  "hard": true,
+  "code": "SELECT d.TenDG, COUNT(DISTINCT m.MaSach) AS SoSach\nFROM DocGia d (1) ______ MuonSach m ON d.MaDG = m.MaDG\nGROUP BY d.MaDG, d.TenDG\n(2) ______ COUNT(DISTINCT m.MaSach) < 2\nORDER BY d.TenDG;",
+  "mono": true
+ },
+ {
+  "id": "h-sql-32",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6"
+  ],
+  "db": "quanly_diem",
+  "why": "Hàm MAX tìm điểm lớn nhất; điều kiện h2.Lop = h.Lop làm truy vấn con TƯƠNG QUAN với từng dòng của truy vấn ngoài (so sánh trong cùng lớp).",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Điền vào hai chỗ trống để câu lệnh cho tên học sinh có điểm Tin cao nhất TRONG LỚP của mình (năm '2024-2025'):",
+  "options": [
+   "(1) MAX; (2) h2.MaHS = h.MaHS",
+   "(1) MIN; (2) h2.Lop = h.Lop",
+   "(1) AVG; (2) h2.Lop = h.Lop",
+   "(1) MAX; (2) h2.Lop = 'Lop'",
+   "(1) MAX; (2) h2.Lop = h.Lop"
+  ],
+  "key": 4,
+  "optWhy": [
+   "Sai: chạy được nhưng kết quả khác yêu cầu.",
+   "Sai: chạy được nhưng kết quả khác yêu cầu.",
+   "Sai: chạy được nhưng kết quả khác yêu cầu.",
+   "Sai: chạy được nhưng kết quả khác yêu cầu.",
+   "Điền đúng: chạy ra kết quả yêu cầu."
+  ],
+  "cl": 2002,
+  "v2": true,
+  "hard": true,
+  "code": "SELECT h.Lop, h.TenHS, k.Diem\nFROM HocSinh h INNER JOIN KetQua k ON h.MaHS = k.MaHS\nWHERE k.MaMon = 'TIN' AND k.NamHoc = '2024-2025'\n  AND k.Diem = (SELECT (1) ______(k2.Diem)\n                FROM HocSinh h2 INNER JOIN KetQua k2 ON h2.MaHS = k2.MaHS\n                WHERE (2) ______ AND k2.MaMon = 'TIN' AND k2.NamHoc = '2024-2025')\nORDER BY h.Lop;",
+  "mono": true
+ },
+ {
+  "id": "h-sql-33",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S10",
+   "S3"
+  ],
+  "db": "thuexe",
+  "why": "LEFT JOIN giữ khách chưa thuê; COALESCE(x, 0) thay giá trị NULL bằng 0.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Điền vào hai chỗ trống để câu lệnh cho mọi khách và tổng giờ thuê (0 nếu chưa thuê), sắp xếp giảm dần theo tổng giờ rồi theo tên:",
+  "options": [
+   "(1) SUM; (2) LEFT JOIN",
+   "(1) COALESCE; (2) LEFT JOIN",
+   "(1) COUNT; (2) LEFT JOIN",
+   "(1) COALESCE; (2) INNER JOIN"
+  ],
+  "key": 1,
+  "optWhy": [
+   "Sai: câu lệnh báo lỗi cú pháp.",
+   "Điền đúng: chạy ra kết quả yêu cầu.",
+   "Sai: câu lệnh báo lỗi cú pháp.",
+   "Sai: chạy được nhưng kết quả khác yêu cầu."
+  ],
+  "cl": 2003,
+  "v2": true,
+  "hard": true,
+  "code": "SELECT k.TenKT, (1) ______(SUM(l.SoGio), 0) AS Tong\nFROM KhachThue k (2) ______ LuotThue l ON k.MaKT = l.MaKT\nGROUP BY k.MaKT, k.TenKT\nORDER BY Tong DESC, k.TenKT;",
+  "mono": true
+ },
+ {
+  "id": "h-sql-34",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6"
+  ],
+  "db": "thuexe",
+  "why": "NOT EXISTS + điều kiện liên kết l.MaKT = k.MaKT: với từng khách, không tồn tại lượt thuê ≥ 5 giờ của chính khách đó.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Điền vào hai chỗ trống để câu lệnh liệt kê khách CHƯA CÓ lượt thuê nào kéo dài từ 5 giờ trở lên:",
+  "options": [
+   "(1) NOT EXISTS; (2) l.MaKT = l.MaKT",
+   "(1) NOT EXISTS; (2) l.MaKT = k.MaKT",
+   "(1) NOT EXISTS; (2) k.MaKT = 'K001'",
+   "(1) EXISTS; (2) l.MaKT = k.MaKT"
+  ],
+  "key": 1,
+  "optWhy": [
+   "Sai: chạy được nhưng kết quả khác yêu cầu.",
+   "Điền đúng: chạy ra kết quả yêu cầu.",
+   "Sai: chạy được nhưng kết quả khác yêu cầu.",
+   "Sai: chạy được nhưng kết quả khác yêu cầu."
+  ],
+  "cl": 2004,
+  "v2": true,
+  "hard": true,
+  "code": "SELECT k.TenKT\nFROM KhachThue k\nWHERE (1) ______ (SELECT 1 FROM LuotThue l\n                  WHERE (2) ______ AND l.SoGio >= 5)\nORDER BY k.TenKT;",
+  "mono": true
+ },
+ {
+  "id": "h-sql-35",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6"
+  ],
+  "db": "mymusic_hsg",
+  "why": "“Khác nhau” → DISTINCT; điều kiện trên hàm tổng hợp → HAVING.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Điền vào hai chỗ trống để câu lệnh cho tên các ca sĩ đã thể hiện bản nhạc của ÍT NHẤT 3 nhạc sĩ khác nhau:",
+  "options": [
+   "(1) HAVING; (2) DISTINCT",
+   "(1) WHERE; (2) DISTINCT",
+   "(1) WHERE; (2) ",
+   "(1) HAVING; (2) DISTINCT t.idCasi,"
+  ],
+  "key": 0,
+  "optWhy": [
+   "Điền đúng: chạy ra kết quả yêu cầu.",
+   "Sai: câu lệnh báo lỗi cú pháp.",
+   "Sai: câu lệnh báo lỗi cú pháp.",
+   "Sai: câu lệnh báo lỗi cú pháp."
+  ],
+  "cl": 2005,
+  "v2": true,
+  "hard": true,
+  "code": "SELECT c.tenCasi\nFROM casi c INNER JOIN banthuam t ON c.idCasi = t.idCasi\n  INNER JOIN bannhac b ON t.idBannhac = b.idBannhac\nGROUP BY c.idCasi, c.tenCasi\n(1) ______ COUNT((2) ______ b.idNhacsi) >= 3;",
+  "mono": true
+ },
+ {
+  "id": "h-sql-36",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S10",
+   "S3"
+  ],
+  "db": "thuvien",
+  "why": "Thứ tự thực hiện: FROM/JOIN → WHERE (lọc dòng) → GROUP BY → HAVING (lọc nhóm) → ORDER BY.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Điền vào hai chỗ trống để câu lệnh cho thể loại sách và số lượt mượn năm 2026, chỉ lấy thể loại có từ 3 lượt trở lên, sắp xếp giảm dần theo số lượt:",
+  "options": [
+   "(1) HAVING; (2) HAVING",
+   "(1) WHERE; (2) WHERE",
+   "(1) HAVING; (2) WHERE",
+   "(1) WHERE; (2) HAVING"
+  ],
+  "key": 3,
+  "optWhy": [
+   "Sai: câu lệnh báo lỗi cú pháp.",
+   "Sai: câu lệnh báo lỗi cú pháp.",
+   "Sai: câu lệnh báo lỗi cú pháp.",
+   "Điền đúng: chạy ra kết quả yêu cầu."
+  ],
+  "cl": 2006,
+  "v2": true,
+  "hard": true,
+  "code": "SELECT s.TheLoai, COUNT(*) AS SoLuot\nFROM Sach s INNER JOIN MuonSach m ON s.MaSach = m.MaSach\n(1) ______ YEAR(m.NgayMuon) = 2026\nGROUP BY s.TheLoai\n(2) ______ COUNT(*) >= 3\nORDER BY SoLuot DESC;",
+  "mono": true
+ },
+ {
+  "id": "h-sql-37",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6"
+  ],
+  "db": "thuvien",
+  "why": "Truy vấn con đếm số cuốn Tin học KHÁC NHAU mà mỗi độc giả mượn, rồi so với tổng số cuốn Tin học: bằng nhau nghĩa là đã mượn đủ (bài toán “với mọi”). Kết quả chạy thật: Lan.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Câu lệnh sau có ý nghĩa nào?",
+  "options": [
+   "Tên các độc giả chỉ mượn toàn sách Tin học và không mượn thể loại nào khác.",
+   "Tên các độc giả đã mượn đủ TẤT CẢ các cuốn sách thể loại Tin học.",
+   "Tên các độc giả đã mượn ít nhất 2 cuốn sách Tin học khác nhau.",
+   "Tên các độc giả đã mượn ít nhất một cuốn sách thể loại Tin học."
+  ],
+  "key": 1,
+  "optWhy": [
+   "Sai: nếu hiểu như vậy thì kết quả sẽ khác kết quả thật.",
+   "Đúng: kết quả chạy thật của câu lệnh là Lan.",
+   "Sai: nếu hiểu như vậy thì kết quả sẽ khác kết quả thật.",
+   "Sai: nếu hiểu như vậy thì kết quả sẽ khác kết quả thật."
+  ],
+  "cl": 2007,
+  "v2": true,
+  "hard": true,
+  "code": "SELECT d.TenDG\nFROM DocGia d\nWHERE d.MaDG IN (SELECT m.MaDG\n                  FROM MuonSach m INNER JOIN Sach s ON m.MaSach = s.MaSach\n                  WHERE s.TheLoai = 'Tin học'\n                  GROUP BY m.MaDG\n                  HAVING COUNT(DISTINCT m.MaSach) = (SELECT COUNT(*) FROM Sach WHERE TheLoai = 'Tin học'));",
+  "mono": true
+ },
+ {
+  "id": "h-sql-38",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6"
+  ],
+  "db": "quanly_diem",
+  "why": "EXISTS bảo đảm có điểm; NOT EXISTS (điểm < 7) bảo đảm KHÔNG có điểm thấp, tức mọi điểm ≥ 7. Nếu bỏ EXISTS thì học sinh chưa có điểm cũng lọt vào. Kết quả chạy thật: 12A1,2; 12A2,1; 12A3,2.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Câu lệnh sau tìm ra điều gì?",
+  "options": [
+   "Với mỗi lớp, số học sinh có ít nhất một điểm từ 7 trở lên.",
+   "Với mỗi lớp, số học sinh chưa có điểm hoặc có mọi điểm từ 7 trở lên.",
+   "Với mỗi lớp, số lượt điểm từ 7 trở lên.",
+   "Với mỗi lớp, số học sinh ĐÃ CÓ điểm và MỌI điểm đều từ 7 trở lên."
+  ],
+  "key": 3,
+  "optWhy": [
+   "Sai: nếu hiểu như vậy thì kết quả sẽ khác kết quả thật.",
+   "Sai: nếu hiểu như vậy thì kết quả sẽ khác kết quả thật.",
+   "Sai: nếu hiểu như vậy thì kết quả sẽ khác kết quả thật.",
+   "Đúng: kết quả chạy thật của câu lệnh là 12A1,2; 12A2,1; 12A3,2."
+  ],
+  "cl": 2008,
+  "v2": true,
+  "hard": true,
+  "code": "SELECT h.Lop, COUNT(*) AS n\nFROM HocSinh h\nWHERE EXISTS (SELECT 1 FROM KetQua k WHERE k.MaHS = h.MaHS)\n  AND NOT EXISTS (SELECT 1 FROM KetQua k WHERE k.MaHS = h.MaHS AND k.Diem < 7)\nGROUP BY h.Lop;",
+  "mono": true
+ },
+ {
+  "id": "h-sql-39",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S10",
+   "S3"
+  ],
+  "db": "thuvien",
+  "why": "GROUP BY hai cột tạo nhóm theo từng cặp (độc giả, sách); COUNT(*) của nhóm là số lần độc giả đó mượn cuốn sách đó. Kết quả chạy thật: D003,S004,2; D004,S002,3.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Câu lệnh sau cho biết điều gì?",
+  "options": [
+   "Các độc giả mượn tối đa 2 lần.",
+   "Các cặp (độc giả, sách) mà độc giả đó đã mượn CÙNG MỘT cuốn sách từ 2 lần trở lên.",
+   "Các cuốn sách có từ 2 độc giả khác nhau mượn trở lên.",
+   "Các độc giả đã mượn từ 2 cuốn sách khác nhau trở lên."
+  ],
+  "key": 1,
+  "optWhy": [
+   "Sai: nếu hiểu như vậy thì kết quả sẽ khác kết quả thật.",
+   "Đúng: kết quả chạy thật của câu lệnh là D003,S004,2; D004,S002,3.",
+   "Sai: nếu hiểu như vậy thì kết quả sẽ khác kết quả thật.",
+   "Sai: nếu hiểu như vậy thì kết quả sẽ khác kết quả thật."
+  ],
+  "cl": 2009,
+  "v2": true,
+  "hard": true,
+  "code": "SELECT MaDG, MaSach, COUNT(*) AS SoLan\nFROM MuonSach\nGROUP BY MaDG, MaSach\nHAVING COUNT(*) >= 2;",
+  "mono": true
+ },
+ {
+  "id": "h-sql-40",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6",
+   "S3"
+  ],
+  "db": "thuexe",
+  "why": "",
+  "src": "verified-sql",
+  "type": "tf",
+  "stem": "Cho câu lệnh sau trên CSDL thuexe:\nSELECT p.LoaiPT, COUNT(DISTINCT l.MaKT) AS SoKhach, SUM(l.SoGio) AS TongGio\nFROM LuotThue l INNER JOIN PhuongTien p ON l.MaPT = p.MaPT\nWHERE l.NgayThue >= '2026-01-01'\nGROUP BY p.LoaiPT\nHAVING SUM(l.SoGio) > 5\nORDER BY TongGio DESC;\nXét các phát biểu (kiểm chứng bằng cách chạy thật):",
+  "items": [
+   {
+    "t": "Lượt thuê ngày 20/12/2025 không được tính vào kết quả.",
+    "v": true,
+    "why": "Đúng: WHERE lọc dòng trước khi gom nhóm, lượt 7 (2025-12-20) bị loại."
+   },
+   {
+    "t": "Mọi nhóm loại phương tiện xuất hiện trong kết quả đều có TongGio lớn hơn 5.",
+    "v": true,
+    "why": "Đúng: HAVING lọc các nhóm theo tổng giờ."
+   },
+   {
+    "t": "Cột SoKhach của mỗi dòng luôn bằng số lượt thuê của loại phương tiện đó.",
+    "v": false,
+    "why": "Sai: DISTINCT đếm số khách khác nhau, không phải số lượt (khách thuê nhiều lần chỉ tính một)."
+   },
+   {
+    "t": "Kết quả được sắp xếp TĂNG dần theo TongGio.",
+    "v": false,
+    "why": "Sai: DESC là sắp xếp GIẢM dần."
+   }
+  ],
+  "optWhy": [],
+  "cl": 2010,
+  "v2": true,
+  "hard": true
+ },
+ {
+  "id": "h-sql-41",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6"
+  ],
+  "db": "thuexe",
+  "why": "“Ít nhất một” → WHERE trực tiếp; “chưa từng” → NOT IN/NOT EXISTS; “chỉ toàn” → so số lượt tổng với số lượt thoả điều kiện trong HAVING.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Ghép đúng mỗi yêu cầu với truy vấn thực hiện đúng yêu cầu đó (mỗi truy vấn dùng một lần):\n(a) Khách đã thuê ÍT NHẤT MỘT xe điện.\n(b) Khách CHƯA TỪNG thuê xe điện.\n(c) Khách CHỈ thuê toàn xe điện (mọi lượt thuê đều là xe điện, và có thuê).",
+  "options": [
+   "(a)-Q1, (b)-Q2, (c)-Q3",
+   "(a)-Q2, (b)-Q1, (c)-Q3",
+   "(a)-Q2, (b)-Q3, (c)-Q1",
+   "(a)-Q3, (b)-Q1, (c)-Q2"
+  ],
+  "key": 3,
+  "optWhy": [
+   "Sai: có ít nhất một cặp yêu cầu – truy vấn bị ghép nhầm.",
+   "Sai: có ít nhất một cặp yêu cầu – truy vấn bị ghép nhầm.",
+   "Sai: có ít nhất một cặp yêu cầu – truy vấn bị ghép nhầm.",
+   "Đúng: đã chạy từng truy vấn để đối chiếu."
+  ],
+  "cl": 2011,
+  "v2": true,
+  "hard": true,
+  "code": "-- Q1\nSELECT MaKT FROM KhachThue\nWHERE MaKT NOT IN (SELECT l.MaKT FROM LuotThue l\n                   INNER JOIN PhuongTien p ON l.MaPT = p.MaPT\n                   WHERE p.LoaiPT = 'Xe điện');\n\n-- Q2\nSELECT l.MaKT\nFROM LuotThue l INNER JOIN PhuongTien p ON l.MaPT = p.MaPT\nGROUP BY l.MaKT\nHAVING COUNT(*) = SUM(CASE WHEN p.LoaiPT = 'Xe điện' THEN 1 ELSE 0 END);\n\n-- Q3\nSELECT DISTINCT l.MaKT\nFROM LuotThue l INNER JOIN PhuongTien p ON l.MaPT = p.MaPT\nWHERE p.LoaiPT = 'Xe điện';",
+  "mono": true
+ },
+ {
+  "id": "h-sql-42",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6"
+  ],
+  "db": "thuvien",
+  "why": "Mỗi yêu cầu có một “chữ ký” riêng: IS NULL sau LEFT JOIN (chưa có); COUNT(DISTINCT thể loại) ≥ 2; COUNT(DISTINCT sách) = 1.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Ghép đúng mỗi yêu cầu với truy vấn thực hiện đúng yêu cầu đó (mỗi truy vấn dùng một lần):\n(a) Độc giả CHƯA mượn sách nào.\n(b) Độc giả đã mượn sách từ 2 THỂ LOẠI khác nhau trở lên.\n(c) Độc giả mượn sách đúng MỘT cuốn khác nhau (nhưng có thể nhiều lần).",
+  "options": [
+   "(a)-Q3, (b)-Q2, (c)-Q1",
+   "(a)-Q1, (b)-Q2, (c)-Q3",
+   "(a)-Q1, (b)-Q3, (c)-Q2",
+   "(a)-Q2, (b)-Q3, (c)-Q1"
+  ],
+  "key": 0,
+  "optWhy": [
+   "Đúng: đã chạy từng truy vấn để đối chiếu.",
+   "Sai: có ít nhất một cặp yêu cầu – truy vấn bị ghép nhầm.",
+   "Sai: có ít nhất một cặp yêu cầu – truy vấn bị ghép nhầm.",
+   "Sai: có ít nhất một cặp yêu cầu – truy vấn bị ghép nhầm."
+  ],
+  "cl": 2012,
+  "v2": true,
+  "hard": true,
+  "code": "-- Q1\nSELECT MaDG\nFROM MuonSach\nGROUP BY MaDG\nHAVING COUNT(DISTINCT MaSach) = 1;\n\n-- Q2\nSELECT m.MaDG\nFROM MuonSach m INNER JOIN Sach s ON m.MaSach = s.MaSach\nGROUP BY m.MaDG\nHAVING COUNT(DISTINCT s.TheLoai) >= 2;\n\n-- Q3\nSELECT d.MaDG\nFROM DocGia d LEFT JOIN MuonSach m ON d.MaDG = m.MaDG\nWHERE m.MaMuon IS NULL;",
+  "mono": true
+ },
+ {
+  "id": "h-sql-43",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6"
+  ],
+  "db": "quanly_diem",
+  "why": "Ba mẫu: tự kết nối (so sánh hai dòng của cùng một bảng), truy vấn con cho giá trị trung bình, NOT EXISTS cho phần “không có”.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Ghép đúng mỗi yêu cầu với truy vấn thực hiện đúng yêu cầu đó (mỗi truy vấn dùng một lần):\n(a) Học sinh có điểm Tin '2024-2025' cao hơn điểm Tin '2023-2024' của chính mình.\n(b) Học sinh có điểm Tin '2024-2025' cao hơn điểm Tin trung bình cả năm đó.\n(c) Học sinh có điểm Tin '2024-2025' nhưng không có điểm Toán '2024-2025'.",
+  "options": [
+   "(a)-Q1, (b)-Q3, (c)-Q2",
+   "(a)-Q1, (b)-Q2, (c)-Q3",
+   "(a)-Q2, (b)-Q1, (c)-Q3",
+   "(a)-Q3, (b)-Q2, (c)-Q1"
+  ],
+  "key": 0,
+  "optWhy": [
+   "Đúng: đã chạy từng truy vấn để đối chiếu.",
+   "Sai: có ít nhất một cặp yêu cầu – truy vấn bị ghép nhầm.",
+   "Sai: có ít nhất một cặp yêu cầu – truy vấn bị ghép nhầm.",
+   "Sai: có ít nhất một cặp yêu cầu – truy vấn bị ghép nhầm."
+  ],
+  "cl": 2013,
+  "v2": true,
+  "hard": true,
+  "code": "-- Q1\nSELECT a.MaHS\nFROM KetQua a INNER JOIN KetQua b ON a.MaHS = b.MaHS AND a.MaMon = b.MaMon\nWHERE a.MaMon = 'TIN' AND a.NamHoc = '2024-2025' AND b.NamHoc = '2023-2024'\n  AND a.Diem > b.Diem;\n\n-- Q2\nSELECT t.MaHS FROM KetQua t\nWHERE t.MaMon = 'TIN' AND t.NamHoc = '2024-2025'\n  AND NOT EXISTS (SELECT 1 FROM KetQua x\n                  WHERE x.MaHS = t.MaHS AND x.MaMon = 'TOA' AND x.NamHoc = '2024-2025');\n\n-- Q3\nSELECT MaHS FROM KetQua\nWHERE MaMon = 'TIN' AND NamHoc = '2024-2025'\n  AND Diem > (SELECT AVG(Diem) FROM KetQua\n              WHERE MaMon = 'TIN' AND NamHoc = '2024-2025');",
+  "mono": true
+ },
+ {
+  "id": "h-sql-44",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S10",
+   "S3"
+  ],
+  "db": "thuvien",
+  "why": "Thứ tự viết: SELECT → FROM (JOIN) → WHERE → GROUP BY → HAVING → ORDER BY. Đảo vị trí bất kì đều gây lỗi cú pháp.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Các mệnh đề sau xáo trộn thứ tự. Thứ tự nào ghép thành câu lệnh ĐÚNG (chạy được và cho đúng yêu cầu: thể loại có từ 3 lượt mượn trở lên, sắp xếp giảm dần theo số lượt)?",
+  "options": [
+   "6 → 5 → 1 → 3 → 4 → 2",
+   "6 → 5 → 1 → 4 → 3 → 2",
+   "6 → 5 → 1 → 4 → 2 → 3",
+   "6 → 5 → 4 → 1 → 3 → 2"
+  ],
+  "key": 1,
+  "optWhy": [
+   "Sai: báo lỗi cú pháp.",
+   "Đúng: ghép lại chạy ra kết quả yêu cầu.",
+   "Sai: báo lỗi cú pháp.",
+   "Sai: báo lỗi cú pháp."
+  ],
+  "cl": 2014,
+  "v2": true,
+  "hard": true,
+  "code": "(1) WHERE m.SoNgay >= 3\n(2) ORDER BY SoLuot DESC\n(3) HAVING COUNT(*) >= 3\n(4) GROUP BY s.TheLoai\n(5) FROM Sach s INNER JOIN MuonSach m ON s.MaSach = m.MaSach\n(6) SELECT s.TheLoai, COUNT(*) AS SoLuot",
+  "mono": true
+ },
+ {
+  "id": "h-sql-45",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6"
+  ],
+  "db": "quanly_diem",
+  "why": "Truy vấn con nằm trong ngoặc, đặt SAU điều kiện của truy vấn ngoài và phải lặp lại phạm vi (môn, năm).",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Ghép các mệnh đề sau thành câu lệnh đúng cho yêu cầu “mã học sinh có điểm Tin '2024-2025' cao nhất”. Thứ tự nào đúng?",
+  "options": [
+   "5 → 1 → 3 → 2 → 4",
+   "5 → 2 → 1 → 3 → 4",
+   "1 → 5 → 2 → 3 → 4",
+   "5 → 1 → 2 → 3 → 4"
+  ],
+  "key": 3,
+  "optWhy": [
+   "Sai: báo lỗi cú pháp.",
+   "Sai: báo lỗi cú pháp.",
+   "Sai: báo lỗi cú pháp.",
+   "Đúng: ghép lại chạy ra kết quả yêu cầu."
+  ],
+  "cl": 2015,
+  "v2": true,
+  "hard": true,
+  "code": "(1) FROM KetQua\n(2) WHERE MaMon = 'TIN' AND NamHoc = '2024-2025'\n(3) AND Diem = (SELECT MAX(Diem) FROM KetQua\n(4) WHERE MaMon = 'TIN' AND NamHoc = '2024-2025')\n(5) SELECT MaHS",
+  "mono": true
+ },
+ {
+  "id": "h-sql-46",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S10",
+   "S3"
+  ],
+  "db": "thuvien",
+  "why": "Hàm tổng hợp không được đứng trong WHERE (WHERE chạy trước khi nhóm); điều kiện trên nhóm phải đặt ở HAVING. Câu lệnh gốc: Báo lỗi khi chạy.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Câu lệnh sau định liệt kê độc giả đã mượn từ 3 lượt trở lên nhưng báo lỗi. Cách sửa nào đúng?",
+  "options": [
+   "Thêm DISTINCT vào SELECT.",
+   "Bỏ WHERE COUNT(*) >= 3 và thêm HAVING COUNT(*) >= 3 sau GROUP BY.",
+   "Đổi COUNT(*) thành COUNT(d.TenDG) trong WHERE.",
+   "Đổi INNER JOIN thành LEFT JOIN."
+  ],
+  "key": 1,
+  "optWhy": [
+   "Sai: sửa như vậy vẫn không ra kết quả yêu cầu.",
+   "Đúng: sau khi sửa chạy ra kết quả yêu cầu.",
+   "Sai: sửa như vậy vẫn không ra kết quả yêu cầu.",
+   "Sai: sửa như vậy vẫn không ra kết quả yêu cầu."
+  ],
+  "cl": 2016,
+  "v2": true,
+  "hard": true,
+  "code": "SELECT d.TenDG, COUNT(*) AS SoLuot\nFROM DocGia d INNER JOIN MuonSach m ON d.MaDG = m.MaDG\nWHERE COUNT(*) >= 3\nGROUP BY d.MaDG, d.TenDG;",
+  "mono": true
+ },
+ {
+  "id": "h-sql-47",
+  "topic": "csdl",
+  "level": 3,
+  "tags": [
+   "S6"
+  ],
+  "db": "thuexe",
+  "why": "Điều kiện trong WHERE áp lên kết quả SAU khi nối nên xoá các dòng NULL; điều kiện trong ON chỉ quyết định dòng nào được ghép, vẫn giữ các dòng bên trái chưa ghép được. Câu lệnh gốc: Chạy được nhưng kết quả: An,3; Bình,2; Chi,1; Hà,1.",
+  "src": "verified-sql",
+  "type": "mcq",
+  "stem": "Câu lệnh sau định liệt kê MỌI khách kèm số lượt thuê từ 3 giờ trở lên (0 nếu không có), nhưng khách Khoa và Hà bị mất. Nguyên nhân và cách sửa đúng là:",
+  "options": [
+   "Đổi LEFT JOIN thành INNER JOIN.",
+   "Đổi COUNT(l.MaLuot) thành COUNT(*).",
+   "Chuyển điều kiện sang HAVING l.SoGio >= 3.",
+   "Điều kiện l.SoGio >= 3 trong WHERE loại các dòng NULL của LEFT JOIN; phải chuyển điều kiện đó vào mệnh đề ON."
+  ],
+  "key": 3,
+  "optWhy": [
+   "Sai: sửa như vậy vẫn không ra kết quả yêu cầu.",
+   "Sai: sửa như vậy vẫn không ra kết quả yêu cầu.",
+   "Sai: sửa như vậy vẫn không ra kết quả yêu cầu.",
+   "Đúng: sau khi sửa chạy ra kết quả yêu cầu."
+  ],
+  "cl": 2017,
+  "v2": true,
+  "hard": true,
+  "code": "SELECT k.TenKT, COUNT(l.MaLuot) AS SoLuot\nFROM KhachThue k LEFT JOIN LuotThue l ON k.MaKT = l.MaKT\nWHERE l.SoGio >= 3\nGROUP BY k.MaKT, k.TenKT\nORDER BY k.TenKT;",
+  "mono": true
+ }
+]

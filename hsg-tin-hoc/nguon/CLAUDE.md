@@ -1,6 +1,6 @@
 # Dự án: Luyện HSG Tin học (THPT, SGK Kết nối tri thức)
 
-Ứng dụng web một tệp (`../index.html`) cho đội tuyển HSG Tin: đề thi thử, ôn theo chủ đề, sổ lỗi, ngân hàng 719 câu (gồm 64 câu khó sinh bằng gen/hard_sql.py, gen/hard_other.py: đáp án đều lấy từ chạy thật), 29 bài học kèm bộ slide, tài khoản học sinh và trang thống kê giáo viên.
+Ứng dụng web một tệp (`../index.html`) cho đội tuyển HSG Tin: đề thi thử, ôn theo chủ đề, sổ lỗi, ngân hàng 736 câu (gồm 81 câu khó sinh bằng gen/hard_sql.py, gen/hard_sql2.py (điền câu lệnh, ý nghĩa câu lệnh dài, ghép yêu cầu–truy vấn, sắp xếp mệnh đề, sửa lỗi), gen/hard_other.py: đáp án đều lấy từ chạy thật), 29 bài học kèm bộ slide, tài khoản học sinh và trang thống kê giáo viên.
 Chủ dự án là giáo viên Tin học (Việt Nam): **mọi nội dung và giao diện bằng tiếng Việt**, ngôn ngữ học thuật kiểu SGK.
 
 ## Cấu trúc
