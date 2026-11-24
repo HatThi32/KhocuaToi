@@ -1,0 +1,177 @@
+<!-- HEAD -->
+<title>Nghề 1 · Nghề nghiệp trong ngành CNTT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · HƯỚNG NGHIỆP 1</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>NGHỀ NGHIỆP<br>TRONG NGÀNH CNTT</h1><p style="font-size:28px;line-height:1.5">Các nhóm nghề CNTT, nghề dịch vụ sửa chữa – bảo trì máy tính, kiến thức – kĩ năng cần có, cách tìm kiếm thông tin hướng nghiệp.</p><div><span class="chip">nghề CNTT</span><span class="chip">sửa chữa bảo trì</span><span class="chip">kĩ năng mềm</span><span class="chip">hướng nghiệp</span><span class="chip">chuyên môn</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Nêu <b>các nhóm nghề</b> trong ngành CNTT.</li><li>Trình bày <b>công việc, kiến thức, kĩ năng</b> của nghề sửa chữa – bảo trì máy tính.</li><li>Nêu <b>vai trò</b> của lập trình viên, quản trị mạng, chuyên gia dữ liệu, an toàn thông tin.</li><li>Biết <b>tra cứu thông tin hướng nghiệp</b> một cách tin cậy.</li><li>Xác định <b>định hướng học tập</b> của bản thân.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Ngành CNTT</li><li>Sửa chữa, bảo trì</li><li>Các nghề khác</li><li>Tìm hiểu hướng nghiệp</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 1</span><h1>Ngành CNTT và nhu cầu nhân lực</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ngành Công nghệ thông tin</h3><ul style="gap:6px"><li>Nghiên cứu, phát triển, <b>ứng dụng</b> CNTT trong mọi lĩnh vực.</li><li>Nhu cầu nhân lực <b>lớn, tăng nhanh</b> nhờ chuyển đổi số.</li><li>Làm việc ở doanh nghiệp công nghệ, ngân hàng, y tế, giáo dục, cơ quan nhà nước.</li></ul></div></div><div class="col"><div class="key">Chuyển đổi số: mọi ngành (nông nghiệp, y tế, giáo dục…) đều cần <b>người có kiến thức CNTT</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 1</span><h1>Các nhóm nghề chính</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Nhóm nghề</th><th>Việc làm</th><th>Ví dụ vị trí</th></tr><tr><td><b>Phát triển phần mềm</b></td><td>thiết kế, lập trình, kiểm thử</td><td>lập trình viên, kiểm thử viên</td></tr><tr><td><b>Hạ tầng, mạng</b></td><td>xây dựng, quản trị hệ thống mạng</td><td>quản trị mạng, kĩ sư hệ thống</td></tr><tr><td><b>Dữ liệu, AI</b></td><td>thu thập, phân tích, xây mô hình</td><td>chuyên gia dữ liệu, kĩ sư AI</td></tr><tr><td><b>An toàn thông tin</b></td><td>bảo vệ hệ thống, dữ liệu</td><td>chuyên viên bảo mật</td></tr><tr><td><b>Dịch vụ CNTT</b></td><td>hỗ trợ, sửa chữa, bảo trì</td><td>kĩ thuật viên, hỗ trợ người dùng</td></tr><tr><td><b>Thiết kế, sáng tạo số</b></td><td>giao diện, đồ hoạ, game</td><td>UI/UX, thiết kế đồ hoạ</td></tr></table><div class="key">Một người có thể chuyển giữa các nhóm nghề nhờ nền tảng <b>chung</b>: tư duy máy tính, lập trình, mạng.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 2</span><h1>Dịch vụ sửa chữa và bảo trì máy tính</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li>Nghề <b>duy trì sự ổn định</b> của máy tính và thiết bị liên quan; <b>hỗ trợ kĩ thuật</b> khi cần.</li><li><b>Sửa chữa</b>: khắc phục khi hỏng. <b>Bảo trì</b>: làm định kì để <b>phòng ngừa</b> hỏng.</li></ul></div></div><div class="col"><div class="key">Nhiều tổ chức <b>trả phí bảo trì định kì</b> vì sự cố làm <b>gián đoạn công việc, mất dữ liệu</b> → thiệt hại lớn hơn chi phí bảo trì.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 2</span><h1>Công việc chính của nghề</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Nhóm</th><th>Công việc cụ thể</th></tr><tr><td><b>Phần cứng</b></td><td>kiểm tra, duy trì hoạt động; tìm và khắc phục lỗi; lắp, thay linh kiện; nâng cấp RAM, ổ cứng, mainboard</td></tr><tr><td><b>Phần mềm</b></td><td>cài, cập nhật hệ điều hành, driver, ứng dụng văn phòng; cấu hình mạng; quét mã độc, cài phần mềm diệt virus</td></tr><tr><td><b>Hỗ trợ người dùng</b></td><td>hướng dẫn sử dụng đúng cách, giải đáp, tư vấn mua sắm thiết bị</td></tr><tr><td><b>Quản lí</b></td><td>lập danh sách thiết bị, lịch bảo trì, ghi chép sự cố</td></tr></table><div class="key">Bảo trì định kì: <b>vệ sinh</b>, <b>cập nhật</b>, <b>sao lưu</b>, <b>kiểm tra ổ cứng, nhiệt độ</b>, quét mã độc.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 2</span><h1>Quy trình xử lí một sự cố máy tính</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các bước</h3><ul style="gap:6px"><li>1. <b>Tiếp nhận</b> và hỏi rõ triệu chứng.</li><li>2. <b>Xác định</b> nguyên nhân: phần cứng hay phần mềm.</li><li>3. <b>Khắc phục</b>: thay linh kiện hoặc cài lại/cấu hình.</li><li>4. <b>Kiểm tra</b> lại hoạt động.</li><li>5. <b>Ghi nhận</b>, hướng dẫn người dùng, <b>sao lưu</b> dữ liệu.</li></ul></div></div><div class="col"><div class="key">Luôn <b>sao lưu dữ liệu</b> trước khi sửa chữa; thay đổi từng bước để biết cái nào khắc phục được lỗi.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 2</span><h1>Triệu chứng thường gặp và nguyên nhân</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Triệu chứng</th><th>Nguyên nhân có thể</th><th>Cách xử lí</th></tr><tr><td>Máy chạy chậm</td><td>đầy ổ đĩa, nhiều chương trình nền, mã độc</td><td>dọn dẹp, quét virus, nâng RAM/SSD</td></tr><tr><td>Không lên nguồn</td><td>hỏng nguồn, RAM lỏng, dây cắm</td><td>kiểm tra dây, nguồn, cắm lại RAM</td></tr><tr><td>Tự khởi động lại</td><td>quá nhiệt, nguồn yếu</td><td>vệ sinh quạt, tra keo tản nhiệt</td></tr><tr><td>Không vào mạng</td><td>sai cấu hình, hỏng card mạng/dây</td><td>kiểm tra IP, DNS, dây, router</td></tr><tr><td>Màn hình xanh</td><td>lỗi driver, RAM, ổ cứng</td><td>cập nhật driver, kiểm tra RAM, ổ đĩa</td></tr></table><div class="warn">Ngắt nguồn điện, dùng vòng chống tĩnh điện khi mở máy; không chạm linh kiện bằng tay ướt.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 3</span><h1>Kiến thức và kĩ năng của nghề</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Kiến thức chuyên môn</h3><ul style="gap:6px"><li><b>Phần cứng</b>: cấu tạo, chức năng, cách lắp ráp, thay thế.</li><li><b>Phần mềm</b>: cài, cấu hình HĐH, phần mềm văn phòng, diệt virus.</li><li><b>Mạng</b>: kết nối, cấu hình LAN và Internet.</li></ul></div></div><div class="col"><div class="key">Cần cả <b>kiến thức chuyên môn</b> và <b>kĩ năng mềm</b> để làm việc hiệu quả.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 3</span><h1>Kĩ năng mềm quan trọng</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Kĩ năng</th><th>Biểu hiện</th></tr><tr><td><b>Học hỏi, cập nhật</b></td><td>theo dõi công nghệ mới</td></tr><tr><td><b>Giải quyết vấn đề</b></td><td>phân tích lỗi, tra cứu tài liệu, thử từng bước</td></tr><tr><td><b>Giao tiếp</b></td><td>nghe yêu cầu, giải thích dễ hiểu</td></tr><tr><td><b>Quản lí thời gian</b></td><td>hoàn thành đúng hạn</td></tr><tr><td><b>Làm việc nhóm</b></td><td>phối hợp với đồng nghiệp</td></tr><tr><td><b>Trung thực, bảo mật</b></td><td>không xem, lấy dữ liệu của khách</td></tr></table><div class="key">Đạo đức nghề: <b>tôn trọng quyền riêng tư</b> của khách hàng khi tiếp xúc với máy, dữ liệu.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 3</span><h1>Con đường đào tạo và chứng chỉ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Con đường học</h3><ul style="gap:6px"><li><b>Trung cấp, cao đẳng</b> nghề: kĩ thuật viên sửa chữa, lắp ráp.</li><li><b>Đại học</b>: CNTT, kĩ thuật máy tính, hệ thống thông tin.</li><li><b>Chứng chỉ</b> quốc tế: CompTIA A+, Cisco CCNA.</li><li><b>Tự học</b> qua khoá học trực tuyến, thực hành.</li></ul></div></div><div class="col"><div class="key">Thực hành thường xuyên (lắp máy, cài HĐH, cấu hình mạng) quan trọng <b>ngang</b> lí thuyết.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 4</span><h1>Các nghề dịch vụ khác trong CNTT</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ví dụ</h3><ul style="gap:6px"><li><b>Quản trị mạng</b>: thiết lập, giám sát, bảo vệ mạng.</li><li><b>Hỗ trợ kĩ thuật</b> (Help desk): giải đáp lỗi cho người dùng.</li><li><b>Quản trị hệ thống</b>: máy chủ, đám mây.</li><li><b>Kĩ thuật viên lắp đặt</b> camera, hệ thống mạng.</li></ul></div></div><div class="col"><div class="key">Các nghề này có điểm chung: <b>hỗ trợ người dùng</b>, <b>duy trì hệ thống ổn định</b>, đòi hỏi <b>giao tiếp</b> tốt.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 4</span><h1>So sánh một số nghề CNTT</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Nghề</th><th>Công việc cốt lõi</th><th>Kĩ năng nổi bật</th></tr><tr><td>Lập trình viên</td><td>viết, kiểm thử chương trình</td><td>tư duy thuật toán, ngôn ngữ lập trình</td></tr><tr><td>Quản trị mạng</td><td>vận hành, giám sát mạng</td><td>giao thức, cấu hình thiết bị</td></tr><tr><td>Chuyên gia dữ liệu</td><td>phân tích, dự đoán</td><td>thống kê, Python, SQL</td></tr><tr><td>An toàn thông tin</td><td>phát hiện, ngăn chặn tấn công</td><td>mật mã, hệ thống, mạng</td></tr><tr><td>Kĩ thuật viên bảo trì</td><td>sửa chữa, hỗ trợ</td><td>phần cứng, giao tiếp</td></tr></table><div class="key">Chọn nghề dựa trên <b>sở thích, năng lực, giá trị</b> và <b>nhu cầu xã hội</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 4</span><h1>Tìm hiểu thông tin hướng nghiệp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nguồn tin cậy</h3><ul style="gap:6px"><li>Website của <b>trường đại học, cao đẳng</b>, Bộ Giáo dục.</li><li><b>Cổng thông tin việc làm</b>, báo cáo thị trường lao động.</li><li>Trải nghiệm thực tế: <b>tham quan</b>, trò chuyện với người làm nghề.</li><li>Khoá học, câu lạc bộ tin học.</li></ul></div></div><div class="col"><div class="key">Kiểm tra <b>nguồn, ngày đăng</b>, so sánh nhiều nguồn; cẩn thận quảng cáo “<b>học nhanh – lương cao</b>”.</div><div class="warn">Đừng chọn nghề chỉ vì <b>mức lương</b> hay lời bạn bè; hãy thử và đánh giá bản thân.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · 4</span><h1>Lập kế hoạch học tập cho bản thân</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các bước</h3><ul style="gap:6px"><li>1. <b>Tìm hiểu bản thân</b>: sở thích, điểm mạnh.</li><li>2. <b>Tìm hiểu nghề</b>: yêu cầu, cơ hội.</li><li>3. <b>Chọn mục tiêu</b>: ngành học, trường.</li><li>4. <b>Lập kế hoạch</b>: môn học, dự án, chứng chỉ.</li><li>5. <b>Thực hiện và điều chỉnh</b>.</li></ul></div></div><div class="col"><div class="key">Kế hoạch cho học sinh lớp 10–12: học tốt <b>Toán, Tin, Anh</b>; làm <b>dự án nhỏ</b>; tham gia <b>cuộc thi tin học</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Các nhóm nghề: phần mềm, mạng, dữ liệu/AI, an toàn thông tin, dịch vụ, thiết kế số.</li><li>Nghề <b>sửa chữa – bảo trì</b>: phần cứng, phần mềm, hỗ trợ người dùng.</li><li>Quy trình: tiếp nhận → xác định → khắc phục → kiểm tra → ghi nhận.</li><li>Cần <b>kiến thức chuyên môn</b> và <b>kĩ năng mềm</b>.</li><li>Tìm thông tin hướng nghiệp từ <b>nguồn tin cậy</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Phòng ngừa hỏng</td><td>bảo trì định kì</td></tr><tr><td class="m">Làm trước khi sửa</td><td>sao lưu</td></tr><tr><td class="m">Hỗ trợ người dùng</td><td>kĩ năng giao tiếp</td></tr><tr><td class="m">Chọn nghề</td><td>sở thích + năng lực</td></tr></table><div class="warn">Chọn nghề chỉ vì lương cao.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Sửa chữa là <b>phản ứng</b>, bảo trì là <b>phòng ngừa</b>.</li><li>Sao lưu <b>trước</b> khi sửa chữa.</li><li>Đạo đức: bảo mật dữ liệu khách.</li><li>Chứng chỉ không thay thế được kĩ năng thực hành.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>DevOps</b>, <b>SRE</b>: vận hành hệ thống hiện đại.</li><li><b>Điện toán đám mây</b> thay đổi nghề quản trị.</li><li><b>Tự động hoá</b> thay công việc lặp đi lặp lại.</li></ul></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Nêu hai nhóm nghề trong ngành CNTT.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Khác nhau giữa sửa chữa và bảo trì?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Kể ba công việc liên quan phần mềm của nghề bảo trì.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Nêu hai kĩ năng mềm quan trọng.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Nêu hai nguồn thông tin hướng nghiệp tin cậy.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Phát triển phần mềm; quản trị mạng (hoặc dữ liệu/AI, an toàn thông tin…).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Sửa chữa: khắc phục khi hỏng; bảo trì: làm định kì để phòng ngừa.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Cài hệ điều hành/driver; cập nhật phần mềm; quét mã độc, cấu hình mạng.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Giải quyết vấn đề; giao tiếp (hoặc học hỏi, quản lí thời gian).</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Website trường đại học, Bộ Giáo dục; tham quan, gặp người làm nghề.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Vì sao nhiều doanh nghiệp thuê dịch vụ bảo trì định kì thay vì chờ máy hỏng?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Máy tính của khách thường xuyên chạy chậm. Nêu các bước kiểm tra.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Vì sao phải sao lưu trước khi sửa?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) Chứng chỉ quan trọng hơn kĩ năng thực hành. (b) Nghề bảo trì cần giao tiếp tốt. (c) Bảo trì chỉ làm khi máy hỏng. (d) Nên so sánh nhiều nguồn khi tìm thông tin nghề.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Phân biệt nhiệm vụ của quản trị mạng và chuyên gia dữ liệu.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Lập kế hoạch ngắn: em dự định theo nhóm nghề nào và làm gì trong 1 năm tới?</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Ngăn sự cố gây gián đoạn, mất dữ liệu; chi phí thấp hơn thiệt hại.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Hỏi triệu chứng; kiểm tra dung lượng ổ, chương trình nền, nhiệt độ; quét mã độc; cập nhật; nâng RAM/SSD nếu cần.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Tránh mất dữ liệu nếu sửa chữa gặp sự cố.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b>. (b) <b>Đúng</b>. (c) <b>Sai</b>. (d) <b>Đúng</b>.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NGHỀ 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Quản trị mạng: vận hành mạng; chuyên gia dữ liệu: phân tích, xây mô hình dữ liệu.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Câu trả lời mở: nêu nhóm nghề, môn học, dự án, cuộc thi, chứng chỉ.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

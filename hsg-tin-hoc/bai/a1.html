@@ -1,0 +1,182 @@
+<!-- HEAD -->
+<title>AI 1 · Khái niệm, ứng dụng và đạo đức</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · TRÍ TUỆ NHÂN TẠO 1</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>AI: KHÁI NIỆM, ỨNG DỤNG<br>VÀ ĐẠO ĐỨC</h1><p style="font-size:28px;line-height:1.5">Trí tuệ nhân tạo là gì, lịch sử, ứng dụng, AI tạo sinh, hạn chế, đạo đức, pháp lí, sử dụng AI có trách nhiệm.</p><div><span class="chip">AI</span><span class="chip">ứng dụng</span><span class="chip">AI tạo sinh</span><span class="chip">thiên lệch</span><span class="chip">đạo đức</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Nêu <b>khái niệm</b> và đặc trưng của trí tuệ nhân tạo.</li><li>Kể <b>ứng dụng</b> của AI trong đời sống, học tập, sản xuất.</li><li>Giải thích <b>AI tạo sinh</b> và hạn chế (ảo giác, thiên lệch).</li><li>Nhận biết <b>vấn đề đạo đức, pháp lí</b> khi dùng AI.</li><li>Sử dụng AI <b>có trách nhiệm</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Khái niệm AI</li><li>Ứng dụng AI</li><li>AI tạo sinh</li><li>Hạn chế, rủi ro</li><li>Đạo đức, trách nhiệm</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 1</span><h1>Trí tuệ nhân tạo là gì?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li><b>Trí tuệ nhân tạo (AI)</b>: khả năng của máy tính thực hiện các việc cần <b>trí thông minh con người</b>: nhận thức, học, suy luận, ra quyết định.</li><li>Không phải <b>suy nghĩ như người</b> mà là <b>xử lí dữ liệu theo mô hình</b>.</li></ul></div></div><div class="col"><div class="key">Ba thành phần: <b>dữ liệu</b>, <b>thuật toán</b> (mô hình), <b>sức mạnh tính toán</b>.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 1</span><h1>Lịch sử tóm tắt</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thời kì</th><th>Sự kiện</th></tr><tr><td><b>1950</b></td><td>Alan Turing đề xuất “phép thử Turing”</td></tr><tr><td><b>1956</b></td><td>thuật ngữ “Artificial Intelligence” ra đời (Dartmouth)</td></tr><tr><td><b>1997</b></td><td>máy Deep Blue thắng nhà vô địch cờ vua Kasparov</td></tr><tr><td><b>2016</b></td><td>AlphaGo thắng kì thủ cờ vây Lee Sedol</td></tr><tr><td><b>2022 →</b></td><td>AI tạo sinh (ChatGPT…) phổ biến toàn cầu</td></tr></table><div class="key">Bước ngoặt gần đây nhờ <b>dữ liệu lớn</b>, <b>học sâu</b> và phần cứng (GPU).</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 1</span><h1>AI hẹp và AI tổng quát</h1></div>
+<div class="bd g2"><div class="col"><table><tr><th>Loại</th><th>Đặc điểm</th><th>Hiện nay</th></tr><tr><td><b>AI hẹp</b> (Narrow AI)</td><td>giỏi <b>một</b> nhiệm vụ</td><td><b>đang có</b>: nhận diện ảnh, dịch, cờ vây</td></tr><tr><td><b>AI tổng quát</b> (AGI)</td><td>làm được <b>mọi việc trí tuệ</b> như người</td><td>chưa có</td></tr></table></div><div class="col"><div class="key">Mọi AI đang dùng đều là <b>AI hẹp</b>; một hệ thống giỏi cờ vây <b>không</b> tự biết lái xe.</div><div class="warn">Phim ảnh thường thổi phồng; AI chưa có <b>ý thức, cảm xúc</b> thật sự.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 2</span><h1>Ứng dụng của AI</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lĩnh vực</h3><ul style="gap:6px"><li><b>Y tế</b>: đọc ảnh X-quang, hỗ trợ chẩn đoán.</li><li><b>Giáo dục</b>: gia sư ảo, chấm bài, cá nhân hoá học tập.</li><li><b>Giao thông</b>: xe tự lái, dẫn đường.</li><li><b>Nông nghiệp</b>: nhận biết sâu bệnh qua ảnh.</li><li><b>Ngân hàng</b>: phát hiện giao dịch gian lận.</li></ul></div></div><div class="col"><div class="key">Đời sống hàng ngày: <b>trợ lí ảo</b>, <b>dịch tự động</b>, <b>gợi ý</b> phim, nhạc, <b>mở khoá bằng khuôn mặt</b>.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 2</span><h1>Các nhóm bài toán AI</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Nhóm</th><th>Việc làm được</th><th>Ví dụ</th></tr><tr><td><b>Thị giác máy tính</b></td><td>nhận diện ảnh, video</td><td>mở khoá khuôn mặt</td></tr><tr><td><b>Xử lí ngôn ngữ tự nhiên</b></td><td>hiểu, dịch, sinh văn bản</td><td>dịch máy, chatbot</td></tr><tr><td><b>Nhận dạng giọng nói</b></td><td>chuyển tiếng nói ↔ văn bản</td><td>trợ lí ảo</td></tr><tr><td><b>Hệ gợi ý</b></td><td>đề xuất theo sở thích</td><td>gợi ý video, sản phẩm</td></tr><tr><td><b>Robot, điều khiển</b></td><td>hành động trong môi trường</td><td>robot hút bụi, xe tự lái</td></tr></table><div class="key">Phần lớn dựa trên <b>học máy</b>: máy học từ dữ liệu thay vì được lập trình từng quy tắc.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 2</span><h1>Chương trình truyền thống và học máy</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">So sánh</span><svg viewBox="0 0 520 260" style="width:100%"><defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#D84315"/></marker></defs><text x="260" y="25" text-anchor="middle" font-size="20" font-weight="800" font-family="sans-serif" fill="#1565C0">LẬP TRÌNH TRUYỀN THỐNG</text><rect x="10" y="45" width="100" height="44" rx="8" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="60.0" y="74.0" text-anchor="middle" font-size="20" font-weight="800" fill="#0B2545" font-family="sans-serif">Dữ liệu</text><rect x="130" y="45" width="110" height="44" rx="8" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="185.0" y="74.0" text-anchor="middle" font-size="20" font-weight="800" fill="#0B2545" font-family="sans-serif">Quy tắc</text><rect x="380" y="45" width="130" height="44" rx="8" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="445.0" y="74.0" text-anchor="middle" font-size="20" font-weight="800" fill="#0B2545" font-family="sans-serif">Kết quả</text><line x1="110" y1="67" x2="130" y2="67" stroke="#D84315" stroke-width="4" marker-end="url(#a)"/><line x1="240" y1="67" x2="380" y2="67" stroke="#D84315" stroke-width="4" marker-end="url(#a)"/><text x="260" y="150" text-anchor="middle" font-size="20" font-weight="800" font-family="sans-serif" fill="#D84315">HỌC MÁY</text><rect x="10" y="170" width="100" height="44" rx="8" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="60.0" y="199.0" text-anchor="middle" font-size="20" font-weight="800" fill="#0B2545" font-family="sans-serif">Dữ liệu</text><rect x="130" y="170" width="110" height="44" rx="8" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="185.0" y="199.0" text-anchor="middle" font-size="20" font-weight="800" fill="#0B2545" font-family="sans-serif">Kết quả</text><rect x="380" y="170" width="130" height="44" rx="8" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="445.0" y="199.0" text-anchor="middle" font-size="20" font-weight="800" fill="#0B2545" font-family="sans-serif">Mô hình</text><line x1="110" y1="192" x2="130" y2="192" stroke="#D84315" stroke-width="4" marker-end="url(#a)"/><line x1="240" y1="192" x2="380" y2="192" stroke="#D84315" stroke-width="4" marker-end="url(#a)"/></svg></div></div><div class="col"><div class="card"><h3>Khác biệt</h3><ul style="gap:6px"><li>Truyền thống: <b>con người viết quy tắc</b>.</li><li>Học máy: máy <b>tự rút ra quy tắc</b> từ dữ liệu có kết quả.</li></ul></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 3</span><h1>AI tạo sinh (Generative AI)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li>AI <b>tạo ra nội dung mới</b>: văn bản, hình ảnh, âm thanh, mã chương trình.</li><li>Học <b>quy luật thống kê</b> từ lượng dữ liệu rất lớn, rồi sinh nội dung theo yêu cầu (<b>prompt</b>).</li><li>Ví dụ: chatbot, tạo ảnh từ mô tả.</li></ul></div></div><div class="col"><div class="key">Mô hình ngôn ngữ lớn (<b>LLM</b>) sinh văn bản bằng cách <b>dự đoán từ tiếp theo</b> có khả năng cao nhất.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 3</span><h1>Viết yêu cầu (prompt) hiệu quả</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cấu trúc gợi ý</h3><ul style="gap:6px"><li><b>Vai trò</b>: “Bạn là giáo viên Tin học”.</li><li><b>Nhiệm vụ</b> rõ ràng.</li><li><b>Bối cảnh</b>, đối tượng.</li><li><b>Định dạng</b> đầu ra, độ dài.</li></ul></div></div><div class="col"><div class="key">Ví dụ: “Là giáo viên Tin 10, giải thích <b>địa chỉ IP</b> cho học sinh lớp 10 trong <b>5 dòng</b>, kèm <b>1 ví dụ</b>.”</div><div class="ok"><p>Yêu cầu càng <b>cụ thể</b> càng cho kết quả tốt; có thể <b>hỏi lại, chỉnh sửa</b> nhiều lượt.</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 3</span><h1>Hạn chế của AI tạo sinh</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các hạn chế</h3><ul style="gap:6px"><li><b>Ảo giác</b> (hallucination): bịa thông tin nghe rất hợp lí.</li><li><b>Thiên lệch</b> từ dữ liệu huấn luyện.</li><li>Kiến thức dừng ở <b>thời điểm huấn luyện</b>.</li><li>Không <b>hiểu</b> thật sự, có thể sai logic, toán.</li></ul></div></div><div class="col"><div class="warn">Luôn <b>kiểm chứng</b> thông tin quan trọng bằng nguồn tin cậy; không nộp bài do AI viết như của mình.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 3</span><h1>Ví dụ ảo giác</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Ảo giác</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">Hỏi: Ai là tác giả cuốn “Giáo trình Tin học Vũ Trụ 2099”?
+AI: “Cuốn sách do GS. Nguyễn Văn A biên soạn năm 2021…” 
+→ sách KHÔNG tồn tại, AI vẫn trả lời tự tin.</pre></div></div><div class="col"><div class="key">AI sinh câu <b>nghe hợp lí</b> chứ không <b>tra cứu sự thật</b>. Phải <b>đối chiếu nguồn</b>.</div><div class="ok"><p>Cách giảm: yêu cầu nêu nguồn, hỏi lại, kiểm tra nhiều nguồn.</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 4</span><h1>Thiên lệch và công bằng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thiên lệch (bias)</h3><ul style="gap:6px"><li>Dữ liệu huấn luyện <b>phản ánh định kiến</b> xã hội.</li><li>Ví dụ: hệ thống tuyển dụng ưu tiên một giới; nhận diện khuôn mặt kém chính xác với một số nhóm.</li></ul></div></div><div class="col"><div class="key">“<b>Rác vào – rác ra</b>” (garbage in, garbage out): dữ liệu lệch → mô hình lệch.</div><div class="ok"><p>Giải pháp: dữ liệu <b>đa dạng, cân bằng</b>; kiểm tra, đánh giá theo từng nhóm.</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 4</span><h1>Các vấn đề đạo đức khi dùng AI</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Vấn đề</th><th>Biểu hiện</th><th>Cách ứng xử</th></tr><tr><td><b>Riêng tư</b></td><td>thu thập, lộ dữ liệu cá nhân</td><td>không đưa thông tin nhạy cảm vào AI</td></tr><tr><td><b>Bản quyền</b></td><td>huấn luyện, sinh nội dung giống tác phẩm có sẵn</td><td>nêu nguồn, tôn trọng quyền tác giả</td></tr><tr><td><b>Trung thực học thuật</b></td><td>nhờ AI làm bài rồi nộp</td><td>dùng để <b>học</b>, ghi rõ khi dùng</td></tr><tr><td><b>Tin giả, deepfake</b></td><td>ảnh, video, giọng nói giả</td><td>kiểm chứng, không lan truyền</td></tr><tr><td><b>Việc làm</b></td><td>tự động hoá thay một số nghề</td><td>học kĩ năng mới</td></tr></table><div class="key">Nguyên tắc: AI <b>hỗ trợ</b> con người; trách nhiệm cuối cùng thuộc về <b>người dùng</b>.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 4</span><h1>Deepfake và tin giả</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Deepfake</h3><ul style="gap:6px"><li>Dùng AI <b>ghép mặt, giả giọng</b> tạo video giả như thật.</li><li>Nguy cơ: <b>lừa đảo, bôi nhọ, thao túng</b> dư luận.</li></ul></div></div><div class="col"><div class="key">Cách nhận biết: chuyển động môi, ánh sáng bất thường; nguồn đăng không rõ; <b>tra cứu</b> tin từ nguồn chính thống.</div><div class="warn">Gặp cuộc gọi video “người thân” vay tiền: <b>gọi lại số thật</b> để xác minh.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · 4</span><h1>Nguyên tắc sử dụng AI có trách nhiệm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy tắc</h3><ul style="gap:6px"><li><b>Minh bạch</b>: nói rõ khi dùng AI.</li><li><b>Kiểm chứng</b> trước khi tin, dùng.</li><li><b>Bảo vệ</b> dữ liệu cá nhân.</li><li><b>Công bằng</b>, không gây hại.</li><li><b>Con người chịu trách nhiệm</b> cuối cùng.</li></ul></div></div><div class="col"><div class="key">Quy định pháp lí đang <b>hoàn thiện</b> (ví dụ Đạo luật AI của EU); cần theo dõi và tuân thủ.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>AI</b>: máy thực hiện việc cần trí tuệ con người; hiện chỉ là <b>AI hẹp</b>.</li><li>Học máy: máy <b>rút quy tắc từ dữ liệu</b>.</li><li><b>AI tạo sinh</b> sinh nội dung mới theo prompt (LLM dự đoán từ tiếp theo).</li><li>Hạn chế: <b>ảo giác, thiên lệch</b>.</li><li>Dùng AI: minh bạch, kiểm chứng, bảo vệ dữ liệu.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">AI hiện có</td><td>AI hẹp</td></tr><tr><td class="m">Bịa thông tin</td><td>ảo giác</td></tr><tr><td class="m">Dữ liệu lệch</td><td>mô hình lệch</td></tr><tr><td class="m">Ảnh, video giả</td><td>deepfake</td></tr></table><div class="warn">Tin tuyệt đối vào câu trả lời của AI.</div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>AI ≠ học máy ≠ học sâu: <b>AI ⊃ học máy ⊃ học sâu</b>.</li><li>Phép thử Turing đánh giá máy có <b>giống người</b> khi trò chuyện.</li><li>LLM <b>không</b> tra cứu sự thật theo thời gian thực nếu không có công cụ tìm kiếm.</li><li>Dữ liệu lệch dẫn đến <b>quyết định bất công</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>RAG</b>: kết hợp tìm kiếm với sinh văn bản.</li><li><b>Kiểm toán thuật toán</b> (algorithm audit).</li><li><b>AI có thể giải thích</b> (XAI).</li></ul></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>AI là gì? Nêu ba ví dụ ứng dụng.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Khác nhau giữa lập trình truyền thống và học máy?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Ảo giác của AI là gì?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Thiên lệch của AI xuất phát từ đâu?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Nêu hai nguyên tắc dùng AI có trách nhiệm.</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Máy thực hiện việc cần trí tuệ con người; ví dụ: dịch máy, nhận diện khuôn mặt, gợi ý video.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Truyền thống: người viết quy tắc; học máy: máy tự rút quy tắc từ dữ liệu.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>AI bịa thông tin nghe hợp lí nhưng sai.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Từ dữ liệu huấn luyện có định kiến, thiếu cân bằng.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Minh bạch; kiểm chứng thông tin; bảo vệ dữ liệu cá nhân.</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Phân biệt AI hẹp và AI tổng quát; cho biết hệ thống nào hiện có.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Vì sao một chatbot có thể trả lời sai mà vẫn rất tự tin?</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) AI hiện nay có ý thức. (b) LLM dự đoán từ tiếp theo. (c) Dữ liệu lệch dẫn tới mô hình lệch. (d) AI luôn đúng nếu trả lời dài.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Một bạn dùng AI viết bài văn rồi nộp. Nhận xét.</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Nêu hai cách nhận biết video deepfake.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Em được nhận cuộc gọi video “bạn” vay tiền gấp. Cần làm gì?</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>AI hẹp: giỏi một nhiệm vụ (hiện có); AI tổng quát: làm mọi việc trí tuệ (chưa có).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Nó sinh chuỗi từ có xác suất cao, không kiểm chứng sự thật.</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b>. (b) <b>Đúng</b>. (c) <b>Đúng</b>. (d) <b>Sai</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Vi phạm trung thực học thuật; nên dùng AI để hỗ trợ học và ghi rõ.</p></div></div></div></section>
+
+<section class="s p0"><div class="hd"><span class="k">AI 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Môi, ánh sáng bất thường; nguồn đăng không rõ.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Không chuyển tiền; gọi lại số thật xác minh.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

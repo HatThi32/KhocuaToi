@@ -1,0 +1,202 @@
+<!-- HEAD -->
+<title>AI 2 · Học máy cơ bản</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · TRÍ TUỆ NHÂN TẠO 2</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>HỌC MÁY CƠ BẢN</h1><p style="font-size:28px;line-height:1.5">Học máy là gì, học có giám sát – không giám sát – tăng cường, phân loại, hồi quy, thuật toán k-NN.</p><div><span class="chip">học máy</span><span class="chip">có giám sát</span><span class="chip">phân loại</span><span class="chip">hồi quy</span><span class="chip">k-NN</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Nêu <b>khái niệm học máy</b> và quy trình.</li><li>Phân biệt học <b>có giám sát, không giám sát, tăng cường</b>.</li><li>Phân biệt bài toán <b>phân loại</b> và <b>hồi quy</b>.</li><li>Hiểu và <b>tính tay</b> thuật toán <b>k-NN</b>.</li><li>Cài đặt k-NN bằng <b>Python</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Học máy là gì</li><li>Các kiểu học</li><li>Phân loại, hồi quy</li><li>Thuật toán k-NN</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 1</span><h1>Học máy là gì?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li><b>Học máy</b> (Machine Learning): máy <b>cải thiện hiệu quả</b> làm một nhiệm vụ nhờ <b>học từ dữ liệu</b>, không cần lập trình quy tắc chi tiết.</li><li>Kết quả học là một <b>mô hình</b> dùng để <b>dự đoán</b> cho dữ liệu mới.</li></ul></div></div><div class="col"><div class="key">Ví dụ: cho máy xem hàng nghìn ảnh mèo/chó có nhãn → máy học cách <b>phân biệt</b> ảnh mới.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 1</span><h1>Quy trình học máy</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các bước</h3><ul style="gap:6px"><li>1. <b>Thu thập</b> dữ liệu.</li><li>2. <b>Chuẩn bị</b> (làm sạch, chọn đặc trưng).</li><li>3. <b>Huấn luyện</b> mô hình.</li><li>4. <b>Đánh giá</b> trên dữ liệu mới.</li><li>5. <b>Triển khai</b>, theo dõi, cải tiến.</li></ul></div></div><div class="col"><div class="key">Chất lượng dữ liệu quyết định phần lớn chất lượng mô hình: <b>dữ liệu tốt hơn quan trọng hơn thuật toán phức tạp</b>.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 1</span><h1>Thuật ngữ cơ bản</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thuật ngữ</th><th>Ý nghĩa</th><th>Ví dụ (dự đoán loại hoa)</th></tr><tr><td><b>Mẫu</b> (dòng)</td><td>một đối tượng dữ liệu</td><td>một bông hoa</td></tr><tr><td><b>Đặc trưng</b> (feature)</td><td>thuộc tính đo được</td><td>chiều dài, rộng cánh hoa</td></tr><tr><td><b>Nhãn</b> (label)</td><td>kết quả cần dự đoán</td><td>loài hoa</td></tr><tr><td><b>Tập huấn luyện</b></td><td>dữ liệu để máy học</td><td>100 bông đã biết loài</td></tr><tr><td><b>Mô hình</b></td><td>quy luật máy học được</td><td>hàm dự đoán loài</td></tr></table><div class="key">Dữ liệu có nhãn = đặc trưng + nhãn đúng.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 2</span><h1>Học có giám sát</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Supervised learning</h3><ul style="gap:6px"><li>Dữ liệu huấn luyện <b>có nhãn</b>.</li><li>Máy học <b>ánh xạ</b> từ đặc trưng → nhãn.</li><li>Hai dạng: <b>phân loại</b>, <b>hồi quy</b>.</li></ul></div></div><div class="col"><div class="key">Ví dụ: lọc thư rác (thư đã đánh dấu rác/không), dự đoán giá nhà từ diện tích.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 2</span><h1>Học không giám sát</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Unsupervised learning</h3><ul style="gap:6px"><li>Dữ liệu <b>không có nhãn</b>.</li><li>Máy tự tìm <b>cấu trúc</b>: nhóm tương tự (<b>phân cụm</b>), bất thường.</li></ul></div></div><div class="col"><div class="res"><span class="lab">Phân cụm</span><svg viewBox="0 0 520 210" style="width:100%"><circle cx="60" cy="60" r="9" fill="#FFCCBC" stroke="#0B2545" stroke-width="2"/><circle cx="90" cy="90" r="9" fill="#FFCCBC" stroke="#0B2545" stroke-width="2"/><circle cx="50" cy="110" r="9" fill="#FFCCBC" stroke="#0B2545" stroke-width="2"/><circle cx="80" cy="50" r="9" fill="#FFCCBC" stroke="#0B2545" stroke-width="2"/><circle cx="380" cy="60" r="9" fill="#BBDEFB" stroke="#0B2545" stroke-width="2"/><circle cx="410" cy="100" r="9" fill="#BBDEFB" stroke="#0B2545" stroke-width="2"/><circle cx="440" cy="70" r="9" fill="#BBDEFB" stroke="#0B2545" stroke-width="2"/><circle cx="390" cy="140" r="9" fill="#BBDEFB" stroke="#0B2545" stroke-width="2"/><ellipse cx="70" cy="80" rx="55" ry="50" fill="none" stroke="#D84315" stroke-width="3" stroke-dasharray="7 5"/><ellipse cx="408" cy="90" rx="60" ry="60" fill="none" stroke="#1565C0" stroke-width="3" stroke-dasharray="7 5"/><text x="260" y="190" text-anchor="middle" font-size="20" font-weight="800" font-family="sans-serif">máy tự chia thành 2 cụm</text></svg></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 2</span><h1>Học tăng cường</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Reinforcement learning</h3><ul style="gap:6px"><li>Tác tử <b>thử – sai</b> trong môi trường, nhận <b>phần thưởng/hình phạt</b>.</li><li>Mục tiêu: tối đa <b>tổng phần thưởng</b>.</li></ul></div></div><div class="col"><div class="key">Ví dụ: AlphaGo tự chơi cờ hàng triệu ván; robot học đi; xe tự lái học tránh va chạm.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 2</span><h1>So sánh ba kiểu học</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Kiểu</th><th>Dữ liệu</th><th>Mục tiêu</th><th>Ví dụ</th></tr><tr><td><b>Có giám sát</b></td><td>có nhãn</td><td>dự đoán nhãn</td><td>lọc thư rác</td></tr><tr><td><b>Không giám sát</b></td><td>không nhãn</td><td>tìm cấu trúc</td><td>phân nhóm khách hàng</td></tr><tr><td><b>Tăng cường</b></td><td>phản hồi thưởng/phạt</td><td>tối đa phần thưởng</td><td>robot, chơi cờ</td></tr></table><div class="key">Dấu hiệu nhận biết: <b>có nhãn</b> → giám sát; <b>tự nhóm</b> → không giám sát; <b>thưởng/phạt</b> → tăng cường.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 3</span><h1>Phân loại và hồi quy</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phân loại (classification)</h3><ul style="gap:6px"><li>Nhãn là <b>giá trị rời rạc</b> (lớp).</li><li>Ví dụ: thư rác / không rác; mèo / chó.</li></ul></div><div class="card"><h3>Hồi quy (regression)</h3><ul style="gap:6px"><li>Nhãn là <b>giá trị số liên tục</b>.</li><li>Ví dụ: dự đoán giá nhà, nhiệt độ.</li></ul></div></div><div class="col"><div class="key">Hỏi “<b>loại nào?</b>” → phân loại; hỏi “<b>bao nhiêu?</b>” → hồi quy.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 3</span><h1>Nhận biết bài toán</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Bài toán</th><th>Dạng</th></tr><tr><td>Dự đoán học sinh đỗ hay trượt</td><td><b>phân loại</b></td></tr><tr><td>Dự đoán điểm thi</td><td><b>hồi quy</b></td></tr><tr><td>Nhận biết chữ số viết tay 0–9</td><td><b>phân loại</b> (10 lớp)</td></tr><tr><td>Dự đoán giá cổ phiếu ngày mai</td><td><b>hồi quy</b></td></tr><tr><td>Chia khách hàng thành các nhóm</td><td><b>phân cụm</b> (không giám sát)</td></tr></table><div class="warn">Nhãn <b>số</b> chưa chắc là hồi quy: mã lớp 0–9 là <b>nhãn rời rạc</b> → phân loại.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 3</span><h1>Thuật toán k-NN: ý tưởng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>k láng giềng gần nhất</h3><ul style="gap:6px"><li>Để phân loại một điểm mới: tìm <b>k điểm gần nhất</b> trong tập huấn luyện.</li><li>Gán nhãn <b>xuất hiện nhiều nhất</b> (bỏ phiếu).</li><li>“Gần” đo bằng <b>khoảng cách</b>.</li></ul></div></div><div class="col"><div class="key">Khoảng cách Euclid: <b>d = √((x₁−x₂)² + (y₁−y₂)²)</b>.</div><div class="ok"><p>k-NN <b>không huấn luyện</b> gì: chỉ lưu dữ liệu, tính toán khi cần dự đoán.</p></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 3</span><h1>Minh hoạ k-NN (k = 3)</h1></div>
+<div class="bd g2"><div class="col"><div class="res"><span class="lab">Điểm vàng cần phân loại</span><svg viewBox="0 0 520 260" style="width:100%"><circle cx="70" cy="70" r="9" fill="#FFCCBC" stroke="#0B2545" stroke-width="2"/><circle cx="110" cy="100" r="9" fill="#FFCCBC" stroke="#0B2545" stroke-width="2"/><circle cx="60" cy="150" r="9" fill="#FFCCBC" stroke="#0B2545" stroke-width="2"/><circle cx="130" cy="60" r="9" fill="#FFCCBC" stroke="#0B2545" stroke-width="2"/><circle cx="400" cy="80" r="9" fill="#BBDEFB" stroke="#0B2545" stroke-width="2"/><circle cx="440" cy="130" r="9" fill="#BBDEFB" stroke="#0B2545" stroke-width="2"/><circle cx="380" cy="170" r="9" fill="#BBDEFB" stroke="#0B2545" stroke-width="2"/><circle cx="430" cy="60" r="9" fill="#BBDEFB" stroke="#0B2545" stroke-width="2"/><circle cx="190" cy="110" r="12" fill="#FFB300" stroke="#0B2545" stroke-width="2"/><circle cx="190" cy="110" r="84" fill="none" stroke="#2E7D32" stroke-width="3" stroke-dasharray="8 5"/><text x="190" y="235" text-anchor="middle" font-size="20" font-weight="800" font-family="sans-serif" fill="#2E7D32">3 láng giềng gần: 3 cam</text><text x="190" y="30" text-anchor="middle" font-size="20" font-weight="800" font-family="sans-serif" fill="#D84315">? → cam</text></svg></div></div><div class="col"><div class="card"><h3>Quy tắc</h3><ul style="gap:6px"><li>3 láng giềng gần nhất đều <b>cam</b> → điểm mới là <b>cam</b>.</li><li>Nếu 2 cam – 1 xanh vẫn là cam (đa số).</li></ul></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 3</span><h1>Tính tay k-NN bằng Python</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">import math
+train = [((1,1),"A"), ((2,1),"A"), ((1,2),"A"),
+         ((6,5),"B"), ((7,6),"B"), ((6,7),"B")]
+p = (3,2)
+ds = sorted((math.dist(p,x),y) for x,y in train)
+print(ds[:3])
+nhan = [y for d,y in ds[:3]]
+print(max(set(nhan), key=nhan.count))</pre><div class="key">Sắp xếp theo khoảng cách, lấy <b>3</b> điểm đầu, <b>bỏ phiếu</b> nhãn nhiều nhất → <b>A</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[(1.4142135623730951, 'A'), (2.0, 'A'), (2.23606797749979, 'A')]
+A</pre></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 4</span><h1>Ảnh hưởng của k</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Chọn k</h3><ul style="gap:6px"><li><b>k nhỏ</b> (1): nhạy với <b>nhiễu</b> → dễ quá khớp.</li><li><b>k lớn</b>: quá “trơn”, bỏ sót đặc điểm cục bộ.</li><li>Thường chọn k <b>lẻ</b> để tránh hoà phiếu (2 lớp).</li></ul></div></div><div class="col"><div class="key">Chọn k bằng cách <b>thử nhiều giá trị</b> và <b>đánh giá</b> trên dữ liệu kiểm tra.</div><div class="warn">Đặc trưng khác thang đo (cm và kg) cần <b>chuẩn hoá</b> trước khi tính khoảng cách.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 4</span><h1>Hàm k-NN hoàn chỉnh</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">import math
+from collections import Counter
+def knn(train, p, k=3):
+    ds = sorted((math.dist(p,x), y) for x,y in train)
+    nhan = [y for _,y in ds[:k]]
+    return Counter(nhan).most_common(1)[0][0]
+train = [((1,1),"A"),((2,2),"A"),((6,6),"B"),((7,7),"B"),((3,3),"A")]
+print(knn(train,(2,3)))
+print(knn(train,(6,5)))
+print(knn(train,(4.4,4.4),1), knn(train,(4.4,4.4),5))</pre><div class="key">Điểm (4.4, 4.4): <b>k = 1</b> và <b>k = 5</b> có thể cho kết quả khác nhau → k ảnh hưởng quyết định.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">A
+B
+A A</pre></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · 4</span><h1>Ưu và nhược của k-NN</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Ưu điểm</th><th>Nhược điểm</th></tr><tr><td>Đơn giản, dễ hiểu</td><td>chậm khi dữ liệu lớn (tính khoảng cách tới mọi điểm)</td></tr><tr><td>Không cần huấn luyện</td><td>tốn bộ nhớ</td></tr><tr><td>Dùng cho phân loại và hồi quy</td><td>nhạy với đặc trưng không cùng thang đo, nhiễu</td></tr></table><div class="key">Hồi quy bằng k-NN: lấy <b>trung bình</b> giá trị của k láng giềng.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Học máy</b>: học quy luật từ dữ liệu → mô hình dự đoán.</li><li>Có giám sát (nhãn) · không giám sát (cụm) · tăng cường (thưởng/phạt).</li><li><b>Phân loại</b> nhãn rời rạc; <b>hồi quy</b> nhãn số liên tục.</li><li><b>k-NN</b>: bỏ phiếu theo k láng giềng gần nhất.</li><li>Chọn k, chuẩn hoá đặc trưng ảnh hưởng kết quả.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Loại nào?</td><td>phân loại</td></tr><tr><td class="m">Bao nhiêu?</td><td>hồi quy</td></tr><tr><td class="m">Tự gom nhóm</td><td>phân cụm</td></tr><tr><td class="m">Khoảng cách</td><td>Euclid</td></tr></table><div class="warn">Quên chuẩn hoá khi các đặc trưng khác thang đo.</div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>k-NN là thuật toán <b>lười</b> (lazy learning).</li><li>Khoảng cách khác: <b>Manhattan</b> |Δx|+|Δy|.</li><li>k = số mẫu → luôn trả nhãn đa số của toàn tập.</li><li>Hoà phiếu: chọn nhãn gần hơn hoặc giảm k.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Cây quyết định</b>, <b>hồi quy tuyến tính</b>.</li><li><b>K-means</b> phân cụm.</li><li><b>Mạng nơ-ron</b>.</li></ul></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Học máy khác lập trình thông thường ở điểm nào?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Thế nào là học có giám sát? Cho ví dụ.</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Dự đoán điểm thi là phân loại hay hồi quy?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Nêu các bước của thuật toán k-NN.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Tính khoảng cách Euclid giữa (1,2) và (4,6).</p></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Máy tự rút quy luật từ dữ liệu thay vì người viết quy tắc.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Dữ liệu có nhãn; ví dụ lọc thư rác.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Hồi quy</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Tính khoảng cách tới mọi điểm → chọn k gần nhất → bỏ phiếu nhãn.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>√(9+16) = <b>5</b>.</p></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Cho (1,1)=A, (2,2)=A, (6,6)=B, (7,7)=B. Phân loại (3,3) bằng k=3.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Với dữ liệu trên, phân loại (5,5) bằng k=1 và k=3.</p></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) k-NN cần huấn luyện lâu. (b) Phân cụm là học không giám sát. (c) Hồi quy dự đoán nhãn rời rạc. (d) k lẻ giúp tránh hoà phiếu 2 lớp.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Vì sao cần chuẩn hoá đặc trưng trước khi dùng k-NN?</p></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Phân loại các bài toán: lọc thư rác; dự đoán giá nhà; gom nhóm khách hàng; robot học đi.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Hồi quy k-NN dự đoán giá nhà từ 3 láng giềng giá 2, 3, 4 (tỉ): kết quả?</p></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Khoảng cách tới (1,1)=2,83; (2,2)=1,41; (6,6)=4,24; (7,7)=5,66 → 3 gần: A,A,B → <b>A</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>(6,6) cách 1,41; (2,2) cách 4,24: k=1 → <b>B</b>; k=3: B(6,6),A(2,2),B(7,7)=2,83 → <b>B</b>.</p></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b>. (b) <b>Đúng</b>. (c) <b>Sai</b>. (d) <b>Đúng</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Đặc trưng có số lớn lấn át khoảng cách.</p></div></div></div></section>
+
+<section class="s p1"><div class="hd"><span class="k">AI 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Phân loại; hồi quy; phân cụm; tăng cường.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Trung bình = <b>3 tỉ</b>.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
