@@ -1,0 +1,313 @@
+<!-- HEAD -->
+<title>Python 3A · Xâu kí tự</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 3A</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>XÂU KÍ TỰ<br>(STRING)</h1><p style="font-size:28px;line-height:1.5">Chỉ số, cắt lát, bất biến, các phương thức xâu, split – join, duyệt xâu, mã hoá Caesar, xâu đối xứng, đếm từ.</p><div><span class="chip">chỉ số</span><span class="chip">cắt lát</span><span class="chip">split</span><span class="chip">join</span><span class="chip">Caesar</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Hiểu xâu là <b>dãy kí tự có thứ tự</b> và <b>bất biến</b>.</li><li>Dùng <b>chỉ số dương, âm</b> và <b>cắt lát [a:b:k]</b> chính xác.</li><li>Dùng thành thạo các phương thức: <b>find, count, replace, split, join, strip…</b></li><li>Phân biệt <b>split()</b> và <b>split(" ")</b>.</li><li>Giải bài toán: đối xứng, đếm từ, <b>mật mã Caesar</b>, chuẩn hoá xâu.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Chỉ số và cắt lát</li><li>Phương thức xâu</li><li>Duyệt xâu, bài mẫu</li><li>Tự kiểm tra, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 1</span><h1>Xâu là dãy kí tự có đánh chỉ số</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><p style="margin:0 0 8px">Xâu viết trong cặp nháy <b>' '</b> hoặc <b>" "</b>. Mỗi kí tự (kể cả dấu cách) có một <b>chỉ số</b>.</p><p style="margin:0 0 8px">Chỉ số <b>dương</b> đếm từ <b>0</b> bên trái; chỉ số <b>âm</b> đếm từ <b>−1</b> bên phải.</p><p style="margin:0 0 8px"><code>len(s)</code> cho số kí tự; kí tự cuối có chỉ số <b>len(s) − 1</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">s = "Tin Hoc"
+print(len(s), s[0], s[3] == " ", s[-1], s[-3])
+print(s[7])</pre><div class="res"><span class="lab">Dòng in đầu tiên</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">7 T True c H</pre></div><div class="res"><span class="lab">s[7] vượt phạm vi</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">IndexError: string index out of range</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 1</span><h1>Chỉ số dương và âm của s = "Tin Hoc 12"</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Kí tự</th><th>T</th><th>i</th><th>n</th><th>␣</th><th>H</th><th>o</th><th>c</th><th>␣</th><th>1</th><th>2</th></tr><tr><td>Chỉ số dương</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr><tr><td>Chỉ số âm</td><td>−10</td><td>−9</td><td>−8</td><td>−7</td><td>−6</td><td>−5</td><td>−4</td><td>−3</td><td>−2</td><td>−1</td></tr></table><div class="key">Kí tự có chỉ số dương <b>i</b> cũng có chỉ số âm <b>i − len(s)</b>. Ở đây <b>len = 10</b>: <code>s[-1]</code> là “2”, <code>s[-3]</code> là dấu cách.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 1</span><h1>Cắt lát s[a:b]: lấy từ a đến b − 1</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy tắc</h3><p style="margin:0 0 8px"><b>s[a:b]</b> lấy các kí tự chỉ số a, a+1, …, <b>b − 1</b> (không lấy b).</p><p style="margin:0 0 8px">Bỏ a: bắt đầu từ đầu. Bỏ b: đến hết. Chỉ số <b>vượt phạm vi không báo lỗi</b> khi cắt lát.</p><p style="margin:0 0 8px">Độ dài lát cắt = <b>b − a</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">s = "Tin hoc 12 - Da Nang"
+print(s[4:7])
+print(s[:3])
+print(s[-4:])
+print(s[4:100])
+print(s[5:2], len(s))</pre><div class="res"><span class="lab">Kết quả (dòng 5: lát rỗng)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">hoc
+Tin
+Nang
+hoc 12 - Da Nang
+ 20</pre></div><div class="key">Đây chính là câu hỏi mẫu của đề: <code>s[4:7]</code> = “hoc”, <code>s[-4:]</code> = “Nang”, len = 20.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 1</span><h1>Cắt lát có bước: s[a:b:k]</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bước k</h3><p style="margin:0 0 8px">Lấy kí tự chỉ số a, a+k, a+2k, … trong khi chưa tới b.</p><p style="margin:0 0 8px"><b>Bước âm</b>: đi ngược; <code>s[::-1]</code> là <b>đảo ngược xâu</b>.</p><p style="margin:0 0 8px">Với bước âm, mặc định a = cuối, b = trước đầu.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">s = "Tin Hoc 11"
+print(s[::-1])
+print(s[1:-1:2])
+print(s[::3])
+print(s[-2:])
+print(s[8:2:-2])</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">11 coH niT
+i o 
+T c1
+11
+1cH</pre></div><div class="key"><code>s[1:-1:2]</code>: bỏ kí tự đầu và cuối, rồi lấy cách một: chỉ số 1, 3, 5, 7.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 1</span><h1>Xâu bất biến (immutable)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Không sửa được từng kí tự</h3><p style="margin:0 0 8px">Không thể gán <code>s[0] = "t"</code> (lỗi <b>TypeError</b>).</p><p style="margin:0 0 8px">Muốn “sửa” phải <b>tạo xâu mới</b> rồi gán lại cho biến.</p><p style="margin:0 0 8px">Các phương thức như <code>upper()</code>, <code>replace()</code> <b>trả về xâu mới</b>, <b>không đổi xâu gốc</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(23px*var(--z,1))">s = "tin"
+t = s.upper()
+print(s, t)
+s = "T" + s[1:]
+print(s)
+s[0] = "X"</pre><div class="res"><span class="lab">Kết quả (hai dòng đầu)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">tin TIN
+Tin</pre></div><div class="res"><span class="lab">Dòng cuối gây lỗi</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">TypeError: 'str' object does not support item assignment</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 1</span><h1>Phép toán trên xâu: +, *, in, so sánh</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các phép toán</h3><ul style="gap:7px"><li><code>a + b</code>: nối xâu; <code>a * 3</code>: lặp xâu.</li><li><code>"in" in s</code>: kiểm tra <b>xâu con</b> (không phân biệt vị trí).</li><li>So sánh <code>&lt; &gt; ==</code>: theo <b>thứ tự từ điển</b> (mã Unicode từng kí tự).</li><li>Không cộng xâu với số: phải <code>str()</code>.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">print("ab" + "cd", "ab" * 3)
+print("na" in "banana", "x" in "banana")
+print("apple" &lt; "banana", "Z" &lt; "a", "10" &lt; "9")
+print("a" + str(5), "5" * 3)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">abcd ababab
+True False
+True True True
+a5 555</pre></div><div class="key"><b>"10" &lt; "9"</b> là True vì so sánh kí tự đầu: “1” &lt; “9”. Đây là bẫy khi sắp xếp xâu số.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 2</span><h1>Các phương thức xâu thường dùng</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Phương thức</th><th>Ý nghĩa</th><th>Ví dụ → kết quả</th></tr><tr><td><code>upper() lower()</code></td><td>đổi chữ hoa, thường</td><td>DA NANG da nang</td></tr><tr><td><code>strip()</code></td><td>bỏ khoảng trắng hai đầu</td><td>'ab c'</td></tr><tr><td><code>find(t)</code></td><td>vị trí đầu tiên của t, <b>−1</b> nếu không có</td><td>3 -1</td></tr><tr><td><code>count(t)</code></td><td>đếm t <b>không chồng lấn</b></td><td>2 2</td></tr><tr><td><code>replace(a, b)</code></td><td>thay mọi a bằng b</td><td>XXabd</td></tr><tr><td><code>startswith(t)</code>, <code>endswith(t)</code></td><td>kiểm tra đầu, cuối</td><td>True True</td></tr><tr><td><code>isdigit() isalpha()</code></td><td>toàn chữ số / chữ cái?</td><td>True False True</td></tr></table><div class="key">Mọi phương thức đều <b>trả về giá trị mới</b>; không có lệnh nào làm đổi xâu gốc. Phải <b>gán lại</b> nếu muốn dùng kết quả.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 2</span><h1>find, index, count: chú ý các trường hợp biên</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>So sánh</h3><table><tr><th>Phương thức</th><th>Không tìm thấy</th></tr><tr><td><code>s.find(t)</code></td><td>trả về <b>−1</b></td></tr><tr><td><code>s.index(t)</code></td><td>gây lỗi <b>ValueError</b></td></tr><tr><td><code>s.count(t)</code></td><td>trả về <b>0</b></td></tr></table><p style="margin:0 0 8px"><b>count</b> không đếm chồng lấn: <code>"aaaa".count("aa")</code> là <b>2</b>, không phải 3.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">s = "abcabcabd"
+print(s.find("abd"), s.count("abc"), s.replace("abc", "X"))
+print(s.find("abc", 1), s.rfind("abc"))
+print("aaaa".count("aa"))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">6 2 XXabd
+3 3
+2</pre></div><div class="key"><code>find(t, từ)</code> tìm bắt đầu từ chỉ số “từ”; <code>rfind</code> tìm <b>từ bên phải</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 2</span><h1>split và join</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai phương thức đối lập</h3><p style="margin:0 0 8px"><b>s.split()</b>: tách theo <b>mọi khoảng trắng liên tiếp</b>, bỏ rỗng ở hai đầu → danh sách từ.</p><p style="margin:0 0 8px"><b>s.split(sep)</b>: tách theo đúng chuỗi sep; hai sep liền nhau sinh <b>xâu rỗng</b>.</p><p style="margin:0 0 8px"><b>sep.join(ds)</b>: nối các xâu trong ds, <b>xen sep</b> giữa.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">s = "  be   dep  trai  "
+a = s.split()
+b = s.strip().split(" ")
+print(len(a), len(b))
+print("-".join(a))
+print(b)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">3 6
+be-dep-trai
+['be', '', '', 'dep', '', 'trai']</pre></div><div class="key"><code>split(" ")</code> với nhiều dấu cách liền nhau sinh các <b>xâu rỗng</b> (a có 3 phần tử, b có 5).</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 2</span><h1>Đảo từ trong câu, đếm từ, chuẩn hoá</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các thao tác tổ hợp</h3><p style="margin:0 0 8px">Đảo thứ tự từ: <code>" ".join(s.split()[::-1])</code>.</p><p style="margin:0 0 8px">Đếm số từ: <code>len(s.split())</code>.</p><p style="margin:0 0 8px">Chuẩn hoá khoảng trắng: <code>" ".join(s.split())</code>.</p><p style="margin:0 0 8px">Viết hoa chữ cái đầu mỗi từ: <code>s.title()</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">s = "  to be   or not to be "
+w = s.split()
+print(len(w), w.count("be"), w[::-1][0])
+print(" ".join(w[::-1]))
+print(" ".join(w).title())
+print("Dang nang 2026".split()[0][::-1])</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">6 2 be
+be to not or be to
+To Be Or Not To Be
+gnaD</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 2</span><h1>Mã kí tự: ord và chr</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nhắc lại và ứng dụng</h3><p style="margin:0 0 8px"><b>ord(c)</b> trả mã Unicode (ASCII) của kí tự; <b>chr(m)</b> làm ngược lại.</p><p style="margin:0 0 8px"><b>A–Z</b> mã 65–90; <b>a–z</b> mã 97–122; <b>0–9</b> mã 48–57.</p><p style="margin:0 0 8px">Chữ thường → chữ hoa cùng chữ: mã trừ <b>32</b>. Vị trí trong bảng chữ cái: <code>ord(c) − ord("a")</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">print(ord("A"), ord("a"), ord("0"))
+print(chr(66), chr(ord("a") + 3))
+print(ord("e") - ord("a"))
+print("".join(chr(ord(c) - 32) for c in "tin"))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">65 97 48
+B d
+4
+TIN</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 3</span><h1>Duyệt xâu: hai cách</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Theo kí tự hoặc theo chỉ số</h3><p style="margin:0 0 8px"><code>for c in s:</code> lấy từng kí tự — gọn, dùng khi <b>không cần vị trí</b>.</p><p style="margin:0 0 8px"><code>for i in range(len(s)):</code> — dùng khi cần <b>vị trí</b> hoặc so sánh kí tự <b>kề nhau</b>.</p><p style="margin:0 0 8px"><code>for i, c in enumerate(s):</code> — có cả hai.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">s = "a1b22c333"
+d = 0
+for ch in s:
+    if ch.isdigit():
+        d += int(ch)
+print(d)
+lien = 0
+for i in range(1, len(s)):
+    if s[i] == s[i - 1]:
+        lien += 1
+print(lien)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">14
+3</pre></div><div class="key">Tổng chữ số: 1 + 2 + 2 + 3 + 3 + 3 = <b>14</b>. Cặp kề bằng nhau: “22”, “33”, “33” → <b>3</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 3</span><h1>Xâu đối xứng (palindrome)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba cách kiểm tra</h3><p style="margin:0 0 8px"><b>Cách 1</b>: <code>s == s[::-1]</code>.</p><p style="margin:0 0 8px"><b>Cách 2</b>: hai chỉ số i, j chạy vào giữa.</p><p style="margin:0 0 8px">Thường <b>chuẩn hoá</b> trước: bỏ khoảng trắng, đổi chữ thường.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">def dx(s):
+    t = "".join(c.lower() for c in s if c.isalnum())
+    return t == t[::-1]
+
+print(dx("Level"), "Level" == "Level"[::-1])
+print(dx("A man, a plan, a canal: Panama"))
+print(dx("Da Nang"))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">True False
+True
+False</pre></div><div class="key">“Level” đối xứng nếu <b>bỏ qua hoa thường</b>; so sánh trực tiếp thì không (L ≠ l).</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 3</span><h1>Mật mã Caesar (dịch vòng k vị trí)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng</h3><p style="margin:0 0 8px">Mỗi chữ thường được dịch <b>k vị trí</b> trong bảng chữ cái, <b>quay vòng</b> sau z.</p><p style="margin:0 0 8px">Công thức: <code>chr((ord(c) − ord("a") + k) % 26 + ord("a"))</code>.</p><p style="margin:0 0 8px">Kí tự khác chữ thường giữ nguyên.</p><p style="margin:0 0 8px"><b>Giải mã</b> = mã hoá với <b>26 − k</b> (hoặc −k).</p></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">def mh(s, k):
+    kq = ""
+    for c in s:
+        if "a" &lt;= c &lt;= "z":
+            kq += chr((ord(c) - 97 + k) % 26 + 97)
+        else:
+            kq += c
+    return kq
+print(mh("xyz abc", 3))
+print(mh(mh("tin hoc", 5), 21))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">abc def
+tin hoc</pre></div><div class="key">Mã hoá 5 rồi 21: 5 + 21 = <b>26</b> ≡ 0 nên <b>trở về xâu gốc</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 3</span><h1>Nén xâu: đếm các kí tự liên tiếp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mã hoá độ dài chạy (RLE)</h3><p style="margin:0 0 8px">Chuyển “aaabccdd” thành “a3b1c2d2”: mỗi kí tự kèm <b>số lần lặp liên tiếp</b>.</p><p style="margin:0 0 8px">Duyệt bằng chỉ số; <b>nhớ kí tự trước</b> và đếm.</p><p style="margin:0 0 8px">Nhớ ghi nốt nhóm cuối sau vòng lặp!</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">s = "aaabccdd"
+kq = ""
+i = 0
+while i &lt; len(s):
+    j = i
+    while j &lt; len(s) and s[j] == s[i]:
+        j += 1
+    kq += s[i] + str(j - i)
+    i = j
+print(kq)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">a3b1c2d2</pre></div><div class="key">Hai vòng <b>while lồng</b> nhưng mỗi kí tự chỉ được duyệt <b>một lần</b> (i nhảy tới j) → tuyến tính.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 3</span><h1>Đếm tần suất kí tự bằng dict</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Kĩ thuật dùng nhiều nhất</h3><p style="margin:0 0 8px">Dùng từ điển: <code>d[c] = d.get(c, 0) + 1</code>.</p><p style="margin:0 0 8px"><code>d.get(k, 0)</code> trả 0 nếu chưa có khoá, tránh lỗi KeyError.</p><p style="margin:0 0 8px">Kí tự xuất hiện nhiều nhất: <code>max(d, key=d.get)</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">s = "tin hoc ung dung"
+d = {}
+for c in s:
+    if c != " ":
+        d[c] = d.get(c, 0) + 1
+print(d)
+print(max(d, key=d.get), max(d.values()))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">{'t': 1, 'i': 1, 'n': 3, 'h': 1, 'o': 1, 'c': 1, 'u': 2, 'g': 2, 'd': 1}
+n 3</pre></div><div class="key">Có nhiều kí tự cùng tần suất thì <code>max</code> chọn <b>kí tự xuất hiện sớm nhất</b> trong từ điển.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 3</span><h1>Định dạng chuỗi và dòng nhiều tầng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Một số tiện ích</h3><p style="margin:0 0 8px"><b>f-string</b>: <code>f"{x:5d}"</code>, <code>f"{x:.2f}"</code>, <code>f"{s:&gt;8}"</code> (căn phải).</p><p style="margin:0 0 8px"><b>zfill</b>: <code>"7".zfill(3)</code> = “007”.</p><p style="margin:0 0 8px"><b>Xâu nhiều dòng</b> bằng ba nháy; <b>\n</b> là xuống dòng, <b>\t</b> là tab.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">x, ten = 3.14159, "An"
+print(f"{ten:&gt;6}|{x:.2f}|{42:05d}")
+print("7".zfill(3), "ab".center(6, "*"))
+print("a\tb\nc")</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">    An|3.14|00042
+007 **ab**
+a	b
+c</pre></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 4</span><h1>Tự kiểm tra: cắt lát</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Cho s = "Tin hoc 12 - Da Nang". Tính s[4:7], s[-4:], len(s), s[::5].</p><pre class="code" style="font-size:calc(21px*var(--z,1))">s = "Tin hoc 12 - Da Nang"
+print(s[4:7], s[-4:], len(s), s[::5])</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Đánh chỉ số: T0 i1 n2 ␣3 h4 o5 c6 ␣7 1(8) 2(9) ␣10 -11 ␣12 D13 a14 ␣15 N16 a17 n18 g19.</p><p style="margin:0 0 8px"><b>s[4:7]</b> = “hoc”; <b>s[-4:]</b> = “Nang”; <b>len = 20</b>; <b>s[::5]</b> lấy các chỉ số 0, 5, 10, 15 → “T”, “o”, “␣”, “␣” → <b>“To  ”</b> (có hai dấu cách cuối).</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">hoc Nang 20 To  </pre></div></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 4</span><h1>Tự kiểm tra: split và đếm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Với s = "  be   dep  trai  ", cho biết len(a), len(b), "-".join(a) và b.</p><pre class="code" style="font-size:calc(20px*var(--z,1))">s = "  be   dep  trai  "
+a = s.split()
+b = s.strip().split(" ")
+print(len(a), len(b), "-".join(a))</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>a</b> = [“be”, “dep”, “trai”] → <b>len 3</b>; nối: <b>be-dep-trai</b>.</p><p style="margin:0 0 8px"><b>s.strip()</b> = “be   dep  trai”; <b>split(" ")</b> tách theo từng dấu cách: sau “be” có 3 dấu cách → 2 xâu rỗng; sau “dep” có 2 dấu cách → 1 xâu rỗng. b = [“be”, “”, “”, “dep”, “”, “trai”] → <b>len 6</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">3 6 be-dep-trai
+['be', '', '', 'dep', '', 'trai']</pre></div></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · 4</span><h1>Tự kiểm tra (HSG): sai ở chỗ nào?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Hàm sau định kiểm tra “xâu chỉ gồm chữ cái, không phân biệt hoa thường, và đối xứng”. Cho kết quả với “Aba” và “ab1ba”. Có lỗi không?</p><pre class="code" style="font-size:calc(20px*var(--z,1))">def kt(s):
+    return s.isalpha() and s.lower() == s[::-1]</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>“Aba”</b>: isalpha đúng; <code>s.lower()</code> = “aba”, <code>s[::-1]</code> = “abA” (<b>chưa hạ chữ thường</b>) → “aba” == “abA” là <b>False</b>. Lẽ ra phải là True.</p><p style="margin:0 0 8px"><b>“ab1ba”</b>: isalpha False vì có chữ số → False (đúng ý).</p><p style="margin:0 0 8px"><b>Sửa</b>: <code>t = s.lower(); return s.isalpha() and t == t[::-1]</code>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">False False True</pre></div></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Xâu là dãy <b>bất biến</b>, có chỉ số dương từ 0 và âm từ −1.</li><li><b>s[a:b:k]</b> lấy từ a đến <b>b − 1</b>; vượt phạm vi khi cắt lát <b>không lỗi</b>; <b>s[::-1]</b> đảo xâu.</li><li>Phương thức xâu <b>trả về xâu mới</b>; <b>find</b> trả −1, <b>index</b> báo lỗi.</li><li><b>split()</b> khác <b>split(" ")</b>; <b>join</b> ghép lại.</li><li><b>ord / chr</b> cho mã kí tự; Caesar dùng <b>% 26</b>.</li><li>Đếm tần suất bằng <b>dict.get</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Đảo xâu</td><td>s[::-1]</td></tr><tr><td class="m">Đếm từ</td><td>len(s.split())</td></tr><tr><td class="m">Bỏ trắng hai đầu</td><td>strip()</td></tr><tr><td class="m">Mã kí tự</td><td>ord / chr</td></tr></table><div class="warn">Gán s[0] = … (xâu bất biến); nhầm split() với split(" "); quên chuẩn hoá hoa thường.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><code>s[a:b]</code> không lấy b.</li><li><code>count</code> không đếm chồng lấn.</li><li>So sánh xâu số theo <b>từ điển</b>, không theo giá trị.</li><li>Mã hoá Caesar quay vòng bằng <b>% 26</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Biểu thức chính quy</b> (re).</li><li><b>KMP</b> tìm xâu con nhanh.</li><li><b>Băm xâu</b> (hash) so sánh xâu.</li></ul></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>"banana".find("na")</code>?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>"abc"[::-1]</code>?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>len("a b".split())</code>?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>"ab" * 2 + "c"</code>?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>"a" &lt; "B"</code> đúng hay sai?</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>2</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>cba</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>2</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>ababc</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>Sai</b> (mã “a” = 97 &gt; “B” = 66).</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Nhập xâu, in số nguyên âm (u, e, o, a, i). Thử “Da Nang 2026”.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Nhập họ tên, in tên (từ cuối) viết hoa. Thử “nguyen van an”.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Chuẩn hoá tên: bỏ khoảng trắng thừa, viết hoa chữ đầu mỗi từ. Thử “  nGUYEN   van  an ”.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Kiểm tra hai xâu có phải <b>đảo chữ cái</b> (anagram) của nhau không. Thử “listen”, “silent”.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Tìm xâu con đối xứng <b>dài nhất</b> của một xâu. Thử “babad”, “cbbd”.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Nén RLE rồi giải nén: “aaabccdd” → “a3b1c2d2” → xâu gốc.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>2 nguyên âm.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>AN.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Nguyen Van An.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>True (so sánh danh sách đã sắp xếp).</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">PYTHON 3A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Duyệt tâm đối xứng, mở rộng hai bên: babad → bab bb.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Giải nén: đọc xen kẽ kí tự và số (một chữ số) → aaabccdd.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

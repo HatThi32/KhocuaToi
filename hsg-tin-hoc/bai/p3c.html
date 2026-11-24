@@ -1,0 +1,326 @@
+<!-- HEAD -->
+<title>Python 3C · Mảng hai chiều</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 3C</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>MẢNG HAI CHIỀU<br>(MA TRẬN)</h1><p style="font-size:28px;line-height:1.5">Danh sách lồng nhau, khởi tạo đúng, duyệt hàng – cột – đường chéo, chuyển vị, tổng, tìm kiếm, xoay, xoắn ốc, đọc ma trận từ bàn phím.</p><div><span class="chip">ma trận</span><span class="chip">hàng cột</span><span class="chip">đường chéo</span><span class="chip">chuyển vị</span><span class="chip">khởi tạo</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Biểu diễn ma trận bằng <b>danh sách các danh sách</b>; <b>m[i][j]</b>.</li><li>Khởi tạo đúng, tránh bẫy <b>[[0]*3]*3</b>.</li><li>Duyệt theo <b>hàng, cột, hai đường chéo, biên</b>.</li><li>Tính <b>tổng, chuyển vị, xoay 90°, đối xứng</b>.</li><li>Đọc ma trận từ bàn phím; giải bài <b>lưới</b> kiểu HSG.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Biểu diễn, khởi tạo</li><li>Duyệt ma trận</li><li>Phép biến đổi</li><li>Bài lưới HSG</li><li>Tự kiểm tra</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 1</span><h1>Ma trận là danh sách các danh sách</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cách truy cập</h3><p style="margin:0 0 8px">Mỗi <b>hàng</b> là một danh sách; ma trận là danh sách các hàng.</p><p style="margin:0 0 8px"><b>m[i][j]</b>: phần tử ở <b>hàng i, cột j</b> (đếm từ 0).</p><p style="margin:0 0 8px"><code>len(m)</code> = số hàng; <code>len(m[0])</code> = số cột.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">m = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+print(m[1][2], m[2][0], m[-1][-1])
+print(len(m), len(m[0]))
+print(m[1])
+print([r[1] for r in m])</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">6 7 9
+3 3
+[4, 5, 6]
+[2, 5, 8]</pre></div><div class="key"><b>Hàng 1</b> là <code>m[1]</code>; <b>cột 1</b> phải gom: <code>[r[1] for r in m]</code>.</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 1</span><h1>Chỉ số của ma trận 3 × 3</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>cột 0</th><th>cột 1</th><th>cột 2</th></tr><tr><td><b>hàng 0</b></td><td>m[0][0] = 1</td><td>m[0][1] = 2</td><td>m[0][2] = 3</td></tr><tr><td><b>hàng 1</b></td><td>m[1][0] = 4</td><td>m[1][1] = 5</td><td>m[1][2] = 6</td></tr><tr><td><b>hàng 2</b></td><td>m[2][0] = 7</td><td>m[2][1] = 8</td><td>m[2][2] = 9</td></tr></table><div class="key"><b>Đường chéo chính</b>: i = j (1, 5, 9). <b>Đường chéo phụ</b>: i + j = n − 1 (3, 5, 7). <b>Hàng</b> thứ i, <b>cột</b> thứ j: nhớ “hàng trước, cột sau”.</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 1</span><h1>Khởi tạo ma trận: bẫy [[0] * 3] * 3</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai cách và hậu quả</h3><p style="margin:0 0 8px"><b>[[0] * 3] * 3</b>: lặp <b>cùng một danh sách hàng</b> 3 lần → ba hàng là <b>một đối tượng</b>; sửa một hàng là sửa cả ba!</p><p style="margin:0 0 8px"><b>[[0] * 3 for _ in range(3)]</b>: tạo <b>ba hàng riêng biệt</b>. Đây là cách đúng.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a = [[0] * 3] * 3
+a[0][1] = 5
+b = [[0] * 3 for _ in range(3)]
+b[0][1] = 5
+print(a)
+print(b)
+print(a[0] is a[1], b[0] is b[1])</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[[0, 5, 0], [0, 5, 0], [0, 5, 0]]
+[[0, 5, 0], [0, 0, 0], [0, 0, 0]]
+True False</pre></div><div class="warn">Lỗi này khiến chương trình in ra <b>cả ba hàng cùng bị đổi</b>; đề thi rất hay hỏi.</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 1</span><h1>Đọc ma trận từ bàn phím</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Dạng nhập thường gặp</h3><p style="margin:0 0 8px">Dòng đầu: hai số <b>n</b> (hàng) và <b>m</b> (cột). Sau đó <b>n dòng</b>, mỗi dòng <b>m số</b>.</p><p style="margin:0 0 8px">Dùng comprehension đọc gọn.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">n, m = map(int, input().split())
+a = [list(map(int, input().split())) for _ in range(n)]
+print(a)
+print(sum(map(sum, a)))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">2 3
+1 2 3
+4 5 6
+[[1, 2, 3], [4, 5, 6]]
+21</pre></div><div class="key"><code>sum(map(sum, a))</code>: tổng mọi phần tử. In đẹp: <code>for r in a: print(*r)</code>.</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 2</span><h1>Duyệt toàn bộ: hai vòng lặp lồng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mẫu cơ bản</h3><p style="margin:0 0 8px">Vòng ngoài: <b>hàng i</b>; vòng trong: <b>cột j</b> (duyệt từng hàng).</p><p style="margin:0 0 8px">Duyệt <b>theo cột</b>: đổi thứ tự hai vòng.</p></div></div><div class="col"><pre class="code" style="font-size:calc(17px*var(--z,1))">m = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+for i in range(3):
+    for j in range(3):
+        print(m[i][j], end=" ")
+    print()
+print("--")
+for j in range(3):
+    for i in range(3):
+        print(m[i][j], end=" ")
+    print()</pre><div class="res"><span class="lab">Duyệt theo hàng rồi theo cột</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1 2 3 
+4 5 6 
+7 8 9 
+--
+1 4 7 
+2 5 8 
+3 6 9 </pre></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 2</span><h1>Tổng theo hàng, theo cột, theo đường chéo</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các công thức</h3><ul style="gap:7px"><li><b>Tổng hàng i</b>: <code>sum(m[i])</code>.</li><li><b>Tổng cột j</b>: <code>sum(r[j] for r in m)</code>.</li><li><b>Đường chéo chính</b>: <code>m[i][i]</code>.</li><li><b>Đường chéo phụ</b>: <code>m[i][n − 1 − i]</code>.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">m = [[1, 2, 3], [4, 5, 6], [7, 8, 10]]
+n = 3
+print([sum(r) for r in m])
+print([sum(r[j] for r in m) for j in range(n)])
+print(sum(m[i][i] for i in range(n)))
+print(sum(m[i][n - 1 - i] for i in range(n)))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[6, 15, 25]
+[12, 15, 19]
+16
+15</pre></div><div class="key">Chéo phụ: 3 + 5 + 7 = 15; chéo chính: 1 + 5 + 10 = 16.</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 2</span><h1>Tìm giá trị lớn nhất và vị trí</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Tìm trên ma trận</h3><p style="margin:0 0 8px">Duyệt hai vòng, giữ <b>giá trị lớn nhất và toạ độ (i, j)</b>.</p><p style="margin:0 0 8px">Muốn <b>vị trí đầu tiên</b> thì dùng <b>&gt;</b>; <b>cuối cùng</b> thì dùng <b>&gt;=</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">m = [[3, 8, 1], [9, 4, 9], [2, 7, 5]]
+lon, vi, vj = m[0][0], 0, 0
+for i in range(3):
+    for j in range(3):
+        if m[i][j] &gt; lon:
+            lon, vi, vj = m[i][j], i, j
+print(lon, vi, vj)
+print(max(max(r) for r in m))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">9 1 0
+9</pre></div><div class="key">Giá trị 9 xuất hiện hai lần; dùng &gt; nên giữ vị trí <b>(1, 0)</b> đầu tiên.</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 2</span><h1>Duyệt các phần tử ở biên và tam giác</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Điều kiện theo toạ độ</h3><p style="margin:0 0 8px"><b>Biên</b>: <code>i == 0 or i == n−1 or j == 0 or j == m−1</code>.</p><p style="margin:0 0 8px"><b>Tam giác trên</b> (kể cả chéo chính): <code>j &gt;= i</code>; <b>tam giác dưới</b>: <code>j &lt;= i</code>.</p><p style="margin:0 0 8px"><b>Hai đường chéo</b>: <code>i == j or i + j == n − 1</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">n = 5
+m = [[i * n + j + 1 for j in range(n)] for i in range(n)]
+bien = sum(m[i][j] for i in range(n) for j in range(n)
+           if i in (0, n - 1) or j in (0, n - 1))
+cheo = sum(m[i][j] for i in range(n) for j in range(n)
+           if i == j or i + j == n - 1)
+tren = sum(m[i][j] for i in range(n) for j in range(n) if j &gt; i)
+print(bien, cheo, tren)</pre><div class="res"><span class="lab">Kết quả (ma trận 5×5 điền 1..25)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">208 117 90</pre></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 3</span><h1>Ma trận chuyển vị: hàng thành cột</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Định nghĩa</h3><p style="margin:0 0 8px">Chuyển vị t của a (n hàng × m cột) có <b>m hàng × n cột</b> với <b>t[j][i] = a[i][j]</b>.</p><p style="margin:0 0 8px">Cách ngắn: <code>list(zip(*a))</code> (cho các tuple).</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">a = [[1, 2, 3], [4, 5, 6]]
+t = [[a[i][j] for i in range(len(a))] for j in range(len(a[0]))]
+print(t, len(t), len(t[0]))
+print([list(r) for r in zip(*a)])</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[[1, 4], [2, 5], [3, 6]] 3 2
+[[1, 4], [2, 5], [3, 6]]</pre></div><div class="key">Ma trận 2 × 3 → chuyển vị 3 × 2. Ma trận <b>đối xứng</b> khi a == chuyển vị của a.</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 3</span><h1>Xoay ma trận 90° theo chiều kim đồng hồ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng</h3><p style="margin:0 0 8px">Xoay phải 90° = <b>chuyển vị rồi đảo mỗi hàng</b>.</p><p style="margin:0 0 8px">Hoặc: <code>[list(r)[::-1] for r in zip(*a)]</code>.</p><p style="margin:0 0 8px">Xoay trái 90° = đảo mỗi hàng rồi chuyển vị (hoặc xoay phải 3 lần).</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">a = [[1, 2, 3], [4, 5, 6]]
+phai = [list(r)[::-1] for r in zip(*a)]
+for r in phai:
+    print(*r)
+print("--")
+trai = [list(r) for r in zip(*a)][::-1]
+for r in trai:
+    print(*r)</pre><div class="res"><span class="lab">Xoay phải, rồi xoay trái</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">4 1
+5 2
+6 3
+--
+3 6
+2 5
+1 4</pre></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 3</span><h1>Điền ma trận theo quy luật</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mẫu: bảng cửu chương, tam giác Pascal</h3><p style="margin:0 0 8px">Bảng nhân: <code>a[i][j] = (i+1)*(j+1)</code>.</p><p style="margin:0 0 8px"><b>Tam giác Pascal</b>: mỗi số bằng tổng hai số phía trên: <code>a[i][j] = a[i−1][j−1] + a[i−1][j]</code>, biên bằng 1.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">n = 6
+p = [[1] * (i + 1) for i in range(n)]
+for i in range(2, n):
+    for j in range(1, i):
+        p[i][j] = p[i-1][j-1] + p[i-1][j]
+for r in p:
+    print(*r)</pre><div class="res"><span class="lab">Tam giác Pascal 6 dòng</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1
+1 1
+1 2 1
+1 3 3 1
+1 4 6 4 1
+1 5 10 10 5 1</pre></div><div class="key">Hàng i có i + 1 phần tử: “ma trận răng cưa” (các hàng độ dài khác nhau).</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 3</span><h1>Duyệt xoắn ốc</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng bốn biên</h3><p style="margin:0 0 8px">Giữ bốn biên <b>trên, dưới, trái, phải</b>; đi hết một cạnh thì thu hẹp biên.</p><p style="margin:0 0 8px">Kiểm tra <b>t &lt; d</b> và <b>l &lt; p</b> trước cạnh dưới, cạnh trái để không lặp khi còn một hàng hoặc một cột.</p></div></div><div class="col"><pre class="code" style="font-size:calc(15px*var(--z,1))">m = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
+kq = []
+t, d, l, p = 0, len(m) - 1, 0, len(m[0]) - 1
+while t &lt;= d and l &lt;= p:
+    for j in range(l, p + 1): kq.append(m[t][j])
+    for i in range(t + 1, d + 1): kq.append(m[i][p])
+    if t &lt; d:
+        for j in range(p - 1, l - 1, -1): kq.append(m[d][j])
+    if l &lt; p:
+        for i in range(d - 1, t, -1): kq.append(m[i][l])
+    t += 1; d -= 1; l += 1; p -= 1
+print(kq)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]</pre></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 4</span><h1>Bài lưới: đếm “đảo” bằng loang (DFS)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đề kiểu HSG</h3><p style="margin:0 0 8px">Lưới 0/1: 1 là đất, 0 là nước. <b>Đảo</b> là nhóm ô 1 <b>kề cạnh</b> nhau (4 hướng). Đếm số đảo.</p><p style="margin:0 0 8px"><b>Ý tưởng</b>: gặp ô 1 chưa thăm → đếm +1 và <b>loang</b> sang mọi ô 1 kề nó, đánh dấu đã thăm.</p><p style="margin:0 0 8px">Dùng <b>ngăn xếp</b> thay đệ quy để tránh tràn đệ quy.</p></div></div><div class="col"><pre class="code" style="font-size:calc(14px*var(--z,1))">g = ["11000", "11011", "00100", "00011"]
+n, m = len(g), len(g[0])
+seen = set()
+so = 0
+for i in range(n):
+    for j in range(m):
+        if g[i][j] == "1" and (i, j) not in seen:
+            so += 1
+            st = [(i, j)]
+            seen.add((i, j))
+            while st:
+                x, y = st.pop()
+                for dx, dy in ((1,0),(-1,0),(0,1),(0,-1)):
+                    u, v = x + dx, y + dy
+                    if 0 &lt;= u &lt; n and 0 &lt;= v &lt; m and g[u][v] == "1" and (u, v) not in seen:
+                        seen.add((u, v))
+                        st.append((u, v))
+print(so)</pre><div class="res"><span class="lab">Số đảo</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">4</pre></div><div class="key">Bốn đảo: khối 2×2 góc trên trái (4 ô), cặp ô ở hàng 1 bên phải (2 ô), ô lẻ ở giữa hàng 2 (1 ô), và cặp ô góc dưới phải (2 ô).</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 4</span><h1>Bài lưới: đường đi có tổng lớn nhất (quy hoạch động)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đề kiểu HSG</h3><p style="margin:0 0 8px">Đi từ <b>góc trên trái</b> đến <b>góc dưới phải</b>, mỗi bước <b>sang phải hoặc xuống</b>. Tìm tổng lớn nhất.</p><p style="margin:0 0 8px"><b>f[i][j] = a[i][j] + max(f[i−1][j], f[i][j−1])</b>; ô ngoài lưới bỏ qua.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">a = [[1, 3, 1], [1, 5, 1], [4, 2, 1]]
+n = m = 3
+f = [[0] * m for _ in range(n)]
+for i in range(n):
+    for j in range(m):
+        b = [f[x][y] for x, y in ((i-1, j), (i, j-1)) if x &gt;= 0 and y &gt;= 0]
+        f[i][j] = a[i][j] + (max(b) if b else 0)
+for r in f:
+    print(*r)</pre><div class="res"><span class="lab">Bảng f và đáp án</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1 4 5
+2 9 10
+6 11 12</pre></div><div class="key">Đường đi tốt nhất: 1 → 3 → 5 → 2 → 1 = <b>12</b>.</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 5</span><h1>Tự kiểm tra: bẫy khởi tạo</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Chương trình in ra gì?</p><pre class="code" style="font-size:calc(21px*var(--z,1))">a = [[0] * 3] * 3
+a[0][1] = 5
+b = [[0] * 3 for _ in range(3)]
+b[0][1] = 5
+print(a)
+print(b)</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>a</b>: ba hàng là <b>cùng một danh sách</b>; gán <code>a[0][1] = 5</code> làm <b>cả ba hàng</b> có 5 ở cột 1: <b>[[0,5,0],[0,5,0],[0,5,0]]</b>.</p><p style="margin:0 0 8px"><b>b</b>: ba hàng riêng → chỉ hàng 0 đổi: <b>[[0,5,0],[0,0,0],[0,0,0]]</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[[0, 5, 0], [0, 5, 0], [0, 5, 0]]
+[[0, 5, 0], [0, 0, 0], [0, 0, 0]]</pre></div></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · 5</span><h1>Tự kiểm tra (HSG): đường chéo</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Tổng các phần tử trên đường chéo phụ của ma trận 3×3 [[1,2,3],[4,5,6],[7,8,10]] là bao nhiêu? Viết công thức chỉ số.</p><pre class="code" style="font-size:calc(21px*var(--z,1))">a = [[1, 2, 3], [4, 5, 6], [7, 8, 10]]
+s = 0
+for i in range(3):
+    s += a[i][2 - i]
+print(s)</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Phần tử chéo phụ có <b>i + j = n − 1 = 2</b>, tức j = 2 − i: (0,2), (1,1), (2,0).</p><p style="margin:0 0 8px">Giá trị: a[0][2] = 3, a[1][1] = 5, a[2][0] = 7 → <b>3 + 5 + 7 = 15</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">15</pre></div></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Ma trận = <b>danh sách các danh sách</b>; <b>m[i][j]</b> = hàng i, cột j.</li><li>Khởi tạo đúng: <code>[[0] * m for _ in range(n)]</code>.</li><li>Chéo chính <b>i = j</b>; chéo phụ <b>i + j = n − 1</b>.</li><li>Chuyển vị: <b>t[j][i] = a[i][j]</b>; xoay phải = chuyển vị + đảo hàng.</li><li>Bài lưới: <b>loang</b> (DFS/BFS) đếm vùng; <b>quy hoạch động</b> cho đường đi.</li><li>Duyệt theo cột: đổi thứ tự hai vòng lặp.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Số hàng</td><td>len(m)</td></tr><tr><td class="m">Số cột</td><td>len(m[0])</td></tr><tr><td class="m">Chéo phụ</td><td>i + j = n − 1</td></tr><tr><td class="m">Hàng độc lập</td><td>for _ in range(n)</td></tr></table><div class="warn">Dùng [[0]*m]*n; nhầm hàng với cột; vượt chỉ số ở biên.</div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Kiểm tra biên <code>0 &lt;= u &lt; n</code> trước khi truy cập lưới.</li><li>Với 4 hướng dùng mảng <b>(dx, dy)</b>.</li><li>Ma trận không vuông thì chuyển vị đổi kích thước.</li><li>Quy hoạch động: xử lí <b>ô xuất phát</b> riêng.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>numpy</b> cho tính toán ma trận.</li><li><b>BFS</b> đường đi ngắn nhất trên lưới.</li><li><b>Tổng tiền tố 2D</b>.</li></ul></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>m = [[1,2],[3,4]]</code>, <code>m[1][0]</code>?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Ma trận 3 hàng 5 cột: <code>len(m[0])</code>?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Chéo phụ của ma trận 4×4 gồm ô nào (i, j)?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Chuyển vị ma trận 2×3 có kích thước?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Khởi tạo đúng ma trận n×m toàn 0?</p></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>3</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>5</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>(0,3), (1,2), (2,1), (3,0).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>3 × 2</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>[[0] * m for _ in range(n)]</code>.</p></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Nhập ma trận n × m, in tổng từng hàng.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Nhập ma trận vuông, in tổng hai đường chéo.</p></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Kiểm tra ma trận vuông có <b>đối xứng</b> không. Thử [[1,2],[2,1]] và [[1,2],[3,1]].</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. In ma trận sau khi <b>xoay 90°</b>. Thử [[1,2,3],[4,5,6]].</p></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Tìm <b>hình vuông con</b> n×n có tổng lớn nhất trong lưới (dùng tổng tiền tố 2D). Thử k = 2.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Đường đi ngắn nhất trong mê cung 0/1 (1 là tường) từ (0,0) đến (n−1, m−1) bằng BFS.</p></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>[sum(r) for r in a]</code>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>sum(a[i][i] for i in range(n)) + sum(a[i][n−1−i] for i in range(n))</code> (chú ý trừ trùng ở tâm nếu n lẻ).</p></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>a == [list(r) for r in zip(*a)]</code> → True False.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>[list(r)[::-1] for r in zip(*a)]</code> → [[4, 1], [5, 2], [6, 3]].</p></div></div></div></section>
+
+<section class="s p13"><div class="hd"><span class="k">PYTHON 3C · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Dựng P[i+1][j+1] = a + P trên + P trái − P chéo; tổng hình vuông = 4 số. Với a = [[1,2,3],[4,5,6],[7,8,9]], k = 2 → 28.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>BFS bằng <code>deque</code>, ghi khoảng cách từng ô; ô tới được lần đầu là ngắn nhất (xem bài Ngăn xếp và hàng đợi).</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

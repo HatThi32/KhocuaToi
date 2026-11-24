@@ -1,0 +1,339 @@
+<!-- HEAD -->
+<title>Python 3B · List, tuple, set, dict</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 3B</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>DANH SÁCH, TUPLE,<br>TẬP HỢP, TỪ ĐIỂN</h1><p style="font-size:28px;line-height:1.5">list và các thao tác, sao chép nông – sâu, sắp xếp, comprehension, zip, enumerate, tuple, set, dict.</p><div><span class="chip">list</span><span class="chip">copy</span><span class="chip">sort</span><span class="chip">set</span><span class="chip">dict</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Dùng <b>list</b>: chỉ số, cắt lát, thêm, xoá, sắp xếp.</li><li>Phân biệt <b>b = a</b>, <b>a[:]</b>, <b>sao chép sâu</b>.</li><li>Nhớ <b>sort()</b> trả None, <b>sorted()</b> trả danh sách mới.</li><li>Viết <b>list comprehension</b>, dùng <b>zip, enumerate</b>.</li><li>Dùng đúng <b>tuple, set, dict</b> và biết khi nào chọn cái nào.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>list</li><li>Sao chép, sắp xếp</li><li>Comprehension, zip, enumerate</li><li>tuple, set, dict</li><li>Tự kiểm tra, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 1</span><h1>List: dãy có thứ tự, thay đổi được</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đặc điểm</h3><p style="margin:0 0 8px">Viết trong <b>[ ]</b>, các phần tử cách nhau dấu phẩy, <b>có thể khác kiểu</b>.</p><p style="margin:0 0 8px">Có chỉ số, cắt lát <b>giống xâu</b>, nhưng <b>thay đổi được</b> (mutable).</p><p style="margin:0 0 8px"><code>len(a)</code> số phần tử; phần tử cuối là <code>a[-1]</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a = [3, 1, 4, 1, 5, 9, 2, 6]
+print(a[2:5], a[::3], a[-3:], sum(a[-3:]))
+a[0] = 10
+print(a, len(a))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[4, 1, 5] [3, 1, 2] [9, 2, 6] 17
+[10, 1, 4, 1, 5, 9, 2, 6] 8</pre></div><div class="key"><code>a[::3]</code> lấy chỉ số 0, 3, 6: 3, 1, 2. <code>sum(a[-3:])</code> = 9 + 2 + 6 = 17.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 1</span><h1>Các thao tác thêm, xoá, tìm</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thao tác</th><th>Ý nghĩa</th><th>Ví dụ</th></tr><tr><td><code>a.append(x)</code></td><td>thêm x vào cuối</td><td>[1, 2, 3]</td></tr><tr><td><code>a.insert(i, x)</code></td><td>chèn x vào vị trí i</td><td>[1, 2, 3]</td></tr><tr><td><code>a.pop()</code> / <code>a.pop(i)</code></td><td>xoá và <b>trả về</b> phần tử cuối / thứ i</td><td>3 1 [2]</td></tr><tr><td><code>a.remove(x)</code></td><td>xoá x <b>đầu tiên</b> tìm thấy</td><td>[2, 1]</td></tr><tr><td><code>a.index(x)</code></td><td>vị trí x đầu tiên (lỗi nếu không có)</td><td>2</td></tr><tr><td><code>x in a</code></td><td>có trong danh sách không</td><td>True</td></tr><tr><td><code>a.extend(b)</code> hoặc <code>a + b</code></td><td>nối danh sách</td><td>[1, 2, 3] [1, 2, 3, 4]</td></tr></table><div class="key"><b>append, insert, pop, remove, extend, sort, reverse</b> đều <b>sửa trực tiếp</b> danh sách và <b>trả về None</b>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 1</span><h1>Bẫy: các hàm sửa trực tiếp trả về None</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nhầm lẫn kinh điển</h3><p style="margin:0 0 8px"><code>b = a.append(5)</code> làm b = <b>None</b>.</p><p style="margin:0 0 8px"><code>b = a.sort()</code> làm b = <b>None</b>, và a đã bị sắp xếp.</p><p style="margin:0 0 8px">Muốn danh sách mới đã sắp xếp: <b>sorted(a)</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a = [4, 1, 3]
+b = a.sort()
+c = sorted([4, 1, 3], reverse=True)
+print(b, a, c)
+x = [1, 2]
+y = x.append(3)
+print(x, y)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">None [1, 3, 4] [4, 3, 1]
+[1, 2, 3] None</pre></div><div class="warn">Lỗi phổ biến: <code>a = a.sort()</code> làm mất danh sách (a thành None).</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 2</span><h1>Gán b = a không tạo bản sao</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai tên, một danh sách</h3><p style="margin:0 0 8px"><b>b = a</b>: b và a là <b>hai tên của cùng một danh sách</b>; đổi qua tên nào cũng thấy cả hai.</p><p style="margin:0 0 8px"><b>c = a[:]</b> (hoặc <code>a.copy()</code>, <code>list(a)</code>) tạo <b>bản sao nông</b>: danh sách mới, các phần tử vẫn cùng đối tượng.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a = [5, 3, 8, 1]
+b = a
+b.append(7)
+c = a[:]
+c.sort()
+print(a, b)
+print(c)
+print(a is b, a is c)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[5, 3, 8, 1, 7] [5, 3, 8, 1, 7]
+[1, 3, 5, 7, 8]
+True False</pre></div><div class="key"><code>a is b</code>: cùng đối tượng. Bản sao c sắp xếp <b>không ảnh hưởng</b> a.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 2</span><h1>Sao chép nông và sao chép sâu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Danh sách lồng nhau</h3><p style="margin:0 0 8px">Bản sao <b>nông</b> chỉ sao chép lớp ngoài; <b>danh sách bên trong vẫn dùng chung</b>.</p><p style="margin:0 0 8px">Sao chép <b>sâu</b>: sao chép cả các danh sách con (<code>copy.deepcopy</code> hoặc tự sao chép từng con).</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">a = [1, [2, 3], 4]
+b = a
+c = a[:]
+d = [x[:] if isinstance(x, list) else x for x in a]
+b[0] = 9
+c[1].append(7)
+d[1].append(8)
+print(a, c, d)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[9, [2, 3, 7], 4] [1, [2, 3, 7], 4] [1, [2, 3, 8], 4]</pre></div><div class="key">b[0] = 9 đổi <b>a</b> (cùng đối tượng). <code>c[1].append(7)</code> đổi danh sách con dùng chung với a. d độc lập hoàn toàn.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 2</span><h1>Truyền danh sách vào hàm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hàm có thể làm đổi danh sách gốc</h3><p style="margin:0 0 8px">Tham số nhận <b>tham chiếu</b> đến danh sách: sửa bên trong hàm là <b>sửa danh sách gốc</b>.</p><p style="margin:0 0 8px">Gán lại tham số (<code>a = ...</code>) chỉ đổi tên cục bộ, không đổi bên ngoài.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">def f(a):
+    a.append(0)
+
+def g(a):
+    a = a + [0]
+    return a
+
+x = [1]
+f(x)
+print(x)
+g(x)
+print(x)
+y = g(x)
+print(x, y)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[1, 0]
+[1, 0]
+[1, 0] [1, 0, 0]</pre></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 2</span><h1>Sắp xếp: sort, sorted, key</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai cách</h3><table><tr><th></th><th>a.sort()</th><th>sorted(a)</th></tr><tr><td>Sửa a?</td><td><b>Có</b></td><td>Không</td></tr><tr><td>Trả về</td><td>None</td><td>danh sách mới</td></tr><tr><td>Dùng được cho</td><td>chỉ list</td><td>mọi dãy</td></tr></table><p style="margin:0 0 8px">Tham số: <code>reverse=True</code> giảm dần; <code>key=hàm</code> sắp xếp theo giá trị hàm. Sắp xếp <b>ổn định</b> (giữ thứ tự gốc khi bằng nhau).</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">t = ["lan", "an", "binh", "ha"]
+print(sorted(t))
+print(sorted(t, key=len))
+print(sorted(t, key=lambda w: (-len(w), w)))
+ds = [(3, "c"), (1, "z"), (3, "a")]
+ds.sort(key=lambda p: (-p[0], p[1]))
+print(ds)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">['an', 'binh', 'ha', 'lan']
+['an', 'ha', 'lan', 'binh']
+['binh', 'lan', 'an', 'ha']
+[(3, 'a'), (3, 'c'), (1, 'z')]</pre></div><div class="key">Khoá là <b>bộ</b> (tuple) sắp xếp theo từng thành phần; dấu − đảo chiều với số.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 3</span><h1>List comprehension: tạo danh sách trong một dòng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cú pháp</h3><p style="margin:0 0 8px"><code>[biểu_thức for x in dãy if điều_kiện]</code></p><p style="margin:0 0 8px">Đọc: “với mỗi x trong dãy (nếu thoả điều kiện), lấy biểu thức”.</p><p style="margin:0 0 8px">Tương đương vòng for + append, nhưng gọn hơn.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a = [x * x for x in range(1, 8) if x % 2]
+b = [c.upper() for c in "tin"]
+c = [(i, j) for i in range(2) for j in range(2)]
+print(a)
+print(b)
+print(c)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[1, 9, 25, 49]
+['T', 'I', 'N']
+[(0, 0), (0, 1), (1, 0), (1, 1)]</pre></div><div class="key">x lẻ từ 1 đến 7: 1, 3, 5, 7 → bình phương: 1, 9, 25, 49.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 3</span><h1>zip và enumerate</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Duyệt song song và đánh số</h3><p style="margin:0 0 8px"><b>zip(a, b)</b> ghép từng cặp, <b>dừng ở dãy ngắn nhất</b>.</p><p style="margin:0 0 8px"><b>enumerate(a)</b> cho cặp (chỉ số, giá trị).</p><p style="margin:0 0 8px"><code>zip(a, a[1:])</code> cho các <b>cặp kề nhau</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">a = [4, 8, 15, 16, 23, 42]
+b = [x * x for x in a if x % 2 == 0]
+c = {x % 5 for x in a}
+d = list(zip(a, a[1:]))
+e = [i for i, x in enumerate(a) if x &gt; 15]
+print(b, c, d[:2], len(d), e)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[16, 64, 256, 1764] {0, 1, 2, 3, 4} [(4, 8), (8, 15)] 5 [3, 4, 5]</pre></div><div class="key">6 phần tử ghép với 5 phần tử kế → chỉ <b>5 cặp</b>. Tập c = {0,1,2,3,4} (5 phần tử).</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 3</span><h1>Hàm có sẵn cho danh sách</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hay dùng</h3><ul style="gap:7px"><li><code>sum, min, max, len</code>.</li><li><code>any(ds)</code>: có ít nhất một phần tử đúng.</li><li><code>all(ds)</code>: tất cả đều đúng.</li><li><code>a.count(x)</code>, <code>a.reverse()</code>, <code>reversed(a)</code>.</li><li><code>list(map(int, input().split()))</code>: đọc dãy số.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">a = [3, 8, 1, 9, 4, 7]
+print(sum(a), min(a), max(a), len(a))
+print(any(x &gt; 8 for x in a), all(x &gt; 0 for x in a))
+b = a[1::2] + a[::-2]
+print(b, sum(b[:3]), max(b[2:]))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">32 1 9 6
+True True
+[8, 9, 7, 7, 9, 8] 24 9</pre></div><div class="key"><code>a[1::2]</code> = [8, 9, 7]; <code>a[::-2]</code> = [7, 9, 8] (từ cuối, lùi hai).</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 3</span><h1>Bẫy: xoá phần tử khi đang duyệt</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Không nên</h3><p style="margin:0 0 8px">Xoá phần tử của danh sách <b>trong lúc for duyệt chính nó</b> làm các phần tử sau dồn chỗ nên bị <b>bỏ sót</b>.</p><p style="margin:0 0 8px">Cách đúng: duyệt <b>bản sao</b>, hoặc <b>tạo danh sách mới</b> bằng comprehension.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a = [2, 4, 6, 7]
+for x in a:
+    if x % 2 == 0:
+        a.remove(x)
+print(a)
+b = [2, 4, 6, 7]
+b = [x for x in b if x % 2]
+print(b)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[4, 7]
+[7]</pre></div><div class="key">Cách sai chỉ xoá 2 và 6 (bỏ sót 4) vì sau khi xoá 2, số 4 nhảy lên vị trí 0 và bị bỏ qua.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 4</span><h1>Tuple (bộ): dãy bất biến</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đặc điểm</h3><p style="margin:0 0 8px">Viết trong <b>( )</b>: <code>t = (3, 5)</code>. <b>Không sửa được</b> sau khi tạo.</p><p style="margin:0 0 8px">Tuple một phần tử phải có <b>dấu phẩy</b>: <code>(5,)</code>.</p><p style="margin:0 0 8px">Hay dùng để <b>trả nhiều giá trị</b> từ hàm, làm <b>khoá</b> của dict, và <b>phần tử của set</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">t = (3, 5)
+x, y = t
+print(x + y, t[0], len(t))
+print(type((5)), type((5,)))
+def f(a, b):
+    return a + b, a * b
+print(f(3, 4))
+t[0] = 9</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">8 3 2
+&lt;class 'int'&gt; &lt;class 'tuple'&gt;
+(7, 12)</pre></div><div class="res"><span class="lab">Dòng cuối gây lỗi</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">TypeError: 'tuple' object does not support item assignment</pre></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 4</span><h1>Set (tập hợp): không trùng, không thứ tự</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đặc điểm và phép toán</h3><p style="margin:0 0 8px">Viết trong <b>{ }</b>; <b>tự loại phần tử trùng</b>, <b>không có chỉ số</b>. Tập rỗng là <code>set()</code> (không phải {}).</p><p style="margin:0 0 8px">Kiểm tra <code>x in s</code> <b>rất nhanh</b> (trung bình O(1)).</p><p style="margin:0 0 8px">Phép toán: <b>|</b> hợp, <b>&amp;</b> giao, <b>−</b> hiệu, <b>^</b> hiệu đối xứng.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">a = {1, 2, 3, 4}
+b = {3, 4, 5}
+print(a | b, a &amp; b)
+print(a - b, a ^ b)
+print(len({1, 1, 2, 2, 3}), 3 in a)
+print(len(set([4, 8, 15, 16, 23, 42, 4])))
+print(type({}), type(set()))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">{1, 2, 3, 4, 5} {3, 4}
+{1, 2} {1, 2, 5}
+3 True
+6
+&lt;class 'dict'&gt; &lt;class 'set'&gt;</pre></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 4</span><h1>Dict (từ điển): ánh xạ khoá → giá trị</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đặc điểm</h3><p style="margin:0 0 8px">Viết <b>{khoá: giá_trị}</b>; khoá <b>không trùng</b> và phải <b>bất biến</b> (số, xâu, tuple).</p><p style="margin:0 0 8px">Tra cứu theo khoá <b>rất nhanh</b>: <code>d[k]</code>; khoá không có → <b>KeyError</b>; dùng <code>d.get(k, mặc_định)</code> để an toàn.</p><p style="margin:0 0 8px">Duyệt: <code>d.items()</code>, <code>d.keys()</code>, <code>d.values()</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">d = {"an": 8, "binh": 6}
+d["chi"] = 9
+d["an"] += 1
+print(d, len(d))
+print(d.get("hoa", 0), "an" in d)
+for ten, diem in d.items():
+    print(ten, diem)
+print(max(d, key=d.get))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">{'an': 9, 'binh': 6, 'chi': 9} 3
+0 True
+an 9
+binh 6
+chi 9
+an</pre></div><div class="key"><b>in</b> kiểm tra <b>khoá</b>, không kiểm tra giá trị.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 4</span><h1>Dict comprehension và đếm tần suất</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ví dụ</h3><p style="margin:0 0 8px"><code>{x: x % 3 for x in range(6)}</code> tạo dict x → x mod 3.</p><p style="margin:0 0 8px">Đếm tần suất phần tử dãy: dict + <code>get</code>, hoặc <code>Counter</code> (module collections).</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">b = {x: x % 3 for x in range(6)}
+print(b, b[5])
+from collections import Counter
+cnt = Counter([3, 1, 3, 2, 3, 1])
+print(cnt, cnt.most_common(1))
+tan = {}
+for x in [3, 1, 3, 2, 3, 1]:
+    tan[x] = tan.get(x, 0) + 1
+print(tan)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">{0: 0, 1: 1, 2: 2, 3: 0, 4: 1, 5: 2} 2
+Counter({3: 3, 1: 2, 2: 1}) [(3, 3)]
+{3: 3, 1: 2, 2: 1}</pre></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 4</span><h1>So sánh bốn kiểu dữ liệu</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>list</th><th>tuple</th><th>set</th><th>dict</th></tr><tr><td>Kí hiệu</td><td>[1, 2]</td><td>(1, 2)</td><td>{1, 2}</td><td>{k: v}</td></tr><tr><td>Thứ tự</td><td>có</td><td>có</td><td><b>không</b></td><td>giữ thứ tự thêm vào</td></tr><tr><td>Sửa được</td><td>có</td><td><b>không</b></td><td>có</td><td>có</td></tr><tr><td>Trùng</td><td>cho phép</td><td>cho phép</td><td><b>không</b></td><td>khoá không trùng</td></tr><tr><td>Tra cứu</td><td>theo chỉ số</td><td>theo chỉ số</td><td>x in s (nhanh)</td><td>theo khoá (nhanh)</td></tr><tr><td>Dùng khi</td><td>dãy dữ liệu</td><td>bộ cố định, khoá dict</td><td>loại trùng, kiểm tra thuộc</td><td>tra cứu, đếm tần suất</td></tr></table><div class="key">Kiểm tra <code>x in list</code> mất O(n); <code>x in set</code> hoặc <code>x in dict</code> chỉ O(1). Đây là lí do bài “có phần tử trùng” dùng set thay vì list.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 4</span><h1>Phát hiện phần tử trùng: list chậm, set nhanh</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>So sánh hai cách</h3><p style="margin:0 0 8px"><b>Dùng list</b> <code>seen</code>: mỗi lần <code>x in seen</code> duyệt cả list → tổng <b>O(n²)</b>.</p><p style="margin:0 0 8px"><b>Dùng set</b>: kiểm tra và thêm đều O(1) trung bình → tổng <b>O(n)</b>.</p><p style="margin:0 0 8px">Cách ngắn nhất: <code>len(set(a)) != len(a)</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">def co_trung(a):
+    seen = set()
+    for x in a:
+        if x in seen:
+            return True
+        seen.add(x)
+    return False
+print(co_trung([3, 1, 4, 1]), co_trung([1, 2, 3]))
+print(len(set([3, 1, 4, 1])) != 4)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">True False
+True</pre></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 5</span><h1>Tự kiểm tra: sao chép</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Cho a = [5, 3, 8, 1]; b = a; b.append(7); c = a[:]; c.sort(). In a, c.</p><pre class="code" style="font-size:calc(21px*var(--z,1))">a = [5, 3, 8, 1]
+b = a
+b.append(7)
+c = a[:]
+c.sort()
+print(a, c)</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">b là tên khác của a → <code>b.append(7)</code> làm <b>a = [5, 3, 8, 1, 7]</b>.</p><p style="margin:0 0 8px">c là bản sao (chụp sau khi a đã có 7) → [5, 3, 8, 1, 7]; sort → <b>[1, 3, 5, 7, 8]</b> và a không đổi.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[5, 3, 8, 1, 7] [1, 3, 5, 7, 8]</pre></div></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 5</span><h1>Tự kiểm tra (HSG): phát biểu đúng/sai</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Cho: a = [4, 8, 15, 16, 23, 42]; d = list(zip(a, a[1:])). Có đúng “d có 6 cặp” không? Tập {x % 5 for x in a} có mấy phần tử?</p><pre class="code" style="font-size:calc(21px*var(--z,1))">a = [4, 8, 15, 16, 23, 42]
+d = list(zip(a, a[1:]))
+print(len(d), len({x % 5 for x in a}))</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>zip dừng ở dãy ngắn nhất</b>: a có 6, a[1:] có 5 → d có <b>5</b> cặp. Phát biểu “6 cặp” là <b>sai</b>.</p><p style="margin:0 0 8px">Dư khi chia 5: 4, 3, 0, 1, 3, 2 → tập {0, 1, 2, 3, 4} có <b>5</b> phần tử (3 trùng được loại).</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">5 5</pre></div></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · 5</span><h1>Tự kiểm tra (HSG): ngăn xếp bằng list</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Chương trình sau in ra gì? Giải thích bằng bảng theo dõi ngăn xếp st.</p><pre class="code" style="font-size:calc(20px*var(--z,1))">st = []
+kq = []
+for ch in "abcdef":
+    st.append(ch)
+    if len(st) == 3:
+        kq.append(st.pop())
+        kq.append(st.pop())
+print(kq, st)</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Thêm a, b → st = [a, b]; thêm c → st = [a, b, c], đủ 3: pop c, pop b → kq = [c, b], st = [a].</p><p style="margin:0 0 8px">Thêm d → [a, d]; thêm e → [a, d, e], đủ 3: pop e, pop d → kq = [c, b, e, d], st = [a].</p><p style="margin:0 0 8px">Thêm f → [a, f] (2 phần tử, chưa đủ 3). Kết quả: <b>kq = [c, b, e, d], st = [a, f]</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">['c', 'b', 'e', 'd'] ['a', 'f']</pre></div></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>List: <b>mutable</b>, có chỉ số, cắt lát như xâu; tuple <b>bất biến</b>; set <b>không trùng</b>; dict <b>khoá → giá trị</b>.</li><li><b>b = a</b> là hai tên một danh sách; <b>a[:]</b> là bản sao nông; lồng nhau cần sao chép <b>sâu</b>.</li><li><b>sort()</b> sửa tại chỗ, trả None; <b>sorted()</b> trả danh sách mới; <b>key</b> chọn tiêu chí.</li><li><b>Comprehension</b>, <b>zip</b> (dừng ở dãy ngắn), <b>enumerate</b>.</li><li><b>in</b> trên set/dict nhanh O(1), trên list chậm O(n).</li><li>Hàm <b>sửa trực tiếp</b> danh sách tham số làm đổi danh sách gốc.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Bản sao nông</td><td>a[:], a.copy()</td></tr><tr><td class="m">Sắp xếp mới</td><td>sorted(a)</td></tr><tr><td class="m">Tập rỗng</td><td>set()</td></tr><tr><td class="m">Cặp kề</td><td>zip(a, a[1:])</td></tr></table><div class="warn">Gán a = a.sort(); quên sao chép sâu; xoá phần tử khi đang duyệt.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><code>(5)</code> không phải tuple; phải <code>(5,)</code>.</li><li><code>{}</code> là dict rỗng, <b>không phải</b> set.</li><li><code>[[0]*3]*3</code> tạo các hàng <b>trùng nhau</b>.</li><li>Khoá dict phải bất biến.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>collections</b>: Counter, deque, defaultdict.</li><li><b>heapq</b> (hàng đợi ưu tiên).</li><li><b>bisect</b> tìm kiếm nhị phân trên list.</li></ul></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>[1,2,3][::-1]</code>?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>len({1,2,2,3})</code>?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>b = a.copy()</code> khác <code>b = a</code> ở đâu?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>sorted([3,1,2], reverse=True)</code>?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>d.get("x", 0)</code> khi d không có “x”?</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>[3, 2, 1]</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>3</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>copy</b> tạo danh sách mới; <b>b = a</b> dùng chung.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>[3, 2, 1]</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>0</b> (không lỗi).</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Nhập dãy số, in các số chẵn theo thứ tự ban đầu. Thử 4 7 2 9 6.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Đếm số phần tử <b>khác nhau</b> của dãy. Thử 3 1 3 2 3 1.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. In số lần xuất hiện của mỗi giá trị, theo thứ tự giá trị tăng dần. Thử 3 1 3 2 3 1.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Sắp xếp danh sách học sinh (tên, điểm) giảm dần theo điểm; bằng nhau xếp theo tên.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Cho dãy a, đếm số cặp (i &lt; j) có a[i] + a[j] = k bằng dict trong O(n). Thử a = 3 1 4 1 5 9 2 6, k = 7.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Tìm <b>độ dài dãy con liên tiếp dài nhất</b> gồm các phần tử đôi một khác nhau. Thử 2 3 4 3 5 6 2 7.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>[4, 2, 6].</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>3 giá trị khác nhau.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>1 2; 2 1; 3 3; .</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>ds.sort(key=lambda p: (-p[1], p[0]))</code>.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">PYTHON 3B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Duyệt từng x, cộng <code>dem[k - x]</code> rồi tăng <code>dem[x]</code> → 4 cặp.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Cửa sổ trượt với set/dict ghi vị trí gần nhất → 6.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
