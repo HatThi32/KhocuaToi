@@ -1,0 +1,890 @@
+[
+ {
+  "id": "h-py-01",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "ham-pham-vi"
+  ],
+  "type": "mcq",
+  "stem": "Đoạn chương trình in ra gì? (chú ý đối số mặc định là đối tượng thay đổi được)",
+  "optWhy": [],
+  "cl": 2001,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "[1, 2] [2] [3]",
+   "[1, 2] [1, 2] [3]",
+   "[1] [1, 2] [3]",
+   "[1] [2] [3]"
+  ],
+  "key": 1,
+  "why": "Danh sách mặc định được tạo MỘT lần khi định nghĩa hàm và dùng chung cho mọi lần gọi không truyền đối số; a và b là cùng một đối tượng. Kết quả chạy thật: [1, 2] [1, 2] [3]",
+  "src": "verified-py",
+  "code": "def them(x, ds=[]):\n    ds.append(x)\n    return ds\na = them(1)\nb = them(2)\nc = them(3, [])\nprint(a, b, c)",
+  "mono": true
+ },
+ {
+  "id": "h-py-02",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "ngoai-le",
+   "ham-pham-vi"
+  ],
+  "type": "mcq",
+  "stem": "Hàm sau trả về giá trị nào?",
+  "optWhy": [],
+  "cl": 2002,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "try",
+   "fin",
+   "try fin",
+   "fin try"
+  ],
+  "key": 3,
+  "why": "Khối finally luôn chạy trước khi hàm thật sự trả về; ở đây nó in 'fin ' rồi hàm trả 'try'. Kết quả chạy thật: fin try",
+  "src": "verified-py",
+  "code": "def f():\n    try:\n        return 'try'\n    finally:\n        print('fin', end=' ')\nprint(f())",
+  "mono": true
+ },
+ {
+  "id": "h-py-03",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "ham-pham-vi"
+  ],
+  "type": "mcq",
+  "stem": "Danh sách ham gồm các hàm lambda. Kết quả in ra:",
+  "optWhy": [],
+  "cl": 2003,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "[3, 3, 3]",
+   "[2, 2, 2]",
+   "[0, 0, 0]",
+   "[0, 1, 2]"
+  ],
+  "key": 1,
+  "why": "Các lambda đều tham chiếu cùng biến i; khi gọi, i đã dừng ở giá trị cuối là 2 (ràng buộc muộn). Kết quả chạy thật: [2, 2, 2]",
+  "src": "verified-py",
+  "code": "ham = [lambda: i for i in range(3)]\nprint([f() for f in ham])",
+  "mono": true
+ },
+ {
+  "id": "h-py-04",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "xau-danh-sach",
+   "xau"
+  ],
+  "type": "mcq",
+  "stem": "Với s = 'abcdefgh', biểu thức in ra:",
+  "optWhy": [],
+  "cl": 2004,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "heb gec cd",
+   "heb gec ce",
+   "hed gec ce",
+   "hed ge ce"
+  ],
+  "key": 1,
+  "why": "Bước âm duyệt từ phải sang trái; chỉ số đầu nằm bên phải chỉ số cuối. Kết quả chạy thật: heb gec ce",
+  "src": "verified-py",
+  "code": "s = 'abcdefgh'\nprint(s[::-3], s[-2:1:-2], s[2:-2][::2])",
+  "mono": true
+ },
+ {
+  "id": "h-py-05",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "xau-danh-sach"
+  ],
+  "type": "mcq",
+  "stem": "Sau khi chạy, a, b, c in ra là:",
+  "optWhy": [],
+  "cl": 2005,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "[1, 2, 3, 4] [1, 2, 3, 4] [1, 2, 3, 4, 5]",
+   "[1, 2, 3] [1, 2, 3, 4] [1, 2, 3, 5]",
+   "[1, 2, 3] [1, 2, 3, 4] [1, 2, 3, 4, 5]",
+   "[1, 2, 3, 4, 5] [1, 2, 3, 4, 5] [1, 2, 3, 4, 5]"
+  ],
+  "key": 0,
+  "why": "b += [4] thay đổi TẠI CHỖ đối tượng chung với a; c = c + [5] tạo danh sách mới nên a không đổi thêm. Kết quả chạy thật: [1, 2, 3, 4] [1, 2, 3, 4] [1, 2, 3, 4, 5]",
+  "src": "verified-py",
+  "code": "a = [1, 2, 3]\nb = a\nb += [4]\nc = a\nc = c + [5]\nprint(a, b, c)",
+  "mono": true
+ },
+ {
+  "id": "h-py-06",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "tinh-toan",
+   "bieu-thuc"
+  ],
+  "type": "mcq",
+  "stem": "Kết quả in ra của dòng lệnh sau:",
+  "optWhy": [],
+  "cl": 2006,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "-4 2 -3 2 4 (-3, 2)",
+   "-4 2 -4 3 4 (-2, 2)",
+   "-3 -1 -3 3 4 (-2, -1)",
+   "-4 2 -4 2 4 (-3, 2)"
+  ],
+  "key": 3,
+  "why": "// làm tròn xuống (về −∞), % cùng dấu với số chia; round làm tròn chẵn (round half to even). Kết quả chạy thật: -4 2 -4 2 4 (-3, 2)",
+  "src": "verified-py",
+  "code": "print(-7 // 2, -7 % 3, 7 // -2, round(2.5), round(3.5), divmod(-7, 3))",
+  "mono": true
+ },
+ {
+  "id": "h-py-07",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "xau-danh-sach",
+   "mang-2d"
+  ],
+  "type": "mcq",
+  "stem": "Đoạn chương trình in ra gì?",
+  "optWhy": [],
+  "cl": 2007,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "[[0, 0, 0], [0, 0, 0], [0, 0, 0]] [[1, 0, 0], [0, 0, 0], [0, 0, 0]]",
+   "[[1, 0, 0], [0, 0, 0], [0, 0, 0]] [[1, 0, 0], [0, 0, 0], [0, 0, 0]]",
+   "[[1, 0, 0], [1, 0, 0], [1, 0, 0]] [[1, 0, 0], [0, 0, 0], [0, 0, 0]]",
+   "[[1, 0, 0], [0, 0, 0], [0, 0, 0]] [[1, 0, 0], [1, 0, 0], [1, 0, 0]]"
+  ],
+  "key": 2,
+  "why": "Nhân danh sách bằng * chỉ sao chép THAM CHIẾU tới cùng một hàng; viết bằng list comprehension tạo ba hàng độc lập. Kết quả chạy thật: [[1, 0, 0], [1, 0, 0], [1, 0, 0]] [[1, 0, 0], [0, 0, 0], [0, 0, 0]]",
+  "src": "verified-py",
+  "code": "m = [[0] * 3] * 3\nm[0][0] = 1\nn = [[0] * 3 for _ in range(3)]\nn[0][0] = 1\nprint(m, n)",
+  "mono": true
+ },
+ {
+  "id": "h-py-08",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "de-quy"
+  ],
+  "type": "mcq",
+  "stem": "Hàm fib được gọi bao nhiêu lần (kể cả lần gọi đầu) khi chạy fib(7), và giá trị trả về là gì?",
+  "optWhy": [],
+  "cl": 2008,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "0 13 41",
+   "1 13 41",
+   "1 13 25",
+   "0 13 25"
+  ],
+  "key": 0,
+  "why": "Đối số in ra được tính từ trái sang phải: dem (0), rồi gọi fib(7)=13, rồi dem (số lần gọi). Số lời gọi của fib(7) là 41. Kết quả chạy thật: 0 13 41",
+  "src": "verified-py",
+  "code": "dem = 0\ndef fib(n):\n    global dem\n    dem += 1\n    return n if n < 2 else fib(n - 1) + fib(n - 2)\nprint(dem, fib(7), dem)",
+  "mono": true
+ },
+ {
+  "id": "h-py-09",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "thuat-toan",
+   "tinh-toan"
+  ],
+  "type": "mcq",
+  "stem": "Đếm số lần dòng lệnh bên trong thực hiện và in tổng:",
+  "optWhy": [],
+  "cl": 2009,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "62",
+   "100",
+   "55",
+   "70"
+  ],
+  "key": 0,
+  "why": "Vòng đôi: n + (n−1) + … + 1 = 55 lần. Vòng while nhân đôi k từ 1 đến ≥ 100 mất 7 lần. Tổng 62. Kết quả chạy thật: 62",
+  "src": "verified-py",
+  "code": "n = 10\ndem = 0\nfor i in range(n):\n    for j in range(i, n):\n        dem += 1\nk = 1\nwhile k < n * n:\n    k *= 2\n    dem += 1\nprint(dem)",
+  "mono": true
+ },
+ {
+  "id": "h-py-10",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "xau",
+   "xau-danh-sach"
+  ],
+  "type": "mcq",
+  "stem": "Kết quả in ra:",
+  "optWhy": [],
+  "cl": 2010,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "[('i', 4), ('s', 4), ('m', 1), ('p', 2)]",
+   "[('m', 1), ('p', 2), ('i', 4), ('s', 4)]",
+   "[('i', 4), ('p', 2), ('s', 4), ('m', 1)]",
+   "[('i', 4), ('s', 4), ('p', 2), ('m', 1)]"
+  ],
+  "key": 3,
+  "why": "Khoá (-số lần, ký tự) sắp giảm dần theo số lần rồi tăng dần theo ký tự khi đồng hạng. Kết quả chạy thật: [('i', 4), ('s', 4), ('p', 2), ('m', 1)]",
+  "src": "verified-py",
+  "code": "s = 'mississippi'\nd = {}\nfor ch in s:\n    d[ch] = d.get(ch, 0) + 1\nprint(sorted(d.items(), key=lambda p: (-p[1], p[0])))",
+  "mono": true
+ },
+ {
+  "id": "h-py-11",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "thuat-toan",
+   "sap-xep"
+  ],
+  "type": "mcq",
+  "stem": "Sắp xếp theo độ dài (sorted ổn định). Kết quả:",
+  "optWhy": [],
+  "cl": 2011,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "['fig', 'kiwi', 'pear', 'plum', 'apple', 'banana']",
+   "['fig', 'pear', 'kiwi', 'plum', 'apple', 'banana']",
+   "['fig', 'apple', 'kiwi', 'pear', 'plum', 'banana']",
+   "['fig', 'kiwi', 'plum', 'pear', 'apple', 'banana']"
+  ],
+  "key": 0,
+  "why": "sorted là sắp xếp ổn định: các từ cùng độ dài giữ nguyên thứ tự xuất hiện ban đầu (kiwi, pear, plum). Kết quả chạy thật: ['fig', 'kiwi', 'pear', 'plum', 'apple', 'banana']",
+  "src": "verified-py",
+  "code": "w = ['kiwi', 'fig', 'banana', 'pear', 'plum', 'apple']\nprint(sorted(w, key=len))",
+  "mono": true
+ },
+ {
+  "id": "h-py-12",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "bieu-thuc"
+  ],
+  "type": "mcq",
+  "stem": "Giá trị in ra (đoản mạch và toán tử logic trả về toán hạng, không phải True/False):",
+  "optWhy": [],
+  "cl": 2012,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "f 0 f 2 f 3 3",
+   "f 0 f 2 f 3 True",
+   "f 0 f 2 3",
+   "f 0 3"
+  ],
+  "key": 0,
+  "why": "and ưu tiên hơn or: f(0) or (f(2) and f(3)). 0 sai nên tính vế phải: f(2) đúng nên tính f(3), kết quả là toán hạng cuối 3. Kết quả chạy thật: f 0 f 2 f 3 3",
+  "src": "verified-py",
+  "code": "def f(x):\n    print('f', x, end=' ')\n    return x\nr = f(0) or f(2) and f(3)\nprint(r)",
+  "mono": true
+ },
+ {
+  "id": "h-py-13",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "cau-truc-du-lieu",
+   "ctdl"
+  ],
+  "type": "mcq",
+  "stem": "Dùng danh sách làm hàng đợi và ngăn xếp. Kết quả in ra:",
+  "optWhy": [],
+  "cl": 2013,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "[1, 4, 1, 5] [3, 1, 4, 1]",
+   "[1, 4, 1, 5, 1] [3, 1, 4]",
+   "[1, 4, 1, 5, 5] [3, 1, 4, 1]",
+   "[1, 4, 1, 5, 1] [3, 1, 4, 1]"
+  ],
+  "key": 1,
+  "why": "Hàng đợi lấy ở đầu (FIFO), ngăn xếp lấy ở cuối (LIFO). st.pop() lần đầu bỏ 5; lần hai lấy 1 đưa vào hàng đợi. Kết quả chạy thật: [1, 4, 1, 5, 1] [3, 1, 4]",
+  "src": "verified-py",
+  "code": "from collections import deque\nq = deque()\nst = []\nfor x in [3, 1, 4, 1, 5]:\n    q.append(x)\n    st.append(x)\nq.popleft()\nst.pop()\nq.append(st.pop())\nprint(list(q), st)",
+  "mono": true
+ },
+ {
+  "id": "h-py-14",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "thuat-toan",
+   "tim-kiem"
+  ],
+  "type": "mcq",
+  "stem": "Tìm kiếm nhị phân: số lần lặp và kết quả (a đã sắp tăng dần):",
+  "optWhy": [],
+  "cl": 2014,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "31 30",
+   "4 30",
+   "6 30",
+   "3 30"
+  ],
+  "key": 3,
+  "why": "Mỗi lần lặp thu hẹp một nửa khoảng; kết quả chạy thật cho biết đúng số lần lặp và chỉ số tìm thấy. Kết quả chạy thật: 3 30",
+  "src": "verified-py",
+  "code": "a = list(range(1, 100, 2))\nx = 61\nl, r, dem = 0, len(a) - 1, 0\nwhile l <= r:\n    dem += 1\n    m = (l + r) // 2\n    if a[m] == x:\n        break\n    if a[m] < x:\n        l = m + 1\n    else:\n        r = m - 1\nprint(dem, m)",
+  "mono": true
+ },
+ {
+  "id": "h-py-15",
+  "topic": "python",
+  "level": 3,
+  "tags": [
+   "ngoai-le",
+   "loi-chay"
+  ],
+  "type": "mcq",
+  "stem": "Chương trình in ra:",
+  "optWhy": [],
+  "cl": 2015,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "xong 3 -1",
+   "xong 3 xong -1",
+   "xong xong 3 -1",
+   "3 -1"
+  ],
+  "key": 2,
+  "why": "finally in ngay khi mỗi lời gọi kết thúc (trước khi print ngoài chạy). Khối else bị bỏ qua vì có return trong try. print ngoài in sau khi cả hai đối số đã tính. Kết quả chạy thật: xong xong 3 -1",
+  "src": "verified-py",
+  "code": "def chia(a, b):\n    try:\n        return a // b\n    except ZeroDivisionError:\n        return -1\n    else:\n        return 0\n    finally:\n        print('xong', end=' ')\nprint(chia(7, 2), chia(7, 0))",
+  "mono": true
+ },
+ {
+  "id": "h-net-01",
+  "topic": "mang",
+  "level": 3,
+  "tags": [
+   "mang-ip"
+  ],
+  "type": "mcq",
+  "stem": "Máy có địa chỉ 172.16.37.200/21. Địa chỉ mạng và địa chỉ quảng bá của mạng chứa máy này là:",
+  "optWhy": [],
+  "cl": 2016,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "172.16.37.0 và 172.16.37.255",
+   "172.16.32.0 và 172.16.39.255",
+   "172.16.32.0 và 172.16.39.254",
+   "172.16.37.192 và 172.16.37.255"
+  ],
+  "key": 1,
+  "why": "/21: mặt nạ 255.255.248.0, khối 8 trong octet thứ 3 → 32..39. Mạng 172.16.32.0, quảng bá 172.16.39.255.",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-net-02",
+  "topic": "mang",
+  "level": 3,
+  "tags": [
+   "mang-ip"
+  ],
+  "type": "mcq",
+  "stem": "Cần chia mạng 192.168.10.0/24 cho các bộ phận có 100, 50, 25 và 12 máy (mỗi bộ phận một mạng con, dùng VLSM, không lãng phí quá mức). Dãy mặt nạ phù hợp theo thứ tự các bộ phận là:",
+  "optWhy": [],
+  "cl": 2017,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "/25, /26, /26, /27",
+   "/24, /25, /26, /27",
+   "/26, /26, /27, /28",
+   "/25, /26, /27, /28"
+  ],
+  "key": 3,
+  "why": "Số host cần: 100→/25 (126), 50→/26 (62), 25→/27 (30), 12→/28 (14). Tổng 128+64+32+16 = 240 ≤ 256 nên vừa trong /24.",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-net-03",
+  "topic": "mang",
+  "level": 3,
+  "tags": [
+   "mang-ip"
+  ],
+  "type": "mcq",
+  "stem": "Từ mạng 10.0.0.0/22 có thể chia được bao nhiêu mạng con /26, và mỗi mạng con dùng được tối đa bao nhiêu địa chỉ máy?",
+  "optWhy": [],
+  "cl": 2018,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "8 mạng, 126 máy",
+   "16 mạng, 62 máy",
+   "64 mạng, 30 máy",
+   "32 mạng, 64 máy"
+  ],
+  "key": 1,
+  "why": "/22 có 1024 địa chỉ; /26 có 64 địa chỉ → 16 mạng, mỗi mạng 62 địa chỉ máy (trừ mạng và quảng bá).",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-net-04",
+  "topic": "mang",
+  "level": 3,
+  "tags": [
+   "mang-bang-thong"
+  ],
+  "type": "mcq",
+  "stem": "Tải tệp 2 GB (quy ước 1 GB = 1000 MB, 1 byte = 8 bit) qua đường truyền 200 Mb/s nhưng chỉ đạt 80% tốc độ danh định. Thời gian tải là:",
+  "optWhy": [],
+  "cl": 2019,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "80 giây",
+   "100 giây",
+   "12,5 giây",
+   "10 giây"
+  ],
+  "key": 1,
+  "why": "2000 MB × 8 = 16 000 Mb; tốc độ thực = 200 × 0,8 = 160 Mb/s; thời gian = 16 000 ÷ 160 = 100 giây.",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-net-05",
+  "topic": "mang",
+  "level": 3,
+  "tags": [
+   "tbmang",
+   "thietbi"
+  ],
+  "type": "mcq",
+  "stem": "Mỗi phòng thực hành có 28 máy, 2 access point, 1 cổng nối lên switch tổng. Có các loại switch 8, 16, 24, 32, 48 cổng. Để mỗi phòng dùng 1 switch và còn ÍT NHẤT 2 cổng dự phòng, loại nhỏ nhất phù hợp là:",
+  "optWhy": [],
+  "cl": 2020,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "Loại 48 cổng",
+   "Loại 32 cổng",
+   "Loại 16 cổng",
+   "Loại 24 cổng"
+  ],
+  "key": 0,
+  "why": "Cần 28 + 2 + 1 = 31 cổng; thêm 2 dự phòng = 33 > 32 nên phải chọn loại 48 cổng.",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-net-06",
+  "topic": "mang",
+  "level": 3,
+  "tags": [
+   "mang-ip"
+  ],
+  "type": "tf",
+  "stem": "Với mặt nạ mạng con 255.255.255.224 (/27), xét các phát biểu (đã kiểm chứng bằng module ipaddress):",
+  "optWhy": [],
+  "cl": 2021,
+  "v2": true,
+  "hard": true,
+  "items": [
+   {
+    "t": "192.168.5.30 và 192.168.5.33 thuộc cùng một mạng con.",
+    "v": false,
+    "why": "Khối 32: 30 thuộc 0–31, 33 thuộc 32–63 nên khác mạng."
+   },
+   {
+    "t": "192.168.5.64 là địa chỉ mạng của một mạng con và không gán cho máy.",
+    "v": true,
+    "why": "Đúng: 64 là bội của 32, là địa chỉ đầu khối."
+   },
+   {
+    "t": "192.168.5.95 có thể gán cho một máy trong mạng 192.168.5.64/27.",
+    "v": false,
+    "why": "Sai: 95 là địa chỉ quảng bá (cuối khối 64–95)."
+   },
+   {
+    "t": "Mỗi mạng con /27 gán được tối đa 30 địa chỉ máy.",
+    "v": true,
+    "why": "Đúng: 32 − 2 = 30."
+   }
+  ],
+  "why": "",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-net-07",
+  "topic": "mang",
+  "level": 3,
+  "tags": [
+   "mang-ip"
+  ],
+  "type": "tf",
+  "stem": "Xét việc phân loại địa chỉ IPv4 (kết quả kiểm chứng bằng chương trình):",
+  "optWhy": [],
+  "cl": 2022,
+  "v2": true,
+  "hard": true,
+  "items": [
+   {
+    "t": "172.31.255.1 là địa chỉ riêng.",
+    "v": true,
+    "why": "Dải riêng 172.16.0.0–172.31.255.255."
+   },
+   {
+    "t": "172.32.0.1 là địa chỉ riêng.",
+    "v": false,
+    "why": "Sai: nằm ngoài dải /12."
+   },
+   {
+    "t": "192.169.1.1 là địa chỉ riêng.",
+    "v": false,
+    "why": "Sai: dải riêng là 192.168.x.x."
+   },
+   {
+    "t": "10.200.3.4 là địa chỉ riêng.",
+    "v": true,
+    "why": "Đúng: thuộc 10.0.0.0/8."
+   }
+  ],
+  "why": "",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-ai-01",
+  "topic": "ai",
+  "level": 3,
+  "tags": [
+   "ml-danhgia"
+  ],
+  "type": "mcq",
+  "stem": "Bộ phát hiện bệnh cho ma trận nhầm lẫn: TP = 45, FP = 15, FN = 5, TN = 35. Chọn bộ số (precision; recall; F1; accuracy) đúng:",
+  "optWhy": [],
+  "cl": 2023,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "0.90; 0.75; 0.818; 0.70",
+   "0.75; 0.90; 0.818; 0.80",
+   "0.75; 0.90; 0.818; 0.70",
+   "0.90; 0.75; 0.818; 0.80"
+  ],
+  "key": 1,
+  "why": "Precision = 45/60 = 0,75; recall = 45/50 = 0,90; F1 = 2PR/(P+R) ≈ 0,818; accuracy = 80/100 = 0,80. Kết quả tính bằng chương trình.",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-ai-02",
+  "topic": "ai",
+  "level": 3,
+  "tags": [
+   "ml-knn"
+  ],
+  "type": "tf",
+  "stem": "Tập huấn luyện k-NN (khoảng cách Euclid): A: (8,8), (4,0), (8,3), (2,1); B: (3,0), (5,1), (1,4), (0,4). Dự đoán nhãn cho điểm mới (5,5). Xét các phát biểu (đã chạy thật):",
+  "optWhy": [],
+  "cl": 2024,
+  "v2": true,
+  "hard": true,
+  "items": [
+   {
+    "t": "Với k = 1, nhãn dự đoán là A.",
+    "v": true,
+    "why": "Điểm gần nhất là (8,8), khoảng cách √18 ≈ 3,61, thuộc lớp A."
+   },
+   {
+    "t": "Với k = 3, nhãn dự đoán là B.",
+    "v": true,
+    "why": "Ba điểm gần nhất: [(3.606, 'A'), (4.0, 'B'), (4.123, 'B')]."
+   },
+   {
+    "t": "Với k = 5, nhãn dự đoán là A.",
+    "v": true,
+    "why": "Năm điểm gần nhất bỏ phiếu: {'A': 3, 'B': 2}."
+   },
+   {
+    "t": "Kết quả dự đoán của k-NN luôn không đổi khi đổi k.",
+    "v": false,
+    "why": "Sai: k thay đổi có thể đổi nhãn."
+   }
+  ],
+  "why": "",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-ai-03",
+  "topic": "ai",
+  "level": 3,
+  "tags": [
+   "ml-kmeans"
+  ],
+  "type": "mcq",
+  "stem": "k-means với k = 2 trên các điểm (1,1), (1,4), (2,2), (6,5), (7,7), (8,6), tâm ban đầu (1,1) và (1,4). Sau HAI vòng lặp (gán rồi cập nhật tâm) hai tâm là:",
+  "optWhy": [],
+  "cl": 2025,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "(1.00; 2.50) và (7.00; 6.00)",
+   "(1.33; 2.33) và (7.00; 6.00)",
+   "(1.00; 1.00) và (1.00; 4.00)",
+   "(1.50; 1.50) và (5.50; 5.50)"
+  ],
+  "key": 1,
+  "why": "Vòng 1 gán các điểm gần (1,1)/(1,4) rồi cập nhật tâm; vòng 2 gán lại và cập nhật. Kết quả chạy bằng chương trình: (1.33; 2.33) và (7.00; 6.00).",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-ai-04",
+  "topic": "ai",
+  "level": 3,
+  "tags": [
+   "ml-hoiquy"
+  ],
+  "type": "mcq",
+  "stem": "Hồi quy tuyến tính y = w·x + b (bình phương tối thiểu) cho x = 1..6, y = 2,1; 3,9; 6,2; 7,8; 10,1; 15,0. Giá trị w (làm tròn 2 chữ số) và phần dư tại x = 6 (y thực − y dự đoán) xấp xỉ là:",
+  "optWhy": [],
+  "cl": 2026,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "w ≈ 2.62; phần dư ≈ 0.00",
+   "w ≈ 2.42; phần dư ≈ 1.43",
+   "w ≈ 2.20; phần dư ≈ -2.02",
+   "w ≈ 2.00; phần dư ≈ 3.00"
+  ],
+  "key": 1,
+  "why": "Một điểm ngoại lai ở cuối kéo độ dốc lên 2.420; điểm đó có phần dư dương lớn. Tính bằng chương trình.",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-ai-05",
+  "topic": "ai",
+  "level": 3,
+  "tags": [
+   "ml-danhgia"
+  ],
+  "type": "mcq",
+  "stem": "Mô hình cho điểm số và nhãn thật: điểm 0.95, 0.8, 0.7, 0.6, 0.55, 0.4, 0.3, 0.2 ứng với nhãn 1, 1, 0, 1, 0, 1, 0, 0 (1 = dương). Dự đoán dương khi điểm ≥ ngưỡng. Hạ ngưỡng từ 0.5 xuống 0.35 thì (precision, recall) thay đổi như thế nào?",
+  "optWhy": [],
+  "cl": 2027,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "(0.60, 0.75) → (0.67, 1.00)",
+   "(0.60, 0.75) → (0.57, 1.00)",
+   "(0.60, 0.75) → (0.50, 1.00)",
+   "(0.75, 0.60) → (0.57, 1.00)"
+  ],
+  "key": 0,
+  "why": "Hạ ngưỡng thì bắt thêm ca dương (recall tăng) nhưng cũng báo nhầm thêm (precision thường giảm). Tính bằng chương trình theo đúng dữ liệu.",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-ai-06",
+  "topic": "ai",
+  "level": 3,
+  "tags": [
+   "mo-phong"
+  ],
+  "type": "mcq",
+  "stem": "Monte Carlo có sai số tỉ lệ 1/√n. Nếu tăng số lần mô phỏng từ n = 10 000 lên n = 1 000 000 thì sai số giảm khoảng bao nhiêu lần?",
+  "optWhy": [],
+  "cl": 2028,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "√10 ≈ 3,2 lần",
+   "1000 lần",
+   "100 lần",
+   "10 lần"
+  ],
+  "key": 3,
+  "why": "Tỉ số sai số = √(10^6 / 10^4) = √100 = 10.",
+  "src": "verified-py"
+ },
+ {
+  "id": "h-web-01",
+  "topic": "web",
+  "level": 3,
+  "tags": [
+   "css-specificity",
+   "css-uutien"
+  ],
+  "type": "mcq",
+  "stem": "Phần tử có id=\"t\" được hiển thị với màu chữ nào?",
+  "optWhy": [],
+  "cl": 2029,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "xanh dương",
+   "xanh lá",
+   "cam",
+   "tím",
+   "đỏ"
+  ],
+  "key": 3,
+  "code": "<style>\ndiv p { color: red; }\n.a .c { color: blue; }\np.c { color: green; }\n#t { color: orange; }\n.b p.c { color: purple !important; }\n</style>\n<div class=\"a b\"><p id=\"t\" class=\"c\">Chữ</p></div>",
+  "mono": true,
+  "why": "Quy tắc có !important thắng mọi quy tắc thường, kể cả #id. Các màu còn lại bị đè. Kết quả dựng trong trình duyệt thật: tím.",
+  "src": "verified-web"
+ },
+ {
+  "id": "h-web-02",
+  "topic": "web",
+  "level": 3,
+  "tags": [
+   "css-specificity",
+   "css-uutien"
+  ],
+  "type": "mcq",
+  "stem": "Phần tử có id=\"t\" hiển thị màu chữ nào?",
+  "optWhy": [],
+  "cl": 2030,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "xanh dương",
+   "đỏ",
+   "xanh lá",
+   "tím",
+   "cam"
+  ],
+  "key": 4,
+  "code": "<style>\nul li { color: red; }\n.x .y { color: blue; }\nli.y { color: green; }\nul.x li.y { color: orange; }\nli { color: purple; }\n</style>\n<ul class=\"x\"><li id=\"t\" class=\"y\">Mục</li></ul>",
+  "mono": true,
+  "why": "Độ cụ thể (ID, lớp, thẻ): ul.x li.y = (0,2,2) lớn nhất; các quy tắc kia nhỏ hơn. Kết quả dựng trong trình duyệt thật: cam.",
+  "src": "verified-web"
+ },
+ {
+  "id": "h-web-03",
+  "topic": "web",
+  "level": 3,
+  "tags": [
+   "css-specificity",
+   "css-uutien"
+  ],
+  "type": "mcq",
+  "stem": "Hai quy tắc cùng độ cụ thể; phần tử có id=\"t\" hiển thị màu chữ nào?",
+  "optWhy": [],
+  "cl": 2031,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "cam",
+   "xanh dương",
+   "xanh lá",
+   "tím",
+   "đỏ"
+  ],
+  "key": 0,
+  "code": "<style>\n.b { color: red; }\n.a { color: blue; }\n.a.b { color: green; }\n.b.a { color: orange; }\n</style>\n<p id=\"t\" class=\"a b\">Chữ</p>",
+  "mono": true,
+  "why": "Độ cụ thể của .a.b và .b.a bằng nhau (0,2,0); khi bằng nhau, quy tắc viết SAU cùng thắng (thứ tự trong CSS, không phải thứ tự trong class). Kết quả dựng trong trình duyệt thật: cam.",
+  "src": "verified-web"
+ },
+ {
+  "id": "h-web-04",
+  "topic": "web",
+  "level": 3,
+  "tags": [
+   "css-specificity",
+   "css-uutien"
+  ],
+  "type": "mcq",
+  "stem": "Phần tử #t kế thừa hay bị ghi đè? Màu chữ hiển thị của nó là:",
+  "optWhy": [],
+  "cl": 2032,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "cam",
+   "tím",
+   "xanh lá",
+   "xanh dương",
+   "đỏ"
+  ],
+  "key": 2,
+  "code": "<style>\n.box { color: blue; }\ndiv { color: red; }\np { color: green; }\n.box p { }\n</style>\n<div class=\"box\"><p id=\"t\">Chữ</p></div>",
+  "mono": true,
+  "why": "p { color: green } nhắm trực tiếp vào phần tử p nên thắng giá trị kế thừa từ .box hay div (kế thừa luôn thua quy tắc trực tiếp, dù cụ thể thế nào). Kết quả dựng trong trình duyệt thật: xanh lá.",
+  "src": "verified-web"
+ },
+ {
+  "id": "h-web-05",
+  "topic": "web",
+  "level": 3,
+  "tags": [
+   "javascript"
+  ],
+  "type": "mcq",
+  "stem": "Đoạn mã JavaScript in ra gì? (so sánh ép kiểu, toán tử + với chuỗi)",
+  "optWhy": [],
+  "cl": 2033,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "53 2 33 12 1 NaN  true false",
+   "53 2 33 12 1 NaN  true true",
+   "53 2 33 12 0 NaN  true false",
+   "8 2 6 12 1 NaN  true false"
+  ],
+  "key": 0,
+  "why": "+ nối chuỗi nếu một vế là chuỗi; - và * ép về số; null → 0, undefined → NaN; 3 > 2 > 1 → true > 1 → 1 > 1 → false. Kết quả chạy thật bằng Node.js: 53 2 33 12 1 NaN  true false",
+  "src": "verified-js",
+  "code": "console.log('5' + 3, '5' - 3, 1 + 2 + '3', '3' * '4', null + 1, undefined + 1, [] + [], 1 < 2 < 3, 3 > 2 > 1);",
+  "mono": true
+ },
+ {
+  "id": "h-web-06",
+  "topic": "web",
+  "level": 3,
+  "tags": [
+   "javascript"
+  ],
+  "type": "mcq",
+  "stem": "Kết quả in ra:",
+  "optWhy": [],
+  "cl": 2034,
+  "v2": true,
+  "hard": true,
+  "options": [
+   "1,10,2,3 | 1,2,3,10 | NaN false",
+   "1,10,2,3 | 1,2,3,10 | number true",
+   "1,2,3,10 | 1,2,3,10 | number true",
+   "1,10,2,3 | 1,2,3,10 | number false"
+  ],
+  "key": 3,
+  "why": "sort() mặc định so sánh CHUỖI nên 10 đứng trước 2; typeof NaN là 'number'; 0.1+0.2 ≠ 0.3 do sai số dấu phẩy động. Kết quả chạy thật bằng Node.js: 1,10,2,3 | 1,2,3,10 | number false",
+  "src": "verified-js",
+  "code": "let a = [3, 1, 10, 2];\na.sort();\nconsole.log(a.join(','));\nconsole.log([3,1,10,2].sort((x, y) => x - y).join(','));\nconsole.log(typeof NaN, 0.1 + 0.2 === 0.3);",
+  "mono": true
+ }
+]
