@@ -38,3 +38,5 @@ Phản hồi của giáo viên: slide cũ quá ngắn, học sinh không tự h�
 
 - Lớp 12 KHÔNG học JavaScript: bank không có câu JS, không có bài w6b. Không thêm lại.
 - Giải thích từng phương án viết tay: gen/oh_*.py (dict id -> 4 lí do) + gen/apply_oh.py oh_web1 oh_web2 ... (chạy lại được); gen/expl_web_auto.py tự sinh cho selector/độ đặc hiệu/hộp.
+
+- Python "Giải từng bước": gen/walk.py (chạy thật + diễn giải), walk_apply.py, walk_hand.py (demo/ghi chú tay) -> field walk.sections trong bank; UI walkBlock + PYHOW trong app_tpl.html; test tests/t10.js. Điều kiện có gọi hàm không được eval (tránh tác dụng phụ).
