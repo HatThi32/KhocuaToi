@@ -102,226 +102,260 @@ pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px sol
 </style>
 
 <div id="wrap">
-<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 8</span></div>
-<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>NGĂN XẾP VÀ<br>HÀNG ĐỢI</h1><p style="font-size:28px;line-height:1.5">Cấu trúc dữ liệu LIFO và FIFO: stack bằng list, queue bằng deque; kiểm tra ngoặc, biểu thức hậu tố, mô phỏng hàng đợi.</p><div><span class="chip">stack</span><span class="chip">queue</span><span class="chip">LIFO</span><span class="chip">FIFO</span><span class="chip">deque</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
-<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
-<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
-<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
-<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+<section class="s title-s p7"><div class="hd"><span class="k">TIN HỌC · PYTHON 8</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>NGĂN XẾP (STACK)<br>VÀ HÀNG ĐỢI (QUEUE)</h1><p style="font-size:28px;line-height:1.5">LIFO và FIFO, cài đặt bằng list và deque, kiểm tra ngoặc, biểu thức hậu tố, bài Josephus, BFS, ngăn xếp đơn điệu, hàng đợi hai đầu.</p><div><span class="chip">stack</span><span class="chip">queue</span><span class="chip">deque</span><span class="chip">hậu tố</span><span class="chip">BFS</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">stack</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">queue</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">deque</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">hậu tố</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">BFS</text></svg></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8</span><h1>Mục tiêu và nội dung bài</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Mô tả <b>ngăn xếp (LIFO)</b> và <b>hàng đợi (FIFO)</b>.</li><li>Cài đặt ngăn xếp bằng <b>list</b> và hàng đợi bằng <b>collections.deque</b>.</li><li>Dùng ngăn xếp: <b>kiểm tra ngoặc</b>, <b>đảo xâu</b>, <b>tính biểu thức hậu tố</b>.</li><li>Dùng hàng đợi: <b>mô phỏng</b>, duyệt theo lớp.</li><li>Trace thao tác <b>push/pop, enqueue/dequeue</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Ngăn xếp</li><li>Ứng dụng ngăn xếp</li><li>Hàng đợi</li><li>Ứng dụng hàng đợi</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Phân biệt <b>LIFO</b> (ngăn xếp) và <b>FIFO</b> (hàng đợi).</li><li>Cài đặt bằng <b>list</b> và <b>collections.deque</b>; biết <b>pop(0)</b> chậm.</li><li><b>Chạy tay</b> các thao tác push, pop, enqueue, dequeue.</li><li>Giải bài kinh điển: <b>kiểm tra ngoặc, hậu tố, Josephus, loang BFS</b>.</li><li>Dùng <b>ngăn xếp đơn điệu</b> cho bài “phần tử lớn hơn kế tiếp”.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Ngăn xếp</li><li>Hàng đợi</li><li>Ứng dụng</li><li>Nâng cao HSG</li><li>Tự kiểm tra</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Ngăn xếp (stack): LIFO</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li><b>Ngăn xếp</b>: thêm và lấy phần tử ở <b>cùng một đầu</b> (đỉnh).</li><li>Nguyên tắc <b>LIFO</b>: <b>vào sau, ra trước</b> (Last In, First Out).</li><li>Ví dụ: chồng đĩa, nút Back của trình duyệt, Undo.</li></ul></div></div><div class="col"><div class="res"><span class="lab">Ngăn xếp</span><svg viewBox="0 0 520 300" style="width:100%"><g font-family="monospace" font-weight="800" font-size="26" text-anchor="middle"><rect x="170" y="215" width="180" height="50" fill="#C5CAE9" stroke="#283593" stroke-width="3"/><text x="260" y="248" fill="#0B2545">5</text><rect x="170" y="160" width="180" height="50" fill="#C5CAE9" stroke="#283593" stroke-width="3"/><text x="260" y="193" fill="#0B2545">9</text><rect x="170" y="105" width="180" height="50" fill="#FFB300" stroke="#283593" stroke-width="3"/><text x="260" y="138" fill="#0B2545">2</text></g><path d="M100 60 L100 100" stroke="#2E7D32" stroke-width="6"/><path d="M85 85 L100 105 L115 85" fill="none" stroke="#2E7D32" stroke-width="6"/><text x="100" y="45" text-anchor="middle" font-size="24" font-weight="800" fill="#2E7D32">push</text><path d="M420 105 L420 60" stroke="#C62828" stroke-width="6"/><path d="M405 78 L420 58 L435 78" fill="none" stroke="#C62828" stroke-width="6"/><text x="420" y="45" text-anchor="middle" font-size="24" font-weight="800" fill="#C62828">pop</text><text x="260" y="95" text-anchor="middle" font-size="22" font-weight="800" fill="#0B2545">đỉnh (top)</text></svg></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Ngăn xếp: vào sau, ra trước (LIFO)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hình dung chồng đĩa</h3><p style="margin:0 0 8px">Chỉ thao tác ở <b>một đầu</b> gọi là <b>đỉnh</b>.</p><p style="margin:0 0 8px"><b>push(x)</b>: đặt x lên đỉnh. <b>pop()</b>: lấy phần tử ở đỉnh. <b>top</b>: xem đỉnh. <b>rỗng?</b>: kiểm tra.</p><p style="margin:0 0 8px">Phần tử <b>vào sau thì ra trước</b>: Last In – First Out.</p></div></div><div class="col"><div class="res"><span class="lab">Ngăn xếp có 3 phần tử: a, b, c</span><svg viewBox="0 0 520 330" style="width:100%"><g font-family="sans-serif" font-weight="800" font-size="26" text-anchor="middle"><rect x="150" y="260" width="220" height="48" rx="6" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="260" y="293" fill="#0B2545">a</text><rect x="150" y="210" width="220" height="48" rx="6" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="260" y="243" fill="#0B2545">b</text><rect x="150" y="160" width="220" height="48" rx="6" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="260" y="193" fill="#0B2545">c  ← đỉnh</text><text x="260" y="50" fill="#C62828" font-size="30">push ↓   pop ↑</text><polygon points="260,60 236,100 284,100" fill="#C62828" opacity=".0"/><line x1="130" y1="150" x2="130" y2="320" stroke="#0B2545" stroke-width="5"/><line x1="390" y1="150" x2="390" y2="320" stroke="#0B2545" stroke-width="5"/></g></svg></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Các thao tác trên ngăn xếp</h1></div>
-<div class="bd g1"><div class="col"><table><tr><th>Thao tác</th><th>Ý nghĩa</th><th>Với list s</th></tr><tr><td class="m"><b>push</b></td><td>đẩy phần tử lên đỉnh</td><td><code>s.append(x)</code></td></tr><tr><td class="m"><b>pop</b></td><td>lấy và bỏ phần tử ở đỉnh</td><td><code>s.pop()</code></td></tr><tr><td class="m"><b>top / peek</b></td><td>xem đỉnh, không bỏ</td><td><code>s[-1]</code></td></tr><tr><td class="m"><b>empty</b></td><td>kiểm tra rỗng</td><td><code>not s</code> hoặc <code>len(s) == 0</code></td></tr><tr><td class="m"><b>size</b></td><td>số phần tử</td><td><code>len(s)</code></td></tr></table><div class="warn"><b>pop trên ngăn xếp rỗng</b> gây <b>IndexError</b>: luôn kiểm tra rỗng trước.</div></div></div></section>
-
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Ngăn xếp bằng list</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">s = []
-s.append(5)
-s.append(9)
-s.append(2)
-print(s)
-print(s.pop())
-print(s[-1])
-print(s, len(s))</pre><div class="key">Đầu <b>cuối</b> của list chính là <b>đỉnh</b> ngăn xếp: <code>append</code> và <code>pop()</code> đều <b>O(1)</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[5, 9, 2]
-2
-9
-[5, 9] 2</pre></div></div></div></section>
-
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Trace push/pop</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">s = []
-for x in [3, 1, 4]:
-    s.append(x)
-    print("push", x, "-&gt;", s)
-while s:
-    print("pop", s.pop(), "-&gt;", s)</pre><div class="key">Thứ tự ra <b>ngược</b> thứ tự vào: nhập 3, 1, 4 thì lấy ra 4, 1, 3.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">push 3 -&gt; [3]
-push 1 -&gt; [3, 1]
-push 4 -&gt; [3, 1, 4]
-pop 4 -&gt; [3, 1]
-pop 1 -&gt; [3]
-pop 3 -&gt; []</pre></div></div></div></section>
-
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Đảo ngược xâu bằng ngăn xếp</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def dao(s):
-    st = []
-    for ch in s:
-        st.append(ch)
-    kq = ""
-    while st:
-        kq += st.pop()
-    return kq
-
-print(dao("Python"))
-print(dao("abc") == "abc"[::-1])</pre><div class="key">Đẩy từng kí tự vào, rồi lấy ra: thứ tự bị <b>đảo</b>. Cách ngắn hơn là <code>s[::-1]</code>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">nohtyP
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Cài đặt ngăn xếp bằng list</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đúng các thao tác</h3><ul style="gap:8px"><li><b>push</b>: <code>st.append(x)</code> — O(1).</li><li><b>pop</b>: <code>st.pop()</code> — O(1), lấy phần tử <b>cuối</b>.</li><li><b>top</b>: <code>st[-1]</code>.</li><li><b>rỗng?</b>: <code>not st</code> hoặc <code>len(st) == 0</code>.</li></ul><div class="warn"><code>st.pop()</code> khi rỗng gây <b>IndexError</b>: luôn kiểm tra rỗng trước.</div></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">st = []
+st.append("a")
+st.append("b")
+st.append("c")
+print(st, st[-1])
+print(st.pop(), st)
+print(st.pop(), st.pop(), st)
+print(not st)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">['a', 'b', 'c'] c
+c ['a', 'b']
+b a []
 True</pre></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 2</span><h1>Kiểm tra ngoặc hợp lệ</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">def hop_le(s):
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Bài: kiểm tra dấu ngoặc cân bằng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng</h3><ol style="gap:6px"><li>Gặp ngoặc <b>mở</b>: đẩy vào ngăn xếp.</li><li>Gặp ngoặc <b>đóng</b>: lấy đỉnh ra, phải là <b>ngoặc mở tương ứng</b>.</li><li>Hết xâu: ngăn xếp phải <b>rỗng</b>.</li></ol></div><div class="warn">Quên trường hợp <b>ngăn xếp rỗng khi gặp ngoặc đóng</b>, và quên kiểm tra rỗng <b>ở cuối</b>.</div></div><div class="col"><pre class="code" style="font-size:calc(17px*var(--z,1))">def can_bang(s):
     st = []
     cap = {")": "(", "]": "[", "}": "{"}
-    for ch in s:
-        if ch in "([{":
-            st.append(ch)
-        elif ch in ")]}":
-            if not st or st.pop() != cap[ch]:
+    for c in s:
+        if c in "([{":
+            st.append(c)
+        elif c in cap:
+            if not st or st.pop() != cap[c]:
                 return False
-    return not st
+    return not st</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">(a[b]{c}) True
+(] False
+(( False
+()) False</pre></div></div></div></section>
 
-for t in ["(a+[b])", "(()", "([)]", ""]:
-    print(repr(t), hop_le(t))</pre><div class="key">Gặp ngoặc <b>mở</b>: push. Gặp ngoặc <b>đóng</b>: pop và so khớp. Cuối cùng ngăn xếp phải <b>rỗng</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">'(a+[b])' True
-'(()' False
-'([)]' False
-'' True</pre></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Theo dõi kiểm tra xâu “([)]”</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Kí tự</th><th>Hành động</th><th>Ngăn xếp sau</th></tr><tr><td>(</td><td>mở → push</td><td>[ ( ]</td></tr><tr><td>[</td><td>mở → push</td><td>[ ( , [ ]</td></tr><tr><td>)</td><td>đóng; đỉnh là [ ≠ (</td><td><b>sai → trả False</b></td></tr></table><div class="key">Chỉ đếm số ngoặc mở và đóng <b>không đủ</b>: “([)]” có số lượng cân bằng nhưng <b>sai thứ tự lồng</b>.</div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 2</span><h1>Trace kiểm tra ngoặc ([)]</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">chuỗi: ( [ ) ]</pre></div><div class="col"><table><tr><th>Kí tự</th><th>Hành động</th><th>Ngăn xếp</th></tr><tr><td>(</td><td>push</td><td>(</td></tr><tr><td>[</td><td>push</td><td>( [</td></tr><tr><td>)</td><td>pop được [ ≠ (</td><td>→ sai</td></tr></table><div class="key">Gặp ")" nhưng đỉnh là "[" → <b>không khớp</b> → kết luận <b>không hợp lệ</b>.</div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Chạy tay: ngăn xếp với xâu “(()())”</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mỗi ( thì push, mỗi ) thì pop</h3><p style="margin:0 0 8px">Duyệt từng kí tự; “(”: <code>append</code>; “)”: <code>pop</code>.</p><p style="margin:0 0 8px">Theo dõi độ sâu: 1, 2, 1, 2, 1, 0.</p></div></div><div class="col"><pre class="code" style="font-size:calc(23px*var(--z,1))">st = []
+for c in "(()())":
+    if c == "(":
+        st.append(c)
+    else:
+        st.pop()
+print(len(st), st)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">0 []</pre></div><div class="key">Số “(” bằng số “)” và không bao giờ pop khi rỗng → ngăn xếp rỗng cuối cùng: <b>0 []</b>.</div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 2</span><h1>Biểu thức hậu tố (RPN)</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Ba cách viết biểu thức</h3><ul style="gap:6px"><li><b>Trung tố</b>: <code>3 + 4</code></li><li><b>Hậu tố</b>: <code>3 4 +</code> (toán tử đứng sau)</li><li><b>Tiền tố</b>: <code>+ 3 4</code></li></ul></div></div><div class="col"><div class="key">Hậu tố <b>không cần ngoặc</b>: (3+4)*5 viết <code>3 4 + 5 *</code>.</div><div class="ok"><p>Quy tắc tính: gặp <b>số</b> thì push; gặp <b>toán tử</b> thì pop hai số, tính rồi push kết quả.</p></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 2</span><h1>Biểu thức hậu tố (RPN)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Toán hạng trước, toán tử sau</h3><p style="margin:0 0 8px">Trung tố <code>5 + (1 + 2) × 4 − 3</code> cần dấu ngoặc và độ ưu tiên. <b>Hậu tố</b>: viết toán hạng trước toán tử: <code>5 1 2 + 4 * + 3 -</code>.</p><p style="margin:0 0 8px"><b>Tính bằng ngăn xếp</b>: số → push; toán tử → pop hai số (b rồi a), tính <b>a op b</b>, push kết quả.</p><div class="key">Phải pop <b>b trước, rồi a</b>: với − và / thứ tự quan trọng.</div></div></div><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">st = []
+for t in "5 1 2 + 4 * + 3 -".split():
+    if t in "+-*":
+        b = st.pop()
+        a = st.pop()
+        st.append(a + b if t == "+" else a - b if t == "-" else a * b)
+    else:
+        st.append(int(t))
+print(st[-1])</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">14</pre></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 2</span><h1>Tính biểu thức hậu tố</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">def tinh(bt):
-    st = []
-    for t in bt.split():
-        if t in "+-*/":
-            b = st.pop()
-            a = st.pop()
-            st.append(a + b if t == "+" else a - b if t == "-" else a * b if t == "*" else a / b)
-        else:
-            st.append(float(t))
-    return st[0]
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 2</span><h1>Theo dõi hậu tố “5 1 2 + 4 * + 3 −”</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Kí hiệu</th><th>Hành động</th><th>Ngăn xếp</th></tr><tr><td>5, 1, 2</td><td>push</td><td>[5, 1, 2]</td></tr><tr><td>+</td><td>pop 2, 1 → 1 + 2 = 3, push</td><td>[5, 3]</td></tr><tr><td>4</td><td>push</td><td>[5, 3, 4]</td></tr><tr><td>*</td><td>pop 4, 3 → 3 × 4 = 12, push</td><td>[5, 12]</td></tr><tr><td>+</td><td>pop 12, 5 → 5 + 12 = 17, push</td><td>[17]</td></tr><tr><td>3</td><td>push</td><td>[17, 3]</td></tr><tr><td>−</td><td>pop 3, 17 → 17 − 3 = 14</td><td><b>[14]</b></td></tr></table><div class="key">Biểu thức trung tố tương ứng: <b>5 + (1 + 2) × 4 − 3 = 14</b>.</div></div></div></section>
 
-print(tinh("3 4 + 5 *"))
-print(tinh("5 1 2 + 4 * + 3 -"))</pre><div class="key">Chú ý thứ tự: <b>pop b trước, rồi a</b> (a là toán hạng trái). “5 1 2 + 4 * + 3 -” = 5 + (1+2)·4 − 3 = <b>14</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">35.0
-14.0</pre></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 2</span><h1>Ngăn xếp và bài toán xâu đảo, hoàn tác</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các ứng dụng quen thuộc</h3><ul style="gap:7px"><li><b>Đảo ngược xâu</b> / dãy.</li><li><b>Hoàn tác</b> (Ctrl + Z) và nút <b>Quay lại</b> của trình duyệt.</li><li><b>Gọi hàm</b>: ngăn xếp lời gọi của đệ quy.</li><li><b>Kiểm tra ngoặc</b>, <b>tính biểu thức</b>.</li><li>Khử đệ quy (DFS bằng ngăn xếp).</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">s = "tin hoc"
+st = list(s)
+kq = ""
+while st:
+    kq += st.pop()
+print(kq)
+lich_su = ["trang1", "trang2", "trang3"]
+lich_su.pop()
+print("quay lai:", lich_su[-1])</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">coh nit
+quay lai: trang2</pre></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Hàng đợi (queue): FIFO</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li><b>Hàng đợi</b>: thêm ở <b>cuối</b>, lấy ở <b>đầu</b>.</li><li>Nguyên tắc <b>FIFO</b>: <b>vào trước, ra trước</b> (First In, First Out).</li><li>Ví dụ: xếp hàng mua vé, hàng chờ in, hàng đợi tiến trình.</li></ul></div></div><div class="col"><div class="res"><span class="lab">Hàng đợi</span><svg viewBox="0 0 520 200" style="width:100%"><g font-family="monospace" font-weight="800" font-size="26" text-anchor="middle"><rect x="100" y="70" width="70" height="60" fill="#FFB300" stroke="#283593" stroke-width="3"/><rect x="170" y="70" width="70" height="60" fill="#C5CAE9" stroke="#283593" stroke-width="3"/><rect x="240" y="70" width="70" height="60" fill="#C5CAE9" stroke="#283593" stroke-width="3"/><rect x="310" y="70" width="70" height="60" fill="#C5CAE9" stroke="#283593" stroke-width="3"/><g fill="#0B2545"><text x="135" y="110">7</text><text x="205" y="110">3</text><text x="275" y="110">8</text><text x="345" y="110">1</text></g></g><path d="M80 100 L10 100 M25 85 L8 100 L25 115" fill="none" stroke="#C62828" stroke-width="6"/><text x="50" y="60" text-anchor="middle" font-size="22" font-weight="800" fill="#C62828">ra (front)</text><path d="M440 100 L385 100 M400 85 L383 100 M400 115 L383 100" fill="none" stroke="#2E7D32" stroke-width="6"/><text x="450" y="60" text-anchor="middle" font-size="22" font-weight="800" fill="#2E7D32">vào (rear)</text><text x="260" y="165" text-anchor="middle" font-size="22" font-weight="800" fill="#0B2545">đầu hàng ← … ← cuối hàng</text></svg></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Hàng đợi: vào trước, ra trước (FIFO)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hình dung xếp hàng mua vé</h3><p style="margin:0 0 8px">Thêm ở <b>cuối</b> (đuôi), lấy ở <b>đầu</b>.</p><p style="margin:0 0 8px"><b>enqueue(x)</b>: thêm vào cuối. <b>dequeue()</b>: lấy phần tử ở đầu. <b>front</b>: xem đầu.</p><p style="margin:0 0 8px">Phần tử <b>vào trước thì ra trước</b>: First In – First Out.</p></div></div><div class="col"><div class="res"><span class="lab">Hàng đợi 1, 2, 3, 4</span><svg viewBox="0 0 520 220" style="width:100%"><g font-family="sans-serif" font-weight="800" font-size="26" text-anchor="middle"><rect x="30" y="80" width="90" height="70" rx="6" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="75" y="125" fill="#0B2545">1</text><rect x="125" y="80" width="90" height="70" rx="6" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="170" y="125" fill="#0B2545">2</text><rect x="220" y="80" width="90" height="70" rx="6" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="265" y="125" fill="#0B2545">3</text><rect x="315" y="80" width="90" height="70" rx="6" fill="#E1BEE7" stroke="#6A1B9A" stroke-width="3"/><text x="360" y="125" fill="#0B2545">4</text><text x="75" y="55" fill="#C62828">đầu</text><text x="360" y="55" fill="#C62828">đuôi</text><text x="75" y="190" fill="#C62828">dequeue ←</text><text x="440" y="125" fill="#C62828">← enqueue</text></g></svg></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Hàng đợi bằng deque</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">from collections import deque
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Cài đặt hàng đợi: list chậm, deque nhanh</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Chi phí các thao tác</h3><table><tr><th></th><th>list</th><th>deque</th></tr><tr><td>thêm cuối</td><td>append O(1)</td><td>append O(1)</td></tr><tr><td>lấy đầu</td><td><b>pop(0): O(n)</b></td><td><b>popleft(): O(1)</b></td></tr><tr><td>thêm đầu</td><td>insert(0, x): O(n)</td><td>appendleft(x): O(1)</td></tr></table><div class="warn">Dùng <code>pop(0)</code> trong vòng lặp lớn khiến thuật toán <b>O(n²)</b>.</div></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">from collections import deque
 q = deque()
-q.append(7)
+q.append(1)
+q.append(2)
 q.append(3)
-q.append(8)
-print(q)
-print(q.popleft())
-print(q[0], len(q))
-print(list(q))</pre><div class="key"><b>deque</b>: <code>append</code> thêm cuối, <code>popleft()</code> lấy đầu, đều <b>O(1)</b>.</div><div class="warn">Dùng list với <code>pop(0)</code> mỗi lần tốn <b>O(n)</b> vì dồn mọi phần tử; dãy lớn nên dùng deque.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">deque([7, 3, 8])
-7
-3 2
-[3, 8]</pre></div></div></div></section>
+print(q, q[0])
+print(q.popleft(), q)
+q.appendleft(9)
+print(q, len(q))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">deque([1, 2, 3]) 1
+1 deque([2, 3])
+deque([9, 2, 3]) 3</pre></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>So sánh ngăn xếp và hàng đợi</h1></div>
-<div class="bd g1"><div class="col"><table><tr><th></th><th>Ngăn xếp</th><th>Hàng đợi</th></tr><tr><td>Nguyên tắc</td><td>LIFO</td><td>FIFO</td></tr><tr><td>Thêm</td><td>cuối (đỉnh)</td><td>cuối (rear)</td></tr><tr><td>Lấy</td><td>cuối (đỉnh)</td><td><b>đầu</b> (front)</td></tr><tr><td>Trong Python</td><td>list: append / pop()</td><td>deque: append / popleft()</td></tr><tr><td>Ứng dụng</td><td>ngoặc, hậu tố, đệ quy, Undo</td><td>mô phỏng, duyệt theo lớp (BFS), in ấn</td></tr></table><div class="key">Cách nhớ: <b>stack = chồng đĩa</b> (lấy đĩa trên cùng); <b>queue = xếp hàng</b> (ai đến trước phục vụ trước).</div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Chạy tay: xoay vòng rồi bỏ đầu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bài trong đề</h3><p style="margin:0 0 8px">q = [1, 2, 3, 4, 5]. Lặp: đưa phần tử đầu vào <b>out</b>, rồi chuyển phần tử đầu mới xuống <b>cuối</b> hàng đợi. Dừng khi còn 1 phần tử.</p><p style="margin:0 0 8px">Theo dõi từng vòng: <b>(1) out=[1], q=[3,4,5,2]; (2) out=[1,3], q=[5,2,4]; (3) out=[1,3,5], q=[4,2]; (4) out=[1,3,5,4], q=[2]</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">q = [1, 2, 3, 4, 5]
+out = []
+while len(q) &gt; 1:
+    out.append(q.pop(0))
+    q.append(q.pop(0))
+print(out, q)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[1, 3, 5, 4] [2]</pre></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Trace enqueue/dequeue</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">from collections import deque
-q = deque()
-for x in [4, 6, 2]:
-    q.append(x)
-    print("vào", x, list(q))
-while q:
-    x = q.popleft()
-    print("ra", x, list(q))</pre><div class="key">Thứ tự ra <b>giống</b> thứ tự vào: 4, 6, 2.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">vào 4 [4]
-vào 6 [4, 6]
-vào 2 [4, 6, 2]
-ra 4 [6, 2]
-ra 6 [2]
-ra 2 []</pre></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Bài Josephus: bỏ qua hai, loại người thứ ba</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đề bài</h3><p style="margin:0 0 8px">7 bạn đánh số 1..7 xếp vòng tròn. Lần lượt <b>bỏ qua hai bạn</b>, rồi <b>loại bạn thứ ba</b>; cứ thế đến khi còn một bạn. Ai còn lại?</p><p style="margin:0 0 8px">Mô phỏng bằng <b>deque</b>: hai lần “đưa đầu xuống cuối”, rồi <b>popleft</b> (loại).</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">from collections import deque
+q = deque(range(1, 8))
+loai = []
+while len(q) &gt; 1:
+    for _ in range(2):
+        q.append(q.popleft())
+    loai.append(q.popleft())
+print(loai, q[0])</pre><div class="res"><span class="lab">Thứ tự bị loại và người còn lại</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[3, 6, 2, 7, 5, 1] 4</pre></div><div class="key">Thứ tự loại: 3, 6, 2, 7, 5, 1 → còn lại <b>4</b>.</div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>Bài toán Josephus (vòng tròn loại)</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">from collections import deque
-n, k = 7, 3
-q = deque(range(1, n + 1))
-ra = []
-while q:
-    q.rotate(-(k - 1))
-    ra.append(q.popleft())
-print(ra)
-print("còn lại cuối:", ra[-1])</pre><div class="key">n người đứng vòng tròn, cứ đếm đến <b>k</b> thì loại người đó. <b>rotate</b> xoay vòng deque để đưa người thứ k lên đầu rồi loại.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[3, 6, 2, 7, 5, 1, 4]
-còn lại cuối: 4</pre></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Mô phỏng phục vụ khách hàng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ứng dụng thực tế</h3><p style="margin:0 0 8px">Khách đến lúc t, phục vụ mất d phút, <b>theo thứ tự đến</b> (FIFO).</p><p style="margin:0 0 8px">Tính <b>thời gian chờ</b> mỗi khách: thời điểm bắt đầu phục vụ − thời điểm đến.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">from collections import deque
+den = deque([(0, 5), (2, 3), (4, 2), (10, 1)])
+t = 0
+wait = []
+while den:
+    a, d = den.popleft()
+    t = max(t, a)
+    wait.append(t - a)
+    t += d
+print(wait, sum(wait) / len(wait))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[0, 3, 4, 0] 1.75</pre></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>Mô phỏng hàng chờ</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">from collections import deque
-hang = deque(["An", "Binh", "Chi"])
-print("phục vụ", hang.popleft())
-hang.append("Dung")
-hang.append("Em")
-print("phục vụ", hang.popleft())
-print("còn chờ:", list(hang))</pre><div class="key">Mỗi người mới <b>append</b> vào cuối; người phục vụ <b>popleft</b> từ đầu: đúng thứ tự đến trước đi trước.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">phục vụ An
-phục vụ Binh
-còn chờ: ['Chi', 'Dung', 'Em']</pre></div></div></div></section>
-
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>Duyệt theo lớp (BFS) trên lưới nhỏ</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">from collections import deque
-g = {1: [2, 3], 2: [4], 3: [4, 5], 4: [6], 5: [6], 6: []}
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>BFS: loang theo từng lớp bằng hàng đợi</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng</h3><p style="margin:0 0 8px"><b>Duyệt theo chiều rộng</b>: xét đỉnh gần nguồn trước, rồi các đỉnh xa hơn một bước, hai bước…</p><p style="margin:0 0 8px">Dùng <b>hàng đợi</b>: lấy đầu, thêm các láng giềng <b>chưa thăm</b> vào cuối.</p><p style="margin:0 0 8px">Nhờ vậy BFS tìm <b>đường đi ngắn nhất</b> (số cạnh) trong đồ thị <b>không trọng số</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">from collections import deque
+ke = {1: [2, 3], 2: [4], 3: [4, 5], 4: [6], 5: [6], 6: []}
+d = {1: 0}
 q = deque([1])
-da = {1}
-thu_tu = []
 while q:
     u = q.popleft()
-    thu_tu.append(u)
-    for v in g[u]:
-        if v not in da:
-            da.add(v)
+    for v in ke[u]:
+        if v not in d:
+            d[v] = d[u] + 1
             q.append(v)
-print(thu_tu)</pre><div class="key"><b>BFS</b> (duyệt theo chiều rộng) dùng <b>hàng đợi</b>: thăm đỉnh gần trước, đỉnh xa sau → tìm đường đi <b>ngắn nhất</b> (số cạnh).</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[1, 2, 3, 4, 5, 6]</pre></div></div></div></section>
+print(d)</pre><div class="res"><span class="lab">Khoảng cách từ đỉnh 1</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">{1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3}</pre></div><div class="key">Đỉnh 6 cách đỉnh 1 <b>3 bước</b> (1→2→4→6).</div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>Hàng đợi hai đầu và ngăn xếp bằng deque</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">from collections import deque
-d = deque([1, 2, 3])
-d.appendleft(0)
-d.append(4)
-print(d)
-print(d.pop(), d.popleft())
-print(d)</pre><div class="key"><b>deque</b> thêm/xoá <b>cả hai đầu</b> đều O(1): dùng được cả làm ngăn xếp lẫn hàng đợi.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">deque([0, 1, 2, 3, 4])
-4 0
-deque([1, 2, 3])</pre></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>BFS trên mê cung: đường đi ngắn nhất</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lưới 0/1</h3><p style="margin:0 0 8px">Ô 0 đi được, ô 1 là tường. Từ (0,0) đến (n−1, m−1), mỗi bước sang ô kề (4 hướng).</p><p style="margin:0 0 8px"><code>d[i][j]</code> = số bước nhỏ nhất đến ô (i, j); −1 nếu chưa đến.</p></div></div><div class="col"><pre class="code" style="font-size:calc(16px*var(--z,1))">from collections import deque
+g = ["0010", "0110", "0000", "1110", "0000"]
+n, m = 5, 4
+d = [[-1] * m for _ in range(n)]
+d[0][0] = 0
+q = deque([(0, 0)])
+while q:
+    x, y = q.popleft()
+    for dx, dy in ((1,0),(-1,0),(0,1),(0,-1)):
+        u, v = x + dx, y + dy
+        if 0 &lt;= u &lt; n and 0 &lt;= v &lt; m and g[u][v] == "0" and d[u][v] &lt; 0:
+            d[u][v] = d[x][y] + 1
+            q.append((u, v))
+print(d[n-1][m-1])</pre><div class="res"><span class="lab">Số bước ngắn nhất</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">7</pre></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Ngăn xếp</b>: LIFO; <code>append</code> (push), <code>pop()</code> (lấy đỉnh).</li><li><b>Hàng đợi</b>: FIFO; <code>deque.append</code>, <code>popleft()</code>.</li><li>Ngăn xếp dùng cho <b>ngoặc, hậu tố, đệ quy, Undo</b>.</li><li>Hàng đợi dùng cho <b>mô phỏng, BFS, hàng chờ</b>.</li><li>Trước khi pop/popleft phải kiểm tra <b>không rỗng</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Kiểm tra ngoặc</td><td>stack</td></tr><tr><td class="m">Duyệt theo lớp (BFS)</td><td>queue</td></tr><tr><td class="m">Lấy đầu hàng</td><td>popleft()</td></tr><tr><td class="m">Lấy đỉnh stack</td><td>pop()</td></tr></table><div class="warn"><code>pop(0)</code> trên list chậm O(n); pop/popleft trên rỗng báo IndexError.</div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>Ngăn xếp đơn điệu: phần tử lớn hơn kế tiếp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bài toán</h3><p style="margin:0 0 8px">Với mỗi a[i], tìm phần tử <b>đầu tiên bên phải lớn hơn</b> nó (hoặc −1).</p><p style="margin:0 0 8px"><b>Cách ngây thơ</b>: O(n²). <b>Ngăn xếp đơn điệu</b>: O(n) — mỗi phần tử vào và ra ngăn xếp <b>đúng một lần</b>.</p><p style="margin:0 0 8px">Ngăn xếp lưu <b>chỉ số</b> các phần tử chưa tìm được kết quả (giá trị giảm dần).</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a = [2, 1, 5, 3, 6, 4]
+kq = [-1] * len(a)
+st = []
+for i, x in enumerate(a):
+    while st and a[st[-1]] &lt; x:
+        kq[st.pop()] = x
+    st.append(i)
+print(kq)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[5, 5, 6, 6, -1, -1]</pre></div><div class="key">Vòng while lồng trong for nhưng tổng số lần pop ≤ n → <b>O(n)</b>.</div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Ngăn xếp <b>gọi hàm</b> là cơ chế của đệ quy.</li><li>Hậu tố đổi từ trung tố bằng thuật toán <b>Dijkstra shunting-yard</b>.</li><li><code>queue.Queue</code>, <code>heapq</code> (hàng đợi ưu tiên).</li><li>Hàng đợi <b>vòng</b> cố định kích thước.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Hàng đợi ưu tiên</b> (heap): lấy phần tử nhỏ nhất.</li><li><b>DFS</b> dùng ngăn xếp (hoặc đệ quy).</li><li><b>Đơn điệu stack</b> giải bài “phần tử lớn hơn kế tiếp”.</li></ul></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>Theo dõi ngăn xếp đơn điệu a = [2, 1, 5, 3, 6, 4]</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>i</th><th>x</th><th>pop (gán kq)</th><th>ngăn xếp (chỉ số) sau</th></tr><tr><td>0</td><td>2</td><td>—</td><td>[0]</td></tr><tr><td>1</td><td>1</td><td>—</td><td>[0, 1]</td></tr><tr><td>2</td><td>5</td><td>pop 1 (kq=5), pop 0 (kq=5)</td><td>[2]</td></tr><tr><td>3</td><td>3</td><td>—</td><td>[2, 3]</td></tr><tr><td>4</td><td>6</td><td>pop 3 (kq=6), pop 2 (kq=6)</td><td>[4]</td></tr><tr><td>5</td><td>4</td><td>—</td><td>[4, 5]</td></tr></table><div class="key">Còn lại chỉ số 4, 5 trong ngăn xếp: kq = <b>−1</b>. Kết quả [5, 5, 6, 6, −1, −1].</div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · TẬP</span><h1>Bài tập củng cố</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Thực hiện push 1, push 2, pop, push 3, pop, pop. Thứ tự các giá trị lấy ra?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Thực hiện enqueue 1, 2, 3; dequeue; enqueue 4; dequeue. Hàng còn lại?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Chuỗi <code>{[()]}</code> có hợp lệ không?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Tính hậu tố <code>2 3 4 * +</code>.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Vì sao không nên dùng <code>list.pop(0)</code> làm dequeue với dữ liệu lớn?</p></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>Hàng đợi hai đầu: cửa sổ trượt lớn nhất</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bài toán “max trong mọi đoạn k”</h3><p style="margin:0 0 8px">Dãy a, với mỗi cửa sổ k phần tử liên tiếp, in <b>giá trị lớn nhất</b>.</p><p style="margin:0 0 8px">Dùng <b>deque</b> lưu chỉ số, giữ giá trị <b>giảm dần</b>: bỏ cuối nếu nhỏ hơn x; bỏ đầu nếu ra khỏi cửa sổ.</p><p style="margin:0 0 8px">Tổng thời gian <b>O(n)</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">from collections import deque
+a = [1, 3, -1, -3, 5, 3, 6, 7]
+k = 3
+dq = deque()
+kq = []
+for i, x in enumerate(a):
+    while dq and a[dq[-1]] &lt;= x:
+        dq.pop()
+    dq.append(i)
+    if dq[0] &lt;= i - k:
+        dq.popleft()
+    if i &gt;= k - 1:
+        kq.append(a[dq[0]])
+print(kq)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[3, 3, 5, 5, 6, 7]</pre></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Lấy ra: <b>2, 3, 1</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Hàng còn lại: <b>[3, 4]</b> (lấy ra 1 rồi 2).</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Hợp lệ</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>3·4 = 12; 2 + 12 = <b>14</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mỗi lần pop(0) phải dồn toàn bộ phần tử: <b>O(n)</b>; deque.popleft O(1).</p></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 5</span><h1>Hàng đợi ưu tiên (heapq)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lấy phần tử nhỏ nhất ra trước</h3><p style="margin:0 0 8px"><b>Hàng đợi ưu tiên</b>: <b>push</b> bất kì, <b>pop</b> luôn lấy phần tử <b>nhỏ nhất</b>.</p><p style="margin:0 0 8px">Cài đặt bằng <b>đống nhị phân</b> (heapq): push và pop đều <b>O(log n)</b>.</p><p style="margin:0 0 8px">Muốn lấy <b>lớn nhất</b>: đẩy giá trị <b>âm</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">import heapq
+h = []
+for x in [5, 2, 8, 1, 9]:
+    heapq.heappush(h, x)
+print([heapq.heappop(h) for _ in range(3)])
+h2 = [-x for x in [5, 2, 8]]
+heapq.heapify(h2)
+print(-heapq.heappop(h2))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[1, 2, 5]
+8</pre></div><div class="key">Ứng dụng: <b>Dijkstra</b>, ghép k danh sách, lấy k lớn nhất.</div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Dự đoán kết quả:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">s = []
-for c in 'abcde':
-    s.append(c)
-    if c in 'ce':
-        print(s.pop(), end=' ')
-print(s)</pre></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Dự đoán:</p><pre class="code" style="margin:6px 0 0;font-size:calc(19px*var(--z,1))">from collections import deque
-q = deque([1, 2, 3, 4])
-q.rotate(1)
-print(list(q))
-q.rotate(-2)
-print(list(q))</pre></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 5</span><h1>So sánh các cấu trúc</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>Ngăn xếp</th><th>Hàng đợi</th><th>Hàng đợi ưu tiên</th></tr><tr><td>Nguyên tắc</td><td>LIFO</td><td>FIFO</td><td>nhỏ nhất (hoặc lớn nhất) trước</td></tr><tr><td>Python</td><td>list append/pop</td><td>deque append/popleft</td><td>heapq</td></tr><tr><td>Thao tác lấy</td><td>O(1)</td><td>O(1) (deque)</td><td>O(log n)</td></tr><tr><td>Ứng dụng</td><td>ngoặc, hậu tố, DFS, hoàn tác</td><td>BFS, mô phỏng hàng đợi</td><td>Dijkstra, lập lịch</td></tr></table><div class="key">Nhớ: <b>DFS ↔ ngăn xếp</b>, <b>BFS ↔ hàng đợi</b>. Đổi cấu trúc là đổi thứ tự duyệt.</div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Chuyển biểu thức trung tố <code>(2 + 3) * 4 - 5 / 5</code> sang hậu tố và tính giá trị.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Viết chương trình nhập xâu gồm các ngoặc ( ) [ ] { }, in "YES" nếu hợp lệ, ngược lại in "NO".</p></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 6</span><h1>Tự kiểm tra: ngăn xếp tạm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Chương trình in ra gì? Theo dõi st.</p><pre class="code" style="font-size:calc(21px*var(--z,1))">st = []
+kq = []
+for ch in "abcdef":
+    st.append(ch)
+    if len(st) == 3:
+        kq.append(st.pop())
+        kq.append(st.pop())
+print("".join(kq), "".join(st))</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">a, b → st = [a, b]; c → [a, b, c] (đủ 3) → pop c, pop b → kq = “cb”, st = [a].</p><p style="margin:0 0 8px">d → [a, d]; e → [a, d, e] → pop e, pop d → kq = “cbed”, st = [a].</p><p style="margin:0 0 8px">f → [a, f]. Kết quả: <b>“cbed”</b> và <b>“af”</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">cbed af</pre></div></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Ba người cùng xếp hàng. Người 1 phục vụ mất 3 phút, người 2 mất 2, người 3 mất 4. Mô phỏng bằng deque thời điểm mỗi người xong (bắt đầu 0).</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Hai ngăn xếp có thể dùng để cài đặt một hàng đợi không? Mô tả cách làm.</p></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 6</span><h1>Tự kiểm tra: Josephus</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">7 bạn, bỏ qua hai, loại bạn thứ ba. Ai còn lại cuối cùng?</p><pre class="code" style="font-size:calc(19px*var(--z,1))">from collections import deque
+q = deque(range(1, 8))
+while len(q) &gt; 1:
+    for _ in range(2):
+        q.append(q.popleft())
+    q.popleft()
+print(q[0])</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">q = [1..7]. Vòng 1: xoay 1, 2 → [3,4,5,6,7,1,2]; loại 3 → [4,5,6,7,1,2].</p><p style="margin:0 0 8px">Vòng 2: xoay 4, 5; loại 6 → [7,1,2,4,5]. Vòng 3: xoay 7, 1; loại 2 → [4,5,7,1].</p><p style="margin:0 0 8px">Vòng 4: xoay 4, 5; loại 7 → [1,4,5]. Vòng 5: xoay 1, 4; loại 5 → [1,4]. Vòng 6: xoay 1, 4 → [1,4] (hai lần xoay về nguyên); loại 1 → [4].</p><p style="margin:0 0 8px">Người còn lại: <b>4</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">4</pre></div></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>c e ['a', 'b', 'd']</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>[4, 1, 2, 3]
-[2, 3, 4, 1]</p></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 6</span><h1>Tự kiểm tra (HSG): kiểm tra ngoặc</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Hàm can_bang có đúng không với xâu “())”? Và với “((” ? Hãy chỉ ra hai lỗi nếu thiếu hai điều kiện nhất định.</p><pre class="code" style="font-size:calc(18px*var(--z,1))">def can_bang(s):
+    st = []
+    cap = {")": "(", "]": "[", "}": "{"}
+    for c in s:
+        if c in "([{":
+            st.append(c)
+        elif c in cap:
+            if not st or st.pop() != cap[c]:
+                return False
+    return not st
+print(can_bang("())"), can_bang("(("))</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>“())”</b>: push (, pop → rỗng, gặp ) nữa: <b>st rỗng</b> nên <code>not st</code> đúng → trả <b>False</b>. Nếu thiếu <code>not st or</code> thì <code>st.pop()</code> gây <b>IndexError</b>.</p><p style="margin:0 0 8px"><b>“((”</b>: hết xâu mà st còn 2 phần tử → <code>return not st</code> = <b>False</b>. Nếu cuối hàm chỉ <code>return True</code> thì <b>sai</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">False False True</pre></div></div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Hậu tố: <code>2 3 + 4 * 5 5 / -</code>. Giá trị: 20 − 1 = <b>19</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Dùng hàm kiểm tra ngoặc ở slide trước: <code>print("YES" if hop_le(input()) else "NO")</code>.</p></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Ngăn xếp LIFO</b>: append/pop ở cuối list; luôn kiểm tra rỗng trước khi pop.</li><li><b>Hàng đợi FIFO</b>: dùng <b>deque</b> (popleft O(1)); <code>pop(0)</code> của list là O(n).</li><li>Ngoặc cân bằng; hậu tố (pop b rồi a); Josephus bằng deque.</li><li><b>BFS</b> = hàng đợi, đường đi ngắn nhất không trọng số; DFS = ngăn xếp/đệ quy.</li><li><b>Ngăn xếp đơn điệu</b> và <b>deque cửa sổ trượt</b> đưa O(n²) về O(n).</li><li><b>heapq</b>: hàng đợi ưu tiên O(log n).</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Đỉnh ngăn xếp</td><td>st[-1]</td></tr><tr><td class="m">Lấy đầu hàng đợi</td><td>popleft()</td></tr><tr><td class="m">BFS</td><td>deque</td></tr><tr><td class="m">Hậu tố</td><td>pop b, rồi a</td></tr></table><div class="warn">Pop khi rỗng; quên kiểm tra rỗng cuối; dùng list.pop(0) trong vòng lặp lớn.</div></div></div></section>
 
-<section class="s p12"><div class="hd"><span class="k">PYTHON 8 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Thời điểm xong: <b>3, 5, 9</b> (cộng dồn).</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p><b>Có</b>: stack vào nhận phần tử mới; khi cần lấy, nếu stack ra rỗng thì đổ hết stack vào sang stack ra (đảo thứ tự) rồi pop. Trung bình mỗi thao tác O(1).</p></div></div></div></section>
+<section class="s p7"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Đếm ngoặc <b>không đủ</b>: phải đúng thứ tự lồng.</li><li>Hậu tố: <b>a op b</b> với b pop trước.</li><li>Mỗi phần tử vào/ra ngăn xếp đơn điệu một lần → O(n).</li><li>BFS đánh dấu thăm <b>khi đẩy vào hàng đợi</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Dijkstra</b> với heapq.</li><li><b>Topo sort</b> (Kahn) bằng hàng đợi.</li><li><b>Hàng đợi vòng</b> (circular buffer).</li></ul></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Ngăn xếp: vào sau ra trước hay vào trước ra trước?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Cách lấy phần tử đầu của deque?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Cấu trúc dùng cho BFS?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>[].pop()</code> gây lỗi gì?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Độ phức tạp của <code>pop(0)</code> trên list?</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>Vào sau, ra trước</b> (LIFO).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>popleft()</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Hàng đợi</b> (deque).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>IndexError</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>O(n)</b>.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Đảo ngược một dãy số bằng ngăn xếp. Thử [1, 2, 3, 4].</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Kiểm tra xâu chỉ có ( và ) có cân bằng không. Thử “(())”, “)(”.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Tính giá trị biểu thức hậu tố “3 4 + 2 *”.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Mô phỏng hàng đợi: lệnh “push x”, “pop”, “size”.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Với dãy a, tìm với mỗi i phần tử <b>nhỏ hơn gần nhất bên trái</b> (hoặc −1) trong O(n).</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Mê cung n × m: đường đi ngắn nhất từ S đến E, in cả đường đi (lưu cha).</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>[4, 3, 2, 1].</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Đếm cân bằng: ngăn xếp hoặc biến <code>d</code> (d &lt; 0 → sai) → True False.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>14 (= (3 + 4) × 2).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Đọc lệnh, <code>q.append</code>, <code>q.popleft()</code>, <code>len(q)</code> (dùng deque).</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Đổi chiều so sánh và duyệt trái → phải với ngăn xếp tăng dần → [-1, -1, 1, -1, 1, 5, 1].</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>BFS + mảng <code>cha[(x,y)]</code>; truy ngược từ E về S rồi đảo lại.</p></div></div></div></section>
 </div>
 <div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
 <script>

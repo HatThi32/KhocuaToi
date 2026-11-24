@@ -1,0 +1,380 @@
+<!-- HEAD -->
+<title>Python 8 · Ngăn xếp và hàng đợi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p7"><div class="hd"><span class="k">TIN HỌC · PYTHON 8</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>NGĂN XẾP (STACK)<br>VÀ HÀNG ĐỢI (QUEUE)</h1><p style="font-size:28px;line-height:1.5">LIFO và FIFO, cài đặt bằng list và deque, kiểm tra ngoặc, biểu thức hậu tố, bài Josephus, BFS, ngăn xếp đơn điệu, hàng đợi hai đầu.</p><div><span class="chip">stack</span><span class="chip">queue</span><span class="chip">deque</span><span class="chip">hậu tố</span><span class="chip">BFS</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">stack</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">queue</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">deque</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">hậu tố</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">BFS</text></svg></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Phân biệt <b>LIFO</b> (ngăn xếp) và <b>FIFO</b> (hàng đợi).</li><li>Cài đặt bằng <b>list</b> và <b>collections.deque</b>; biết <b>pop(0)</b> chậm.</li><li><b>Chạy tay</b> các thao tác push, pop, enqueue, dequeue.</li><li>Giải bài kinh điển: <b>kiểm tra ngoặc, hậu tố, Josephus, loang BFS</b>.</li><li>Dùng <b>ngăn xếp đơn điệu</b> cho bài “phần tử lớn hơn kế tiếp”.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Ngăn xếp</li><li>Hàng đợi</li><li>Ứng dụng</li><li>Nâng cao HSG</li><li>Tự kiểm tra</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Ngăn xếp: vào sau, ra trước (LIFO)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hình dung chồng đĩa</h3><p style="margin:0 0 8px">Chỉ thao tác ở <b>một đầu</b> gọi là <b>đỉnh</b>.</p><p style="margin:0 0 8px"><b>push(x)</b>: đặt x lên đỉnh. <b>pop()</b>: lấy phần tử ở đỉnh. <b>top</b>: xem đỉnh. <b>rỗng?</b>: kiểm tra.</p><p style="margin:0 0 8px">Phần tử <b>vào sau thì ra trước</b>: Last In – First Out.</p></div></div><div class="col"><div class="res"><span class="lab">Ngăn xếp có 3 phần tử: a, b, c</span><svg viewBox="0 0 520 330" style="width:100%"><g font-family="sans-serif" font-weight="800" font-size="26" text-anchor="middle"><rect x="150" y="260" width="220" height="48" rx="6" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="260" y="293" fill="#0B2545">a</text><rect x="150" y="210" width="220" height="48" rx="6" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="260" y="243" fill="#0B2545">b</text><rect x="150" y="160" width="220" height="48" rx="6" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="260" y="193" fill="#0B2545">c  ← đỉnh</text><text x="260" y="50" fill="#C62828" font-size="30">push ↓   pop ↑</text><polygon points="260,60 236,100 284,100" fill="#C62828" opacity=".0"/><line x1="130" y1="150" x2="130" y2="320" stroke="#0B2545" stroke-width="5"/><line x1="390" y1="150" x2="390" y2="320" stroke="#0B2545" stroke-width="5"/></g></svg></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Cài đặt ngăn xếp bằng list</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đúng các thao tác</h3><ul style="gap:8px"><li><b>push</b>: <code>st.append(x)</code> — O(1).</li><li><b>pop</b>: <code>st.pop()</code> — O(1), lấy phần tử <b>cuối</b>.</li><li><b>top</b>: <code>st[-1]</code>.</li><li><b>rỗng?</b>: <code>not st</code> hoặc <code>len(st) == 0</code>.</li></ul><div class="warn"><code>st.pop()</code> khi rỗng gây <b>IndexError</b>: luôn kiểm tra rỗng trước.</div></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">st = []
+st.append("a")
+st.append("b")
+st.append("c")
+print(st, st[-1])
+print(st.pop(), st)
+print(st.pop(), st.pop(), st)
+print(not st)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">['a', 'b', 'c'] c
+c ['a', 'b']
+b a []
+True</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Bài: kiểm tra dấu ngoặc cân bằng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng</h3><ol style="gap:6px"><li>Gặp ngoặc <b>mở</b>: đẩy vào ngăn xếp.</li><li>Gặp ngoặc <b>đóng</b>: lấy đỉnh ra, phải là <b>ngoặc mở tương ứng</b>.</li><li>Hết xâu: ngăn xếp phải <b>rỗng</b>.</li></ol></div><div class="warn">Quên trường hợp <b>ngăn xếp rỗng khi gặp ngoặc đóng</b>, và quên kiểm tra rỗng <b>ở cuối</b>.</div></div><div class="col"><pre class="code" style="font-size:calc(17px*var(--z,1))">def can_bang(s):
+    st = []
+    cap = {")": "(", "]": "[", "}": "{"}
+    for c in s:
+        if c in "([{":
+            st.append(c)
+        elif c in cap:
+            if not st or st.pop() != cap[c]:
+                return False
+    return not st</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">(a[b]{c}) True
+(] False
+(( False
+()) False</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Theo dõi kiểm tra xâu “([)]”</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Kí tự</th><th>Hành động</th><th>Ngăn xếp sau</th></tr><tr><td>(</td><td>mở → push</td><td>[ ( ]</td></tr><tr><td>[</td><td>mở → push</td><td>[ ( , [ ]</td></tr><tr><td>)</td><td>đóng; đỉnh là [ ≠ (</td><td><b>sai → trả False</b></td></tr></table><div class="key">Chỉ đếm số ngoặc mở và đóng <b>không đủ</b>: “([)]” có số lượng cân bằng nhưng <b>sai thứ tự lồng</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 1</span><h1>Chạy tay: ngăn xếp với xâu “(()())”</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mỗi ( thì push, mỗi ) thì pop</h3><p style="margin:0 0 8px">Duyệt từng kí tự; “(”: <code>append</code>; “)”: <code>pop</code>.</p><p style="margin:0 0 8px">Theo dõi độ sâu: 1, 2, 1, 2, 1, 0.</p></div></div><div class="col"><pre class="code" style="font-size:calc(23px*var(--z,1))">st = []
+for c in "(()())":
+    if c == "(":
+        st.append(c)
+    else:
+        st.pop()
+print(len(st), st)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">0 []</pre></div><div class="key">Số “(” bằng số “)” và không bao giờ pop khi rỗng → ngăn xếp rỗng cuối cùng: <b>0 []</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 2</span><h1>Biểu thức hậu tố (RPN)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Toán hạng trước, toán tử sau</h3><p style="margin:0 0 8px">Trung tố <code>5 + (1 + 2) × 4 − 3</code> cần dấu ngoặc và độ ưu tiên. <b>Hậu tố</b>: viết toán hạng trước toán tử: <code>5 1 2 + 4 * + 3 -</code>.</p><p style="margin:0 0 8px"><b>Tính bằng ngăn xếp</b>: số → push; toán tử → pop hai số (b rồi a), tính <b>a op b</b>, push kết quả.</p><div class="key">Phải pop <b>b trước, rồi a</b>: với − và / thứ tự quan trọng.</div></div></div><div class="col"><pre class="code" style="font-size:calc(18px*var(--z,1))">st = []
+for t in "5 1 2 + 4 * + 3 -".split():
+    if t in "+-*":
+        b = st.pop()
+        a = st.pop()
+        st.append(a + b if t == "+" else a - b if t == "-" else a * b)
+    else:
+        st.append(int(t))
+print(st[-1])</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">14</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 2</span><h1>Theo dõi hậu tố “5 1 2 + 4 * + 3 −”</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Kí hiệu</th><th>Hành động</th><th>Ngăn xếp</th></tr><tr><td>5, 1, 2</td><td>push</td><td>[5, 1, 2]</td></tr><tr><td>+</td><td>pop 2, 1 → 1 + 2 = 3, push</td><td>[5, 3]</td></tr><tr><td>4</td><td>push</td><td>[5, 3, 4]</td></tr><tr><td>*</td><td>pop 4, 3 → 3 × 4 = 12, push</td><td>[5, 12]</td></tr><tr><td>+</td><td>pop 12, 5 → 5 + 12 = 17, push</td><td>[17]</td></tr><tr><td>3</td><td>push</td><td>[17, 3]</td></tr><tr><td>−</td><td>pop 3, 17 → 17 − 3 = 14</td><td><b>[14]</b></td></tr></table><div class="key">Biểu thức trung tố tương ứng: <b>5 + (1 + 2) × 4 − 3 = 14</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 2</span><h1>Ngăn xếp và bài toán xâu đảo, hoàn tác</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các ứng dụng quen thuộc</h3><ul style="gap:7px"><li><b>Đảo ngược xâu</b> / dãy.</li><li><b>Hoàn tác</b> (Ctrl + Z) và nút <b>Quay lại</b> của trình duyệt.</li><li><b>Gọi hàm</b>: ngăn xếp lời gọi của đệ quy.</li><li><b>Kiểm tra ngoặc</b>, <b>tính biểu thức</b>.</li><li>Khử đệ quy (DFS bằng ngăn xếp).</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">s = "tin hoc"
+st = list(s)
+kq = ""
+while st:
+    kq += st.pop()
+print(kq)
+lich_su = ["trang1", "trang2", "trang3"]
+lich_su.pop()
+print("quay lai:", lich_su[-1])</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">coh nit
+quay lai: trang2</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Hàng đợi: vào trước, ra trước (FIFO)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hình dung xếp hàng mua vé</h3><p style="margin:0 0 8px">Thêm ở <b>cuối</b> (đuôi), lấy ở <b>đầu</b>.</p><p style="margin:0 0 8px"><b>enqueue(x)</b>: thêm vào cuối. <b>dequeue()</b>: lấy phần tử ở đầu. <b>front</b>: xem đầu.</p><p style="margin:0 0 8px">Phần tử <b>vào trước thì ra trước</b>: First In – First Out.</p></div></div><div class="col"><div class="res"><span class="lab">Hàng đợi 1, 2, 3, 4</span><svg viewBox="0 0 520 220" style="width:100%"><g font-family="sans-serif" font-weight="800" font-size="26" text-anchor="middle"><rect x="30" y="80" width="90" height="70" rx="6" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="75" y="125" fill="#0B2545">1</text><rect x="125" y="80" width="90" height="70" rx="6" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="170" y="125" fill="#0B2545">2</text><rect x="220" y="80" width="90" height="70" rx="6" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="265" y="125" fill="#0B2545">3</text><rect x="315" y="80" width="90" height="70" rx="6" fill="#E1BEE7" stroke="#6A1B9A" stroke-width="3"/><text x="360" y="125" fill="#0B2545">4</text><text x="75" y="55" fill="#C62828">đầu</text><text x="360" y="55" fill="#C62828">đuôi</text><text x="75" y="190" fill="#C62828">dequeue ←</text><text x="440" y="125" fill="#C62828">← enqueue</text></g></svg></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Cài đặt hàng đợi: list chậm, deque nhanh</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Chi phí các thao tác</h3><table><tr><th></th><th>list</th><th>deque</th></tr><tr><td>thêm cuối</td><td>append O(1)</td><td>append O(1)</td></tr><tr><td>lấy đầu</td><td><b>pop(0): O(n)</b></td><td><b>popleft(): O(1)</b></td></tr><tr><td>thêm đầu</td><td>insert(0, x): O(n)</td><td>appendleft(x): O(1)</td></tr></table><div class="warn">Dùng <code>pop(0)</code> trong vòng lặp lớn khiến thuật toán <b>O(n²)</b>.</div></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">from collections import deque
+q = deque()
+q.append(1)
+q.append(2)
+q.append(3)
+print(q, q[0])
+print(q.popleft(), q)
+q.appendleft(9)
+print(q, len(q))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">deque([1, 2, 3]) 1
+1 deque([2, 3])
+deque([9, 2, 3]) 3</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Chạy tay: xoay vòng rồi bỏ đầu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bài trong đề</h3><p style="margin:0 0 8px">q = [1, 2, 3, 4, 5]. Lặp: đưa phần tử đầu vào <b>out</b>, rồi chuyển phần tử đầu mới xuống <b>cuối</b> hàng đợi. Dừng khi còn 1 phần tử.</p><p style="margin:0 0 8px">Theo dõi từng vòng: <b>(1) out=[1], q=[3,4,5,2]; (2) out=[1,3], q=[5,2,4]; (3) out=[1,3,5], q=[4,2]; (4) out=[1,3,5,4], q=[2]</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">q = [1, 2, 3, 4, 5]
+out = []
+while len(q) &gt; 1:
+    out.append(q.pop(0))
+    q.append(q.pop(0))
+print(out, q)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[1, 3, 5, 4] [2]</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Bài Josephus: bỏ qua hai, loại người thứ ba</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đề bài</h3><p style="margin:0 0 8px">7 bạn đánh số 1..7 xếp vòng tròn. Lần lượt <b>bỏ qua hai bạn</b>, rồi <b>loại bạn thứ ba</b>; cứ thế đến khi còn một bạn. Ai còn lại?</p><p style="margin:0 0 8px">Mô phỏng bằng <b>deque</b>: hai lần “đưa đầu xuống cuối”, rồi <b>popleft</b> (loại).</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">from collections import deque
+q = deque(range(1, 8))
+loai = []
+while len(q) &gt; 1:
+    for _ in range(2):
+        q.append(q.popleft())
+    loai.append(q.popleft())
+print(loai, q[0])</pre><div class="res"><span class="lab">Thứ tự bị loại và người còn lại</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[3, 6, 2, 7, 5, 1] 4</pre></div><div class="key">Thứ tự loại: 3, 6, 2, 7, 5, 1 → còn lại <b>4</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 3</span><h1>Mô phỏng phục vụ khách hàng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ứng dụng thực tế</h3><p style="margin:0 0 8px">Khách đến lúc t, phục vụ mất d phút, <b>theo thứ tự đến</b> (FIFO).</p><p style="margin:0 0 8px">Tính <b>thời gian chờ</b> mỗi khách: thời điểm bắt đầu phục vụ − thời điểm đến.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">from collections import deque
+den = deque([(0, 5), (2, 3), (4, 2), (10, 1)])
+t = 0
+wait = []
+while den:
+    a, d = den.popleft()
+    t = max(t, a)
+    wait.append(t - a)
+    t += d
+print(wait, sum(wait) / len(wait))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[0, 3, 4, 0] 1.75</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>BFS: loang theo từng lớp bằng hàng đợi</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý tưởng</h3><p style="margin:0 0 8px"><b>Duyệt theo chiều rộng</b>: xét đỉnh gần nguồn trước, rồi các đỉnh xa hơn một bước, hai bước…</p><p style="margin:0 0 8px">Dùng <b>hàng đợi</b>: lấy đầu, thêm các láng giềng <b>chưa thăm</b> vào cuối.</p><p style="margin:0 0 8px">Nhờ vậy BFS tìm <b>đường đi ngắn nhất</b> (số cạnh) trong đồ thị <b>không trọng số</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">from collections import deque
+ke = {1: [2, 3], 2: [4], 3: [4, 5], 4: [6], 5: [6], 6: []}
+d = {1: 0}
+q = deque([1])
+while q:
+    u = q.popleft()
+    for v in ke[u]:
+        if v not in d:
+            d[v] = d[u] + 1
+            q.append(v)
+print(d)</pre><div class="res"><span class="lab">Khoảng cách từ đỉnh 1</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">{1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3}</pre></div><div class="key">Đỉnh 6 cách đỉnh 1 <b>3 bước</b> (1→2→4→6).</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>BFS trên mê cung: đường đi ngắn nhất</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lưới 0/1</h3><p style="margin:0 0 8px">Ô 0 đi được, ô 1 là tường. Từ (0,0) đến (n−1, m−1), mỗi bước sang ô kề (4 hướng).</p><p style="margin:0 0 8px"><code>d[i][j]</code> = số bước nhỏ nhất đến ô (i, j); −1 nếu chưa đến.</p></div></div><div class="col"><pre class="code" style="font-size:calc(16px*var(--z,1))">from collections import deque
+g = ["0010", "0110", "0000", "1110", "0000"]
+n, m = 5, 4
+d = [[-1] * m for _ in range(n)]
+d[0][0] = 0
+q = deque([(0, 0)])
+while q:
+    x, y = q.popleft()
+    for dx, dy in ((1,0),(-1,0),(0,1),(0,-1)):
+        u, v = x + dx, y + dy
+        if 0 &lt;= u &lt; n and 0 &lt;= v &lt; m and g[u][v] == "0" and d[u][v] &lt; 0:
+            d[u][v] = d[x][y] + 1
+            q.append((u, v))
+print(d[n-1][m-1])</pre><div class="res"><span class="lab">Số bước ngắn nhất</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">7</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>Ngăn xếp đơn điệu: phần tử lớn hơn kế tiếp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bài toán</h3><p style="margin:0 0 8px">Với mỗi a[i], tìm phần tử <b>đầu tiên bên phải lớn hơn</b> nó (hoặc −1).</p><p style="margin:0 0 8px"><b>Cách ngây thơ</b>: O(n²). <b>Ngăn xếp đơn điệu</b>: O(n) — mỗi phần tử vào và ra ngăn xếp <b>đúng một lần</b>.</p><p style="margin:0 0 8px">Ngăn xếp lưu <b>chỉ số</b> các phần tử chưa tìm được kết quả (giá trị giảm dần).</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">a = [2, 1, 5, 3, 6, 4]
+kq = [-1] * len(a)
+st = []
+for i, x in enumerate(a):
+    while st and a[st[-1]] &lt; x:
+        kq[st.pop()] = x
+    st.append(i)
+print(kq)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[5, 5, 6, 6, -1, -1]</pre></div><div class="key">Vòng while lồng trong for nhưng tổng số lần pop ≤ n → <b>O(n)</b>.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>Theo dõi ngăn xếp đơn điệu a = [2, 1, 5, 3, 6, 4]</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>i</th><th>x</th><th>pop (gán kq)</th><th>ngăn xếp (chỉ số) sau</th></tr><tr><td>0</td><td>2</td><td>—</td><td>[0]</td></tr><tr><td>1</td><td>1</td><td>—</td><td>[0, 1]</td></tr><tr><td>2</td><td>5</td><td>pop 1 (kq=5), pop 0 (kq=5)</td><td>[2]</td></tr><tr><td>3</td><td>3</td><td>—</td><td>[2, 3]</td></tr><tr><td>4</td><td>6</td><td>pop 3 (kq=6), pop 2 (kq=6)</td><td>[4]</td></tr><tr><td>5</td><td>4</td><td>—</td><td>[4, 5]</td></tr></table><div class="key">Còn lại chỉ số 4, 5 trong ngăn xếp: kq = <b>−1</b>. Kết quả [5, 5, 6, 6, −1, −1].</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 4</span><h1>Hàng đợi hai đầu: cửa sổ trượt lớn nhất</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bài toán “max trong mọi đoạn k”</h3><p style="margin:0 0 8px">Dãy a, với mỗi cửa sổ k phần tử liên tiếp, in <b>giá trị lớn nhất</b>.</p><p style="margin:0 0 8px">Dùng <b>deque</b> lưu chỉ số, giữ giá trị <b>giảm dần</b>: bỏ cuối nếu nhỏ hơn x; bỏ đầu nếu ra khỏi cửa sổ.</p><p style="margin:0 0 8px">Tổng thời gian <b>O(n)</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">from collections import deque
+a = [1, 3, -1, -3, 5, 3, 6, 7]
+k = 3
+dq = deque()
+kq = []
+for i, x in enumerate(a):
+    while dq and a[dq[-1]] &lt;= x:
+        dq.pop()
+    dq.append(i)
+    if dq[0] &lt;= i - k:
+        dq.popleft()
+    if i &gt;= k - 1:
+        kq.append(a[dq[0]])
+print(kq)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[3, 3, 5, 5, 6, 7]</pre></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 5</span><h1>Hàng đợi ưu tiên (heapq)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lấy phần tử nhỏ nhất ra trước</h3><p style="margin:0 0 8px"><b>Hàng đợi ưu tiên</b>: <b>push</b> bất kì, <b>pop</b> luôn lấy phần tử <b>nhỏ nhất</b>.</p><p style="margin:0 0 8px">Cài đặt bằng <b>đống nhị phân</b> (heapq): push và pop đều <b>O(log n)</b>.</p><p style="margin:0 0 8px">Muốn lấy <b>lớn nhất</b>: đẩy giá trị <b>âm</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">import heapq
+h = []
+for x in [5, 2, 8, 1, 9]:
+    heapq.heappush(h, x)
+print([heapq.heappop(h) for _ in range(3)])
+h2 = [-x for x in [5, 2, 8]]
+heapq.heapify(h2)
+print(-heapq.heappop(h2))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[1, 2, 5]
+8</pre></div><div class="key">Ứng dụng: <b>Dijkstra</b>, ghép k danh sách, lấy k lớn nhất.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 5</span><h1>So sánh các cấu trúc</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>Ngăn xếp</th><th>Hàng đợi</th><th>Hàng đợi ưu tiên</th></tr><tr><td>Nguyên tắc</td><td>LIFO</td><td>FIFO</td><td>nhỏ nhất (hoặc lớn nhất) trước</td></tr><tr><td>Python</td><td>list append/pop</td><td>deque append/popleft</td><td>heapq</td></tr><tr><td>Thao tác lấy</td><td>O(1)</td><td>O(1) (deque)</td><td>O(log n)</td></tr><tr><td>Ứng dụng</td><td>ngoặc, hậu tố, DFS, hoàn tác</td><td>BFS, mô phỏng hàng đợi</td><td>Dijkstra, lập lịch</td></tr></table><div class="key">Nhớ: <b>DFS ↔ ngăn xếp</b>, <b>BFS ↔ hàng đợi</b>. Đổi cấu trúc là đổi thứ tự duyệt.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 6</span><h1>Tự kiểm tra: ngăn xếp tạm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Chương trình in ra gì? Theo dõi st.</p><pre class="code" style="font-size:calc(21px*var(--z,1))">st = []
+kq = []
+for ch in "abcdef":
+    st.append(ch)
+    if len(st) == 3:
+        kq.append(st.pop())
+        kq.append(st.pop())
+print("".join(kq), "".join(st))</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">a, b → st = [a, b]; c → [a, b, c] (đủ 3) → pop c, pop b → kq = “cb”, st = [a].</p><p style="margin:0 0 8px">d → [a, d]; e → [a, d, e] → pop e, pop d → kq = “cbed”, st = [a].</p><p style="margin:0 0 8px">f → [a, f]. Kết quả: <b>“cbed”</b> và <b>“af”</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">cbed af</pre></div></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 6</span><h1>Tự kiểm tra: Josephus</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">7 bạn, bỏ qua hai, loại bạn thứ ba. Ai còn lại cuối cùng?</p><pre class="code" style="font-size:calc(19px*var(--z,1))">from collections import deque
+q = deque(range(1, 8))
+while len(q) &gt; 1:
+    for _ in range(2):
+        q.append(q.popleft())
+    q.popleft()
+print(q[0])</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">q = [1..7]. Vòng 1: xoay 1, 2 → [3,4,5,6,7,1,2]; loại 3 → [4,5,6,7,1,2].</p><p style="margin:0 0 8px">Vòng 2: xoay 4, 5; loại 6 → [7,1,2,4,5]. Vòng 3: xoay 7, 1; loại 2 → [4,5,7,1].</p><p style="margin:0 0 8px">Vòng 4: xoay 4, 5; loại 7 → [1,4,5]. Vòng 5: xoay 1, 4; loại 5 → [1,4]. Vòng 6: xoay 1, 4 → [1,4] (hai lần xoay về nguyên); loại 1 → [4].</p><p style="margin:0 0 8px">Người còn lại: <b>4</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">4</pre></div></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · 6</span><h1>Tự kiểm tra (HSG): kiểm tra ngoặc</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Hàm can_bang có đúng không với xâu “())”? Và với “((” ? Hãy chỉ ra hai lỗi nếu thiếu hai điều kiện nhất định.</p><pre class="code" style="font-size:calc(18px*var(--z,1))">def can_bang(s):
+    st = []
+    cap = {")": "(", "]": "[", "}": "{"}
+    for c in s:
+        if c in "([{":
+            st.append(c)
+        elif c in cap:
+            if not st or st.pop() != cap[c]:
+                return False
+    return not st
+print(can_bang("())"), can_bang("(("))</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>“())”</b>: push (, pop → rỗng, gặp ) nữa: <b>st rỗng</b> nên <code>not st</code> đúng → trả <b>False</b>. Nếu thiếu <code>not st or</code> thì <code>st.pop()</code> gây <b>IndexError</b>.</p><p style="margin:0 0 8px"><b>“((”</b>: hết xâu mà st còn 2 phần tử → <code>return not st</code> = <b>False</b>. Nếu cuối hàm chỉ <code>return True</code> thì <b>sai</b>.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">False False True</pre></div></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Ngăn xếp LIFO</b>: append/pop ở cuối list; luôn kiểm tra rỗng trước khi pop.</li><li><b>Hàng đợi FIFO</b>: dùng <b>deque</b> (popleft O(1)); <code>pop(0)</code> của list là O(n).</li><li>Ngoặc cân bằng; hậu tố (pop b rồi a); Josephus bằng deque.</li><li><b>BFS</b> = hàng đợi, đường đi ngắn nhất không trọng số; DFS = ngăn xếp/đệ quy.</li><li><b>Ngăn xếp đơn điệu</b> và <b>deque cửa sổ trượt</b> đưa O(n²) về O(n).</li><li><b>heapq</b>: hàng đợi ưu tiên O(log n).</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Đỉnh ngăn xếp</td><td>st[-1]</td></tr><tr><td class="m">Lấy đầu hàng đợi</td><td>popleft()</td></tr><tr><td class="m">BFS</td><td>deque</td></tr><tr><td class="m">Hậu tố</td><td>pop b, rồi a</td></tr></table><div class="warn">Pop khi rỗng; quên kiểm tra rỗng cuối; dùng list.pop(0) trong vòng lặp lớn.</div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Đếm ngoặc <b>không đủ</b>: phải đúng thứ tự lồng.</li><li>Hậu tố: <b>a op b</b> với b pop trước.</li><li>Mỗi phần tử vào/ra ngăn xếp đơn điệu một lần → O(n).</li><li>BFS đánh dấu thăm <b>khi đẩy vào hàng đợi</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Dijkstra</b> với heapq.</li><li><b>Topo sort</b> (Kahn) bằng hàng đợi.</li><li><b>Hàng đợi vòng</b> (circular buffer).</li></ul></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Ngăn xếp: vào sau ra trước hay vào trước ra trước?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Cách lấy phần tử đầu của deque?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Cấu trúc dùng cho BFS?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>[].pop()</code> gây lỗi gì?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Độ phức tạp của <code>pop(0)</code> trên list?</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>Vào sau, ra trước</b> (LIFO).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>popleft()</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Hàng đợi</b> (deque).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>IndexError</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>O(n)</b>.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Đảo ngược một dãy số bằng ngăn xếp. Thử [1, 2, 3, 4].</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Kiểm tra xâu chỉ có ( và ) có cân bằng không. Thử “(())”, “)(”.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Tính giá trị biểu thức hậu tố “3 4 + 2 *”.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Mô phỏng hàng đợi: lệnh “push x”, “pop”, “size”.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Với dãy a, tìm với mỗi i phần tử <b>nhỏ hơn gần nhất bên trái</b> (hoặc −1) trong O(n).</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Mê cung n × m: đường đi ngắn nhất từ S đến E, in cả đường đi (lưu cha).</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>[4, 3, 2, 1].</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Đếm cân bằng: ngăn xếp hoặc biến <code>d</code> (d &lt; 0 → sai) → True False.</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>14 (= (3 + 4) × 2).</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Đọc lệnh, <code>q.append</code>, <code>q.popleft()</code>, <code>len(q)</code> (dùng deque).</p></div></div></div></section>
+
+<section class="s p7"><div class="hd"><span class="k">PYTHON 8 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Đổi chiều so sánh và duyệt trái → phải với ngăn xếp tăng dần → [-1, -1, 1, -1, 1, 5, 1].</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>BFS + mảng <code>cha[(x,y)]</code>; truy ngược từ E về S rồi đảo lại.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
