@@ -1,6 +1,6 @@
 # Dự án: Luyện HSG Tin học (THPT, SGK Kết nối tri thức)
 
-Ứng dụng web một tệp (`../index.html`) cho đội tuyển HSG Tin: đề thi thử, ôn theo chủ đề, sổ lỗi, ngân hàng 736 câu (giải thích từng phương án, trace, res do gen/explain.py sinh bằng cách chạy thật) (gồm 81 câu khó sinh bằng gen/hard_sql.py, gen/hard_sql2.py (điền câu lệnh, ý nghĩa câu lệnh dài, ghép yêu cầu–truy vấn, sắp xếp mệnh đề, sửa lỗi), gen/hard_other.py: đáp án đều lấy từ chạy thật), 29 bài học kèm bộ slide, tài khoản học sinh và trang thống kê giáo viên.
+Ứng dụng web một tệp (`../index.html`) cho đội tuyển HSG Tin: đề thi thử, ôn theo chủ đề, sổ lỗi, ngân hàng 722 câu (giải thích từng phương án, trace, res do gen/explain.py sinh bằng cách chạy thật) (gồm 81 câu khó sinh bằng gen/hard_sql.py, gen/hard_sql2.py (điền câu lệnh, ý nghĩa câu lệnh dài, ghép yêu cầu–truy vấn, sắp xếp mệnh đề, sửa lỗi), gen/hard_other.py: đáp án đều lấy từ chạy thật), 29 bài học kèm bộ slide, tài khoản học sinh và trang thống kê giáo viên.
 Chủ dự án là giáo viên Tin học (Việt Nam): **mọi nội dung và giao diện bằng tiếng Việt**, ngôn ngữ học thuật kiểu SGK.
 
 ## Cấu trúc
@@ -35,3 +35,6 @@ Phản hồi của giáo viên: slide cũ quá ngắn, học sinh không tự h�
 - **Phủ nội dung**: trước khi viết bài, liệt kê câu hỏi trong `bank.json` thuộc bài đó (theo `topic`, `tags`, từ khoá) và bảo đảm mỗi khái niệm các câu đó kiểm tra đều có slide dạy (kể cả mục NÂNG CAO kiểu HSG: số âm với // và %, round chẵn, ** phải sang trái, đoản mạch...).
 - Mỗi bài có thể gồm nhiều bộ (1A, 1B, 1C...), mỗi bộ 30–45 slide; nối vào `DECK` trong `learnui.js`.
 - Làm theo từng đợt nhỏ, gửi giáo viên duyệt trước khi sang bài kế tiếp.
+
+- Lớp 12 KHÔNG học JavaScript: bank không có câu JS, không có bài w6b. Không thêm lại.
+- Giải thích từng phương án viết tay: gen/oh_*.py (dict id -> 4 lí do) + gen/apply_oh.py oh_web1 oh_web2 ... (chạy lại được); gen/expl_web_auto.py tự sinh cho selector/độ đặc hiệu/hộp.

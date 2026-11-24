@@ -1,0 +1,17 @@
+W={
+'cs12-ai-khdl-thongke-18':["r = 0 là không có tương quan tuyến tính.","−0,5 là tương quan nghịch yếu.","y = 12 − 2x: các điểm nằm trên đường thẳng dốc xuống, r = −1.","+1 là tương quan thuận."],
+'cs12-ai-khdl-lamsach-19':["(12 + 18 + 30)/3 = 20.","15 không phải trung bình ba giá trị hiện có.","12 sai khi chia cho 5 (tính cả ô thiếu).","10 không đúng."],
+'cs12-ai-khdl-lamsach-20':["min = 10, max = 50, khoảng 40: 0; 0,25; 0,5; 1.","Đó là chia cho 100, không phải min-max.","0,33 và 0,67 là chia đều ba khoảng; dữ liệu không cách đều.","0,2 và 0,4 sai: (20−10)/40 = 0,25; (30−10)/40 = 0,5."],
+'cs12-ai-mo-phong-21':["0,579 là xác suất sai; mô phỏng kiểm chứng được xác suất.","1 − (5/6)³ ≈ 0,421; mô phỏng chỉ xấp xỉ, sai số giảm khi tăng số lần tung.","0,5 sai và mô phỏng không cho đúng chính xác.","0,167 là xác suất một con xúc xắc ra 6."],
+'cs12-ai-mo-phong-22':["6,3% = 23/365 là cách tính sai.","Xác suất trùng ngày sinh của 23 người ≈ 50,7%.","Nhân đôi 6,3% không có cơ sở.","99,9% chỉ đạt với nhóm khoảng 70 người."],
+'cs12-ai-mo-phong-23':["Tăng √10 lần chỉ giảm sai số √(√10) ≈ 1,8 lần.","1000 lần giảm khoảng 31 lần.","10 lần giảm sai số chỉ khoảng 3,2 lần.","Sai số ∝ 1/√n: giảm 10 lần cần n tăng 100 lần."],
+'cs12-ai-mo-phong-24':["Phần tư hình tròn có diện tích π/4 nên π ≈ 4 × (trong)/(tổng).","Công thức này sai.","(trong)/(tổng) ≈ π/4, chưa nhân 4.","Nhân 2 sai."],
+'bn_b-ai-ai-dactrung-11':["Không nhập yêu cầu bằng ngôn ngữ.","Không dùng cảm biến vật lí.","Không dùng luật cho sẵn.","Tự điều chỉnh gợi ý từ dữ liệu và phản hồi là khả năng học."],
+'bn_b-ai-ai-dactrung-12':["Nghe câu lệnh là hiểu ngôn ngữ; điều khiển đúng yêu cầu là giải quyết vấn đề.","Không phải tính toán nhiệt độ.","Không chỉ học; trực tiếp là hiểu ngôn ngữ và giải quyết vấn đề.","Không nhận thức hình ảnh."],
+'bn_b-ai-ai-canhbao-13':["Kết quả có thể sai nhưng thuyết phục; cần kiểm chứng và ghi nguồn.","AI tạo sinh có thể sai nên phải kiểm tra.","Dữ liệu nhập vào có thể được lưu.","AI có thể sao chép nội dung có bản quyền."],
+'h-ai-01':["Precision = 45/60 = 0,75, không phải 0,90.","Precision = 45/60 = 0,75; recall = 45/50 = 0,90; F1 ≈ 0,818; accuracy = 80/100 = 0,80.","Accuracy = (45 + 35)/100 = 0,80, không phải 0,70.","Đảo precision và recall."],
+'h-ai-03':["Tâm thứ nhất không phải (1; 2,5).","Sau hai vòng: cụm 1 = (1,1),(1,4),(2,2) → (1,33; 2,33); cụm 2 = (6,5),(7,7),(8,6) → (7; 6).","Đó là tâm ban đầu.","Không phải kết quả cập nhật."],
+'h-ai-04':["w = 2,62 sai.","Điểm ngoại lai kéo w = 2,42; phần dư tại x=6 = 15 − (2,42×6 − 0,95) ≈ 1,43.","w = 2,20 sai.","w = 2,00 sai."],
+'h-ai-05':["Ngưỡng 0,5: TP=3, FP=2 → (0,60; 0,75). Ngưỡng 0,35: TP=4, FP=2 → (0,67; 1,00).","Precision mới là 4/6 = 0,67, không phải 0,57.","Precision mới không phải 0,50.","Thứ tự (precision, recall) ban đầu bị đảo."],
+'h-ai-06':["√10 chỉ ứng với tăng n lên 10 lần.","Giảm 1000 lần cần n tăng 10⁶ lần.","Giảm 100 lần cần n tăng 10⁴ lần.","n tăng 100 lần nên sai số giảm √100 = 10 lần."],
+}

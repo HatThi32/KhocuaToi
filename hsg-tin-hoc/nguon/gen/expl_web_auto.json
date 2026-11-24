@@ -1,0 +1,209 @@
+{
+ "web-sel-9": [
+  "Bộ chọn «ul.menu > li.it» — «>» chỉ chọn con TRỰC TIẾP; li.it phải là con của ul.menu. Khớp 3 phần tử: li.it.on \"A\"; li.it \"B\"; li.it.on \"C\".",
+  [
+   "Đúng: khớp đúng 3 phần tử (li.it.on \"A\"; li.it \"B\"; li.it.on \"C\").",
+   "Sai: số phần tử khớp thực tế là 3, không phải 2.",
+   "Sai: số phần tử khớp thực tế là 3, không phải 1.",
+   "Sai: số phần tử khớp thực tế là 3, không phải 0."
+  ]
+ ],
+ "web-sel-10": [
+  "Bộ chọn «li.it.on» — hai class viết liền nhau (không dấu cách): phần tử phải có CẢ it VÀ on. Khớp 2 phần tử: li.it.on \"A\"; li.it.on \"C\".",
+  [
+   "Sai: số phần tử khớp thực tế là 2, không phải 0.",
+   "Sai: số phần tử khớp thực tế là 2, không phải 3.",
+   "Sai: số phần tử khớp thực tế là 2, không phải 1.",
+   "Đúng: khớp đúng 2 phần tử (li.it.on \"A\"; li.it.on \"C\")."
+  ]
+ ],
+ "web-sel-11": [
+  "Bộ chọn «#m .it» — dấu cách = hậu duệ ở mọi cấp bên trong #m, kể cả p.it. Khớp 4 phần tử: li.it.on \"A\"; li.it \"B\"; li.it.on \"C\"; p.it \"E\".",
+  [
+   "Sai: số phần tử khớp thực tế là 4, không phải 2.",
+   "Sai: số phần tử khớp thực tế là 4, không phải 1.",
+   "Đúng: khớp đúng 4 phần tử (li.it.on \"A\"; li.it \"B\"; li.it.on \"C\"; p.it \"E\").",
+   "Sai: số phần tử khớp thực tế là 4, không phải 0."
+  ]
+ ],
+ "web-sel-12": [
+  "Bộ chọn «li + li» — «+» chọn li đứng NGAY SAU một li anh em: mọi li trừ li đầu. Khớp 3 phần tử: li.it \"B\"; li.it.on \"C\"; li \"D\".",
+  [
+   "Sai: số phần tử khớp thực tế là 3, không phải 0.",
+   "Sai: số phần tử khớp thực tế là 3, không phải 1.",
+   "Sai: số phần tử khớp thực tế là 3, không phải 2.",
+   "Đúng: khớp đúng 3 phần tử (li.it \"B\"; li.it.on \"C\"; li \"D\")."
+  ]
+ ],
+ "web-sel-13": [
+  "Bộ chọn «li:nth-child(odd)» — nth-child đếm vị trí trong cha (1,3,5…) . Khớp 2 phần tử: li.it.on \"A\"; li.it.on \"C\".",
+  [
+   "Sai: số phần tử khớp thực tế là 2, không phải 1.",
+   "Sai: số phần tử khớp thực tế là 2, không phải 0.",
+   "Sai: số phần tử khớp thực tế là 2, không phải 3.",
+   "Đúng: khớp đúng 2 phần tử (li.it.on \"A\"; li.it.on \"C\")."
+  ]
+ ],
+ "web-sel-14": [
+  "Bộ chọn «p.it, li.on» — dấu phẩy = hợp của hai bộ chọn, đếm phần tử khớp ít nhất một vế. Khớp 3 phần tử: li.it.on \"A\"; li.it.on \"C\"; p.it \"E\".",
+  [
+   "Sai: số phần tử khớp thực tế là 3, không phải 1.",
+   "Sai: số phần tử khớp thực tế là 3, không phải 0.",
+   "Đúng: khớp đúng 3 phần tử (li.it.on \"A\"; li.it.on \"C\"; p.it \"E\").",
+   "Sai: số phần tử khớp thực tế là 3, không phải 2."
+  ]
+ ],
+ "web-sel-15": [
+  "Bộ chọn «.on:not(li)» — :not(li) loại các thẻ li; còn lại phần tử có class on mà không phải li. Khớp 1 phần tử: span.lk.on \"y\".",
+  [
+   "Đúng: khớp đúng 1 phần tử (span.lk.on \"y\").",
+   "Sai: số phần tử khớp thực tế là 1, không phải 2.",
+   "Sai: số phần tử khớp thực tế là 1, không phải 3.",
+   "Sai: số phần tử khớp thực tế là 1, không phải 0."
+  ]
+ ],
+ "web-sel-16": [
+  "Bộ chọn «li:last-child» — chỉ phần tử là con cuối của cha. Khớp 1 phần tử: li \"D\".",
+  [
+   "Sai: số phần tử khớp thực tế là 1, không phải 3.",
+   "Sai: số phần tử khớp thực tế là 1, không phải 0.",
+   "Đúng: khớp đúng 1 phần tử (li \"D\").",
+   "Sai: số phần tử khớp thực tế là 1, không phải 2."
+  ]
+ ],
+ "web-sel-17": [
+  "Bộ chọn «div p span.lk» — span.lk phải nằm trong p, p nằm trong div (hậu duệ). Khớp 1 phần tử: span.lk.on \"y\".",
+  [
+   "Sai: số phần tử khớp thực tế là 1, không phải 3.",
+   "Đúng: khớp đúng 1 phần tử (span.lk.on \"y\").",
+   "Sai: số phần tử khớp thực tế là 1, không phải 2.",
+   "Sai: số phần tử khớp thực tế là 1, không phải 0."
+  ]
+ ],
+ "web-sel-18": [
+  "Bộ chọn «a[href]» — chọn thẻ a có thuộc tính href. Khớp 1 phần tử: a.lk \"x\".",
+  [
+   "Sai: số phần tử khớp thực tế là 1, không phải 3.",
+   "Đúng: khớp đúng 1 phần tử (a.lk \"x\").",
+   "Sai: số phần tử khớp thực tế là 1, không phải 0.",
+   "Sai: số phần tử khớp thực tế là 1, không phải 2."
+  ]
+ ],
+ "web-sel-19": [
+  "Bộ chọn «ul li:nth-of-type(2n)» — nth-of-type đếm theo cùng loại thẻ: vị trí chẵn. Khớp 2 phần tử: li.it \"B\"; li \"D\".",
+  [
+   "Sai: số phần tử khớp thực tế là 2, không phải 3.",
+   "Sai: số phần tử khớp thực tế là 2, không phải 1.",
+   "Sai: số phần tử khớp thực tế là 2, không phải 0.",
+   "Đúng: khớp đúng 2 phần tử (li.it \"B\"; li \"D\")."
+  ]
+ ],
+ "web-sel-20": [
+  "Bộ chọn «li:not(.it)» — li không có class it. Khớp 1 phần tử: li \"D\".",
+  [
+   "Sai: số phần tử khớp thực tế là 1, không phải 3.",
+   "Sai: số phần tử khớp thực tế là 1, không phải 2.",
+   "Sai: số phần tử khớp thực tế là 1, không phải 0.",
+   "Đúng: khớp đúng 1 phần tử (li \"D\")."
+  ]
+ ],
+ "web-spec-21": [
+  "So sánh độ đặc hiệu (số id, số class/thuộc tính/giả lớp, số thẻ), từ trái sang phải; thứ tự viết chỉ quyết định khi bằng nhau. «p» → (0, 0, 1) màu red; «.a» → (0, 1, 0) màu blue; «#x» → (1, 0, 0) màu green. Cao nhất: «#x» nên màu là green.",
+  [
+   "Đúng: quy tắc «#x» có độ đặc hiệu (1, 0, 0) cao nhất.",
+   "Sai: quy tắc cho màu blue có độ đặc hiệu (0, 1, 0), thấp hơn (1, 0, 0) của quy tắc thắng.",
+   "Sai: quy tắc cho màu red có độ đặc hiệu (0, 0, 1), thấp hơn (1, 0, 0) của quy tắc thắng.",
+   "Sai: luôn xác định được. Thứ tự viết sau cùng chỉ dùng khi độ đặc hiệu BẰNG nhau; ở đây các bộ chọn có độ đặc hiệu khác nhau."
+  ]
+ ],
+ "web-spec-22": [
+  "So sánh độ đặc hiệu (số id, số class/thuộc tính/giả lớp, số thẻ), từ trái sang phải; thứ tự viết chỉ quyết định khi bằng nhau. «div p.a» → (0, 1, 2) màu red; «p.a.b» → (0, 2, 1) màu blue; «div .a» → (0, 1, 1) màu green. Cao nhất: «p.a.b» nên màu là blue.",
+  [
+   "Đúng: quy tắc «p.a.b» có độ đặc hiệu (0, 2, 1) cao nhất.",
+   "Sai: quy tắc cho màu red có độ đặc hiệu (0, 1, 2), thấp hơn (0, 2, 1) của quy tắc thắng.",
+   "Sai: luôn xác định được. Thứ tự viết sau cùng chỉ dùng khi độ đặc hiệu BẰNG nhau; ở đây các bộ chọn có độ đặc hiệu khác nhau.",
+   "Sai: quy tắc cho màu green có độ đặc hiệu (0, 1, 1), thấp hơn (0, 2, 1) của quy tắc thắng."
+  ]
+ ],
+ "web-spec-23": [
+  "So sánh độ đặc hiệu (số id, số class/thuộc tính/giả lớp, số thẻ), từ trái sang phải; thứ tự viết chỉ quyết định khi bằng nhau. «#x p» → (1, 0, 1) màu red; «.a .b .c» → (0, 3, 0) màu blue; «p» → (0, 0, 1) màu green. Cao nhất: «#x p» nên màu là red.",
+  [
+   "Sai: quy tắc cho màu green có độ đặc hiệu (0, 0, 1), thấp hơn (1, 0, 1) của quy tắc thắng.",
+   "Sai: luôn xác định được. Thứ tự viết sau cùng chỉ dùng khi độ đặc hiệu BẰNG nhau; ở đây các bộ chọn có độ đặc hiệu khác nhau.",
+   "Đúng: quy tắc «#x p» có độ đặc hiệu (1, 0, 1) cao nhất.",
+   "Sai: quy tắc cho màu blue có độ đặc hiệu (0, 3, 0), thấp hơn (1, 0, 1) của quy tắc thắng."
+  ]
+ ],
+ "web-spec-24": [
+  "So sánh độ đặc hiệu (số id, số class/thuộc tính/giả lớp, số thẻ), từ trái sang phải; thứ tự viết chỉ quyết định khi bằng nhau. «ul li.on» → (0, 1, 2) màu red; «.menu li.on» → (0, 2, 1) màu blue; «li.on» → (0, 1, 1) màu green. Cao nhất: «.menu li.on» nên màu là blue.",
+  [
+   "Đúng: quy tắc «.menu li.on» có độ đặc hiệu (0, 2, 1) cao nhất.",
+   "Sai: quy tắc cho màu red có độ đặc hiệu (0, 1, 2), thấp hơn (0, 2, 1) của quy tắc thắng.",
+   "Sai: luôn xác định được. Thứ tự viết sau cùng chỉ dùng khi độ đặc hiệu BẰNG nhau; ở đây các bộ chọn có độ đặc hiệu khác nhau.",
+   "Sai: quy tắc cho màu green có độ đặc hiệu (0, 1, 1), thấp hơn (0, 2, 1) của quy tắc thắng."
+  ]
+ ],
+ "web-spec-25": [
+  "So sánh độ đặc hiệu (số id, số class/thuộc tính/giả lớp, số thẻ), từ trái sang phải; thứ tự viết chỉ quyết định khi bằng nhau. «a:hover» → (0, 1, 1) màu red; «a.lk:hover» → (0, 2, 1) màu blue; «a» → (0, 0, 1) màu green. Cao nhất: «a.lk:hover» nên màu là blue.",
+  [
+   "Đúng: quy tắc «a.lk:hover» có độ đặc hiệu (0, 2, 1) cao nhất.",
+   "Sai: quy tắc cho màu red có độ đặc hiệu (0, 1, 1), thấp hơn (0, 2, 1) của quy tắc thắng.",
+   "Sai: luôn xác định được. Thứ tự viết sau cùng chỉ dùng khi độ đặc hiệu BẰNG nhau; ở đây các bộ chọn có độ đặc hiệu khác nhau.",
+   "Sai: quy tắc cho màu green có độ đặc hiệu (0, 0, 1), thấp hơn (0, 2, 1) của quy tắc thắng."
+  ]
+ ],
+ "web-spec-26": [
+  "So sánh độ đặc hiệu (số id, số class/thuộc tính/giả lớp, số thẻ), từ trái sang phải; thứ tự viết chỉ quyết định khi bằng nhau. «#x» → (1, 0, 0) màu red; «div#x» → (1, 0, 1) màu blue; «.a.b.c.d.e» → (0, 5, 0) màu green. Cao nhất: «div#x» nên màu là blue.",
+  [
+   "Đúng: quy tắc «div#x» có độ đặc hiệu (1, 0, 1) cao nhất.",
+   "Sai: quy tắc cho màu red có độ đặc hiệu (1, 0, 0), thấp hơn (1, 0, 1) của quy tắc thắng.",
+   "Sai: luôn xác định được. Thứ tự viết sau cùng chỉ dùng khi độ đặc hiệu BẰNG nhau; ở đây các bộ chọn có độ đặc hiệu khác nhau.",
+   "Sai: quy tắc cho màu green có độ đặc hiệu (0, 5, 0), thấp hơn (1, 0, 1) của quy tắc thắng."
+  ]
+ ],
+ "web-box-27": [
+  "content-box: width chỉ là phần nội dung, khung = 200 + 2×20 (padding) + 2×5 (border) = 250, cộng 2×10 (margin) → 270 px.",
+  [
+   "Đúng: 270 px.",
+   "Sai: 150 px — trừ padding và border khỏi width (đó là cách tính nội dung của border-box, không phải khung).",
+   "Sai: 230 px — sai ở bước cộng padding/border/margin.",
+   "Sai: 200 px — chỉ là giá trị width, bỏ qua phần còn lại."
+  ]
+ ],
+ "web-box-28": [
+  "content-box: width chỉ là phần nội dung, khung = 300 + 2×15 (padding) + 2×2 (border) = 334, cộng 2×0 (margin) → 334 px.",
+  [
+   "Sai: 304 px — sai ở bước cộng padding/border/margin.",
+   "Đúng: 334 px.",
+   "Sai: 266 px — trừ padding và border khỏi width (đó là cách tính nội dung của border-box, không phải khung).",
+   "Sai: 300 px — chỉ là giá trị width, bỏ qua phần còn lại."
+  ]
+ ],
+ "web-box-29": [
+  "border-box: width đã gồm padding và border nên khung = 240, cộng 2×5 (margin) → 250 px.",
+  [
+   "Sai: 240 px — chỉ là giá trị width, bỏ qua phần còn lại.",
+   "Sai: 245 px — chỉ cộng margin một phía.",
+   "Đúng: 250 px.",
+   "Sai: 180 px — trừ padding và border khỏi width (đó là cách tính nội dung của border-box, không phải khung)."
+  ]
+ ],
+ "web-box-30": [
+  "content-box: width chỉ là phần nội dung, khung = 180 + 2×10 (padding) + 2×4 (border) = 208, cộng 2×8 (margin) → 224 px.",
+  [
+   "Sai: 180 px — chỉ là giá trị width, bỏ qua phần còn lại.",
+   "Sai: 152 px — trừ padding và border khỏi width (đó là cách tính nội dung của border-box, không phải khung).",
+   "Sai: 200 px — mới cộng padding.",
+   "Đúng: 224 px."
+  ]
+ ],
+ "web-box-31": [
+  "border-box: width đã gồm padding và border nên khung = 320, cộng 2×10 (margin) → 340 px.",
+  [
+   "Sai: 330 px — chỉ cộng margin một phía.",
+   "Sai: 260 px — trừ padding và border khỏi width (đó là cách tính nội dung của border-box, không phải khung).",
+   "Đúng: 340 px.",
+   "Sai: 320 px — chỉ là giá trị width, bỏ qua phần còn lại."
+  ]
+ ]
+}
