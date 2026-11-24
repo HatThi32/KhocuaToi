@@ -1,0 +1,341 @@
+<!-- HEAD -->
+<title>Python 4B · Ngoại lệ, kiểm thử và sửa lỗi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+</style>
+
+<div id="wrap">
+<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · PYTHON 4B</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>NGOẠI LỆ, KIỂM THỬ<br>VÀ SỬA LỖI</h1><p style="font-size:28px;line-height:1.5">try – except – else – finally, assert, thiết kế bộ test, giá trị biên, tìm và sửa lỗi logic trong hàm (đề HSG).</p><div><span class="chip">try</span><span class="chip">except</span><span class="chip">assert</span><span class="chip">test</span><span class="chip">sửa lỗi</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
+<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
+<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
+<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
+<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Nhận biết <b>các loại lỗi chạy</b> (ngoại lệ) qua tên.</li><li>Dùng <b>try – except – else – finally</b> đúng thứ tự thực hiện.</li><li>Dùng <b>assert</b> và <b>raise</b>.</li><li>Thiết kế <b>bộ test</b>: bình thường, biên, đặc biệt.</li><li><b>Tìm và sửa lỗi logic</b> thường gặp: lệch một, biên, vòng lặp vô hạn.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Ngoại lệ</li><li>try – except</li><li>assert, test</li><li>Sửa lỗi</li><li>Tự kiểm tra, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 1</span><h1>Các ngoại lệ thường gặp</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Mã nguồn</th><th>Ngoại lệ</th><th>Nguyên nhân</th></tr><tr><td><code>a=[1,2,3]; a[3]</code></td><td><b>IndexError</b></td><td>chỉ số ngoài phạm vi</td></tr><tr><td><code>d={"a":1}; d["b"]</code></td><td><b>KeyError</b></td><td>khoá không có trong dict</td></tr><tr><td><code>int("12a")</code></td><td><b>ValueError</b></td><td>giá trị không đổi được</td></tr><tr><td><code>10 // (5 - 5)</code></td><td><b>ZeroDivisionError</b></td><td>chia cho 0</td></tr><tr><td><code>"abc" + 5</code></td><td><b>TypeError</b></td><td>sai kiểu dữ liệu</td></tr><tr><td><code>print(y + 1)</code> (y chưa gán)</td><td><b>NameError</b></td><td>dùng tên chưa tồn tại</td></tr></table><div class="key">Dòng cuối của <b>traceback</b> luôn có dạng <b>TênLỗi: mô tả</b>. Đọc dòng này trước tiên!</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 1</span><h1>Nhắc lại: ba loại lỗi</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phân loại</h3><table><tr><th>Loại</th><th>Khi nào phát hiện</th><th>Ví dụ</th></tr><tr><td><b>Cú pháp</b></td><td>trước khi chạy</td><td>thiếu <b>:</b>, ngoặc</td></tr><tr><td><b>Ngoại lệ</b> (chạy)</td><td>trong khi chạy</td><td>chia 0, IndexError</td></tr><tr><td><b>Logic</b></td><td><b>không báo</b>, kết quả sai</td><td>dùng &gt; thay &gt;=</td></tr></table></div></div><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">print(10 / 0)</pre><div class="res"><span class="lab">ZeroDivisionError</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">ZeroDivisionError: division by zero</pre></div><div class="key">Lỗi logic là nguy hiểm nhất vì máy <b>không báo</b>: phải <b>kiểm thử</b> mới phát hiện.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 2</span><h1>try – except: bắt ngoại lệ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cách hoạt động</h3><ol style="gap:6px"><li>Chạy khối <b>try</b>.</li><li>Không lỗi: <b>bỏ qua</b> mọi except.</li><li>Có lỗi: <b>dừng ngay</b> tại dòng lỗi, nhảy tới <b>except</b> khớp loại lỗi.</li></ol><div class="warn">Các dòng trong try <b>sau dòng gây lỗi không chạy</b>.</div></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">try:
+    x = int(input())
+    print(10 // x)
+except ValueError:
+    print("khong phai so")
+except ZeroDivisionError:
+    print("chia cho 0")</pre><div class="res"><span class="lab">Kết quả (nhập 0)</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">0
+chia cho 0</pre></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 2</span><h1>else và finally</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thứ tự đầy đủ</h3><ul style="gap:7px"><li><b>try</b>: đoạn có thể lỗi.</li><li><b>except</b>: chạy khi có lỗi khớp.</li><li><b>else</b>: chạy khi <b>không có lỗi</b>.</li><li><b>finally</b>: <b>luôn chạy</b>, kể cả khi có return hoặc lỗi.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">def chia(a, b):
+    try:
+        r = a // b
+    except ZeroDivisionError:
+        return "loi"
+    else:
+        return r
+    finally:
+        print("xong", end=" ")
+print(chia(7, 2), chia(1, 0), chia(9, 3))</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">xong xong xong 3 loi 3</pre></div><div class="key"><b>finally</b> chạy 3 lần (in “xong” trước khi print trả giá trị); print ngoài in <b>3 loi 3</b>.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 2</span><h1>Thứ tự các except và sự lan truyền</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khớp từ trên xuống, chỉ một nhánh</h3><p style="margin:0 0 8px">Python kiểm tra các <b>except</b> lần lượt; <b>nhánh khớp đầu tiên</b> chạy, các nhánh sau bỏ qua.</p><p style="margin:0 0 8px">Lỗi không khớp except nào → <b>lan ra ngoài</b> (chương trình dừng).</p><p style="margin:0 0 8px"><code>except Exception as e</code> bắt hầu hết lỗi; <b>e</b> chứa thông báo.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">try:
+    a = [1, 2, 3]
+    x = int("7")
+    y = a[x]
+    print("A")
+except ValueError:
+    print("B")
+except IndexError:
+    print("C")
+finally:
+    print("D")</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">C
+D</pre></div><div class="key">int("7") thành công (x = 7); <b>a[7]</b> gây IndexError → in C; finally in D. A và B <b>không in</b>.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 2</span><h1>Nhập đến khi đúng: vòng lặp + try</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Kiểm tra dữ liệu người dùng</h3><p style="margin:0 0 8px"><b>while True</b> + <b>try</b> đọc số; thành công thì <b>break</b>; lỗi thì nhắc nhập lại.</p><p style="margin:0 0 8px"><b>raise</b> tự phát sinh ngoại lệ để vào nhánh except.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">while True:
+    try:
+        n = int(input())
+        if n &lt;= 0:
+            raise ValueError
+        break
+    except ValueError:
+        print("nhap lai")
+print("n =", n)</pre><div class="res"><span class="lab">Nhập “abc”, “−5”, “12”</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">abc
+nhap lai
+-5
+nhap lai
+12
+n = 12</pre></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 2</span><h1>raise: tự báo lỗi trong hàm</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khi nào cần?</h3><p style="margin:0 0 8px">Hàm phát hiện <b>đầu vào không hợp lệ</b> thì nên <b>raise</b> thay vì trả giá trị vô nghĩa.</p><p style="margin:0 0 8px">Cú pháp: <code>raise TênLỗi("thông báo")</code>.</p><p style="margin:0 0 8px">Nơi gọi dùng try – except để xử lí.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">def can(x):
+    if x &lt; 0:
+        raise ValueError("am")
+    return x ** 0.5
+
+for v in (9, -4):
+    try:
+        print(can(v))
+    except ValueError as e:
+        print("loi:", e)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">3.0
+loi: am</pre></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 3</span><h1>assert: khẳng định điều kiện</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cú pháp</h3><p style="margin:0 0 8px"><code>assert điều_kiện, "thông báo"</code>: nếu điều kiện <b>sai</b> thì phát sinh <b>AssertionError</b>.</p><p style="margin:0 0 8px">Dùng để <b>kiểm thử</b> hàm: khẳng định kết quả mong đợi.</p><p style="margin:0 0 8px">Khi test <b>đạt</b> thì chương trình chạy bình thường, <b>không in gì</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">def tb(a):
+    return sum(a) / len(a)
+kq = []
+for t in ([2, 4], [], [5]):
+    try:
+        assert len(t) &gt; 0, "rong"
+        kq.append(tb(t))
+    except AssertionError as e:
+        kq.append(str(e))
+print(kq)</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[3.0, 'rong', 5.0]</pre></div><div class="key">Danh sách rỗng bị chặn bởi assert nên tránh được ZeroDivisionError.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 3</span><h1>Các loại test case</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cần chuẩn bị đủ loại</h3><ul style="gap:7px"><li><b>Bình thường</b>: dữ liệu điển hình.</li><li><b>Biên</b>: nhỏ nhất, lớn nhất, đúng mốc (0, 1, n, giá trị bằng ngưỡng).</li><li><b>Đặc biệt</b>: rỗng, một phần tử, trùng nhau, toàn âm, đã sắp xếp, ngược.</li><li><b>Lỗi</b>: dữ liệu sai kiểu, chia 0.</li></ul><div class="key">Một bộ test tốt <b>khiến mọi phiên bản sai đều lộ ra</b>.</div></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">def xep_loai(d):
+    if d &gt;= 8:
+        return "Gioi"
+    if d &gt;= 6.5:
+        return "Kha"
+    if d &gt;= 5:
+        return "TB"
+    return "Yeu"
+
+assert xep_loai(8) == "Gioi"
+assert xep_loai(7.9) == "Kha"
+assert xep_loai(6.5) == "Kha"
+assert xep_loai(5) == "TB"
+assert xep_loai(4.99) == "Yeu"
+print("dat")</pre><div class="res"><span class="lab">Kết quả</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">dat</pre></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 3</span><h1>Bộ test bắt lỗi của find_max</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các lỗi có thể mắc</h3><ul style="gap:7px"><li>(1) Khởi tạo <b>m = 0</b> → sai khi mọi số âm.</li><li>(2) <b>Bỏ sót phần tử cuối</b> (range(len−1)).</li><li>(3) Nhầm dấu so sánh (&lt; thay &gt;).</li></ul><p style="margin:0 0 8px">Cần <b>ít nhất</b> các test: <b>toàn số âm</b>, <b>max ở cuối</b>, <b>max ở đầu</b>, một phần tử.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">def find_max(a):
+    m = a[0]
+    for x in a:
+        if x &gt; m:
+            m = x
+    return m
+
+tests = [([-5, -2, -9], -2), ([1, 9], 9),
+         ([9, 1], 9), ([7], 7)]
+for a, kq in tests:
+    print(find_max(a) == kq, end=" ")</pre><div class="res"><span class="lab">Hàm đúng: mọi test đạt</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">True True True True </pre></div><div class="key">Thử với phiên bản sai <b>m = 0</b>: test toàn âm trả 0 ≠ −2 → <b>bị phát hiện</b>.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 3</span><h1>Bộ test bắt lỗi của index_of</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hàm tìm vị trí</h3><pre class="code" style="font-size:calc(20px*var(--z,1))">def index_of(a, k):
+    for i in range(len(a)):
+        if a[i] == k:
+            return i
+    return -1</pre><p style="margin:0 0 8px">Các lỗi có thể: bỏ sót <b>phần tử cuối</b>; bỏ sót <b>phần tử đầu</b>; trả về <b>vị trí cuối</b> thay vì vị trí đầu khi có trùng; không trả −1.</p></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">tests = [([5, 6, 7], 5),   # đầu
+         ([5, 6, 7], 7),   # cuối
+         ([5, 6, 5], 5),   # trùng: kỳ vọng 0
+         ([5, 6, 7], 9),   # không có: -1
+         ([], 1)]          # rỗng
+def index_of(a, k):
+    for i in range(len(a)):
+        if a[i] == k:
+            return i
+    return -1
+print([index_of(a, k) for a, k in tests])</pre><div class="res"><span class="lab">Kết quả: mong đợi [0, 2, 0, −1, −1]</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[0, 2, 0, -1, -1]</pre></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 4</span><h1>Lỗi “lệch một” (off-by-one)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hàm đếm số chẵn bị sai</h3><pre class="code" style="font-size:calc(21px*var(--z,1))">def dem_chan(a):
+    dem = 0
+    for i in range(len(a) - 1):
+        if a[i] % 2 == 0:
+            dem += 1
+    return dem</pre><p style="margin:0 0 8px"><b>Lỗi</b>: <code>range(len(a) − 1)</code> chỉ chạy i = 0 … n−2, <b>bỏ sót phần tử cuối</b>.</p><p style="margin:0 0 8px"><b>Sửa</b>: <code>range(len(a))</code>, hoặc duyệt trực tiếp <code>for x in a</code>.</p></div></div><div class="col"><div class="res"><span class="lab">Hàm sai: mong đợi 3 và 1</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">2 0</pre></div><div class="key">Test lộ lỗi: số chẵn <b>nằm ở cuối</b> dãy. Luôn có test mà đáp án phụ thuộc vào phần tử cuối.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 4</span><h1>Lỗi biên trong kiểm tra nguyên tố</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hàm sai với vài số đầu</h3><pre class="code" style="font-size:calc(21px*var(--z,1))">def nt(n):
+    if n &lt; 2:
+        return False
+    for i in range(2, int(n ** 0.5)):
+        if n % i == 0:
+            return False
+    return True</pre><p style="margin:0 0 8px"><b>Lỗi</b>: <code>range(2, int(√n))</code> <b>không lấy</b> int(√n). Với n = 4, 9, 25… (bình phương số nguyên tố) bỏ sót ước √n → <b>kết luận sai là nguyên tố</b>.</p><p style="margin:0 0 8px"><b>Sửa</b>: <code>range(2, int(n ** 0.5) + 1)</code>.</p></div></div><div class="col"><div class="res"><span class="lab">Danh sách bị lẫn hợp số 4, 9, 25</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:20px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 15, 17, 19, 23, 25, 29]</pre></div><div class="key">Bộ test cần các <b>số chính phương</b> (4, 9, 25) và các số bé (1, 2, 3).</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 4</span><h1>Lỗi chỉ số và logic trong xâu đối xứng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hàm sai hai chỗ</h3><pre class="code" style="font-size:calc(20px*var(--z,1))">def la_palindrome(s):
+    t = s.replace(" ", "")
+    for i in range(len(t) // 2):
+        if t[i] == t[len(t) - i]:
+            return False
+    return True</pre><p style="margin:0 0 8px"><b>Lỗi 1</b>: <code>t[len(t) − i]</code> với i = 0 → <b>t[len(t)]</b>: <b>IndexError</b>. Phải là <code>t[len(t) − 1 − i]</code>.</p><p style="margin:0 0 8px"><b>Lỗi 2</b>: điều kiện <b>ngược</b>: hai kí tự đối xứng <b>bằng nhau</b> là tốt, phải return False khi <b>khác nhau</b>.</p></div></div><div class="col"><div class="res"><span class="lab">Hàm đã sửa</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">True False True</pre></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 4</span><h1>Vòng lặp vô hạn trong tìm kiếm nhị phân</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hàm sai: có lúc không dừng</h3><pre class="code" style="font-size:calc(20px*var(--z,1))">def tim(a, k):
+    l, r = 0, len(a) - 1
+    while l &lt;= r:
+        m = (l + r) // 2
+        if a[m] == k:
+            return m
+        elif a[m] &lt; k:
+            l = m
+        else:
+            r = m - 1
+    return -1</pre><p style="margin:0 0 8px"><b>Lỗi</b>: <code>l = m</code> không loại m khỏi khoảng tìm. Với a = [1, 3], k = 3... khi l = m thì khoảng <b>không thu hẹp</b> → lặp vô hạn.</p><p style="margin:0 0 8px"><b>Sửa</b>: <code>l = m + 1</code> (m đã xét, bỏ đi).</p></div></div><div class="col"><div class="res"><span class="lab">Hàm đã sửa</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">3 -1</pre></div><div class="key">Quy tắc: mỗi vòng lặp phải <b>thu hẹp</b> miền tìm; luôn <b>±1</b> sau khi đã xét m.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 4</span><h1>Quy trình gỡ lỗi</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Năm bước</h3><ol style="gap:6px"><li><b>Đọc thông báo lỗi</b>, xác định dòng và loại lỗi.</li><li><b>Tái hiện</b> lỗi bằng dữ liệu nhỏ nhất.</li><li><b>Theo dõi</b>: in giá trị biến hoặc lập bảng trace bằng tay.</li><li><b>Giả thuyết</b> chỗ sai, sửa <b>một chỗ</b> mỗi lần.</li><li><b>Chạy lại toàn bộ test</b> để chắc không phát sinh lỗi mới.</li></ol></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">def tong_chan(a):
+    s = 0
+    for x in a:
+        if x % 2 == 0:
+            s += x
+        print("DEBUG x =", x, "s =", s)
+    return s
+print(tong_chan([3, 4, 6]))</pre><div class="res"><span class="lab">Dùng print để theo dõi</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">DEBUG x = 3 s = 0
+DEBUG x = 4 s = 4
+DEBUG x = 6 s = 10
+10</pre></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 5</span><h1>Tự kiểm tra: thứ tự try – except – finally</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Chương trình in ra gì? Nếu thay <code>int("7")</code> bằng <code>int("x")</code> thì sao?</p><pre class="code" style="font-size:calc(20px*var(--z,1))">try:
+    a = [1, 2, 3]
+    x = int("7")
+    y = a[x]
+    print("A")
+except ValueError:
+    print("B")
+except IndexError:
+    print("C")
+finally:
+    print("D")</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>Ban đầu</b>: x = 7; <code>a[7]</code> gây <b>IndexError</b> → nhánh C, rồi finally D. In: <b>C D</b>.</p><p style="margin:0 0 8px"><b>Nếu int("x")</b>: gây <b>ValueError</b> ngay → nhánh B, rồi finally D. In: <b>B D</b>. Dòng “A” không bao giờ in vì luôn có lỗi trước.</p><div class="res"><span class="lab">Kết quả thật với int("x")</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">B
+D</pre></div></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · 5</span><h1>Tự kiểm tra (HSG): chọn bộ test</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Hàm đếm số lần xuất hiện lớn nhất của một giá trị liên tiếp trong dãy. Hãy nêu 5 test để phát hiện nhiều lỗi nhất.</p><pre class="code" style="font-size:calc(19px*var(--z,1))">def dai_nhat(a):
+    best = cur = 1
+    for i in range(1, len(a)):
+        cur = cur + 1 if a[i] == a[i - 1] else 1
+        best = max(best, cur)
+    return best</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>Test 1</b> [5]: một phần tử → 1 (hàm cho 1, nhưng dãy <b>rỗng</b> sẽ lỗi IndexError ở chỗ khác).</p><p style="margin:0 0 8px"><b>Test 2</b> [2,2,2,2]: toàn bằng nhau → 4 (dãy dài nhất ở cuối).</p><p style="margin:0 0 8px"><b>Test 3</b> [1,2,3]: không có cặp bằng nhau → 1.</p><p style="margin:0 0 8px"><b>Test 4</b> [3,3,1,1,1,2]: dãy dài nhất ở giữa → 3.</p><p style="margin:0 0 8px"><b>Test 5</b> [1,1,1,2,2]: dài nhất ở đầu → 3. Thêm <b>[]</b> (rỗng): cần quy ước kết quả 0.</p><div class="res"><span class="lab">Kết quả thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1 4 1 3 3 </pre></div></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>Ngoại lệ</b>: IndexError, KeyError, ValueError, ZeroDivisionError, TypeError, NameError.</li><li><b>try</b> chạy; có lỗi → <b>except</b> khớp đầu tiên; không lỗi → <b>else</b>; <b>finally</b> luôn chạy.</li><li><b>raise</b> tự phát sinh lỗi; <b>assert</b> khẳng định điều kiện.</li><li>Bộ test: <b>bình thường, biên, đặc biệt</b>.</li><li>Lỗi hay gặp: <b>lệch một</b>, thiếu <b>+1</b> ở range, biên &gt; và &gt;=, vòng lặp không thu hẹp.</li><li>Gỡ lỗi: đọc lỗi → tái hiện → theo dõi → sửa một chỗ → test lại.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Chia 0</td><td>ZeroDivisionError</td></tr><tr><td class="m">Luôn chạy</td><td>finally</td></tr><tr><td class="m">Khẳng định</td><td>assert</td></tr><tr><td class="m">Tự báo lỗi</td><td>raise</td></tr></table><div class="warn">Bắt lỗi quá rộng che mất lỗi thật; sửa nhiều chỗ cùng lúc; thiếu test biên.</div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Dòng sau chỗ lỗi trong try <b>không chạy</b>.</li><li><b>finally</b> chạy cả khi có return.</li><li>Test phải có <b>phần tử cuối, phần tử đầu, rỗng</b>.</li><li>Với số chính phương, <code>range(2, int(√n)+1)</code>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Ngoại lệ tự định nghĩa</b> (class).</li><li><b>unittest, pytest</b>.</li><li><b>Logging</b> thay print khi gỡ lỗi.</li></ul></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Lỗi gì: <code>int("3.5")</code>?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Lỗi gì: <code>[1,2][2]</code>?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Nhánh nào luôn chạy: try, except, else hay finally?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>assert 2 + 2 == 5</code> gây lỗi gì?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>except Exception as e</code>: e dùng để làm gì?</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>ValueError</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>IndexError</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>finally</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>AssertionError</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Lấy thông báo lỗi (in ra, ghi lại).</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Đọc một số nguyên, nếu nhập sai thì in “Loi” và dừng. Thử “12”, “abc”.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Hàm <code>chia_an_toan(a, b)</code> trả None nếu b = 0.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Viết bộ <code>assert</code> kiểm thử hàm <code>la_nt(n)</code> với các biên 0, 1, 2, 4, 9, 97.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Hàm sau có lỗi, hãy tìm và sửa: tính tổng các số từ 1 đến n bằng <code>for i in range(1, n)</code>.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Hàm <code>vi_tri_dau(a, k)</code> tìm vị trí <b>đầu tiên</b> của k trong mảng tăng có giá trị trùng bằng nhị phân; hãy sửa để không trả về vị trí giữa chừng.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Hàm đọc dãy số có thể chứa chữ: bỏ qua phần tử không phải số, trả tổng và <b>số phần tử lỗi</b>. Thử “3 x 4 5.5 y 6”.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>try: n = int(input()); print(n)\nexcept ValueError: print("Loi")</code>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>return None if b == 0 else a / b</code>.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>assert not nt(0) and not nt(1) and nt(2) and not nt(4) and not nt(9) and nt(97)</code>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Lỗi lệch một: phải là <code>range(1, n + 1)</code>.</p></div></div></div></section>
+
+<section class="s p2"><div class="hd"><span class="k">PYTHON 4B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Khi a[m] == k, <b>không return</b> mà đặt <code>kq = m; r = m − 1</code> để tiếp tục tìm bên trái → 1 -1.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Dùng try – except ValueError cho từng phần tử → 18.5 2.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
