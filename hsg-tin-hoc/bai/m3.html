@@ -1,5 +1,5 @@
 <!-- HEAD -->
-<title>Mạng 3 · Địa chỉ IP và mạng con</title>
+<title>Mạng 3 · Địa chỉ IP, mạng con và băng thông</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
 :root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
@@ -102,139 +102,134 @@ pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px sol
 </style>
 
 <div id="wrap">
-<section class="s title-s"><div class="hd"><span class="k">TIN HỌC · MẠNG MÁY TÍNH 3</span></div>
-<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>ĐỊA CHỈ IP VÀ MẠNG CON</h1><p style="font-size:28px;line-height:1.5">IPv4, nhị phân – thập phân, lớp địa chỉ, mặt nạ mạng, CIDR, chia mạng con, địa chỉ riêng, IPv6.</p><div><span class="chip">IPv4</span><span class="chip">mặt nạ mạng</span><span class="chip">CIDR</span><span class="chip">mạng con</span><span class="chip">IPv6</span></div></div><svg viewBox="0 0 520 360"><rect x="10" y="10" width="500" height="340" rx="16" fill="#fff"/><rect x="10" y="10" width="500" height="50" rx="16" fill="#CFD8DC"/><rect x="10" y="40" width="500" height="20" fill="#CFD8DC"/><circle cx="40" cy="35" r="9" fill="#E53935"/><circle cx="70" cy="35" r="9" fill="#FDD835"/><circle cx="100" cy="35" r="9" fill="#43A047"/><rect x="130" y="22" width="360" height="26" rx="13" fill="#fff"/><text x="146" y="42" font-size="18" class="mono" fill="#0B2545">https://lop12.edu.vn</text>
-<rect x="34" y="84" width="220" height="30" rx="6" fill="#0B2545"/><text x="46" y="106" font-size="21" fill="#fff" font-weight="800">LỚP 12A1</text>
-<rect x="34" y="130" width="450" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="158" width="400" height="14" rx="7" fill="#90A4AE"/><rect x="34" y="186" width="430" height="14" rx="7" fill="#90A4AE"/>
-<rect x="34" y="222" width="200" height="110" rx="10" fill="#F2A900"/><text x="134" y="285" font-size="22" text-anchor="middle" font-weight="800" fill="#0B2545">&lt;img&gt;</text>
-<rect x="254" y="222" width="230" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="369" y="270" font-size="22" text-anchor="middle" class="mono" fill="#1565C0">&lt;a href&gt;</text><text x="369" y="300" font-size="20" text-anchor="middle" fill="#1565C0">liên kết</text></svg></div></section>
+<section class="s title-s p3"><div class="hd"><span class="k">TIN HỌC · MẠNG 3</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>ĐỊA CHỈ IP, MẠNG CON<br>VÀ BĂNG THÔNG</h1><p style="font-size:28px;line-height:1.5">Địa chỉ IPv4, địa chỉ riêng – công cộng, mặt nạ mạng con, địa chỉ mạng và quảng bá, số host, chia mạng con, tính thời gian truyền (bit – byte), chia sẻ băng thông; mọi phép tính chạy bằng Python.</p><div><span class="chip">IPv4</span><span class="chip">/26</span><span class="chip">mạng con</span><span class="chip">host</span><span class="chip">Mbps – MB</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">IPv4</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">/26</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">mạng con</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">host</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">Mbps – MB</text></svg></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3</span><h1>Mục tiêu và nội dung bài</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Mô tả cấu trúc <b>địa chỉ IPv4</b> (4 byte).</li><li>Đổi <b>nhị phân ↔ thập phân</b> từng byte.</li><li>Xác định <b>địa chỉ mạng, quảng bá, số máy</b> từ IP và mặt nạ.</li><li>Hiểu kí hiệu <b>CIDR (/n)</b> và <b>chia mạng con</b>.</li><li>Nhận biết <b>địa chỉ riêng, công cộng</b> và <b>IPv6</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Địa chỉ IPv4</li><li>Mặt nạ mạng</li><li>CIDR, số máy</li><li>Chia mạng con</li><li>Trọng tâm, HSG</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Đọc và viết <b>địa chỉ IPv4</b>; phân biệt <b>riêng</b> và <b>công cộng</b>.</li><li>Tính <b>địa chỉ mạng, quảng bá, số host</b> từ IP và mặt nạ (/n).</li><li>Kiểm tra hai địa chỉ có <b>cùng mạng con</b> không; chọn <b>mặt nạ</b> cho số thiết bị.</li><li>Tính <b>thời gian truyền</b> tệp với <b>Mbps</b> và <b>MB</b> (nhớ 1 byte = 8 bit).</li><li>Hiểu <b>băng thông chia sẻ</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>IPv4, riêng – công cộng</li><li>Mặt nạ, mạng con</li><li>Số host, chọn mặt nạ</li><li>Băng thông</li><li>Tự kiểm tra</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Địa chỉ IP là gì?</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li><b>Địa chỉ IP</b>: nhãn số duy nhất xác định một thiết bị trong mạng.</li><li><b>IPv4</b>: <b>32 bit</b> = <b>4 byte</b>, viết 4 số thập phân (0–255) cách nhau dấu chấm.</li></ul></div></div><div class="col"><div class="key">Ví dụ: <b>192.168.1.10</b> = 11000000.10101000.00000001.00001010. Tổng số địa chỉ IPv4: <b>2³² = 4 294 967 296</b>.</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Địa chỉ IPv4</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cấu trúc</h3><p style="margin:0 0 8px"><b>IPv4</b>: 32 bit, viết thành <b>4 số</b> (0–255) cách nhau dấu chấm: <b>192.168.10.77</b>.</p><p style="margin:0 0 8px">Mỗi số là một <b>byte</b> (8 bit). Tổng 2³² ≈ <b>4,3 tỉ</b> địa chỉ → cạn kiệt → <b>IPv6</b> (128 bit).</p><p style="margin:0 0 8px">Một địa chỉ có hai phần: <b>phần mạng</b> và <b>phần máy (host)</b>; <b>mặt nạ mạng con</b> cho biết ranh giới.</p></div></div><div class="col"><div class="res"><span class="lab">Python: số địa chỉ, 192 và 168 ở dạng nhị phân</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">4294967296
+11000000 10101000
+0b1001101</pre></div><div class="key">Mỗi số 0–255 vì 8 bit biểu diễn <b>2⁸ = 256</b> giá trị.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Cấu trúc: phần mạng + phần máy</h1></div>
-<div class="bd g2"><div class="col"><div class="res"><span class="lab">IP = mạng + máy</span><svg viewBox="0 0 520 150" style="width:100%"><rect x="10" y="40" width="130" height="60" rx="8" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="75.0" y="77.0" text-anchor="middle" font-size="26" font-weight="800" fill="#0B2545" font-family="sans-serif">192</text><rect x="140" y="40" width="130" height="60" rx="8" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="205.0" y="77.0" text-anchor="middle" font-size="26" font-weight="800" fill="#0B2545" font-family="sans-serif">168</text><rect x="270" y="40" width="120" height="60" rx="8" fill="#FFCCBC" stroke="#D84315" stroke-width="3"/><text x="330.0" y="77.0" text-anchor="middle" font-size="26" font-weight="800" fill="#0B2545" font-family="sans-serif">1</text><rect x="390" y="40" width="120" height="60" rx="8" fill="#FFCCBC" stroke="#D84315" stroke-width="3"/><text x="450.0" y="77.0" text-anchor="middle" font-size="26" font-weight="800" fill="#0B2545" font-family="sans-serif">10</text><text x="140" y="25" text-anchor="middle" font-size="20" font-weight="800" fill="#1565C0" font-family="sans-serif">PHẦN MẠNG</text><text x="390" y="25" text-anchor="middle" font-size="20" font-weight="800" fill="#D84315" font-family="sans-serif">PHẦN MÁY</text><text x="260" y="135" text-anchor="middle" font-size="21" font-weight="800" font-family="sans-serif">mặt nạ 255.255.0.0 → /16</text></svg></div></div><div class="col"><div class="card"><h3>Ý nghĩa</h3><ul style="gap:6px"><li>Các máy <b>cùng phần mạng</b> thuộc cùng một mạng.</li><li>Phần máy <b>phân biệt</b> các máy trong mạng đó.</li><li><b>Mặt nạ mạng</b> cho biết ranh giới.</li></ul></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Địa chỉ riêng (private) và công cộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Dải địa chỉ riêng</h3><table><tr><th>Dải</th><th>Phạm vi</th></tr><tr><td><b>10.0.0.0/8</b></td><td>10.0.0.0 – 10.255.255.255</td></tr><tr><td><b>172.16.0.0/12</b></td><td>172.16.0.0 – <b>172.31</b>.255.255</td></tr><tr><td><b>192.168.0.0/16</b></td><td>192.168.0.0 – 192.168.255.255</td></tr></table><p style="margin:0 0 8px">Địa chỉ <b>riêng</b> dùng trong LAN, <b>không được định tuyến</b> trên Internet; địa chỉ <b>công cộng</b> duy nhất toàn cầu.</p></div></div><div class="col"><div class="res"><span class="lab">Địa chỉ nào là riêng?</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">172.20.5.1 True
+192.169.1.1 False
+172.32.0.1 False
+11.0.0.1 False</pre></div><div class="key"><b>172.20.5.1</b> là riêng; 172.32.x.x và 192.169.x.x nằm <b>ngoài</b> dải.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Đổi nhị phân ↔ thập phân (một byte)</h1></div>
-<div class="bd g1"><div class="col"><table><tr><th>Vị trí</th><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr><tr><td>Trọng số</td><td>128</td><td>64</td><td>32</td><td>16</td><td>8</td><td>4</td><td>2</td><td>1</td></tr><tr><td>Ví dụ 192</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Ví dụ 168</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr></table><div class="key">192 = 128 + 64; 168 = 128 + 32 + 8. Mỗi byte có giá trị từ <b>0 đến 255</b> (2⁸ = 256).</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Mặt nạ mạng con và ký hiệu /n</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phần mạng và phần máy</h3><p style="margin:0 0 8px"><b>Mặt nạ</b>: 32 bit có <b>n bit 1</b> ở đầu: <b>/n</b>. Ví dụ <b>/26</b> = 255.255.255.<b>192</b>.</p><p style="margin:0 0 8px">Bit 1 = <b>phần mạng</b>; bit 0 = <b>phần máy</b>.</p><p style="margin:0 0 8px">Số bit 0 là <b>h = 32 − n</b>: mạng có <b>2ʰ</b> địa chỉ, dùng được <b>2ʰ − 2</b> cho thiết bị.</p></div></div><div class="col"><table><tr><th>/n</th><th>Mặt nạ</th><th>Số địa chỉ</th><th>Host</th></tr><tr><td>/24</td><td>255.255.255.0</td><td>256</td><td>254</td></tr><tr><td>/25</td><td>255.255.255.128</td><td>128</td><td>126</td></tr><tr><td>/26</td><td>255.255.255.192</td><td>64</td><td><b>62</b></td></tr><tr><td>/27</td><td>255.255.255.224</td><td>32</td><td><b>30</b></td></tr><tr><td>/28</td><td>255.255.255.240</td><td>16</td><td><b>14</b></td></tr><tr><td>/29</td><td>255.255.255.248</td><td>8</td><td>6</td></tr></table><div class="key">Trừ <b>2</b>: địa chỉ <b>mạng</b> (đầu) và địa chỉ <b>quảng bá</b> (cuối).</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Đổi số bằng Python</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">ip = "192.168.1.10"
-byte = [int(x) for x in ip.split(".")]
-print(byte)
-print(".".join(format(b, "08b") for b in byte))
-print(int("11000000", 2))
-print(bin(168))</pre><div class="key"><code>format(b,"08b")</code> viết nhị phân đủ <b>8 bit</b>; <code>int(s,2)</code> đổi nhị phân → thập phân.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">[192, 168, 1, 10]
-11000000.10101000.00000001.00001010
-192
-0b10101000</pre></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Tính địa chỉ mạng, quảng bá, số host</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px"><b>192.168.10.77/26</b>: khối <b>64</b> địa chỉ: 0–63, 64–127, …</p><p style="margin:0 0 8px">77 thuộc khối bắt đầu từ <b>64</b> → địa chỉ mạng <b>192.168.10.64</b>.</p><p style="margin:0 0 8px">Quảng bá = 127; host = <b>62</b>.</p></div><pre class="code" style="font-size:calc(18px*var(--z,1))">import ipaddress
+n = ipaddress.ip_interface('192.168.10.77/26')
+print('mặt nạ    :', n.netmask)
+print('địa chỉ mạng:', n.network.network_address)
+print('quảng bá  :', n.network.broadcast_address)
+print('số host   :', n.network.num_addresses - 2)</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">mặt nạ    : 255.255.255.192
+địa chỉ mạng: 192.168.10.64
+quảng bá  : 192.168.10.127
+số host   : 62</pre></div><div class="key">Đáp án: địa chỉ mạng <b>192.168.10.64</b>, <b>62</b> host.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 1</span><h1>Các lớp địa chỉ IPv4 (kiến thức nền)</h1></div>
-<div class="bd g1"><div class="col"><table><tr><th>Lớp</th><th>Byte đầu</th><th>Mặt nạ mặc định</th><th>Dùng cho</th></tr><tr><td><b>A</b></td><td>1 – 126</td><td>255.0.0.0 (/8)</td><td>mạng rất lớn</td></tr><tr><td><b>B</b></td><td>128 – 191</td><td>255.255.0.0 (/16)</td><td>mạng vừa</td></tr><tr><td><b>C</b></td><td>192 – 223</td><td>255.255.255.0 (/24)</td><td>mạng nhỏ</td></tr><tr><td>D</td><td>224 – 239</td><td>—</td><td>phát đa hướng</td></tr><tr><td>E</td><td>240 – 255</td><td>—</td><td>dự phòng</td></tr></table><div class="warn">Hiện nay dùng <b>CIDR</b> không theo lớp; lớp A, B, C chỉ là kiến thức nền.</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Cách tính tay: “khối” địa chỉ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba bước nhanh</h3><ol style="gap:6px"><li>Tìm <b>độ lớn khối</b> = 256 − (octet cuối của mặt nạ). Với /26: 256 − 192 = <b>64</b>.</li><li>Địa chỉ mạng = <b>bội của 64 không vượt quá</b> octet cuối của IP: 77 → <b>64</b>.</li><li>Quảng bá = địa chỉ mạng + 64 − 1 = <b>127</b>; host = 64 − 2 = <b>62</b>.</li></ol></div></div><div class="col"><div class="res"><span class="lab">Octet cuối 70, 130, 77 với khối 64</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">70 -&gt; khối bắt đầu 64 , quảng bá 127
+130 -&gt; khối bắt đầu 128 , quảng bá 191
+77 -&gt; khối bắt đầu 64 , quảng bá 127</pre></div><div class="key">Máy 192.168.1.130 thuộc khối <b>128–191</b>, khác khối 64–127 của máy 192.168.1.70.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Mặt nạ mạng (subnet mask)</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><ul style="gap:6px"><li>Dãy 32 bit: <b>bit 1</b> ứng với phần mạng, <b>bit 0</b> ứng với phần máy.</li><li>Ví dụ: <b>255.255.255.0</b> = 24 bit 1 + 8 bit 0.</li></ul></div></div><div class="col"><div class="key">Địa chỉ mạng = <b>IP AND mặt nạ</b> (phép AND từng bit).</div><div class="ok"><p>Mặt nạ luôn có dạng <b>các bit 1 liên tiếp</b> rồi tới các bit 0.</p></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Hai địa chỉ có cùng mạng con không? (/28)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Mặt nạ 240 → khối <b>16</b> địa chỉ: .128–.143, .144–.159, …</p><p style="margin:0 0 8px">Hai địa chỉ cùng mạng con khi <b>cùng khối</b>.</p></div><pre class="code" style="font-size:calc(15px*var(--z,1))">import ipaddress
+m = '255.255.255.240'
+for a,b in [('192.168.1.130','192.168.1.140'),('192.168.1.140','192.168.1.145'),('192.168.1.129','192.168.1.144'),('192.168.1.130','192.168.1.145')]:
+    na = ipaddress.ip_network(a+'/'+m, strict=False)
+    nb = ipaddress.ip_network(b+'/'+m, strict=False)
+    print(a, b, na==nb)</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:22px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">192.168.1.130 192.168.1.140 True
+192.168.1.140 192.168.1.145 False
+192.168.1.129 192.168.1.144 False
+192.168.1.130 192.168.1.145 False</pre></div><div class="key">Chỉ cặp <b>.130 và .140</b> cùng khối .128–.143.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Hai địa chỉ đặc biệt trong mỗi mạng</h1></div>
-<div class="bd g1"><div class="col"><table><tr><th>Địa chỉ</th><th>Phần máy</th><th>Ví dụ 192.168.1.0/24</th><th>Dùng được cho máy?</th></tr><tr><td><b>Địa chỉ mạng</b></td><td>toàn bit 0</td><td>192.168.1.0</td><td>không</td></tr><tr><td><b>Địa chỉ quảng bá</b></td><td>toàn bit 1</td><td>192.168.1.255</td><td>không</td></tr><tr><td>Các địa chỉ còn lại</td><td>khác</td><td>192.168.1.1 … 254</td><td><b>có</b> (254 máy)</td></tr></table><div class="key">Số máy tối đa = <b>2<sup>h</sup> − 2</b>, với h là số bit phần máy.</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Chọn mặt nạ cho 25 thiết bị</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Cần <b>host ≥ 25</b>. /28 chỉ có 14; /27 có <b>30</b> ≥ 25.</p><p style="margin:0 0 8px">Chọn mặt nạ <b>dài nhất</b> (ít lãng phí nhất) vẫn đủ: <b>/27 = 255.255.255.224</b>.</p></div><pre class="code" style="font-size:calc(20px*var(--z,1))">import math
+n = 25
+for p in range(30, 20, -1):
+    host = 2**(32-p) - 2
+    if host &gt;= n:
+        print('/%d: %d host' % (p, host)); break</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">/27: 30 host</pre></div><div class="key">Đáp án: <b>255.255.255.224 (/27)</b>; /26 có 62 host nên lãng phí.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Tính địa chỉ mạng bằng Python</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">import ipaddress
-n = ipaddress.ip_network("192.168.1.10/24", strict=False)
-print(n.network_address)
-print(n.netmask)
-print(n.broadcast_address)
-print(n.num_addresses - 2)</pre><div class="key"><code>strict=False</code> cho phép nhập IP của một máy; thư viện <b>ipaddress</b> tính sẵn địa chỉ mạng, quảng bá, số máy.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">192.168.1.0
-255.255.255.0
-192.168.1.255
-254</pre></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Chia mạng con</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Tách một mạng thành nhiều</h3><p style="margin:0 0 8px">Mượn thêm bit từ phần máy cho phần mạng: <b>/24 → /26</b> chia thành <b>4</b> mạng con, mỗi mạng 64 địa chỉ.</p><p style="margin:0 0 8px">Mục đích <b>phân đoạn mạng</b>: giới hạn xung đột, <b>bảo vệ máy chủ quan trọng</b>, <b>cô lập sự cố</b>.</p></div></div><div class="col"><div class="res"><span class="lab">Chia 192.168.1.0/24 thành bốn /26</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">192.168.1.0/26 host 62
+192.168.1.64/26 host 62
+192.168.1.128/26 host 62
+192.168.1.192/26 host 62</pre></div><div class="key">Mỗi bit mượn <b>nhân đôi</b> số mạng con và <b>chia đôi</b> số địa chỉ mỗi mạng.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Kí hiệu CIDR: /n</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>CIDR</h3><ul style="gap:6px"><li><b>/n</b> = số bit 1 của mặt nạ (số bit phần mạng).</li><li>/24 → 255.255.255.0</li><li>/16 → 255.255.0.0</li><li>/26 → 255.255.255.192</li></ul></div></div><div class="col"><table><tr><th>CIDR</th><th>Mặt nạ</th><th>Số máy</th></tr><tr><td>/24</td><td>255.255.255.0</td><td>254</td></tr><tr><td>/25</td><td>255.255.255.128</td><td>126</td></tr><tr><td>/26</td><td>255.255.255.192</td><td>62</td></tr><tr><td>/27</td><td>255.255.255.224</td><td>30</td></tr><tr><td>/28</td><td>255.255.255.240</td><td>14</td></tr><tr><td>/30</td><td>255.255.255.252</td><td>2</td></tr></table></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>Băng thông và đơn vị</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bit hay byte?</h3><p style="margin:0 0 8px"><b>Băng thông</b>: lượng dữ liệu truyền được trong một giây, đo bằng <b>bit/s</b>: <b>Mb/s = Mbps</b> (megabit/giây).</p><p style="margin:0 0 8px"><b>Dung lượng tệp</b> đo bằng <b>byte</b>: <b>MB</b> (megabyte). <b>1 byte = 8 bit</b>.</p><p style="margin:0 0 8px">Thời gian = <b>(MB × 8) ÷ Mbps</b> (giây).</p></div></div><div class="col"><table><tr><th>Chữ</th><th>Nghĩa</th></tr><tr><td><b>Mb</b> hoặc Mbps</td><td>megabit (bit)</td></tr><tr><td><b>MB</b></td><td>megabyte (byte)</td></tr></table><div class="key">Bẫy thường gặp: nhầm MB với Mb, quên nhân 8.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 2</span><h1>Mẹo tính nhanh số máy</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Quy trình</h3><ul style="gap:6px"><li>1. Số bit máy <b>h = 32 − n</b>.</li><li>2. Số máy = <b>2<sup>h</sup> − 2</b>.</li><li>3. “Bước nhảy” của byte cuối = <b>2<sup>h</sup></b> (nếu h ≤ 8).</li></ul></div></div><div class="col"><div class="key">Ví dụ /26: h = 6, số máy = 64 − 2 = <b>62</b>, bước nhảy <b>64</b> → các mạng bắt đầu 0, 64, 128, 192.</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>Tải tệp 50 MB qua 100 Mbps</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">50 MB = 50 × 8 = <b>400 Mb</b>.</p><p style="margin:0 0 8px">400 Mb ÷ 100 Mb/s = <b>4 giây</b>.</p></div><pre class="code" style="font-size:calc(23px*var(--z,1))">mb = 50
+mbps = 100
+bit = mb * 8
+print('Số megabit =', bit)
+print('Thời gian  =', bit / mbps, 'giây')</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">Số megabit = 400
+Thời gian  = 4.0 giây</pre></div><div class="key">Nhầm bit/byte cho 0,5 hoặc 5 giây là sai.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Chia mạng con (subnetting)</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Vì sao chia?</h3><ul style="gap:6px"><li>Quản lí dễ (mỗi phòng ban một mạng).</li><li><b>Giảm lưu lượng quảng bá</b>, tăng bảo mật.</li><li>Tiết kiệm địa chỉ IP.</li></ul></div></div><div class="col"><div class="key">Cách chia: <b>mượn bit</b> từ phần máy làm phần mạng. Mượn k bit → <b>2<sup>k</sup></b> mạng con.</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>Tải tệp 600 MB và gấp đôi băng thông</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px"><b>600 × 8 ÷ 100 = 48 giây</b>; băng thông gấp đôi → <b>24 giây</b> (tỉ lệ nghịch).</p><p style="margin:0 0 8px">Băng thông <b>chia sẻ</b> cho 4 máy: mỗi máy chỉ còn 25 Mbps → chậm gấp 4.</p></div><pre class="code" style="font-size:calc(20px*var(--z,1))">mb = 600
+for mbps in (100, 200):
+    print(mbps, 'Mbps -&gt;', mb*8/mbps, 'giây')
+print('chia 4 máy, 100 Mbps:', 600*8/(100/4), 'giây mỗi máy')</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">100 Mbps -&gt; 48.0 giây
+200 Mbps -&gt; 24.0 giây
+chia 4 máy, 100 Mbps: 192.0 giây mỗi máy</pre></div><div class="key">Chia sẻ băng thông làm <b>giảm</b> tốc độ mỗi máy.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Chia 192.168.10.0/24 thành 4 mạng con</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">import ipaddress
-n = ipaddress.ip_network("192.168.10.0/24")
-for s in n.subnets(prefixlen_diff=2):
-    h = list(s.hosts())
-    print(s, h[0], h[-1], s.broadcast_address)</pre><div class="key">Mượn <b>2 bit</b> → 4 mạng con /26, mỗi mạng 62 máy, bước nhảy 64.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">192.168.10.0/26 192.168.10.1 192.168.10.62 192.168.10.63
-192.168.10.64/26 192.168.10.65 192.168.10.126 192.168.10.127
-192.168.10.128/26 192.168.10.129 192.168.10.190 192.168.10.191
-192.168.10.192/26 192.168.10.193 192.168.10.254 192.168.10.255</pre></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>40 học sinh xem video, mỗi luồng 3 Mb/s</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Tổng nhu cầu = 40 × 3 = <b>120 Mb/s</b>.</p><p style="margin:0 0 8px">Fast Ethernet 100 Mb/s <b>không đủ</b> → chọn <b>Gigabit</b>.</p></div><pre class="code" style="font-size:calc(19px*var(--z,1))">hs, luong = 40, 3
+tong = hs*luong
+print('Tổng nhu cầu =', tong, 'Mb/s')
+for ten, mb in [('10BASE-T',10),('Fast Ethernet',100),('Gigabit',1000)]:
+    print(ten, mb, 'đủ' if mb&gt;=tong else 'THIẾU')</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">Tổng nhu cầu = 120 Mb/s
+10BASE-T 10 THIẾU
+Fast Ethernet 100 THIẾU
+Gigabit 1000 đủ</pre></div><div class="key">Không được chọn theo tốc độ của <b>một</b> luồng (3 Mb/s).</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Kết quả chia 4 mạng con</h1></div>
-<div class="bd g1"><div class="col"><table><tr><th>Mạng con</th><th>Máy đầu</th><th>Máy cuối</th><th>Quảng bá</th></tr><tr><td>192.168.10.0/26</td><td>.1</td><td>.62</td><td>.63</td></tr><tr><td>192.168.10.64/26</td><td>.65</td><td>.126</td><td>.127</td></tr><tr><td>192.168.10.128/26</td><td>.129</td><td>.190</td><td>.191</td></tr><tr><td>192.168.10.192/26</td><td>.193</td><td>.254</td><td>.255</td></tr></table><div class="key">Mỗi mạng con có <b>62 máy</b>; hai máy khác mạng con muốn liên lạc phải qua <b>router</b>.</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 5</span><h1>Tự kiểm tra 1: tính tay /26</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Máy 192.168.1.70/26. Tìm địa chỉ mạng, địa chỉ quảng bá, số host, và 192.168.1.130 có cùng mạng không?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Khối 64: 70 thuộc <b>64–127</b>.</p><p style="margin:0 0 8px">Địa chỉ mạng <b>192.168.1.64</b>; quảng bá <b>192.168.1.127</b>; host <b>62</b>.</p><p style="margin:0 0 8px">192.168.1.130 thuộc khối 128–191 → <b>không cùng mạng</b>.</p></div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Hai máy có cùng mạng không?</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Cách kiểm tra</h3><ul style="gap:6px"><li>Tính <b>IP AND mặt nạ</b> của từng máy.</li><li>Hai kết quả <b>giống nhau</b> → cùng mạng.</li></ul></div><div class="key">Ví dụ /26: <b>192.168.10.70</b> và <b>192.168.10.100</b> đều thuộc 192.168.10.64/26 → cùng mạng. <b>192.168.10.70</b> và <b>192.168.10.130</b> khác mạng.</div></div><div class="col"><div class="res"><span class="lab">Địa chỉ mạng của 70, 100, 130</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:18px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">192.168.10.64  192.168.10.64  192.168.10.128</pre></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 5</span><h1>Tự kiểm tra 2: thời gian truyền</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Tệp 450 MB, đường truyền 100 Mb/s. Thời gian truyền?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">450 MB = 450 × 8 = 3600 Mb.</p><p style="margin:0 0 8px">3600 ÷ 100 = <b>36 giây</b>.</p><p style="margin:0 0 8px">Kiểm tra bằng Python: 36.0 giây.</p></div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 3</span><h1>Kiểm tra cùng mạng bằng Python</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">import ipaddress
-def cung_mang(a, b, n):
-    ma = ipaddress.ip_interface(f"{a}/{n}").network
-    mb = ipaddress.ip_interface(f"{b}/{n}").network
-    return ma == mb
-print(cung_mang("192.168.10.70", "192.168.10.100", 26))
-print(cung_mang("192.168.10.70", "192.168.10.130", 26))</pre><div class="key">So sánh <b>địa chỉ mạng</b> của hai máy: giống nhau → <b>True</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">True
-False</pre></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · 5</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) 192.168.1.70/26 có địa chỉ mạng 192.168.1.64. (b) Mạng /26 dùng tối đa 62 địa chỉ. (c) Quảng bá của mạng đó là 192.168.1.128. (d) 172.32.0.1 là địa chỉ riêng. (e) Tải 600 MB qua 100 Mbps mất 6 giây.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Đúng</b>.</p><p style="margin:0 0 8px">(b) <b>Đúng</b> (64 − 2).</p><p style="margin:0 0 8px">(c) <b>Sai</b>: là 192.168.1.127.</p><p style="margin:0 0 8px">(d) <b>Sai</b>: ngoài dải 172.16–172.31.</p><p style="margin:0 0 8px">(e) <b>Sai</b>: 48 giây.</p></div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>Địa chỉ riêng và địa chỉ công cộng</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Địa chỉ riêng (private)</h3><ul style="gap:6px"><li><b>10.0.0.0/8</b></li><li><b>172.16.0.0/12</b></li><li><b>192.168.0.0/16</b></li><li>Dùng trong LAN, <b>không định tuyến</b> ra Internet.</li></ul></div></div><div class="col"><div class="key"><b>NAT</b>: router đổi địa chỉ riêng thành <b>một địa chỉ công cộng</b> khi ra Internet, nên nhiều máy dùng chung một IP công cộng.</div><div class="warn">Địa chỉ <b>127.0.0.1</b> (localhost) là địa chỉ của chính máy đó.</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>IPv4: 32 bit, 4 octet; <b>riêng</b>: 10/8, 172.16–31, 192.168/16.</li><li><b>/n</b>: n bit mạng; host = <b>2^(32−n) − 2</b>; trừ địa chỉ mạng và quảng bá.</li><li>Mạng con: <b>cùng khối</b>; khối = 256 − octet mặt nạ.</li><li>Thời gian = <b>MB × 8 ÷ Mbps</b>.</li><li>Chia sẻ băng thông làm chậm từng máy.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Số host /27</td><td>30</td></tr><tr><td class="m">Số host /26</td><td>62</td></tr><tr><td class="m">Quảng bá 192.168.1.64/26</td><td>192.168.1.127</td></tr><tr><td class="m">600 MB @ 100 Mbps</td><td>48 s</td></tr></table><div class="warn">Quên trừ 2; nhầm Mb với MB; coi 172.32 là riêng; nhầm khối khi tính mạng.</div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>Phân loại địa chỉ bằng Python</h1></div>
-<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">import ipaddress
-for s in ["192.168.1.5", "8.8.8.8", "10.1.2.3", "127.0.0.1", "172.20.5.9"]:
-    a = ipaddress.ip_address(s)
-    print(s, "riêng" if a.is_private else "công cộng")</pre><div class="key"><code>is_private</code> kiểm tra địa chỉ có thuộc dải riêng. <b>8.8.8.8</b> là DNS công cộng của Google.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:28px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">192.168.1.5 riêng
-8.8.8.8 công cộng
-10.1.2.3 riêng
-127.0.0.1 riêng
-172.20.5.9 riêng</pre></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>CIDR</b>.</li><li><b>DHCP</b> cấp IP.</li><li><b>NAT</b> dùng IP riêng ra Internet.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>VLSM</b>.</li><li><b>IPv6</b>.</li><li>Độ trễ và băng thông khác nhau.</li></ul></div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>Cổng mặc định và cấu hình mạng</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Một máy cần</h3><ul style="gap:6px"><li><b>Địa chỉ IP</b> riêng của máy.</li><li><b>Mặt nạ mạng</b>.</li><li><b>Cổng mặc định</b> (default gateway): địa chỉ router để ra ngoài.</li><li><b>Máy chủ DNS</b>.</li></ul></div></div><div class="col"><div class="key">Máy gửi gói tới đích <b>cùng mạng</b> thì gửi trực tiếp; <b>khác mạng</b> thì gửi tới <b>cổng mặc định</b>.</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Số host /28?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Số host /27?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mặt nạ /26?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Thời gian: 100 MB, 100 Mbps?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Dải riêng bắt đầu 192.?</p></div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · 4</span><h1>IPv6</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Vì sao có IPv6?</h3><ul style="gap:6px"><li>IPv4 chỉ có khoảng <b>4,3 tỉ</b> địa chỉ, <b>đã cạn</b>.</li><li><b>IPv6</b>: <b>128 bit</b>, viết 8 nhóm số hex, ví dụ <b>2001:0db8:85a3::8a2e:0370:7334</b>.</li><li>Số địa chỉ: <b>2¹²⁸</b>, rất lớn.</li></ul></div></div><div class="col"><div class="key">Quy tắc rút gọn: bỏ số 0 đầu mỗi nhóm; dùng <b>::</b> một lần thay cho các nhóm toàn 0.</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>14</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>30</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>255.255.255.192</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>8 giây</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>192.168</b>.x.x.</p></div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>IPv4 gồm <b>32 bit</b> = 4 byte (0–255).</li><li>Địa chỉ mạng = <b>IP AND mặt nạ</b>; số máy = <b>2<sup>h</sup> − 2</b>.</li><li><b>/n</b> = số bit phần mạng; h = 32 − n.</li><li>Mượn k bit → <b>2<sup>k</sup></b> mạng con.</li><li><b>10/8, 172.16/12, 192.168/16</b> là địa chỉ riêng; IPv6 dài 128 bit.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Số máy /24</td><td>254</td></tr><tr><td class="m">Số máy /26</td><td>62</td></tr><tr><td class="m">Địa chỉ riêng</td><td>192.168.x.x</td></tr><tr><td class="m">Chính máy mình</td><td>127.0.0.1</td></tr></table><div class="warn">Quên trừ 2 (địa chỉ mạng và quảng bá).</div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Số host của /29.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Thời gian tải 20 MB qua 40 Mbps.</p></div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
-<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Máy cùng mạng ⇔ cùng <b>IP AND mặt nạ</b>.</li><li>Quảng bá = địa chỉ mạng với phần máy <b>toàn bit 1</b>.</li><li>/31 và /32 là trường hợp đặc biệt.</li><li>Mặt nạ ngược (wildcard) dùng trong ACL.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>VLSM</b>: chia mạng con có kích thước khác nhau.</li><li><b>Gộp tuyến</b> (route summarization).</li><li><b>APIPA</b> 169.254.x.x khi không có DHCP.</li></ul></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Tìm địa chỉ mạng của 10.1.1.200/27.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Chọn mặt nạ cho 50 thiết bị.</p></div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · TẬP</span><h1>Bài tập củng cố</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Đổi 11000000.10101000.00000001.00001010 sang thập phân.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mạng 192.168.5.0/24 có bao nhiêu máy dùng được?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Xác định địa chỉ mạng của 172.16.37.200/20.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Chia 192.168.1.0/24 thành 2 mạng con bằng nhau: cho biết mặt nạ và địa chỉ mạng.</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Địa chỉ 192.168.3.7 là riêng hay công cộng?</p></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Chia 192.168.5.0/24 thành 4 mạng con, liệt kê địa chỉ mạng và quảng bá.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). 40 học sinh xem video 5 Mb/s: chọn chuẩn đường truyền nào?</p></div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>192.168.1.10</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>2⁸ − 2 = <b>254</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>/20 → bước nhảy 16 ở byte thứ ba: 37 → 32 → <b>172.16.32.0</b>. 172.16.32.0 / 255.255.240.0 / 172.16.47.255 / 4094 máy (172.16.32.1–172.16.47.254)</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mượn 1 bit: <b>/25</b> (255.255.255.128): 192.168.1.0 và 192.168.1.128.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>Riêng</b> (192.168.0.0/16).</p></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>6 host.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>4.0 giây.</p></div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Một công ty có 5 phòng, mỗi phòng tối đa 25 máy. Dùng mạng 192.168.20.0/24. Chia thế nào?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Hai máy 10.0.0.130/25 và 10.0.0.100/25 có cùng mạng không?</p></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>10.1.1.192/27.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>/26 (62 host)</p></div></div></div></section>
 
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mạng /30 dùng được mấy máy? Thường dùng ở đâu?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Cho 192.168.1.77/27. Tìm địa chỉ mạng, quảng bá, dải máy.</p></div></div></div></section>
-
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Đúng hay sai: (a) 192.168.1.255/24 gán được cho máy. (b) 172.32.1.1 là địa chỉ riêng. (c) IPv6 dài 128 bit. (d) Mặt nạ 255.255.255.192 là /26.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Số mạng con và số máy mỗi mạng khi chia /24 thành mạng /28?</p></div></div></div></section>
-
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Cần ≥ 5 mạng, mỗi mạng ≥ 25 máy: mượn 3 bit → 8 mạng /27, mỗi mạng <b>30 máy</b>. Ví dụ: 192.168.20.0/27, .32/27, .64/27, …</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>/25: 130 thuộc 10.0.0.128/25; 100 thuộc 10.0.0.0/25 → <b>khác mạng</b>.</p></div></div></div></section>
-
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>2 máy</b>; dùng cho đường nối <b>hai router</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>192.168.1.64 / 255.255.255.224 / 192.168.1.95 / 30 máy (192.168.1.65–192.168.1.94)</p></div></div></div></section>
-
-<section class="s p11"><div class="hd"><span class="k">MẠNG 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
-<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>(a) <b>Sai</b> (quảng bá). (b) <b>Sai</b> (riêng chỉ 172.16–172.31). (c) <b>Đúng</b>. (d) <b>Đúng</b>.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mượn 4 bit: <b>16</b> mạng con, mỗi mạng <b>14</b> máy.</p></div></div></div></section>
+<section class="s p3"><div class="hd"><span class="k">MẠNG 3 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Dùng subnets(new_prefix=26) hoặc tính khối 64.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Nhu cầu 200 Mb/s: Gigabit.</p></div></div></div></section>
 </div>
 <div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
 <script>

@@ -1,0 +1,203 @@
+<!-- HEAD -->
+<title>Mạng 4A · Chia sẻ tài nguyên và an toàn mạng</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p4"><div class="hd"><span class="k">TIN HỌC · MẠNG 4A</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>CHIA SẺ TÀI NGUYÊN<br>VÀ AN TOÀN MẠNG</h1><p style="font-size:28px;line-height:1.5">Chia sẻ thư mục và máy in trong LAN Windows, mạng Private – Public, tường lửa, lừa đảo, 2FA và sao lưu.</p><div><span class="chip">chia sẻ</span><span class="chip">Private – Public</span><span class="chip">tường lửa</span><span class="chip">2FA</span><span class="chip">sao lưu</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">chia sẻ</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">Private – Public</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">tường lửa</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">2FA</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">sao lưu</text></svg></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Nêu <b>điều kiện</b> để chia sẻ <b>thư mục, máy in</b> trong LAN.</li><li>Cấu hình đúng: <b>Network discovery</b>, chia sẻ tệp – máy in, mạng <b>Private</b>.</li><li>Hiểu <b>thư mục Public</b> và <b>tường lửa</b>.</li><li>Nhận biết <b>lừa đảo trực tuyến</b>; hiểu <b>2FA</b>; biết cách <b>sao lưu</b> an toàn.</li><li>Phân biệt hai mô hình <b>workgroup</b> và <b>domain</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Chia sẻ tệp</li><li>Chia sẻ máy in</li><li>Tường lửa</li><li>An toàn thông tin</li><li>Workgroup – domain</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 1</span><h1>Vì sao phải chia sẻ tài nguyên?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lợi ích của mạng</h3><p style="margin:0 0 8px">Mạng cho phép <b>dùng chung</b>: tệp, máy in, Internet, phần mềm.</p><p style="margin:0 0 8px">Giảm chi phí (một máy in cho cả phòng), <b>cộng tác</b> trên cùng một tệp.</p><p style="margin:0 0 8px">Nhưng chia sẻ cần <b>kiểm soát</b>: ai được xem, được sửa.</p></div></div><div class="col"><table><tr><th>Tài nguyên</th><th>Ví dụ</th></tr><tr><td>dữ liệu</td><td>thư mục dùng chung</td></tr><tr><td>thiết bị</td><td>máy in, máy quét</td></tr><tr><td>dịch vụ</td><td>Internet, máy chủ thư</td></tr></table><div class="key">Chia sẻ trong <b>mạng cục bộ không cần Internet</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 1</span><h1>Điều kiện chia sẻ thư mục</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba điều kiện cùng lúc</h3><ol style="gap:6px"><li>Hai máy <b>cùng mạng cục bộ</b> (thông nhau).</li><li>Máy chứa thư mục <b>bật chia sẻ</b>.</li><li><b>Cấp quyền</b> cho người dùng (đọc, đọc/ghi).</li></ol></div></div><div class="col"><div class="key">Không cần trả phí, không cần kết bạn mạng xã hội, <b>không cần tắt vĩnh viễn diệt virus</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 1</span><h1>Cấu hình trên Windows</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các thiết lập đúng</h3><p style="margin:0 0 8px">Bật <b>Network discovery</b> (phát hiện mạng).</p><p style="margin:0 0 8px">Bật <b>chia sẻ tệp và máy in</b> (File and printer sharing).</p><p style="margin:0 0 8px">Đặt mạng ở chế độ <b>Private</b> (mạng riêng, nhóm tin cậy).</p><p style="margin:0 0 8px">Chế độ <b>Public</b> dành cho nơi công cộng (quán cà phê): <b>hạn chế chia sẻ</b> để tránh lộ thông tin.</p></div></div><div class="col"><table><tr><th>Chế độ</th><th>Khi nào dùng</th></tr><tr><td><b>Private</b></td><td>nhà, cơ quan: nhóm tin cậy, <b>cho chia sẻ</b></td></tr><tr><td><b>Public</b></td><td>quán cà phê, sân bay: <b>hạn chế</b></td></tr></table><div class="key">Cấu hình đúng: <b>bật Network discovery, chia sẻ tệp – máy in, mạng Private</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 1</span><h1>Thư mục Public</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Chia sẻ công cộng</h3><p style="margin:0 0 8px">Thư mục <b>Public</b> mặc định <b>không chia sẻ</b>; phải <b>bật chia sẻ Public folder</b>.</p><p style="margin:0 0 8px">Khi bật, <b>mọi người dùng trong mạng</b> thấy toàn bộ nội dung.</p><p style="margin:0 0 8px">Không phải chia sẻ cho cả Internet.</p></div></div><div class="col"><div class="key">Dữ liệu trong Public <b>mặc định không chia sẻ</b>, phải bật chia sẻ công cộng.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 2</span><h1>Chia sẻ máy in trong LAN</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Máy in nối USB vào máy của An</h3><p style="margin:0 0 8px">An <b>bật chia sẻ máy in</b> và <b>cấp quyền</b> cho Đức.</p><p style="margin:0 0 8px">Máy của Đức cùng mạng cục bộ, cài <b>driver</b> tương ứng để dùng máy in.</p><p style="margin:0 0 8px">Máy in được chia sẻ <b>thông qua máy của An</b> → An phải <b>bật máy</b>.</p></div></div><div class="col"><table><tr><th>Phát biểu</th><th>Đúng/Sai</th></tr><tr><td>An phải bật chia sẻ và cấp quyền cho Đức</td><td><b>Đúng</b></td></tr><tr><td>Đức cần cài driver</td><td><b>Đúng</b></td></tr><tr><td>Cả hai bắt buộc phải có Internet</td><td>Sai</td></tr><tr><td>An tắt máy mà Đức vẫn in được</td><td>Sai</td></tr></table><div class="key">Ba điều kiện: <b>chia sẻ máy in + cùng mạng nội bộ + cài driver</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 2</span><h1>Tường lửa (firewall)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lọc lưu lượng ra – vào</h3><p style="margin:0 0 8px"><b>Tường lửa</b>: phần mềm / thiết bị <b>lọc gói tin ra, vào theo luật</b> (địa chỉ, cổng, giao thức), chặn truy cập lạ.</p><p style="margin:0 0 8px"><b>Không</b> thay thế phần mềm diệt virus, <b>không</b> tăng băng thông, <b>không</b> mã hoá mọi trang web.</p><p style="margin:0 0 8px">Tường lửa có thể <b>chặn cả chia sẻ</b> nên cần điều chỉnh (cho phép chia sẻ tệp) hoặc tạm dừng trong mạng nội bộ tin cậy.</p></div></div><div class="col"><div class="key">Vai trò đúng nhất của tường lửa: <b>lọc gói tin theo luật, chặn truy cập lạ</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 2</span><h1>Tường lửa không làm gì?</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Phát biểu</th><th>Đúng?</th></tr><tr><td>Diệt virus đã nằm sẵn trong tệp</td><td><b>Sai</b> (đó là phần mềm diệt virus)</td></tr><tr><td>Tăng băng thông Internet</td><td><b>Sai</b></td></tr><tr><td>Mã hoá mọi trang web</td><td><b>Sai</b> (HTTPS làm việc đó)</td></tr><tr><td>Lọc gói tin theo luật, chặn truy cập lạ</td><td><b>Đúng</b></td></tr><tr><td>Ngăn người dùng đã được cấp tài khoản</td><td><b>Không</b> (tường lửa lọc lưu lượng, không thay phân quyền)</td></tr></table><div class="key">Ba lớp bảo vệ khác nhau: <b>tường lửa</b> (lưu lượng), <b>phần mềm diệt virus</b> (mã độc), <b>phân quyền</b> (người dùng).</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 3</span><h1>Workgroup và domain</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai mô hình quản lí</h3><p style="margin:0 0 8px"><b>Workgroup</b> (nhóm làm việc): <b>không máy nào điều khiển máy nào</b>; mỗi máy tự quản tài khoản; đơn giản, hợp mạng nhỏ.</p><p style="margin:0 0 8px"><b>Domain</b> (miền): <b>Domain Controller</b> quản lí tài khoản, tài nguyên <b>tập trung</b>; đăng nhập từ máy nào cũng được.</p><p style="margin:0 0 8px">Chọn theo <b>yêu cầu quản trị</b>, <b>không theo số máy</b>.</p></div></div><div class="col"><table><tr><th></th><th>Workgroup</th><th>Domain</th></tr><tr><td>Quản lí</td><td>phân tán, từng máy</td><td><b>tập trung</b> (Domain Controller)</td></tr><tr><td>Tài khoản</td><td>riêng trên từng máy</td><td><b>chung</b>, đăng nhập mọi máy</td></tr><tr><td>Hợp với</td><td>mạng nhỏ, quản trị đơn giản</td><td>tổ chức lớn, cần kiểm soát</td></tr></table><div class="key">Phòng máy trường, tài khoản ghi sẵn trên thân máy: dùng <b>workgroup</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 4</span><h1>An toàn thông tin cá nhân</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các hiểm hoạ thường gặp</h3><table><tr><th>Hiểm hoạ</th><th>Cách xử lí</th></tr><tr><td><b>lừa đảo (phishing)</b>: thư giả ngân hàng bắt bấm liên kết</td><td><b>không bấm</b>, kiểm tra qua kênh chính thức, báo cáo</td></tr><tr><td>mật khẩu yếu, dùng lại</td><td>mật khẩu <b>dài, riêng</b> cho từng tài khoản</td></tr><tr><td>mã độc, virus</td><td>phần mềm diệt virus, cập nhật hệ thống</td></tr><tr><td>mất dữ liệu</td><td><b>sao lưu</b> ở nhiều nơi</td></tr><tr><td>mạng Wi-Fi công cộng</td><td>tránh giao dịch; dùng HTTPS/VPN</td></tr></table></div></div><div class="col"><div class="key">Thư giả danh ngân hàng: <b>không bấm, không trả lời</b>; xác minh qua <b>kênh chính thức</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 4</span><h1>Xác thực hai yếu tố (2FA)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thêm một lớp bảo vệ</h3><p style="margin:0 0 8px">Đăng nhập cần <b>hai yếu tố</b>: (1) điều bạn <b>biết</b> (mật khẩu) và (2) điều bạn <b>có</b> (mã OTP trên điện thoại) hoặc <b>là</b> (vân tay).</p><p style="margin:0 0 8px">Kẻ xấu <b>biết mật khẩu</b> vẫn <b>cần yếu tố thứ hai</b> mới vào được.</p><p style="margin:0 0 8px">2FA <b>không</b> làm tài khoản không bao giờ bị khoá, và <b>không</b> thay thế mật khẩu mạnh.</p></div></div><div class="col"><div class="key">2FA tăng bảo mật vì <b>biết mật khẩu chưa đủ</b> để đăng nhập.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 4</span><h1>Sao lưu đúng cách</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy tắc</h3><p style="margin:0 0 8px">Dữ liệu quan trọng cần <b>ít nhất hai bản ở hai nơi khác nhau</b>, <b>một bản tách khỏi máy chính</b> (ổ ngoài, đám mây).</p><p style="margin:0 0 8px">Không để bản sao <b>cùng ổ đĩa</b> với bản gốc; không đưa lên nơi <b>công khai</b>.</p><p style="margin:0 0 8px"><b>Máy mới</b> vẫn có thể hỏng, bị mã độc → vẫn cần sao lưu.</p></div></div><div class="col"><svg viewBox="0 0 520 160" style="width:100%"><rect x="0" y="5" width="160" height="150" rx="12" fill="#2E7D32"/><text x="80" y="62" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">Máy chính</text><text x="80" y="100" text-anchor="middle" font-size="17" fill="#FFE082">bản gốc</text><polygon points="162,70 178,80 162,90" fill="#0B2545"/><rect x="180" y="5" width="160" height="150" rx="12" fill="#2E7D32"/><text x="260" y="62" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">Ổ ngoài</text><text x="260" y="100" text-anchor="middle" font-size="17" fill="#FFE082">bản 2</text><polygon points="342,70 358,80 342,90" fill="#0B2545"/><rect x="360" y="5" width="160" height="150" rx="12" fill="#2E7D32"/><text x="440" y="62" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">Đám mây</text><text x="440" y="100" text-anchor="middle" font-size="17" fill="#FFE082">bản 3 (xa)</text></svg><div class="key">Sao lưu an toàn nhất: <b>≥ 2 bản, ở 2 nơi, một bản tách khỏi máy chính</b>.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 5</span><h1>Tự kiểm tra: điều kiện in qua mạng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Hà nối máy in bằng USB vào máy của mình, Minh ở phòng khác muốn in. Điều kiện đầy đủ?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>Hà chia sẻ máy in</b>; hai máy <b>cùng mạng nội bộ</b>; Minh <b>cài driver</b>.</p><p style="margin:0 0 8px">Repeater hay Internet không phải điều kiện cần.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 5</span><h1>Tự kiểm tra: tường lửa và 2FA</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Tường lửa làm gì? Vì sao 2FA tăng bảo mật?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Tường lửa: <b>lọc gói tin ra / vào theo luật</b>, chặn truy cập lạ.</p><p style="margin:0 0 8px">2FA: kẻ biết mật khẩu vẫn cần <b>yếu tố thứ hai</b>.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · 5</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) Chia sẻ trong LAN bắt buộc có Internet. (b) Mạng Public để chia sẻ cho dễ. (c) Public folder mặc định không chia sẻ. (d) Gặp thư giả ngân hàng nên bấm liên kết nhưng không nhập gì. (e) Chỉ giữ một bản sao cùng ổ đĩa là đủ.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Sai</b>.</p><p style="margin:0 0 8px">(b) <b>Sai</b>: dùng Private.</p><p style="margin:0 0 8px">(c) <b>Đúng</b>.</p><p style="margin:0 0 8px">(d) <b>Sai</b>: không bấm.</p><p style="margin:0 0 8px">(e) <b>Sai</b>: cần ≥ 2 bản, ≥ 2 nơi.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Chia sẻ trong LAN: <b>bật chia sẻ + cấp quyền + cùng mạng</b> (+ driver cho máy in).</li><li>Windows: <b>Network discovery</b>, chia sẻ tệp – máy in, mạng <b>Private</b>.</li><li><b>Tường lửa</b> lọc lưu lượng theo luật, không phải diệt virus.</li><li><b>Workgroup</b> đơn giản; <b>domain</b> tập trung.</li><li><b>2FA</b>, không bấm thư lừa đảo, <b>sao lưu ≥ 2 bản, 2 nơi</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Chia sẻ trong nhóm tin cậy</td><td>Private</td></tr><tr><td class="m">Lọc gói tin</td><td>tường lửa</td></tr><tr><td class="m">Quản trị tập trung</td><td>domain</td></tr><tr><td class="m">Chống lộ mật khẩu</td><td>2FA</td></tr></table><div class="warn">Chia sẻ ở mạng Public; tắt hẳn diệt virus; bấm liên kết lạ; chỉ sao lưu một bản.</div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>VPN</b> mã hoá kết nối.</li><li><b>Mật khẩu</b> mạnh + trình quản lí mật khẩu.</li><li><b>Cập nhật</b> hệ điều hành.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Zero trust</b>.</li><li><b>IDS/IPS</b>.</li><li>Chính sách <b>BYOD</b>.</li></ul></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Chế độ mạng cho phép chia sẻ?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Cái lọc gói tin theo luật?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mô hình tập trung?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Thư lạ đòi xác nhận tài khoản?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Số bản sao tối thiểu?</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>Private</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Tường lửa</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Domain</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>Không bấm</b>, báo cáo.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>2 bản, 2 nơi</b>.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Liệt kê điều kiện chia sẻ thư mục.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Phân biệt Private và Public.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Thiết lập chia sẻ máy in trong phòng.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Gặp email giả ngân hàng, em làm gì?</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Vì sao không nên tắt tường lửa vĩnh viễn để chia sẻ?</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Chọn workgroup hay domain cho trường có 100 máy, quản trị đơn giản? Vì sao?</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Cùng mạng, bật chia sẻ, cấp quyền.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Private: nhóm tin cậy; Public: hạn chế.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Chia sẻ máy in, cùng mạng, cài driver.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Không bấm; kiểm tra kênh chính thức; báo cáo.</p></div></div></div></section>
+
+<section class="s p4"><div class="hd"><span class="k">MẠNG 4A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mất lớp bảo vệ, dễ bị truy cập lạ; chỉ tạm dừng hoặc mở luật.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Workgroup: chọn theo yêu cầu quản trị, không theo số máy.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

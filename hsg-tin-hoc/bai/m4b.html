@@ -1,0 +1,211 @@
+<!-- HEAD -->
+<title>Mạng 4B · Thiết kế mạng</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p5"><div class="hd"><span class="k">TIN HỌC · MẠNG 4B</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>THIẾT KẾ MẠNG<br>CHO TRƯỜNG HỌC</h1><p style="font-size:28px;line-height:1.5">Bốn bước thiết kế mạng, chọn đường truyền và thiết bị, miền xung đột, số cổng switch, băng thông, cấu trúc phân cấp và mạng di động 4G – 5G.</p><div><span class="chip">4 bước</span><span class="chip">switch</span><span class="chip">miền xung đột</span><span class="chip">cổng</span><span class="chip">5G</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">4 bước</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">switch</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">miền xung đột</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">cổng</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">5G</text></svg></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Nêu <b>4 bước thiết kế mạng</b> đúng thứ tự.</li><li>Chọn <b>đường truyền</b> (xoắn, quang, không dây) theo khoảng cách.</li><li>Tính <b>số cổng switch</b> và <b>băng thông</b> cần có.</li><li>Hiểu <b>miền xung đột</b>: hub, switch, repeater khác nhau thế nào.</li><li>Biết các thế hệ <b>mạng di động</b> 2G–5G.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>4 bước thiết kế</li><li>Đường truyền</li><li>Thiết bị và miền xung đột</li><li>Tính số cổng, băng thông</li><li>Mạng di động</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · 1</span><h1>Bốn bước thiết kế mạng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thứ tự cố định</h3><ol style="gap:6px"><li><b>Khảo sát</b> hiện trạng, phân tích nhu cầu.</li><li><b>Thiết kế logic</b>: sơ đồ, địa chỉ IP, mô hình.</li><li><b>Thiết kế vật lí</b>: thiết bị, dây, vị trí.</li><li><b>Chọn hệ điều hành mạng</b> (bước cuối).</li></ol></div></div><div class="col"><svg viewBox="0 0 560 160" style="width:100%"><rect x="0" y="5" width="125" height="150" rx="12" fill="#6A1B9A"/><text x="62" y="62" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">1</text><text x="62" y="100" text-anchor="middle" font-size="17" fill="#FFE082">khảo sát</text><polygon points="127,70 143,80 127,90" fill="#0B2545"/><rect x="145" y="5" width="125" height="150" rx="12" fill="#6A1B9A"/><text x="207" y="62" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">2</text><text x="207" y="100" text-anchor="middle" font-size="17" fill="#FFE082">logic</text><polygon points="272,70 288,80 272,90" fill="#0B2545"/><rect x="290" y="5" width="125" height="150" rx="12" fill="#6A1B9A"/><text x="352" y="62" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">3</text><text x="352" y="100" text-anchor="middle" font-size="17" fill="#FFE082">vật lí</text><polygon points="417,70 433,80 417,90" fill="#0B2545"/><rect x="435" y="5" width="125" height="150" rx="12" fill="#6A1B9A"/><text x="497" y="62" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">4</text><text x="497" y="100" text-anchor="middle" font-size="17" fill="#FFE082">HĐH mạng</text></svg><div class="key">Chọn hệ điều hành mạng ở <b>bước cuối</b>, không phải đầu tiên.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · 1</span><h1>Đường truyền: chọn theo khoảng cách</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ưu nhược điểm</h3><table><tr><th>Loại</th><th>Đặc điểm</th></tr><tr><td><b>Cáp xoắn</b></td><td>rẻ; hiệu quả khoảng <b>100 m</b>; có thể bị nhiễu</td></tr><tr><td><b>Cáp quang</b></td><td>xa; <b>không bị nhiễu điện từ</b>; nối các toà nhà</td></tr><tr><td><b>Wi-Fi</b></td><td>tiện, di động; kém ổn định hơn</td></tr><tr><td><b>Bluetooth</b></td><td>thiết bị cá nhân, khoảng <b>10 m</b>, ~1 Mb/s</td></tr></table><p style="margin:0 0 8px">Máy tính trong LAN dùng <b>tín hiệu điện</b>: nối cáp quang cần <b>bộ chuyển đổi quang – điện</b>.</p></div></div><div class="col"><div class="key">Hai toà nhà cách <b>150 m</b>: cáp xoắn không đảm bảo → <b>cáp quang</b> hoặc repeater.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · 2</span><h1>Hub, switch, repeater và miền xung đột</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khác nhau chỗ nào</h3><table><tr><th>Thiết bị</th><th>Làm gì</th></tr><tr><td><b>Hub</b></td><td>phát tín hiệu ra <b>mọi cổng</b> → cùng miền xung đột</td></tr><tr><td><b>Switch</b></td><td>chuyển tới <b>cổng đích</b> → <b>tách miền xung đột</b> từng cổng</td></tr><tr><td><b>Repeater</b></td><td>khuếch đại để đi xa; <b>không chia nhỏ</b> miền xung đột, gây trễ</td></tr><tr><td><b>Router</b></td><td><b>chọn đường</b> giữa các mạng khác nhau</td></tr></table></div></div><div class="col"><div class="key">Switch tách miền xung đột; <b>repeater không tăng tốc độ</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · 2</span><h1>Chọn switch cho phòng 30 máy</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Cần <b>30 + 1 + 1 = 32</b> cổng → loại <b>32</b> (vừa đủ).</p><p style="margin:0 0 8px">Thực tế nên chọn <b>dư</b> cổng dự phòng.</p></div><pre class="code" style="font-size:calc(19px*var(--z,1))">may, ap, uplink = 30, 1, 1
+can = may + ap + uplink
+for loai in (8, 16, 24, 32):
+    if loai &gt;= can:
+        print('cần', can, 'cổng -&gt; chọn loại', loai); break</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">cần 32 cổng -&gt; chọn loại 32</pre></div><div class="key">Đừng quên cổng cho <b>access point</b> và cổng <b>nối lên switch tổng</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · 2</span><h1>Phòng thực hành 23 máy: dùng switch nào?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">23 máy → cần ít nhất 23 cổng → <b>24 cổng</b>.</p><p style="margin:0 0 8px">5 thiết bị → loại <b>8 cổng</b>.</p></div><pre class="code" style="font-size:calc(22px*var(--z,1))">may = 23
+for loai in (8, 16, 24, 48):
+    ghi = 'đủ' if loai &gt;= may else 'thiếu'
+    print(loai, ghi)</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">8 thiếu
+16 thiếu
+24 đủ
+48 đủ</pre></div><div class="key">Chọn loại <b>nhỏ nhất đủ cổng</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · 3</span><h1>Băng thông tổng cho cả trường</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ý chính</h3><p style="margin:0 0 8px">Tổng nhu cầu = 40 × 3 = <b>120 Mb/s</b>.</p><p style="margin:0 0 8px">Chọn chuẩn có tốc độ <b>≥ nhu cầu tổng</b>: <b>Gigabit</b>.</p></div><pre class="code" style="font-size:calc(20px*var(--z,1))">hs, luong = 40, 3
+tong = hs * luong
+print('nhu cầu', tong, 'Mb/s')
+for ten, mb in [('Ethernet',10),('Fast Ethernet',100),('Gigabit',1000)]:
+    print(ten, 'đủ' if mb &gt;= tong else 'THIẾU')</pre></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Python thật</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:24px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">nhu cầu 120 Mb/s
+Ethernet THIẾU
+Fast Ethernet THIẾU
+Gigabit đủ</pre></div><div class="key">Không so với tốc độ <b>một</b> luồng.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · 3</span><h1>Cấu trúc phân cấp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hình sao của các hình sao</h3><p style="margin:0 0 8px">Mỗi phòng một <b>switch</b>, các switch nối vào <b>switch tổng</b>: cấu trúc <b>phân cấp</b>.</p><p style="margin:0 0 8px">Rất thích hợp mạng khoảng <b>100 máy</b> trở lên.</p><p style="margin:0 0 8px">Học sinh chia sẻ tài liệu trong phòng, ít trao đổi giữa phòng → <b>phân đoạn mạng</b> theo phòng giảm xung đột.</p></div></div><div class="col"><svg viewBox="0 0 560 160" style="width:100%"><rect x="0" y="5" width="173" height="150" rx="12" fill="#6A1B9A"/><text x="86" y="62" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">Phòng 1</text><text x="86" y="100" text-anchor="middle" font-size="17" fill="#FFE082">switch</text><polygon points="175,70 191,80 175,90" fill="#0B2545"/><rect x="193" y="5" width="173" height="150" rx="12" fill="#6A1B9A"/><text x="279" y="62" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">Switch tổng</text><text x="279" y="100" text-anchor="middle" font-size="17" fill="#FFE082">lõi</text><polygon points="368,70 384,80 368,90" fill="#0B2545"/><rect x="386" y="5" width="173" height="150" rx="12" fill="#6A1B9A"/><text x="472" y="62" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">Phòng 2</text><text x="472" y="100" text-anchor="middle" font-size="17" fill="#FFE082">switch</text></svg><div class="key">Số máy lớn <b>không bắt buộc</b> domain; mô hình chọn theo <b>yêu cầu quản trị</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · 4</span><h1>Mạng di động 2G đến 5G</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Tốc độ theo SGK</h3><table><tr><th>Thế hệ</th><th>Đặc điểm</th></tr><tr><td>2G</td><td>thoại, tin nhắn</td></tr><tr><td>3G</td><td>Internet di động</td></tr><tr><td><b>4G</b></td><td>tối đa <b>1,5 Gb/s</b></td></tr><tr><td><b>5G</b></td><td>tối đa <b>10 Gb/s</b>, trễ rất thấp, hợp <b>IoT</b></td></tr></table></div></div><div class="col"><div class="key">5G > 4G: tối đa 10 Gb/s so với 1,5 Gb/s.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · 5</span><h1>Tự kiểm tra 1: thứ tự thiết kế</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Chọn hệ điều hành mạng đứng ở vị trí nào trong thiết kế mạng?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Thứ tự: <b>khảo sát → logic → vật lí → chọn HĐH mạng</b>: bước <b>cuối</b>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · 5</span><h1>Tự kiểm tra 2: số cổng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Phòng 30 máy, 1 access point, 1 cổng lên switch tổng. Loại 8/16/24/32 nhỏ nhất đủ?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">30 + 1 + 1 = <b>32</b> → loại <b>32 cổng</b>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · 5</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) Repeater chia nhỏ miền xung đột tốt hơn switch. (b) Cáp quang bị nhiễu điện từ. (c) 4G tối đa lớn hơn 5G. (d) Máy tính để bàn nối thẳng cáp quang vào switch, không cần bộ chuyển đổi. (e) Trường 100 máy bắt buộc dùng domain.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Sai</b>.</p><p style="margin:0 0 8px">(b) <b>Sai</b>: không bị nhiễu.</p><p style="margin:0 0 8px">(c) <b>Sai</b>: 5G lớn hơn.</p><p style="margin:0 0 8px">(d) <b>Sai</b>: cần bộ chuyển đổi.</p><p style="margin:0 0 8px">(e) <b>Sai</b>: theo yêu cầu quản trị.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>4 bước</b>: khảo sát → logic → vật lí → HĐH mạng.</li><li>Cáp xoắn ~100 m; xa hơn dùng <b>cáp quang</b>.</li><li><b>Switch</b> tách miền xung đột; repeater thì không.</li><li>Cổng cần = máy + AP + cổng lên; băng thông = <b>tổng</b> nhu cầu.</li><li>5G tối đa <b>10 Gb/s</b>; 4G 1,5 Gb/s.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Bước cuối thiết kế</td><td>chọn HĐH mạng</td></tr><tr><td class="m">Cáp quang cần</td><td>bộ chuyển đổi</td></tr><tr><td class="m">30 + 1 + 1 cổng</td><td>loại 32</td></tr><tr><td class="m">Tách miền xung đột</td><td>switch</td></tr></table><div class="warn">Chọn HĐH mạng đầu tiên; coi repeater tách xung đột; bỏ cổng AP; chọn băng thông theo một luồng.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>Dự phòng</b> cổng, đường truyền.</li><li><b>Sơ đồ logic</b>.</li><li>Quản trị tập trung.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>VLAN</b>.</li><li><b>Spanning tree</b>.</li><li><b>Mesh Wi-Fi</b>.</li></ul></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Bước 4 thiết kế?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Khoảng cách cáp xoắn hiệu quả?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Thiết bị tách miền xung đột?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mạng 10 Gb/s?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>30 máy + AP + uplink: loại?</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>Chọn HĐH mạng</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>~100 m</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Switch</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>5G</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>32 cổng</b>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Liệt kê 4 bước thiết kế.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Chọn switch cho 23 máy.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Nối hai toà nhà cách 150 m.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. 60 học sinh xem video 2 Mb/s: băng thông?</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Giải thích vì sao chia phòng bằng switch giảm xung đột.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Thiết kế mạng cho 2 toà, mỗi toà 2 phòng 30 máy.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>Khảo sát, logic, vật lí, HĐH mạng.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Loại 24 cổng.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Cáp quang + bộ chuyển đổi.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>120 Mb/s → Gigabit.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">MẠNG 4B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mỗi cổng một miền xung đột riêng.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Switch mỗi phòng + switch tổng, cáp quang giữa 2 toà, workgroup/domain tuỳ quản trị.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

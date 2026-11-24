@@ -1,0 +1,206 @@
+<!-- HEAD -->
+<title>Mạng 1 · Thiết bị và cấu trúc mạng</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p11"><div class="hd"><span class="k">TIN HỌC · MẠNG 1</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>THIẾT BỊ VÀ CẤU TRÚC<br>MẠNG MÁY TÍNH</h1><p style="font-size:28px;line-height:1.5">Mạng máy tính, LAN – WAN, đường truyền có dây và không dây, thiết bị mạng (NIC, hub, switch, router, modem, AP, repeater), miền xung đột, cấu trúc hình sao và phân cấp.</p><div><span class="chip">LAN</span><span class="chip">hub – switch</span><span class="chip">router</span><span class="chip">modem</span><span class="chip">miền xung đột</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">LAN</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">hub – switch</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">router</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">modem</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">miền xung đột</text></svg></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Nêu khái niệm <b>mạng máy tính</b>, phân biệt <b>LAN</b> và <b>WAN</b>.</li><li>Phân biệt các <b>đường truyền</b>: cáp xoắn, cáp quang, Wi-Fi, Bluetooth, 3G/4G/5G.</li><li>Nêu <b>chức năng</b> của NIC, hub, switch, router, modem, access point, repeater.</li><li>Giải thích <b>miền xung đột</b>; so sánh <b>hub và switch</b>.</li><li>Chọn thiết bị và đường truyền cho tình huống cụ thể.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Mạng, LAN, WAN</li><li>Đường truyền</li><li>Thiết bị mạng</li><li>Hub – switch</li><li>Chọn thiết bị</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 1</span><h1>Mạng máy tính là gì?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khái niệm</h3><p style="margin:0 0 8px"><b>Mạng máy tính</b>: tập hợp các máy tính và thiết bị được <b>nối với nhau</b> bằng đường truyền để <b>trao đổi dữ liệu, chia sẻ tài nguyên</b>.</p><p style="margin:0 0 8px">Gồm: <b>thiết bị đầu cuối</b> (máy tính, điện thoại, máy in…), <b>thiết bị kết nối</b> (switch, router…), <b>đường truyền</b> và <b>giao thức</b>.</p><p style="margin:0 0 8px"><b>Server</b>: hệ thống phần cứng và phần mềm cung cấp dịch vụ cho máy khách; mạng gia đình có thể không có server.</p></div></div><div class="col"><svg viewBox="0 0 520 190" style="width:100%"><g font-family="sans-serif" font-weight="800"><rect x="10" y="20" width="64" height="40" rx="9" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="42" y="46" text-anchor="middle" font-size="18" fill="#0B2545">Máy</text><rect x="100" y="20" width="64" height="40" rx="9" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="132" y="46" text-anchor="middle" font-size="18" fill="#0B2545">Máy</text><rect x="190" y="20" width="64" height="40" rx="9" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="222" y="46" text-anchor="middle" font-size="18" fill="#0B2545">Máy</text><rect x="100" y="110" width="160" height="44" rx="9" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="180" y="138" text-anchor="middle" font-size="18" fill="#0B2545">Switch</text><line x1="42" y1="60" x2="150" y2="110" stroke="#0B2545" stroke-width="3"/><line x1="132" y1="60" x2="170" y2="110" stroke="#0B2545" stroke-width="3"/><line x1="222" y1="60" x2="200" y2="110" stroke="#0B2545" stroke-width="3"/><rect x="300" y="20" width="100" height="44" rx="9" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="350" y="48" text-anchor="middle" font-size="18" fill="#0B2545">Máy in</text><line x1="350" y1="64" x2="230" y2="110" stroke="#0B2545" stroke-width="3"/><rect x="300" y="110" width="160" height="44" rx="9" fill="#FFCDD2" stroke="#C62828" stroke-width="3"/><text x="380" y="138" text-anchor="middle" font-size="18" fill="#0B2545">Router → Internet</text><line x1="260" y1="132" x2="300" y2="132" stroke="#0B2545" stroke-width="3"/></g></svg><div class="key">Mạng cho phép <b>dùng chung</b> máy in, tệp, Internet và trao đổi thông tin.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 1</span><h1>LAN và WAN</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>LAN (mạng cục bộ)</th><th>WAN (mạng diện rộng)</th></tr><tr><td><b>Phạm vi</b></td><td>nhỏ: phòng, toà nhà, trường</td><td>lớn: thành phố, quốc gia, toàn cầu</td></tr><tr><td><b>Sở hữu</b></td><td>một tổ chức</td><td>nhiều tổ chức / nhà cung cấp</td></tr><tr><td><b>Tốc độ</b></td><td>cao</td><td>thường thấp hơn</td></tr><tr><td><b>Ví dụ</b></td><td>mạng phòng máy, mạng gia đình</td><td><b>Internet</b></td></tr></table><div class="key">Internet là <b>mạng của các mạng</b> (WAN lớn nhất) nối vô số LAN.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 2</span><h1>Đường truyền có dây</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cáp xoắn và cáp quang</h3><p style="margin:0 0 8px"><b>Cáp xoắn</b> (đồng): rẻ, dễ lắp, hiệu quả tối đa khoảng <b>100 m</b>, dễ bị nhiễu điện từ; dùng nối máy vào switch.</p><p style="margin:0 0 8px"><b>Cáp quang</b>: truyền <b>ánh sáng</b>, <b>xa</b> (hàng km), băng thông lớn, <b>không nhiễu điện từ</b>, khó bị lấy trộm tín hiệu.</p><p style="margin:0 0 8px">Máy tính trong LAN dùng tín hiệu điện → muốn dùng quang phải có <b>bộ chuyển đổi quang – điện</b>.</p></div></div><div class="col"><table><tr><th>Tiêu chí</th><th>Cáp xoắn</th><th>Cáp quang</th></tr><tr><td>Tín hiệu</td><td>điện</td><td><b>ánh sáng</b></td></tr><tr><td>Khoảng cách</td><td>~100 m</td><td><b>rất xa</b></td></tr><tr><td>Nhiễu điện từ</td><td><b>có</b></td><td><b>không</b></td></tr><tr><td>Chi phí</td><td>thấp</td><td>cao hơn</td></tr><tr><td>Dùng để</td><td>nối máy trong phòng</td><td>nối <b>các toà nhà</b></td></tr></table><div class="key">Hai toà nhà cách <b>300 m</b>: ưu tiên <b>cáp quang</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 2</span><h1>Đường truyền không dây</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Wi-Fi, Bluetooth, mạng di động</h3><p style="margin:0 0 8px"><b>Wi-Fi</b> (Wireless Fidelity): bộ tiêu chuẩn truyền dữ liệu bằng <b>sóng vô tuyến</b>; thiết bị phát là <b>Access Point (AP)</b>.</p><p style="margin:0 0 8px"><b>Bluetooth</b>: ~1 Mb/s, khoảng <b>10 m</b>, nối thiết bị cá nhân (tai nghe, chuột).</p><p style="margin:0 0 8px"><b>Mạng di động</b>: 3G, 4G, 5G; <b>vệ tinh</b> cho vùng xa.</p></div></div><div class="col"><table><tr><th>Chuẩn</th><th>Tốc độ tối đa</th></tr><tr><td>802.11b</td><td>11 Mb/s</td></tr><tr><td>802.11a, g</td><td>54 Mb/s</td></tr><tr><td>802.11n</td><td>450 Mb/s</td></tr><tr><td>802.11ac</td><td>1,3 Gb/s</td></tr><tr><td><b>802.11ad</b></td><td>4,6 Gb/s, dải <b>60 GHz</b></td></tr></table><div class="key">Di động: <b>3G (40 Mb/s) → 4G (1,5 Gb/s) → 5G (10 Gb/s)</b>; 5G độ trễ rất thấp, hợp IoT.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 2</span><h1>Chọn đường truyền theo tình huống</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Gợi ý</h3><table><tr><th>Tình huống</th><th>Chọn</th></tr><tr><td>tai nghe không dây cách điện thoại 2 m</td><td><b>Bluetooth</b></td></tr><tr><td>nối hai toà nhà cách 300 m</td><td><b>cáp quang</b></td></tr><tr><td>nối máy vào switch trong phòng</td><td><b>cáp xoắn</b></td></tr><tr><td>chia sẻ ảnh giữa hai điện thoại cạnh nhau, không Internet</td><td><b>Bluetooth / Wi-Fi Direct</b></td></tr><tr><td>vùng không có cáp</td><td>vệ tinh, 4G/5G</td></tr></table></div></div><div class="col"><div class="key">Đề thường cho khoảng cách + yêu cầu và hỏi <b>công nghệ phù hợp nhất</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 3</span><h1>Card mạng (NIC) và modem</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai thiết bị đầu tiên</h3><p style="margin:0 0 8px"><b>Card mạng (NIC)</b>: thiết bị trong mỗi máy giúp máy <b>kết nối mạng</b>, mỗi NIC có <b>địa chỉ MAC</b> duy nhất.</p><p style="margin:0 0 8px"><b>Modem</b>: <b>chuyển đổi</b> tín hiệu số ↔ tín hiệu của đường truyền (điện thoại, quang, di động), <b>giữ nguyên dữ liệu</b>; nằm giữa router và nhà cung cấp dịch vụ.</p><p style="margin:0 0 8px">Loại: <b>ADSL</b> (dây điện thoại), <b>modem quang</b> (số ↔ quang), <b>modem GSM 3G/4G/5G</b> (có khe SIM).</p></div></div><div class="col"><div class="key">Chuyển đổi số ↔ tương tự (hoặc quang) là việc của <b>modem</b>; chọn đường đi là việc của <b>router</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 3</span><h1>Hub và switch</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thiết bị tập trung kết nối</h3><p style="margin:0 0 8px"><b>Hub</b>: nhận tín hiệu ở một cổng rồi <b>phát ra mọi cổng khác</b> → mọi máy nối vào hub cùng <b>một miền xung đột</b>.</p><p style="margin:0 0 8px"><b>Switch</b>: chỉ tạo <b>kênh tạm thời giữa cổng gửi và cổng nhận</b>; các cặp cổng khác vẫn truyền song song → mỗi cổng là một miền xung đột riêng.</p></div></div><div class="col"><svg viewBox="0 0 520 150" style="width:100%"><g font-family="sans-serif" font-weight="800"><rect x="10" y="10" width="64" height="40" rx="9" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="42" y="36" text-anchor="middle" font-size="18" fill="#0B2545">A</text><rect x="90" y="10" width="64" height="40" rx="9" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="122" y="36" text-anchor="middle" font-size="18" fill="#0B2545">B</text><rect x="10" y="90" width="140" height="40" rx="9" fill="#FFE0B2" stroke="#E65100" stroke-width="3"/><text x="80" y="116" text-anchor="middle" font-size="18" fill="#0B2545">HUB</text><line x1="42" y1="50" x2="70" y2="90" stroke="#0B2545" stroke-width="3"/><line x1="122" y1="50" x2="110" y2="90" stroke="#0B2545" stroke-width="3"/><rect x="260" y="10" width="64" height="40" rx="9" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="292" y="36" text-anchor="middle" font-size="18" fill="#0B2545">C</text><rect x="340" y="10" width="64" height="40" rx="9" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="372" y="36" text-anchor="middle" font-size="18" fill="#0B2545">D</text><rect x="250" y="90" width="160" height="40" rx="9" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="330" y="116" text-anchor="middle" font-size="18" fill="#0B2545">SWITCH</text><line x1="292" y1="50" x2="310" y2="90" stroke="#0B2545" stroke-width="3"/><line x1="372" y1="50" x2="350" y2="90" stroke="#0B2545" stroke-width="3"/></g></svg><div class="key">Hub: phát <b>ra mọi cổng</b>. Switch: <b>chỉ tới cổng đích</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 3</span><h1>So sánh hub và switch</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>Hub</th><th>Switch</th></tr><tr><td><b>Cách chuyển</b></td><td>phát ra <b>mọi cổng</b></td><td><b>kênh tạm</b> giữa hai cổng</td></tr><tr><td><b>Miền xung đột</b></td><td><b>một</b> cho tất cả</td><td><b>mỗi cổng</b> một miền</td></tr><tr><td><b>Hiệu quả</b></td><td>thấp, dễ xung đột khi nhiều máy</td><td>cao</td></tr><tr><td><b>Dùng khi</b></td><td>mạng rất nhỏ (gia đình ~4 máy), rẻ</td><td>văn phòng, phòng máy (hàng chục máy)</td></tr></table><div class="key">A gửi B qua hub: C, D cùng nhận. Qua switch: <b>chỉ B</b> nhận (traffic không tràn sang máy khác).</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 3</span><h1>Router: chọn đường giữa các mạng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cổng LAN và cổng WAN</h3><p style="margin:0 0 8px"><b>Router</b> kết nối các <b>mạng khác nhau</b> và <b>chọn đường</b> (định tuyến) cho gói tin.</p><p style="margin:0 0 8px"><b>Cổng WAN</b> nối ra ngoài (Internet); <b>cổng LAN</b> nối vào mạng nội bộ.</p><p style="margin:0 0 8px">Dữ liệu từ máy A đến máy B ở LAN khác: vào router qua <b>cổng LAN</b>, ra qua <b>cổng WAN</b> thích hợp.</p><p style="margin:0 0 8px">Router gia đình thường tích hợp <b>Wi-Fi (AP)</b>, <b>switch</b> và cả <b>modem</b>.</p></div></div><div class="col"><svg viewBox="0 0 520 160" style="width:100%"><g font-family="sans-serif" font-weight="800"><rect x="10" y="20" width="110" height="44" rx="9" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="65" y="48" text-anchor="middle" font-size="18" fill="#0B2545">LAN A (máy A)</text><rect x="190" y="10" width="140" height="64" rx="9" fill="#FFCDD2" stroke="#C62828" stroke-width="3"/><text x="260" y="48" text-anchor="middle" font-size="18" fill="#0B2545">ROUTER</text><rect x="400" y="20" width="110" height="44" rx="9" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="455" y="48" text-anchor="middle" font-size="18" fill="#0B2545">LAN B (máy B)</text><line x1="120" y1="42" x2="190" y2="42" stroke="#0B2545" stroke-width="3"/><line x1="330" y1="42" x2="400" y2="42" stroke="#0B2545" stroke-width="3"/><rect x="215" y="110" width="90" height="30" rx="9" fill="#FFF9C4" stroke="#F9A825" stroke-width="3"/><text x="260" y="131" text-anchor="middle" font-size="18" fill="#0B2545">cổng LAN</text><rect x="335" y="100" width="90" height="30" rx="9" fill="#E1BEE7" stroke="#6A1B9A" stroke-width="3"/><text x="380" y="121" text-anchor="middle" font-size="18" fill="#0B2545">cổng WAN</text></g></svg><div class="key">Dấu hiệu nhận ra router: có <b>cổng WAN</b>. Hub/switch chỉ có các cổng như nhau.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 3</span><h1>Repeater và Access Point</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mở rộng phạm vi</h3><p style="margin:0 0 8px"><b>Repeater</b>: nhận tín hiệu yếu, <b>khuếch đại / chỉnh sửa</b> rồi phát lại → kéo dài khoảng cách. Quy tắc <b>5-4-3</b>: không quá 5 phân đoạn, <b>4 repeater</b>, 3 phân đoạn có máy.</p><p style="margin:0 0 8px"><b>Access Point (AP)</b>: nối thiết bị <b>không dây</b> vào mạng có dây.</p><p style="margin:0 0 8px">Cáp xoắn đã dài 100 m muốn thêm 100 m nữa: đặt <b>repeater</b> rồi nối thêm cáp.</p></div></div><div class="col"><div class="key">Thay bằng hub hay switch <b>không</b> làm tăng khoảng cách tối đa của một đoạn cáp xoắn.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 4</span><h1>Cấu trúc hình sao và phân cấp</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cách nối thiết bị</h3><p style="margin:0 0 8px"><b>Hình sao</b>: mọi máy nối vào một thiết bị trung tâm (switch): dễ thi công, rẻ, tin cậy, <b>dùng trong hầu hết LAN</b>.</p><p style="margin:0 0 8px"><b>Phân cấp</b> = hình sao của các hình sao: mỗi tầng/phòng một switch nối lên switch tổng.</p><p style="margin:0 0 8px"><b>Dạng tuyến, dạng vòng</b>: ít dùng cho nối máy; tuyến chủ yếu làm <b>đường trục</b> nối các toà nhà.</p></div></div><div class="col"><svg viewBox="0 0 520 170" style="width:100%"><g font-family="sans-serif" font-weight="800"><rect x="190" y="20" width="140" height="40" rx="9" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="260" y="46" text-anchor="middle" font-size="18" fill="#0B2545">Switch tổng</text><rect x="10" y="110" width="110" height="40" rx="9" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="65" y="136" text-anchor="middle" font-size="18" fill="#0B2545">Switch tầng 1</text><rect x="205" y="110" width="110" height="40" rx="9" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="260" y="136" text-anchor="middle" font-size="18" fill="#0B2545">Switch tầng 2</text><rect x="400" y="110" width="110" height="40" rx="9" fill="#E3F2FD" stroke="#1565C0" stroke-width="3"/><text x="455" y="136" text-anchor="middle" font-size="18" fill="#0B2545">Switch tầng 3</text><line x1="260" y1="60" x2="65" y2="110" stroke="#0B2545" stroke-width="3"/><line x1="260" y1="60" x2="260" y2="110" stroke="#0B2545" stroke-width="3"/><line x1="260" y1="60" x2="455" y2="110" stroke="#0B2545" stroke-width="3"/></g></svg><div class="key">Ba tầng, mỗi tầng một switch nối lên switch tổng: xung đột <b>chỉ nằm trong từng đường truyền</b>, không lan sang tầng khác.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 4</span><h1>Tình huống: chọn thiết bị</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hub hay switch?</h3><p style="margin:0 0 8px"><b>Nhà</b> có 4 thiết bị, chi phí thấp nhất: dùng <b>hub</b> được (ít máy, ít xung đột).</p><p style="margin:0 0 8px"><b>Văn phòng</b> hàng chục máy dùng liên tục: dùng <b>switch</b>.</p><p style="margin:0 0 8px">LAN từ vài chục đến hàng trăm máy nên dùng <b>switch</b>.</p></div></div><div class="col"><table><tr><th>Hai máy</th><th>Phát biểu</th></tr><tr><td>A, B nối chung hub; C, D nối chung switch</td><td>A gửi B: <b>C, D</b> cũng nhận trên hub; trên switch <b>chỉ B</b> nhận</td></tr><tr><td>thay hai switch bằng hai hub</td><td>nguy cơ <b>xung đột tăng</b></td></tr></table></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 5</span><h1>Tự kiểm tra: hub và switch</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Điểm khác nhau cơ bản giữa hub và switch là gì? Với 3 tầng, mỗi tầng một switch nối lên switch tổng, miền xung đột thế nào?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Hub phát tín hiệu ra <b>mọi cổng</b>; switch tạo <b>kênh tạm</b> giữa cổng gửi và nhận.</p><p style="margin:0 0 8px">Xung đột chỉ nằm trong từng đường truyền giữa hai cổng, <b>không lan</b> sang tầng khác.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 5</span><h1>Tự kiểm tra: router hay switch?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Dấu hiệu nào giúp nhận biết router chứ không phải switch?</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Router có <b>cổng WAN</b> nối ra ngoài mạng cục bộ.</p><p style="margin:0 0 8px">“Có đèn ở mỗi cổng”, “có nhiều cổng RJ45” hay “nối nhiều máy bằng cáp xoắn” là đặc điểm chung với switch.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · 5</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) Cáp quang dùng tín hiệu điện. (b) Modem chọn đường đi cho gói tin. (c) Router có cổng LAN và WAN. (d) Switch mở rộng một miền xung đột duy nhất. (e) Bluetooth phạm vi khoảng 10 m.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Sai</b>: tín hiệu ánh sáng.</p><p style="margin:0 0 8px">(b) <b>Sai</b>: đó là router.</p><p style="margin:0 0 8px">(c) <b>Đúng</b>.</p><p style="margin:0 0 8px">(d) <b>Sai</b>: switch <b>chia nhỏ</b> miền xung đột.</p><p style="margin:0 0 8px">(e) <b>Đúng</b>.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Mạng: máy + thiết bị + đường truyền + giao thức; <b>LAN</b> nhỏ, <b>WAN</b> lớn (Internet).</li><li>Cáp xoắn ~100 m; cáp quang xa, không nhiễu; Wi-Fi sóng vô tuyến (AP); Bluetooth ~10 m; 3G → 4G → 5G.</li><li><b>Hub</b> phát mọi cổng; <b>switch</b> kênh tạm, chia miền xung đột; <b>router</b> chọn đường (cổng WAN); <b>modem</b> đổi tín hiệu.</li><li><b>Repeater</b> khuếch đại tín hiệu; <b>AP</b> cho không dây.</li><li>LAN dùng cấu trúc <b>hình sao / phân cấp</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Chọn đường</td><td>router</td></tr><tr><td class="m">Đổi số ↔ quang</td><td>modem</td></tr><tr><td class="m">Chia miền xung đột</td><td>switch</td></tr><tr><td class="m">Nối hai toà nhà xa</td><td>cáp quang</td></tr></table><div class="warn">Nhầm modem với router; cho rằng hub chia miền xung đột; dùng cáp xoắn nối quá 100 m.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>Địa chỉ MAC</b> gắn với NIC.</li><li>Chuẩn <b>Ethernet</b>: 10BASE-T, Fast Ethernet 100 Mb/s, Gigabit.</li><li>Wi-Fi <b>2,4 GHz</b> và <b>5 GHz</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>VLAN</b> chia mạng logic.</li><li><b>PoE</b> cấp điện qua cáp mạng.</li><li><b>Mesh Wi-Fi</b>.</li></ul></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Thiết bị chọn đường giữa các mạng?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Thiết bị đổi số ↔ quang?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Hub phát tín hiệu ra?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Khoảng cách hiệu quả cáp xoắn?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Nối hai toà nhà 300 m?</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>Router</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Modem quang</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>Mọi cổng</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>~<b>100 m</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>Cáp quang</b>.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Kể tên và chức năng 4 thiết bị mạng.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Phân biệt LAN và WAN, cho ví dụ.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Vì sao văn phòng 50 máy nên dùng switch thay hub?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Chọn đường truyền: tai nghe 2 m; hai toà nhà 300 m; phòng máy.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Sơ đồ 2 phòng máy mỗi phòng 30 máy + switch, nối router Wi-Fi: phân tích miền xung đột nếu thay switch bằng hub.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Giải thích vì sao cáp quang không nối trực tiếp từng máy tính vào switch.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p>NIC, switch, router, modem.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>LAN phòng máy; WAN Internet.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mỗi cổng một miền xung đột.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Bluetooth; cáp quang; cáp xoắn.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">MẠNG 1 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mỗi phòng thành một miền xung đột lớn, nguy cơ xung đột tăng.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Máy dùng tín hiệu điện, cần bộ chuyển đổi quang – điện.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
