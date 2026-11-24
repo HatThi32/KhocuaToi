@@ -1,0 +1,216 @@
+<!-- HEAD -->
+<title>CSS 5A · Mô hình hộp và hiển thị</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p11"><div class="hd"><span class="k">TIN HỌC · WEB 5A</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>MÔ HÌNH HỘP CSS<br>VÀ KIỂU HIỂN THỊ</h1><p style="font-size:28px;line-height:1.5">Content – padding – border – margin, viền, kích thước, content-box và border-box, gộp lề (margin collapsing), khối – nội tuyến, display: none.</p><div><span class="chip">content</span><span class="chip">padding</span><span class="chip">border</span><span class="chip">margin</span><span class="chip">display</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">content</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">padding</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">border</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">margin</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">display</text></svg></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Gọi tên và <b>sắp thứ tự</b> các lớp của mô hình hộp.</li><li>Dùng <b>margin, padding, border</b> và viết tắt 1–4 giá trị.</li><li>Tính <b>kích thước thực</b> với <b>content-box</b> và <b>border-box</b>.</li><li>Hiểu <b>gộp lề dọc</b> (margin collapsing).</li><li>Phân biệt <b>block / inline / inline-block / none</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Các lớp của hộp</li><li>Viền, lề, đệm</li><li>Kích thước</li><li>Gộp lề</li><li>display</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · 1</span><h1>Mô hình hộp (box model)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mỗi phần tử là một hộp</h3><p style="margin:0 0 8px">Từ <b>trong ra ngoài</b>: <b>content</b> (nội dung) → <b>padding</b> (đệm) → <b>border</b> (viền) → <b>margin</b> (lề ngoài).</p><p style="margin:0 0 8px"><b>padding</b>: khoảng cách từ nội dung tới viền (nền tô cả vùng này).</p><p style="margin:0 0 8px"><b>margin</b>: khoảng cách <b>ngoài viền</b> tới phần tử khác (trong suốt).</p></div></div><div class="col"><svg viewBox="0 0 520 340" style="width:100%"><g font-family="sans-serif" font-weight="800" font-size="22"><rect x="10" y="10" width="500" height="320" fill="#FFE0B2" stroke="#E65100" stroke-width="3"/><text x="260" y="40" text-anchor="middle" fill="#BF360C">margin</text><rect x="60" y="60" width="400" height="220" fill="#FFF59D" stroke="#0B2545" stroke-width="5"/><text x="260" y="88" text-anchor="middle" fill="#0B2545">border</text><rect x="100" y="100" width="320" height="140" fill="#C8E6C9" stroke="#2E7D32" stroke-width="3"/><text x="260" y="128" text-anchor="middle" fill="#1B5E20">padding</text><rect x="150" y="140" width="220" height="60" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/><text x="260" y="178" text-anchor="middle" fill="#0D47A1">content</text></g></svg><div class="key">Thứ tự từ trong ra: <b>content → padding → border → margin</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · 1</span><h1>Thuộc tính border</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Viền: dày – kiểu – màu</h3><p style="margin:0 0 8px">Viết tắt: <code>border: 2px solid blue;</code> = <b>độ dày, kiểu, màu</b>.</p><p style="margin:0 0 8px">Kiểu viền: <b>solid</b> (liền), <b>dashed</b>, <b>dotted</b>, <b>double</b>, <b>none</b>.</p><p style="margin:0 0 8px">Từng cạnh: <code>border-top</code>, <code>border-left</code>…</p><p style="margin:0 0 8px">Bo góc: <code>border-radius</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">td {
+  border: 2px solid blue;
+}
+
+.hop {
+  border-radius: 12px;
+  border-bottom: 3px dashed red;
+}</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.h1{border:2px solid blue;padding:6px}.h2{border:2px solid #333;border-radius:12px;border-bottom:3px dashed red;padding:6px}&lt;/style&gt;&lt;div class=&quot;h1&quot;&gt;Viền liền xanh 2px&lt;/div&gt;&lt;br&gt;&lt;div class=&quot;h2&quot;&gt;Bo góc, đáy đứt&lt;/div&gt;" style="width:100%;height:140px;border:0;display:block;background:#fff"></iframe></div><div class="key">Viền liền 2px xanh dương mọi td: <b>td { border: 2px solid blue; }</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · 2</span><h1>padding và margin: viết tắt</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Một đến bốn giá trị</h3><table><tr><th>Cú pháp</th><th>Ý nghĩa</th></tr><tr><td><code>10px</code></td><td>cả 4 cạnh</td></tr><tr><td><code>10px 20px</code></td><td><b>trên-dưới</b> 10, <b>trái-phải</b> 20</td></tr><tr><td><code>10px 20px 30px</code></td><td>trên 10, <b>trái-phải 20</b>, dưới 30</td></tr><tr><td><code>10px 20px 30px 40px</code></td><td><b>trên, phải, dưới, trái</b> (chiều kim đồng hồ)</td></tr></table><p style="margin:0 0 8px"><code>margin: 0 auto</code> <b>căn giữa</b> khối có width cố định.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">.hop {
+  width: 200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.hop{width:200px;margin:0 auto;padding:10px 20px;background:#BBDEFB;border:2px solid #1565C0}&lt;/style&gt;&lt;div class=&quot;hop&quot;&gt;Hộp căn giữa bằng margin: 0 auto&lt;/div&gt;" style="width:100%;height:110px;border:0;display:block;background:#fff"></iframe></div><div class="key">Thứ tự 4 giá trị: <b>trên – phải – dưới – trái</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · 3</span><h1>Kích thước: content-box và border-box</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>box-sizing</h3><p style="margin:0 0 8px"><b>content-box</b> (mặc định): <b>width chỉ là phần nội dung</b>; tổng = width + padding + border.</p><p style="margin:0 0 8px"><b>border-box</b>: <b>width gồm cả padding và border</b>; nội dung co lại.</p><p style="margin:0 0 8px">Ví dụ: width 200, padding 20, border 5.</p></div></div><div class="col"><table><tr><th>Kiểu</th><th>Tổng chiều rộng</th></tr><tr><td>content-box</td><td>200 + 2×20 + 2×5 = <b>250 px</b></td></tr><tr><td>border-box</td><td><b>200 px</b> (đúng bằng width)</td></tr></table><pre class="code" style="font-size:calc(22px*var(--z,1))">* { box-sizing: border-box; }</pre><div class="key">Số liệu đo bằng trình duyệt thật: content-box <b>250 px</b>, border-box <b>200 px</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · 3</span><h1>Tính kích thước hộp: ví dụ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>width 300, padding 10, border 2, margin 15</h3><ol style="gap:6px"><li><b>content-box</b>: rộng = 300 + 2×10 + 2×2 = <b>324</b>.</li><li>Chiếm chỗ ngang cả margin: 324 + 2×15 = <b>354</b>.</li><li><b>border-box</b>: rộng hộp vẫn <b>300</b>; nội dung = 300 − 20 − 4 = <b>276</b>.</li></ol></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">.hop {
+  width: 300px;
+  padding: 10px;
+  border: 2px solid red;
+  margin: 15px;
+}</pre><div class="key">Đề hay hỏi: <b>tổng chiều rộng</b> (không gồm margin) và <b>tổng chỗ chiếm</b> (gồm margin).</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · 4</span><h1>Gộp lề dọc (margin collapsing)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai lề dọc liền kề gộp thành một</h3><p style="margin:0 0 8px">Hai khối <b>liền kề theo chiều dọc</b>: lề dưới của khối trên và lề trên của khối dưới <b>gộp</b>, khoảng cách là <b>giá trị lớn hơn</b>, không phải tổng.</p><p style="margin:0 0 8px">Ví dụ: margin-bottom 30px và margin-top 20px → khoảng cách <b>30 px</b>.</p><p style="margin:0 0 8px">Chỉ gộp lề <b>dọc</b>; lề ngang không gộp.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">.a { margin-bottom: 30px; }
+.b { margin-top: 20px; }</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.a{background:#BBDEFB;margin-bottom:30px}.b{background:#C8E6C9;margin-top:20px}&lt;/style&gt;&lt;div class=&quot;a&quot;&gt;Hộp A&lt;/div&gt;&lt;div class=&quot;b&quot;&gt;Hộp B&lt;/div&gt;" style="width:100%;height:150px;border:0;display:block;background:#fff"></iframe></div><div class="key">Khoảng cách thật đo bằng trình duyệt: <b>30 px</b> (= max(30, 20)), không phải 50.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · 5</span><h1>Kiểu hiển thị: block, inline, inline-block, none</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>display</h3><p style="margin:0 0 8px"><b>block</b>: chiếm cả dòng; có thể đặt width, height, margin dọc.</p><p style="margin:0 0 8px"><b>inline</b>: nằm cùng dòng; <b>width, height không có tác dụng</b>.</p><p style="margin:0 0 8px"><b>inline-block</b>: nằm cùng dòng <b>nhưng</b> đặt được width, height.</p><p style="margin:0 0 8px"><b>none</b>: <b>ẩn hẳn, không chiếm chỗ</b> (visibility:hidden vẫn chiếm chỗ).</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">.k { display: inline-block;
+     width: 80px; }
+.an { display: none; }</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.k{display:inline-block;width:80px;background:#BBDEFB;border:1px solid #1565C0;text-align:center}.an{display:none}&lt;/style&gt;&lt;span class=&quot;k&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;3&lt;/span&gt;&lt;div class=&quot;an&quot;&gt;ẩn&lt;/div&gt;&lt;p&gt;Đoạn sau&lt;/p&gt;" style="width:100%;height:110px;border:0;display:block;background:#fff"></iframe></div><div class="key">Phần tử biến mất <b>và không chiếm chỗ</b>: <b>display: none</b>.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · 5</span><h1>Thẻ khối và thẻ nội tuyến mặc định</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Khối (block)</th><th>Nội tuyến (inline)</th></tr><tr><td>div, p, h1–h6, ul, ol, li, table, form, header, nav, section, footer</td><td>span, a, b, i, em, strong, img (inline-block), input, label</td></tr></table><div class="key">Đổi kiểu bằng <b>display</b>: ví dụ <code>li { display: inline-block; }</code> xếp menu ngang.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · 6</span><h1>Tự kiểm tra: gộp lề</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Hai div liền nhau, div trên margin-bottom 30px, div dưới margin-top 20px. Khoảng cách giữa chúng?</p><pre class="code" style="font-size:calc(22px*var(--z,1))">.a{background:#BBDEFB;margin-bottom:30px}
+.b{background:#C8E6C9;margin-top:20px}
+</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Gộp lề dọc → giá trị lớn nhất: <b>30 px</b>.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · 6</span><h1>Tự kiểm tra: tổng kích thước</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">width 200px, padding 20px, border 5px, content-box. Tổng chiều rộng? Nếu border-box?</p><pre class="code" style="font-size:calc(22px*var(--z,1))">div { width:200px; padding:20px;
+      border:5px solid red; }</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">content-box: 200 + 2×20 + 2×5 = <b>250 px</b>.</p><p style="margin:0 0 8px">border-box: <b>200 px</b>.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · 6</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) Thứ tự từ trong ra: content, padding, border, margin. (b) <code>margin: 10px 20px</code> là trên-dưới 10, trái-phải 20. (c) visibility:hidden không chiếm chỗ. (d) inline-block đặt được width. (e) Lề dọc liền kề cộng dồn.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Đúng</b>.</p><p style="margin:0 0 8px">(b) <b>Đúng</b>.</p><p style="margin:0 0 8px">(c) <b>Sai</b>: vẫn chiếm chỗ; <b>display:none</b> mới không.</p><p style="margin:0 0 8px">(d) <b>Đúng</b>.</p><p style="margin:0 0 8px">(e) <b>Sai</b>: gộp lại lấy giá trị lớn nhất.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Hộp: <b>content → padding → border → margin</b>.</li><li><b>border: dày kiểu màu</b>; viết tắt 1–4 giá trị (<b>trên phải dưới trái</b>).</li><li><b>content-box</b>: width chỉ nội dung; <b>border-box</b>: gồm padding + border.</li><li><b>Gộp lề dọc</b>: lấy giá trị lớn nhất.</li><li><b>block</b> chiếm dòng; <b>inline</b> cùng dòng; <b>inline-block</b> cùng dòng có kích thước; <b>none</b> ẩn hẳn.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Căn giữa khối</td><td>margin: 0 auto</td></tr><tr><td class="m">Ẩn, không chiếm chỗ</td><td>display: none</td></tr><tr><td class="m">Viền liền 2px xanh</td><td>border: 2px solid blue</td></tr><tr><td class="m">Width gồm viền</td><td>border-box</td></tr></table><div class="warn">Cộng hai lề dọc; quên padding/border khi tính content-box; nhầm visibility:hidden với display:none.</div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>Lề âm</b> kéo phần tử.</li><li><b>outline</b> không chiếm chỗ.</li><li><b>overflow</b> xử lí nội dung tràn.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>box-shadow</b>.</li><li><b>calc()</b>.</li><li><b>CSS reset</b>.</li></ul></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Lớp trong cùng của hộp?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Viết tắt của padding?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Tổng chiều rộng content-box: 100 + padding 10 + border 1?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Gộp lề 40 và 25 dọc?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Làm phần tử không chiếm chỗ?</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>content</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>padding</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>100+20+2 = <b>122</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>40</b> px.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>display: none</b>.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Viết quy tắc viền đứt 1px xám cho .hop.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Căn giữa khối rộng 400px.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Tính tổng chiều rộng content-box: width 150, padding 5, border 3.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Đặt border-box cho mọi phần tử.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Hai khối lề 25 và 35: khoảng cách? Nếu một khối nằm ngang?</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Vì sao span width:100px không đổi?</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>.hop{border:1px dashed gray}</code>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>width:400px; margin:0 auto</code>.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p>150+10+6 = <b>166</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>*{box-sizing:border-box}</code>.</p></div></div></div></section>
+
+<section class="s p11"><div class="hd"><span class="k">CSS 5A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>35</b>; lề ngang không gộp.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>span là inline nên width không có tác dụng.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

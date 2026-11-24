@@ -1,0 +1,275 @@
+<!-- HEAD -->
+<title>Web 6B · JavaScript cơ bản</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p5"><div class="hd"><span class="k">TIN HỌC · WEB 6B</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>JAVASCRIPT CƠ BẢN<br>CHO TRANG WEB</h1><p style="font-size:28px;line-height:1.5">Biến let/const/var, kiểu dữ liệu và ép kiểu, mảng và hàm bậc cao, vòng lặp for-in/for-of, hoisting và phạm vi, DOM, sự kiện, localStorage. Mọi kết quả chạy Node.js thật.</p><div><span class="chip">let – const</span><span class="chip">map – filter</span><span class="chip">hoisting</span><span class="chip">DOM</span><span class="chip">localStorage</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">let – const</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">map – filter</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">hoisting</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">DOM</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">localStorage</text></svg></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Khai báo biến <b>let, const, var</b> và hiểu <b>phạm vi</b>.</li><li>Nắm <b>kiểu dữ liệu</b>, <b>ép kiểu</b> với + và -, <b>typeof</b>.</li><li>Dùng <b>map, filter, reduce, sort</b>; phân biệt <b>for…in</b> và <b>for…of</b>.</li><li>Hiểu <b>hoisting</b> và lỗi <b>var trong vòng lặp</b>.</li><li>Dùng <b>DOM</b>: querySelector, sự kiện, <b>localStorage</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Biến, kiểu</li><li>Mảng, hàm</li><li>Vòng lặp</li><li>Phạm vi</li><li>DOM, sự kiện</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 1</span><h1>JavaScript làm gì trong trang web?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ngôn ngữ của trình duyệt</h3><p style="margin:0 0 8px"><b>JavaScript (JS)</b> thêm <b>hành vi</b> cho trang: phản ứng khi bấm nút, kiểm tra biểu mẫu, đổi nội dung mà không tải lại trang.</p><p style="margin:0 0 8px">Nhúng vào HTML bằng <b>&lt;script&gt;</b> (trong trang hoặc tệp <b>.js</b> ngoài).</p><p style="margin:0 0 8px">Có thể chạy ngoài trình duyệt bằng <b>Node.js</b> (dùng cho các ví dụ ở đây).</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;button id="b"&gt;Bấm&lt;/button&gt;
+&lt;script&gt;
+  document.getElementById("b")
+    .onclick = () =&gt; alert("Chào!");
+&lt;/script&gt;</pre><div class="key"><b>HTML</b> cấu trúc, <b>CSS</b> trình bày, <b>JavaScript</b> hành vi.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 1</span><h1>Khai báo biến: let, const, var</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba cách</h3><p style="margin:0 0 8px"><b>let</b>: biến đổi được, phạm vi <b>khối</b> { }.</p><p style="margin:0 0 8px"><b>const</b>: <b>hằng</b>, không gán lại, phạm vi khối.</p><p style="margin:0 0 8px"><b>var</b> (cũ): phạm vi <b>hàm</b>, bị <b>hoisting</b>; nên tránh.</p><p style="margin:0 0 8px">Kiểu: number, string, boolean, <b>null</b>, <b>undefined</b>, object, array.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">let n = 5;
+const PI = 3.14;
+var s = "cũ";
+n = n + 1;      // đúng
+// PI = 3;      // lỗi</pre><div class="key">Dùng <b>const</b> mặc định, <b>let</b> khi cần đổi giá trị; hạn chế <b>var</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 2</span><h1>typeof và so sánh lỏng</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">console.log(typeof null, typeof [], typeof undefined, [] == false);</pre><div class="key"><b>typeof null = "object"</b> (lỗi lịch sử); mảng cũng là object; <code>[] == false</code> ép kiểu thành <b>true</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Node.js</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">object object undefined true</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 2</span><h1>Ép kiểu: + nối chuỗi, - tính số</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">let s = '5' + 3;
+let t = '5' - 3;
+let u = +'5' + 3;
+console.log(s, t, u);</pre><div class="key"><b>+</b> với một vế là chuỗi → <b>nối chuỗi</b>; <b>-</b> luôn ép về <b>số</b>; dấu <b>+</b> đứng trước chuỗi ép thành số.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Node.js</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">53 2 8</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 2</span><h1>So sánh == và ===</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lỏng và chặt</h3><p style="margin:0 0 8px"><b>==</b> so sánh <b>sau khi ép kiểu</b> (lỏng).</p><p style="margin:0 0 8px"><b>===</b> so sánh <b>cả giá trị lẫn kiểu</b> (chặt) — nên dùng.</p></div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Node.js</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">true false true false true false</pre></div><pre class="code" style="font-size:calc(20px*var(--z,1))">5=='5'  5==='5'
+0==false  0===false
+null==undefined  null===undefined</pre><div class="key">Ưu tiên <b>===</b> để tránh kết quả bất ngờ do ép kiểu.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 3</span><h1>Mảng: map và filter</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">let a = [1, 2, 3];
+let b = a.map(x =&gt; x * 2).filter(x =&gt; x &gt; 2);
+console.log(b.length, b[0]);</pre><div class="key"><b>map</b> biến đổi từng phần tử: [2,4,6]; <b>filter</b> giữ phần tử thoả điều kiện: [4,6].</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Node.js</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">2 4</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 3</span><h1>reduce: gộp mảng thành một giá trị</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">const t = [1,2,3,4,5].reduce(
+  (acc, x) =&gt; x % 2 ? acc + x : acc * x, 1);
+console.log(t);</pre><div class="key">Theo dõi <b>acc</b> từng bước: lẻ → cộng, chẵn → nhân, khởi đầu 1.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Node.js</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">33</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 3</span><h1>Theo dõi reduce từng bước</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Từng phần tử</h3><table><tr><th>x</th><th>x % 2</th><th>acc mới</th></tr><tr><td>1</td><td>lẻ</td><td>1 + 1 = 2</td></tr><tr><td>2</td><td>chẵn</td><td>2 × 2 = 4</td></tr><tr><td>3</td><td>lẻ</td><td>4 + 3 = 7</td></tr><tr><td>4</td><td>chẵn</td><td>7 × 4 = 28</td></tr><tr><td>5</td><td>lẻ</td><td>28 + 5 = <b>33</b></td></tr></table></div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Node.js</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:30px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">33</pre></div><div class="key">Kết quả <b>33</b>, trùng với bảng theo dõi.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 3</span><h1>sort: mặc định theo chuỗi</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">console.log([10, 9, 1, 100].sort().join(','),
+            [10, 9, 1, 100].sort((a, b) =&gt; a - b).join(','));</pre><div class="key"><b>sort()</b> không có hàm so sánh sắp theo <b>chuỗi</b>: "1" &lt; "10" &lt; "100" &lt; "9". Sắp số phải dùng <b>(a, b) =&gt; a − b</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Node.js</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">1,10,100,9 1,9,10,100</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 4</span><h1>for…in và for…of</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">let r = [];
+for (const k in { x: 1, y: 2 }) r.push(k);
+for (const v of [3, 4]) r.push(v);
+console.log(r.join(' '));</pre><div class="key"><b>for…in</b> duyệt <b>khoá</b> (tên thuộc tính; với mảng là chỉ số dạng chuỗi); <b>for…of</b> duyệt <b>giá trị</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Node.js</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">x y 3 4</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 5</span><h1>Hoisting và phạm vi biến</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">let x = 1;
+function f() {
+  console.log(x);
+  var x = 2;
+}
+f();
+console.log(x);</pre><div class="key"><b>var x</b> bị kéo lên đầu hàm nhưng chưa gán → in <b>undefined</b>; x toàn cục vẫn là 1.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Node.js</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">undefined
+1</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 5</span><h1>var trong vòng lặp với setTimeout</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">var out = [];
+for (var i = 0; i &lt; 3; i++) {
+  setTimeout(() =&gt; out.push(i), 0);
+}
+setTimeout(() =&gt; console.log(out.join(',')), 10);</pre><div class="key"><b>var</b> có phạm vi hàm: cả ba callback dùng chung một i; khi chạy i = 3 → <b>3,3,3</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Node.js</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">3,3,3</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 5</span><h1>Sửa bằng let</h1></div>
+<div class="bd g2"><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">var out = [];
+for (let i = 0; i &lt; 3; i++) {
+  setTimeout(() =&gt; out.push(i), 0);
+}
+setTimeout(() =&gt; console.log(out.join(',')), 10);</pre><div class="key"><b>let</b> tạo biến i riêng cho mỗi vòng lặp → <b>0,1,2</b>.</div></div><div class="col"><div class="res"><span class="lab">Kết quả chạy Node.js</span><pre style="font-family:JetBrains Mono,Consolas,monospace;font-size:26px;line-height:1.45;margin:0;white-space:pre-wrap;color:#0B2545;font-weight:600">0,1,2</pre></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 6</span><h1>DOM: chọn phần tử</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cây phần tử trong JS</h3><p style="margin:0 0 8px"><b>document.querySelector(selector)</b>: chọn phần tử <b>ĐẦU TIÊN</b> khớp bộ chọn CSS.</p><p style="margin:0 0 8px"><b>querySelectorAll</b>: <b>tất cả</b> phần tử khớp.</p><p style="margin:0 0 8px"><b>getElementById</b>: theo id.</p><p style="margin:0 0 8px">Đổi nội dung: <b>.textContent</b>, <b>.innerHTML</b>; đổi kiểu: <b>.style</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">const t = document.querySelector(".note");
+t.textContent = "Đã đổi";
+t.style.color = "red";</pre><div class="key">Chọn <b>phần tử đầu tiên</b> khớp bộ chọn CSS: <b>querySelector</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 6</span><h1>Sự kiện (event)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Phản ứng với người dùng</h3><p style="margin:0 0 8px"><b>click</b>: bấm; <b>input</b>: đang gõ; <b>change</b>: giá trị đổi <b>và rời khỏi ô</b>; <b>submit</b>: gửi biểu mẫu.</p><p style="margin:0 0 8px">Gắn bằng <b>addEventListener</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">const o = document.querySelector("input");
+o.addEventListener("change", () =&gt; {
+  console.log("đã đổi:", o.value);
+});</pre><div class="key">Người dùng đổi giá trị ô input <b>và rời khỏi ô</b>: sự kiện <b>change</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 6</span><h1>localStorage: lưu dữ liệu giữa các lần mở trang</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Lưu trong trình duyệt</h3><p style="margin:0 0 8px">Đối tượng <b>window.localStorage</b> (viết <b>localStorage</b>) có <b>setItem(khoá, giá trị)</b>, <b>getItem(khoá)</b>, <b>removeItem</b>.</p><p style="margin:0 0 8px">Dữ liệu <b>còn lại</b> khi đóng trang; chỉ lưu <b>chuỗi</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">localStorage.setItem("ten", "An");
+const t = localStorage.getItem("ten");
+
+// lưu đối tượng:
+localStorage.setItem("d",
+   JSON.stringify({a:1}));</pre><div class="key">Dữ liệu chỉ lưu <b>chuỗi</b>: dùng JSON.stringify / JSON.parse cho đối tượng.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 7</span><h1>Tự kiểm tra: ép kiểu</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">In ra gì? <code>5 + "3"</code>, <code>"5" - 3</code>, <code>+"5" + 3</code></p><pre class="code" style="font-size:calc(22px*var(--z,1))">console.log(5+"3", "5"-3, +"5"+3);</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Kết quả chạy thật: <b>53 2 8</b>.</p><p style="margin:0 0 8px">+ có chuỗi → nối; - → số; +"5" → số 5 rồi cộng 3.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 7</span><h1>Tự kiểm tra: map, filter</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Mảng [1,2,3].map(x=>x*2).filter(x=>x>2). Độ dài và phần tử đầu?</p><pre class="code" style="font-size:calc(22px*var(--z,1))">let a = [1, 2, 3];
+let b = a.map(x =&gt; x * 2).filter(x =&gt; x &gt; 2);
+console.log(b.length, b[0]);</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Kết quả chạy thật: <b>2 4</b>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 7</span><h1>Tự kiểm tra (HSG): hoisting</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Đoạn mã in ra gì?</p><pre class="code" style="font-size:calc(20px*var(--z,1))">let x = 1;
+function f() {
+  console.log(x);
+  var x = 2;
+}
+f();
+console.log(x);</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Kết quả chạy thật: <b>undefined / 1</b> (hai dòng).</p><p style="margin:0 0 8px">var bị hoisting lên đầu hàm → undefined; x toàn cục = 1.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · 7</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) typeof null là "object". (b) sort() sắp số đúng thứ tự số học. (c) for…of duyệt giá trị. (d) querySelector chọn tất cả phần tử khớp. (e) change xảy ra khi đổi giá trị và rời ô.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Đúng</b>.</p><p style="margin:0 0 8px">(b) <b>Sai</b>: sắp theo chuỗi.</p><p style="margin:0 0 8px">(c) <b>Đúng</b>.</p><p style="margin:0 0 8px">(d) <b>Sai</b>: chỉ phần tử <b>đầu tiên</b>.</p><p style="margin:0 0 8px">(e) <b>Đúng</b>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>let/const</b> phạm vi khối; <b>var</b> phạm vi hàm + hoisting.</li><li><b>+</b> nối chuỗi, <b>-</b> ép số; <b>===</b> so sánh chặt; <b>typeof null = "object"</b>.</li><li><b>map</b> biến đổi, <b>filter</b> lọc, <b>reduce</b> gộp; <b>sort</b> mặc định theo chuỗi.</li><li><b>for…in</b> khoá, <b>for…of</b> giá trị.</li><li><b>querySelector</b> phần tử đầu tiên; <b>change</b>; <b>localStorage</b> lưu chuỗi.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Chọn phần tử đầu</td><td>querySelector</td></tr><tr><td class="m">Đổi giá trị rồi rời ô</td><td>change</td></tr><tr><td class="m">Lưu lâu dài</td><td>localStorage</td></tr><tr><td class="m">Sắp số</td><td>(a,b)=>a-b</td></tr></table><div class="warn">Dùng var trong vòng lặp với callback; tin sort() sắp số; nhầm == với ===.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>NaN</b>, <b>undefined</b>.</li><li><b>JSON</b>.</li><li><b>Hàm mũi tên</b> =&gt;.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Closure</b>.</li><li><b>Promise, async</b>.</li><li><b>Event loop</b>: setTimeout chạy sau.</li></ul></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>"5" + 3 = ?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>typeof null?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Duyệt giá trị mảng?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Chọn phần tử đầu theo CSS?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Lưu dữ liệu lâu dài?</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>"53"</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>"object"</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>for…of</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>querySelector</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>localStorage</b>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Viết mảng bình phương [1,2,3].</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Đổi chữ của phần tử #t thành “Xong”.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Tính tổng mảng bằng reduce.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Sắp [10,9,1,100] tăng dần.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Dự đoán kết quả vòng lặp var với setTimeout và sửa.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Giải thích vì sao [10,9,1,100].sort() cho 1,10,100,9.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>a.map(x=>x*x)</code>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>document.querySelector("#t").textContent="Xong"</code>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>a.reduce((s,x)=>s+x,0)</code>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>.sort((a,b)=>a-b)</code>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">JS CƠ BẢN · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>3,3,3; đổi var thành let → 0,1,2.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Sắp theo thứ tự chuỗi.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

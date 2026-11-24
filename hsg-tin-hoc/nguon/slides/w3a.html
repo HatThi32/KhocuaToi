@@ -1,0 +1,228 @@
+<!-- HEAD -->
+<title>CSS 3A · Nhúng, cú pháp, văn bản, màu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p6"><div class="hd"><span class="k">TIN HỌC · WEB 3A</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>CSS CƠ BẢN:<br>NHÚNG, CÚ PHÁP, VĂN BẢN, MÀU</h1><p style="font-size:28px;line-height:1.5">Vai trò của CSS, ba cách nhúng, cú pháp quy tắc, kế thừa và thứ tự cuối cùng, định dạng văn bản, hệ màu và đơn vị.</p><div><span class="chip">CSS</span><span class="chip">nhúng</span><span class="chip">kế thừa</span><span class="chip">văn bản</span><span class="chip">màu sắc</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">CSS</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">nhúng</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">kế thừa</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">văn bản</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">màu sắc</text></svg></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Nêu <b>vai trò</b> của CSS: tách nội dung và trình bày.</li><li>Phân biệt <b>ba cách nhúng</b> CSS; biết cách nào dùng chung nhiều trang.</li><li>Viết đúng <b>cú pháp</b> quy tắc CSS.</li><li>Giải thích <b>kế thừa</b> và <b>thứ tự cuối cùng</b>.</li><li>Dùng thuộc tính <b>văn bản</b> và <b>màu</b> (tên, #RRGGBB, rgb, hsl).</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Vai trò, nhúng</li><li>Cú pháp</li><li>Kế thừa, thứ tự</li><li>Văn bản</li><li>Màu sắc</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 1</span><h1>CSS là gì và để làm gì?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cascading Style Sheets</h3><p style="margin:0 0 8px"><b>CSS</b> là ngôn ngữ <b>định dạng, trình bày</b> trang web: màu sắc, phông chữ, khoảng cách, bố cục.</p><p style="margin:0 0 8px"><b>Tách nội dung (HTML) khỏi hình thức (CSS)</b>: sửa một tệp CSS thì cả website đổi giao diện.</p><p style="margin:0 0 8px">Giúp trang <b>nhất quán</b>, mã <b>gọn</b>, dễ <b>bảo trì</b>, tải nhanh hơn.</p></div></div><div class="col"><div class="res"><span class="lab">Chưa có CSS</span><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}&lt;/style&gt;&lt;h1&gt;Tin học 12&lt;/h1&gt;&lt;p&gt;Cùng một HTML, hai giao diện.&lt;/p&gt;" style="width:100%;height:110px;border:0;display:block;background:#fff"></iframe></div></div><div class="res"><span class="lab">Có CSS</span><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}h1{color:#fff;background:#1565C0;padding:8px;text-align:center}p{color:#C62828;font-style:italic}&lt;/style&gt;&lt;h1&gt;Tin học 12&lt;/h1&gt;&lt;p&gt;Cùng một HTML, hai giao diện.&lt;/p&gt;" style="width:100%;height:130px;border:0;display:block;background:#fff"></iframe></div></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 1</span><h1>Ba cách nhúng CSS</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Inline, internal, external</h3><p style="margin:0 0 8px"><b>Inline</b>: thuộc tính <b>style</b> trong thẻ, chỉ ảnh hưởng thẻ đó.</p><p style="margin:0 0 8px"><b>Internal</b>: thẻ <b>&lt;style&gt;</b> trong <b>head</b>, dùng cho một trang.</p><p style="margin:0 0 8px"><b>External</b>: tệp <b>.css</b> riêng, nối bằng <b>&lt;link&gt;</b> trong head; <b>dùng chung nhiều trang</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;!-- inline --&gt;
+&lt;p style="color:red"&gt;A&lt;/p&gt;
+
+&lt;!-- internal --&gt;
+&lt;style&gt; p {color:red} &lt;/style&gt;
+
+&lt;!-- external --&gt;
+&lt;link rel="stylesheet" href="style.css"&gt;</pre><div class="key">Muốn <b>một tệp CSS dùng chung</b> cho nhiều trang: <b>external</b> bằng thẻ link.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 1</span><h1>So sánh ba cách</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Cách</th><th>Vị trí</th><th>Phạm vi</th><th>Ưu / nhược</th></tr><tr><td><b>Inline</b></td><td>thuộc tính style</td><td>một phần tử</td><td>nhanh, nhưng khó bảo trì, trộn nội dung với hình thức</td></tr><tr><td><b>Internal</b></td><td>&lt;style&gt; trong head</td><td>một trang</td><td>gọn cho trang đơn</td></tr><tr><td><b>External</b></td><td>tệp .css + &lt;link&gt;</td><td>nhiều trang</td><td><b>nên dùng</b>; sửa một nơi, đổi cả site</td></tr></table><div class="key">Thẻ <b>link</b> nằm trong <b>head</b>: <code>&lt;link rel="stylesheet" href="style.css"&gt;</code>.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 2</span><h1>Cú pháp một quy tắc CSS</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bộ chọn { thuộc tính: giá trị; }</h3><p style="margin:0 0 8px"><b>Bộ chọn</b>: chọn phần tử cần định dạng.</p><p style="margin:0 0 8px"><b>Khối khai báo</b> trong <b>{ }</b>; mỗi khai báo là <b>thuộc tính: giá trị;</b> (dấu <b>:</b> giữa, dấu <b>;</b> cuối).</p><p style="margin:0 0 8px">Chú thích CSS: <code>/* ghi chú */</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">h1 {
+  color: red;
+  text-align: center;
+}
+
+/* đúng */  p { font-size: 18px; }
+/* sai  */  p ( font-size = 18px )</pre><div class="key">Cú pháp đúng: <b>p { font-size: 18px; }</b>; không dùng ngoặc tròn hay dấu =.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 2</span><h1>Kế thừa</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Con thừa hưởng từ cha</h3><p style="margin:0 0 8px">Nhiều thuộc tính (<b>color, font-family, font-size, text-align…</b>) được <b>kế thừa</b>: định dạng áp cho phần tử cha sẽ áp cho con, cháu.</p><p style="margin:0 0 8px">Phần tử có <b>định dạng riêng</b> thì dùng của nó.</p><p style="margin:0 0 8px">Thuộc tính <b>margin, padding, border, background</b> thì <b>không</b> kế thừa.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">body { color: blue; }
+h1   { color: red; }</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}body{color:blue}h1{color:red}&lt;/style&gt;&lt;h1&gt;Tiêu đề h1&lt;/h1&gt;&lt;h2&gt;Tiêu đề h2&lt;/h2&gt;&lt;p&gt;Đoạn văn&lt;/p&gt;" style="width:100%;height:170px;border:0;display:block;background:#fff"></iframe></div><div class="key">h2 và p <b>kế thừa xanh</b> từ body; h1 có quy tắc riêng nên <b>đỏ</b>.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 2</span><h1>Thứ tự cuối cùng (cascading)</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cùng bộ chọn: cái sau thắng</h3><p style="margin:0 0 8px">Hai quy tắc <b>cùng bộ chọn</b> (cùng trọng số): quy tắc <b>đứng sau</b> được áp dụng.</p><p style="margin:0 0 8px">Thuộc tính <b>không bị ghi đè</b> vẫn giữ nguyên.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">h1 { color: red; text-align: center; }
+h1 { text-align: left; }</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}h1{color:red;text-align:center}h1{text-align:left}&lt;/style&gt;&lt;h1&gt;Tiêu đề h1&lt;/h1&gt;" style="width:100%;height:90px;border:0;display:block;background:#fff"></iframe></div><div class="key">Kết quả h1: <b>chữ đỏ</b> (color giữ) và <b>căn trái</b> (text-align bị ghi đè).</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 3</span><h1>Thuộc tính định dạng văn bản</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thuộc tính</th><th>Tác dụng</th><th>Ví dụ</th></tr><tr><td><code>font-family</code></td><td>phông chữ</td><td>Arial, sans-serif</td></tr><tr><td><code>font-size</code></td><td>cỡ chữ</td><td>16px, 1.2em</td></tr><tr><td><code>font-weight</code></td><td>độ đậm</td><td>bold, 700</td></tr><tr><td><code>font-style</code></td><td>kiểu</td><td>italic</td></tr><tr><td><code>color</code></td><td>màu chữ</td><td>#C62828</td></tr><tr><td><code>text-align</code></td><td>căn lề đoạn</td><td>left, center, right, justify</td></tr><tr><td><code>text-indent</code></td><td><b>thụt dòng đầu</b></td><td>2em</td></tr><tr><td><code>line-height</code></td><td>khoảng cách dòng</td><td>1.5</td></tr><tr><td><code>text-decoration</code></td><td>gạch chân, bỏ gạch</td><td>none, underline</td></tr></table><div class="key"><b>text-align</b>: căn nội dung trong khối; <b>text-indent: 2em</b> thụt dòng đầu <b>bằng 2 lần cỡ chữ</b>.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 3</span><h1>text-align, text-indent, line-height</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba thuộc tính cho đoạn văn</h3><p style="margin:0 0 8px"><b>text-align: center</b> căn giữa (áp cho phần tử <b>khối</b> chứa chữ).</p><p style="margin:0 0 8px"><b>text-indent: 2em</b>: thụt vào dòng đầu tiên.</p><p style="margin:0 0 8px"><b>line-height: 1.8</b>: tăng khoảng cách dòng.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">p {
+  text-align: justify;
+  text-indent: 2em;
+  line-height: 1.8;
+}</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}p{text-align:justify;text-indent:2em;line-height:1.8}&lt;/style&gt;&lt;p&gt;HTML là ngôn ngữ đánh dấu siêu văn bản dùng để tạo trang web. CSS dùng để trình bày trang web đó một cách đẹp mắt và nhất quán trên nhiều thiết bị.&lt;/p&gt;" style="width:100%;height:170px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 3</span><h1>Đơn vị độ dài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Tuyệt đối và tương đối</h3><p style="margin:0 0 8px"><b>px</b> (pixel): cố định theo màn hình.</p><p style="margin:0 0 8px"><b>em</b>: tương đối theo <b>cỡ chữ của phần tử</b> (1em = cỡ chữ hiện tại).</p><p style="margin:0 0 8px"><b>rem</b>: theo cỡ chữ của <b>html</b>. <b>%</b>: theo phần tử cha.</p><p style="margin:0 0 8px">Đơn vị tương đối giúp trang <b>co giãn</b> theo thiết bị.</p></div></div><div class="col"><table><tr><th>Đơn vị</th><th>Loại</th><th>Ghi chú</th></tr><tr><td>px</td><td>tuyệt đối</td><td>cố định</td></tr><tr><td>em</td><td>tương đối</td><td>theo cỡ chữ phần tử</td></tr><tr><td>rem</td><td>tương đối</td><td>theo cỡ chữ gốc (html)</td></tr><tr><td>%</td><td>tương đối</td><td>theo phần tử cha</td></tr></table><div class="key"><code>text-indent: 2em</code> với chữ 16px thụt <b>32px</b>.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 4</span><h1>Biểu diễn màu trong CSS</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bốn cách viết màu</h3><p style="margin:0 0 8px"><b>Tên màu</b>: red, blue, green…</p><p style="margin:0 0 8px"><b>Thập lục phân</b>: <code>#RRGGBB</code> (mỗi cặp 00–FF).</p><p style="margin:0 0 8px"><b>rgb(r,g,b)</b>: mỗi kênh 0–255.</p><p style="margin:0 0 8px"><b>hsl(h,s,l)</b>: sắc độ, bão hoà, sáng.</p></div></div><div class="col"><table><tr><th>Màu</th><th>Tên</th><th>Hex</th><th>rgb</th></tr><tr><td>đỏ</td><td>red</td><td>#FF0000</td><td>rgb(255,0,0)</td></tr><tr><td>xanh lá</td><td>lime</td><td>#00FF00</td><td>rgb(0,255,0)</td></tr><tr><td>xanh dương</td><td>blue</td><td>#0000FF</td><td>rgb(0,0,255)</td></tr><tr><td>trắng</td><td>white</td><td>#FFFFFF</td><td>rgb(255,255,255)</td></tr><tr><td>đen</td><td>black</td><td>#000000</td><td>rgb(0,0,0)</td></tr></table><div class="key">Đỏ = <b>#FF0000</b> = <b>rgb(255,0,0)</b>; xanh lá = #00FF00; xanh dương = #0000FF.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 4</span><h1>Màu chữ và màu nền</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>color và background-color</h3><p style="margin:0 0 8px"><b>color</b>: màu <b>chữ</b>.</p><p style="margin:0 0 8px"><b>background-color</b>: màu <b>nền</b>.</p><p style="margin:0 0 8px"><b>background-image: url(…)</b>: ảnh nền.</p><p style="margin:0 0 8px">Chọn màu chữ và nền <b>tương phản</b> để dễ đọc.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">h2 {
+  color: #FFFFFF;
+  background-color: #1565C0;
+  padding: 8px;
+}</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}h2{color:#fff;background-color:#1565C0;padding:8px}&lt;/style&gt;&lt;h2&gt;Tiêu đề có nền&lt;/h2&gt;&lt;p style=&quot;color:#222;background:#FFF9C4;padding:6px&quot;&gt;Đoạn nền vàng nhạt&lt;/p&gt;" style="width:100%;height:170px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 5</span><h1>Tự kiểm tra: kế thừa</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Với CSS dưới đây, thẻ h2 và p trong body có màu chữ gì? Vì sao?</p><pre class="code" style="font-size:calc(22px*var(--z,1))">body { color: blue; }
+h1 { color: red; }</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">h2 và p <b>không có quy tắc riêng</b> nên <b>kế thừa</b> màu <b>xanh</b> từ body.</p><p style="margin:0 0 8px">Chỉ <b>h1</b> được chọn trực tiếp nên màu <b>đỏ</b>.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 5</span><h1>Tự kiểm tra: thứ tự cuối cùng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Kết quả hiển thị của h1 (màu, căn lề)?</p><pre class="code" style="font-size:calc(22px*var(--z,1))">h1 { color: red; text-align: center; }
+h1 { text-align: left; }</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Cùng bộ chọn → quy tắc <b>sau</b> thắng với thuộc tính trùng: <b>text-align: left</b>.</p><p style="margin:0 0 8px"><b>color: red</b> không bị ghi đè nên giữ nguyên: <b>chữ đỏ, căn trái</b>.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · 5</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) Tệp CSS ngoài dùng chung cho nhiều trang. (b) <code>p ( color = red )</code> là cú pháp đúng. (c) rgb(255,0,0) là đỏ. (d) text-indent: 2em thụt dòng đầu của đoạn. (e) margin được kế thừa từ phần tử cha.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Đúng</b>.</p><p style="margin:0 0 8px">(b) <b>Sai</b>: phải là <b>p { color: red; }</b>.</p><p style="margin:0 0 8px">(c) <b>Đúng</b>.</p><p style="margin:0 0 8px">(d) <b>Đúng</b>.</p><p style="margin:0 0 8px">(e) <b>Sai</b>: margin không kế thừa.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>CSS <b>tách</b> nội dung và trình bày.</li><li>Ba cách nhúng: <b>inline, internal, external</b>; external dùng chung nhiều trang.</li><li>Cú pháp: <b>bộ chọn { thuộc tính: giá trị; }</b>.</li><li><b>Kế thừa</b>: con nhận từ cha; <b>thứ tự cuối cùng</b>: cùng trọng số, sau thắng.</li><li>Văn bản: font-*, color, <b>text-align</b>, <b>text-indent</b>, <b>line-height</b>.</li><li>Màu: tên, <b>#RRGGBB</b>, <b>rgb()</b>, <b>hsl()</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Nối tệp CSS</td><td>link trong head</td></tr><tr><td class="m">Thụt dòng đầu</td><td>text-indent</td></tr><tr><td class="m">Đỏ</td><td>#FF0000</td></tr><tr><td class="m">Nền</td><td>background-color</td></tr></table><div class="warn">Dùng ( ) hoặc = trong CSS; quên dấu ; ; nghĩ margin được kế thừa; nhầm xanh lá và xanh dương.</div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Đơn vị <b>em</b> theo cỡ chữ.</li><li><b>/* */</b> là chú thích.</li><li>Nhiều thuộc tính <b>không</b> kế thừa.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>CSS biến</b> (--ten).</li><li><b>Phông web</b> (Google Fonts).</li><li><b>@import</b>.</li></ul></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Cách nhúng nào dùng chung nhiều trang?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Thuộc tính màu nền?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Thuộc tính thụt dòng đầu?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mã thập lục phân màu đỏ?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Dấu kết thúc một khai báo?</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>External</b> (link).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>background-color</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>text-indent</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>#FF0000</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Dấu <b>;</b>.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Viết quy tắc cho h1 chữ xanh dương, căn giữa.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Viết thẻ link nối tệp style.css.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Đoạn văn căn đều, thụt 2em, giãn dòng 1.6.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Tiêu đề nền #1565C0, chữ trắng, đệm 8px.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Cho body {color:blue} p {color:green} h1 {color:red}: màu của h1, p, h2, em trong p?</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Hai quy tắc h1 cùng bộ chọn (đỏ, căn giữa) rồi (căn trái): kết quả?</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>h1{color:blue;text-align:center}</code>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>&lt;link rel="stylesheet" href="style.css"&gt;</code>.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>text-align:justify; text-indent:2em; line-height:1.6</code>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>background-color; color; padding</code>.</p></div></div></div></section>
+
+<section class="s p6"><div class="hd"><span class="k">CSS 3A · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>h1 đỏ; p xanh lá; h2 xanh dương (kế thừa); em xanh lá (kế thừa từ p).</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Đỏ, căn trái.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

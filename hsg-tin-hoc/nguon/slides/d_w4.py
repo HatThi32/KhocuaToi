@@ -1,0 +1,42 @@
+# -*- coding: utf-8 -*-
+exec(open('lib6.py',encoding='utf-8').read())
+c='p10';B='CSS 4'
+def col(html,css,sel='.t'):
+    r=WCHECK(html,css,styles=[(sel,'color')])['styles'][0]
+    return {'rgb(255, 0, 0)':'ĐỎ','rgb(0, 0, 255)':'XANH DƯƠNG','rgb(0, 128, 0)':'XANH LÁ','rgb(128, 0, 128)':'TÍM','rgb(255, 165, 0)':'CAM'}.get(r,r)
+H1='<p id="b" class="a t">Xin chào</p>'
+C1='p{color:blue}.a{color:green}#b{color:red}'
+H2='<div class="menu"><nav><a class="t" href="#">Link</a></nav></div>'
+C2='a:hover{color:blue}.menu a{color:green}nav a:hover{color:red}'
+H3='<p id="intro"><em class="t">nhấn</em></p>'
+C3='p em{color:blue}.note{color:green}#intro em{color:red}'
+H4='<p class="a t">Xin chào</p>'
+C4='p{color:blue}.a{color:green}p{color:red}'
+H5='<p id="b" class="a t" style="color:purple">Xin chào</p>'
+C5='#b{color:red}.a{color:green}'
+H6='<p id="b" class="t" style="color:purple">Xin chào</p>'
+C6='#b{color:red !important}'
+r1=col(H1,C1);r4=col(H4,C4);r5=col(H5,C5);r6=col(H6,C6)
+print(r1,r4,r5,r6)
+S=[]
+S.append(TITLE('TIN HỌC · WEB 4','MỨC ƯU TIÊN<br>CỦA BỘ CHỌN CSS','Khi nhiều quy tắc cùng áp dụng cho một phần tử: tính trọng số (id 100, lớp 10, thẻ 1), quy tắc !important, style trong thẻ, thứ tự cuối cùng; mọi kết quả đều chạy trình duyệt thật.',['100 – 10 – 1','!important','style','thứ tự cuối']))
+S.append(goals(c,B,['Hiểu vì sao cần <b>mức ưu tiên</b> khi nhiều quy tắc xung đột.','<b>Tính trọng số</b> theo SGK: id = 100, class/lớp giả/thuộc tính = 10, thẻ/phần tử giả = 1.','Biết thứ bậc: <b>!important &gt; style trong thẻ &gt; trọng số &gt; thứ tự</b>.','Dự đoán <b>màu cuối cùng</b> của phần tử trong các đề HSG.'],['Vì sao có xung đột','Cách tính trọng số','!important, style','Luyện tập']))
+S.append(S2(c,B+' · 1','Vì sao cần mức ưu tiên?',card('Nhiều quy tắc cùng chọn một phần tử',P('Một phần tử có thể khớp <b>nhiều quy tắc</b> với giá trị <b>khác nhau</b> (một bảo xanh, một bảo đỏ).','Trình duyệt phải chọn <b>một</b> giá trị: dựa vào <b>mức ưu tiên</b>.','Quy trình: kiểm tra <b>!important</b> → <b>style trong thẻ</b> → <b>trọng số bộ chọn</b> → <b>thứ tự</b> (sau thắng).')),CODE(C1.replace('}','}\n')+'\n<p id="b" class="a">Xin chào</p>',22)+KEY('Ba quy tắc cùng chọn thẻ p ở trên: màu nào thắng? Học cách tính để trả lời chắc chắn.')))
+S.append(TB(c,B+' · 1','Bảng trọng số theo SGK',['Loại bộ chọn','Ví dụ','Trọng số'],[['<b>id</b>','#intro','<b>100</b>'],['<b>class</b>','.note','<b>10</b>'],['<b>lớp giả</b>','a:hover, :nth-child','<b>10</b>'],['<b>thuộc tính</b>','[href]','<b>10</b>'],['<b>thẻ</b> (phần tử)','p, em, a','<b>1</b>'],['<b>phần tử giả</b>','::first-line','<b>1</b>'],['bộ chọn tổ hợp','div &gt; p, h2 + p','<b>cộng</b> các thành phần'],['*','mọi phần tử','0']],note=KEY('Trọng số bộ chọn tổ hợp = <b>tổng</b> trọng số các phần của nó. Trọng số <b>lớn hơn thắng</b>.')))
+S.append(S2(c,B+' · 2','Ví dụ mẫu: tính trọng số',card('p, .a và #b',P('<b>p</b> → 1.','<b>.a</b> → 10.','<b>#b</b> → 100.','Phần tử <code>&lt;p id="b" class="a"&gt;</code> khớp cả ba → <b>#b thắng</b> (100).')),CODE(C1.replace('}','}\n')+'\n<p id="b" class="a t">',22)+BROWSER(H1.replace(' t"','"'),C1,h=80)+KEY('Chữ <b>%s</b> (trình duyệt thật xác nhận).'%r1)))
+S.append(S2(c,B+' · 2','Cộng trọng số: p em, .note, #intro em',card('Từng bộ chọn',T(tr('Bộ chọn','Cách tính','Tổng',h=True)+tr('p em','1 + 1','<b>2</b>')+tr('.note','10','<b>10</b>')+tr('#intro em','100 + 1','<b>101</b>'))),CODE(C3.replace('}','}\n'),22)+BROWSER('<p id="intro">Đoạn <em>nhấn mạnh</em></p>',C3,h=80)+KEY('Phần tử em khớp <b>p em (2)</b> và <b>#intro em (101)</b>; thắng: <b>#intro em</b> → <b>%s</b>.'%col(H3,C3))))
+S.append(S2(c,B+' · 2','Lớp giả cộng 10: a:hover và nav a:hover',card('Tính trọng số',T(tr('Bộ chọn','Cách tính','Tổng',h=True)+tr('a:hover','1 + 10','<b>11</b>')+tr('.menu a','10 + 1','<b>11</b>')+tr('nav a:hover','1 + 1 + 10','<b>12</b>'))+P('Khi <b>trỏ chuột</b> lên liên kết: cả ba khớp; <b>nav a:hover</b> (12) thắng.')),CODE(C2.replace('}','}\n'),21)+KEY('Khi hover, màu là <b>đỏ</b> (nav a:hover = 12). Khi <b>không hover</b>, chỉ .menu a khớp → <b>xanh lá</b>.')))
+S.append(S2(c,B+' · 3','Cùng trọng số: quy tắc sau thắng',card('Thứ tự cuối cùng',P('Hai quy tắc có <b>cùng trọng số</b> → quy tắc <b>viết sau</b> thắng.','Ở ví dụ dưới: <b>.a</b> (10) mạnh hơn <b>p</b> (1) nên p đỏ <b>không</b> thắng dù viết sau.')),CODE(C4.replace('}','}\n'),22)+BROWSER(H4.replace(' t"','"'),C4,h=80)+KEY('p (1) < .a (10) → chữ <b>%s</b>, dù p{red} đứng sau.'%r4)))
+S.append(S2(c,B+' · 3','style trong thẻ mạnh hơn bộ chọn',card('Inline style',P('Thuộc tính <b>style</b> viết trực tiếp trong thẻ có <b>ưu tiên cao hơn</b> mọi bộ chọn (kể cả id), trừ khi có <b>!important</b>.')),CODE('#b { color: red; }\n.a { color: green; }\n\n<p id="b" class="a"\n   style="color:purple">',22)+BROWSER(H5.replace(' t"','"'),C5,h=80)+KEY('Chữ <b>%s</b> (style trong thẻ thắng id).'%r5)))
+S.append(S2(c,B+' · 3','!important: mạnh nhất',card('Ép ưu tiên',P('<code>color: red !important;</code> làm khai báo đó <b>thắng cả style trong thẻ</b>.','Chỉ dùng khi thật cần: lạm dụng làm mã khó sửa.','Hai khai báo cùng !important thì lại xét trọng số rồi thứ tự.')),CODE('#b { color: red !important; }\n\n<p id="b"\n   style="color:purple">',22)+BROWSER(H6.replace(' t"','"'),C6,h=80)+KEY('Chữ <b>%s</b>: !important thắng style trong thẻ.'%r6)))
+S.append(TB(c,B+' · 3','Thứ bậc ưu tiên từ cao xuống thấp',['Bậc','Nội dung','Ví dụ'],[['1','khai báo có <b>!important</b>','color: red !important'],['2','<b>style</b> viết trong thẻ','style="color:purple"'],['3','<b>trọng số</b> bộ chọn lớn hơn','#b (100) &gt; .a (10) &gt; p (1)'],['4','cùng trọng số → <b>quy tắc sau</b> thắng','h1{…} h1{…}'],['5','không có quy tắc → <b>kế thừa</b> từ cha','body{color:blue}']],note=KEY('Nhớ thứ tự: <b>!important &gt; style trong thẻ &gt; trọng số &gt; thứ tự &gt; kế thừa</b>.')))
+S.append(SELF(c,B+' · 4','Tự kiểm tra 1: tính trọng số',"Phần tử p có id=\"b\", class=\"a\". Màu chữ cuối cùng?",C1.replace('}','}\n'),P('p = 1; .a = 10; #b = 100.','<b>#b lớn nhất</b> → chữ <b>%s</b>.'%r1),22))
+S.append(SELF(c,B+' · 4','Tự kiểm tra 2: lớp giả',"Khi trỏ chuột lên liên kết (a trong nav trong .menu), màu chữ?",C2.replace('}','}\n'),P('a:hover = 11; .menu a = 11; nav a:hover = 12.','<b>Đỏ</b> thắng (12).'),20))
+S.append(SELF(c,B+' · 4','Tự kiểm tra 3: cùng trọng số','Hai quy tắc <code>h1{color:red}</code> rồi <code>h1{color:blue}</code>. Màu h1?','h1{color:red}\nh1{color:blue}',P('Cùng trọng số (1) → quy tắc <b>sau</b> thắng: <b>xanh dương</b>.'),22))
+S.append(SELF(c,B+' · 4','Tự kiểm tra (HSG): đúng hay sai?','(a) #b mạnh hơn .a. (b) style trong thẻ thắng #b không có !important. (c) !important thắng style trong thẻ. (d) a:hover có trọng số 2. (e) Cùng trọng số thì quy tắc đứng trước thắng.','',P('(a) <b>Đúng</b> (100 &gt; 10).','(b) <b>Đúng</b>.','(c) <b>Đúng</b>.','(d) <b>Sai</b>: 1 + 10 = <b>11</b>.','(e) <b>Sai</b>: quy tắc <b>sau</b> thắng.'),20))
+S+=END(c,B,['Trọng số SGK: <b>id 100, class/lớp giả/thuộc tính 10, thẻ/phần tử giả 1</b>, cộng lại.','Thứ bậc: <b>!important &gt; style trong thẻ &gt; trọng số &gt; thứ tự cuối &gt; kế thừa</b>.','Cùng trọng số: <b>sau thắng</b>.','Mọi đáp án đều được <b>kiểm bằng trình duyệt thật</b>.'],[('id','100'),('class, :hover','10'),('thẻ','1'),('nav a:hover','12')],'Quên cộng thẻ vào bộ chọn tổ hợp; coi lớp giả = 1; nghĩ viết sau luôn thắng.',['<b>*</b> có trọng số 0.','!important nên dùng tiết kiệm.','Kế thừa yếu hơn mọi quy tắc trực tiếp.'],['<b>Specificity</b> chuẩn W3C gồm 4 cấp.','<b>:where()</b> trọng số 0.','<b>@layer</b>.'],
+ [('Trọng số của id?',),('Trọng số của lớp giả :hover?',),('Trọng số của nav a:hover?',),('Mạnh hơn style trong thẻ?',),('Cùng trọng số, ai thắng?',)],
+ [('<b>100</b>.',),('<b>10</b>.',),('<b>12</b>.',),('<b>!important</b>.',),('Quy tắc <b>sau</b>.',)],
+ [('Mức 1. Tính trọng số của .menu li a.',),('Mức 1. p, .x, #y: sắp theo mạnh dần.',),('Mức 2. #a p và .b p: bộ chọn nào thắng?',),('Mức 2. Có style trong thẻ và #id: màu nào?',),('Mức 3 (HSG). Ba quy tắc: div p:first-child, .box p, #m p. Tính trọng số và chọn kết quả.',),('Mức 3 (HSG). Giải thích vì sao thêm !important vào mọi nơi là thói quen xấu.',)],
+ [('10 + 1 + 1 = <b>12</b>.',),('p &lt; .x &lt; #y.',),('#a p = 101 thắng .b p = 11.',),('style trong thẻ.',),('div p:first-child = 1+1+10 = 12; .box p = 11; #m p = 101 → <b>#m p</b> thắng.',),('Khó bảo trì, dễ xung đột.',)],hper=2)
+mkdeck('w4.html','CSS 4 · Mức ưu tiên của bộ chọn',S)

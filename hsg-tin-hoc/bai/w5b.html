@@ -1,0 +1,220 @@
+<!-- HEAD -->
+<title>CSS 5B · Flexbox, position, @media</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p12"><div class="hd"><span class="k">TIN HỌC · WEB 5B</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>FLEXBOX, VỊ TRÍ<br>VÀ GIAO DIỆN ĐÁP ỨNG</h1><p style="font-size:28px;line-height:1.5">display: flex, trục chính – trục phụ, justify-content, align-items, flex-direction; position: static, relative, absolute, fixed, sticky; đơn vị tương đối; @media.</p><div><span class="chip">flex</span><span class="chip">position</span><span class="chip">rem</span><span class="chip">@media</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">flex</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">position</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">rem</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">@media</text></svg></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Dùng <b>Flexbox</b> xếp phần tử: <b>justify-content</b> (trục chính), <b>align-items</b> (trục phụ).</li><li>Phân biệt các giá trị <b>position</b> và mốc định vị của từng loại.</li><li>Dùng đơn vị <b>em, rem, %, vw</b> cho trang co giãn.</li><li>Viết <b>@media</b> để trang đáp ứng nhiều cỡ màn hình.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Flexbox</li><li>Position</li><li>Đơn vị</li><li>@media</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 1</span><h1>Flexbox: bật bố cục linh hoạt</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>display: flex</h3><p style="margin:0 0 8px">Đặt <b>display: flex</b> cho <b>phần tử cha</b> (flex container); các <b>con trực tiếp</b> thành flex item xếp <b>theo hàng ngang</b>.</p><p style="margin:0 0 8px">Hai trục: <b>trục chính</b> (main axis, mặc định ngang) và <b>trục phụ</b> (cross axis, vuông góc).</p></div></div><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">.f { display: flex; }</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.f{border:2px dashed #1565C0;padding:4px;height:110px}.i{background:#BBDEFB;border:2px solid #1565C0;padding:6px 14px;font-weight:bold}.f{display:flex}&lt;/style&gt;&lt;div class=&quot;f&quot;&gt;&lt;div class=&quot;i&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;3&lt;/div&gt;&lt;/div&gt;" style="width:100%;height:130px;border:0;display:block;background:#fff"></iframe></div><div class="key">Không có flex: ba hộp xếp dọc (block). Có <b>display:flex</b>: xếp ngang.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 1</span><h1>justify-content: căn theo TRỤC CHÍNH</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các giá trị</h3><p style="margin:0 0 8px"><b>flex-start</b> (đầu), <b>center</b> (giữa), <b>flex-end</b> (cuối).</p><p style="margin:0 0 8px"><b>space-between</b>: dàn đều, hai đầu sát mép.</p><p style="margin:0 0 8px"><b>space-around</b> / <b>space-evenly</b>: cách đều.</p></div></div><div class="col"><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.f{border:2px dashed #1565C0;padding:4px;height:110px}.i{background:#BBDEFB;border:2px solid #1565C0;padding:6px 14px;font-weight:bold}.f{display:flex;justify-content:center}&lt;/style&gt;&lt;div class=&quot;f&quot;&gt;&lt;div class=&quot;i&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;3&lt;/div&gt;&lt;/div&gt;" style="width:100%;height:100px;border:0;display:block;background:#fff"></iframe></div><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.f{border:2px dashed #1565C0;padding:4px;height:110px}.i{background:#BBDEFB;border:2px solid #1565C0;padding:6px 14px;font-weight:bold}.f{display:flex;justify-content:space-between}&lt;/style&gt;&lt;div class=&quot;f&quot;&gt;&lt;div class=&quot;i&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;3&lt;/div&gt;&lt;/div&gt;" style="width:100%;height:100px;border:0;display:block;background:#fff"></iframe></div><div class="key"><b>justify-content</b> căn theo <b>trục chính</b>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 1</span><h1>align-items: căn theo TRỤC PHỤ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Các giá trị</h3><p style="margin:0 0 8px"><b>stretch</b> (mặc định), <b>flex-start</b>, <b>center</b>, <b>flex-end</b>.</p><p style="margin:0 0 8px">Với hàng ngang, trục phụ là <b>chiều dọc</b>: <b>align-items: center</b> căn giữa theo chiều cao.</p></div></div><div class="col"><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.f{border:2px dashed #1565C0;padding:4px;height:110px}.i{background:#BBDEFB;border:2px solid #1565C0;padding:6px 14px;font-weight:bold}.f{display:flex;align-items:center}&lt;/style&gt;&lt;div class=&quot;f&quot;&gt;&lt;div class=&quot;i&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;3&lt;/div&gt;&lt;/div&gt;" style="width:100%;height:130px;border:0;display:block;background:#fff"></iframe></div><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.f{border:2px dashed #1565C0;padding:4px;height:110px}.i{background:#BBDEFB;border:2px solid #1565C0;padding:6px 14px;font-weight:bold}.f{display:flex;justify-content:center;align-items:center}&lt;/style&gt;&lt;div class=&quot;f&quot;&gt;&lt;div class=&quot;i&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;3&lt;/div&gt;&lt;/div&gt;" style="width:100%;height:130px;border:0;display:block;background:#fff"></iframe></div><div class="key"><b>align-items</b> căn theo <b>trục phụ</b>. Căn giữa hoàn hảo: <b>cả hai</b> thuộc tính.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 1</span><h1>flex-direction và flex-wrap</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đổi hướng trục chính</h3><p style="margin:0 0 8px"><b>row</b> (mặc định): trục chính ngang. <b>column</b>: trục chính <b>dọc</b>.</p><p style="margin:0 0 8px">Khi <b>column</b>, hai trục <b>đổi vai</b>: justify-content căn dọc, align-items căn ngang.</p><p style="margin:0 0 8px"><b>flex-wrap: wrap</b>: cho xuống dòng khi hết chỗ; <b>gap</b>: khoảng cách giữa các item.</p></div></div><div class="col"><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.f{border:2px dashed #1565C0;padding:4px;height:110px}.i{background:#BBDEFB;border:2px solid #1565C0;padding:6px 14px;font-weight:bold}.f{display:flex;flex-direction:column;gap:6px;height:150px}&lt;/style&gt;&lt;div class=&quot;f&quot;&gt;&lt;div class=&quot;i&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;3&lt;/div&gt;&lt;/div&gt;" style="width:100%;height:170px;border:0;display:block;background:#fff"></iframe></div><div class="key">Với <b>flex-direction: column</b>, trục chính trở thành <b>chiều dọc</b>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 1</span><h1>Menu ngang bằng Flexbox</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ứng dụng điển hình</h3><p style="margin:0 0 8px">Cho <b>ul</b> thành flex container, bỏ chấm và dàn đều các mục.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">ul {
+  display: flex;
+  list-style: none;
+  gap: 16px;
+}</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}ul{display:flex;list-style:none;gap:16px;background:#BBDEFB;padding:10px;margin:0}a{text-decoration:none;font-weight:bold;color:#0D47A1}&lt;/style&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Giới thiệu&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Liên hệ&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;" style="width:100%;height:70px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 2</span><h1>Thuộc tính position</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Giá trị</th><th>Mốc định vị</th><th>Trong luồng?</th></tr><tr><td><code>static</code></td><td>mặc định, không định vị</td><td>có</td></tr><tr><td><code>relative</code></td><td>lệch so với <b>vị trí gốc của chính nó</b></td><td>có (chỗ cũ vẫn giữ)</td></tr><tr><td><code>absolute</code></td><td>so với <b>tổ tiên gần nhất đã được định vị</b> (không thì so với trang)</td><td><b>không</b></td></tr><tr><td><code>fixed</code></td><td>so với <b>khung nhìn</b> (viewport), đứng yên khi cuộn</td><td><b>không</b></td></tr><tr><td><code>sticky</code></td><td>dính khi cuộn tới ngưỡng, rồi cố định</td><td>có</td></tr></table><div class="key">Thường đặt <b>position: relative</b> cho phần tử cha để con <b>absolute</b> lấy cha làm mốc.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 2</span><h1>absolute: mốc là tổ tiên đã định vị</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ví dụ góc hộp</h3><p style="margin:0 0 8px">Cha có <b>position: relative</b>; con <b>absolute</b> với <b>top, right</b> bám góc trên phải của cha.</p><p style="margin:0 0 8px">Nếu cha <b>không</b> định vị, con lấy mốc xa hơn (thường là trang).</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">.cha { position: relative; }
+.con { position: absolute;
+       top: 0; right: 0; }</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.cha{position:relative;height:90px;border:2px solid #1565C0;background:#E3F2FD;padding:6px}.con{position:absolute;top:0;right:0;background:#FFB300;padding:4px 10px;font-weight:bold}&lt;/style&gt;&lt;div class=&quot;cha&quot;&gt;Hộp cha&lt;div class=&quot;con&quot;&gt;Góc&lt;/div&gt;&lt;/div&gt;" style="width:100%;height:130px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 2</span><h1>fixed và sticky</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hai kiểu “dính”</h3><p style="margin:0 0 8px"><b>fixed</b>: mốc là <b>khung nhìn</b>; ra khỏi luồng; đứng yên khi cuộn (thanh menu, nút lên đầu trang).</p><p style="margin:0 0 8px"><b>sticky</b>: bình thường như relative, tới ngưỡng (<code>top:0</code>) thì <b>dính</b> lại.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">.menu {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+}
+th { position: sticky; top: 0; }</pre><div class="key">Muốn thanh luôn ở đầu màn hình khi cuộn: <b>position: fixed</b>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 3</span><h1>Đơn vị tương đối cho giao diện co giãn</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>em, rem, %, vw</h3><p style="margin:0 0 8px"><b>em</b>: theo cỡ chữ của phần tử (hoặc cha khi dùng cho font-size).</p><p style="margin:0 0 8px"><b>rem</b>: theo cỡ chữ <b>gốc</b> (html) → ổn định hơn em.</p><p style="margin:0 0 8px"><b>%</b>: theo kích thước phần tử cha. <b>vw/vh</b>: % bề rộng/cao khung nhìn.</p></div></div><div class="col"><table><tr><th>Đơn vị</th><th>Cơ sở tính</th></tr><tr><td>px</td><td>cố định</td></tr><tr><td>em</td><td>cỡ chữ phần tử</td></tr><tr><td>rem</td><td>cỡ chữ của html</td></tr><tr><td>%</td><td>phần tử cha</td></tr><tr><td>vw</td><td>1% bề rộng cửa sổ</td></tr></table><div class="key">Cỡ chữ html 16px: <b>2rem = 32px</b>; chữ 20px: <b>1.5em = 30px</b>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 4</span><h1>@media: giao diện đáp ứng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy tắc theo cỡ màn hình</h3><p style="margin:0 0 8px"><b>@media (max-width: 600px) { … }</b>: các quy tắc bên trong chỉ áp dụng khi <b>bề rộng khung nhìn ≤ 600px</b> (điện thoại).</p><p style="margin:0 0 8px">Cần thẻ: <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">.f { display: flex; }
+@media (max-width: 600px) {
+  .f { flex-direction: column; }
+}</pre><div class="key"><b>@media (max-width: 600px)</b> có tác dụng khi màn hình <b>hẹp từ 600px trở xuống</b>.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 4</span><h1>Ví dụ đáp ứng thật</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Chạy ở hai chiều rộng</h3><p style="margin:0 0 8px">Cùng mã: màn rộng xếp ngang; khi <b>≤ 400px</b> chuyển sang xếp dọc.</p></div></div><div class="col"><div class="res"><span class="lab">Khung rộng ~600px: xếp ngang</span><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.f{border:2px dashed #1565C0;padding:4px;height:110px}.i{background:#BBDEFB;border:2px solid #1565C0;padding:6px 14px;font-weight:bold}.f{display:flex;gap:6px;height:auto}@media (max-width:400px){.f{flex-direction:column}}&lt;/style&gt;&lt;div class=&quot;f&quot;&gt;&lt;div class=&quot;i&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;3&lt;/div&gt;&lt;/div&gt;" style="width:100%;height:90px;border:0;display:block;background:#fff"></iframe></div></div><div style="width:320px;margin-top:8px"><div class="res"><span class="lab">Khung hẹp 320px: xếp dọc</span><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}.f{border:2px dashed #1565C0;padding:4px;height:110px}.i{background:#BBDEFB;border:2px solid #1565C0;padding:6px 14px;font-weight:bold}.f{display:flex;gap:6px;height:auto}@media (max-width:400px){.f{flex-direction:column}}&lt;/style&gt;&lt;div class=&quot;f&quot;&gt;&lt;div class=&quot;i&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;i&quot;&gt;3&lt;/div&gt;&lt;/div&gt;" style="width:100%;height:150px;border:0;display:block;background:#fff"></iframe></div></div></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 5</span><h1>Tự kiểm tra: trục chính</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Trong Flexbox, thuộc tính nào căn theo trục chính? Thuộc tính nào căn theo trục phụ? Khi flex-direction: column thì sao?</p><pre class="code" style="font-size:calc(22px*var(--z,1))">.f { display:flex;
+     justify-content:center;
+     align-items:center; }</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Trục chính: <b>justify-content</b>; trục phụ: <b>align-items</b>.</p><p style="margin:0 0 8px">Khi <b>column</b>, hai trục <b>đổi vai</b>: justify-content căn dọc, align-items căn ngang.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 5</span><h1>Tự kiểm tra: absolute</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Con có position:absolute định vị tương đối theo phần tử nào?</p><pre class="code" style="font-size:calc(22px*var(--z,1))">.cha { position: relative; }
+.con { position: absolute;
+       top:0; right:0; }</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Theo <b>tổ tiên gần nhất đã được định vị</b> (relative, absolute, fixed, sticky); không có thì theo trang.</p><p style="margin:0 0 8px">Vì vậy hay đặt <b>relative</b> cho cha.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · 5</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) fixed lấy khung nhìn làm mốc. (b) display:none vẫn chiếm chỗ. (c) @media (max-width:600px) áp dụng khi màn ≤ 600px. (d) rem tính theo cỡ chữ của html. (e) sticky ra khỏi luồng như absolute.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Đúng</b>.</p><p style="margin:0 0 8px">(b) <b>Sai</b>: none loại hẳn khỏi bố cục.</p><p style="margin:0 0 8px">(c) <b>Đúng</b>.</p><p style="margin:0 0 8px">(d) <b>Đúng</b>.</p><p style="margin:0 0 8px">(e) <b>Sai</b>: sticky <b>vẫn nằm trong luồng</b>.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>display:flex</b> trên cha; <b>justify-content</b> = trục chính; <b>align-items</b> = trục phụ.</li><li><b>flex-direction: column</b> đổi vai hai trục.</li><li><b>position</b>: relative (lệch tại chỗ), absolute (theo tổ tiên định vị), fixed (theo khung nhìn), sticky.</li><li>Đơn vị: px, <b>em</b>, <b>rem</b>, <b>%</b>, <b>vw</b>.</li><li><b>@media (max-width: …)</b> cho giao diện đáp ứng.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Căn giữa cả hai chiều</td><td>justify + align center</td></tr><tr><td class="m">Dính đầu màn hình</td><td>position: fixed</td></tr><tr><td class="m">Chỉ trên điện thoại</td><td>@media max-width</td></tr><tr><td class="m">Menu ngang</td><td>ul {display:flex}</td></tr></table><div class="warn">Nhầm justify-content với align-items; quên relative cho cha; nhầm fixed với sticky.</div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>gap</b> thay margin giữa item.</li><li><b>flex: 1</b> chia đều.</li><li><b>z-index</b> xếp chồng.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>CSS Grid</b>.</li><li><b>mobile-first</b>.</li><li><b>clamp()</b>.</li></ul></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Thuộc tính căn theo trục chính?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Giá trị cho thanh dính khi cuộn?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Giá trị position mốc là khung nhìn?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>2rem với html 16px?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Điều kiện @media (max-width:600px)?</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>justify-content</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>fixed</b> / sticky.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>fixed</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>32px</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Màn hình <b>≤ 600px</b>.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Viết quy tắc xếp ba div ngang.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Căn giữa các item theo trục chính.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Thanh menu luôn ở đầu màn hình.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Chữ 1.2rem là bao nhiêu px khi html 16px?</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Dùng flex để căn giữa một hộp cả ngang lẫn dọc trong khung cao 300px.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Viết @media để chuyển 3 cột thành 1 cột khi ≤ 600px.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>display:flex</code>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>justify-content:center</code>.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>position:fixed; top:0</code>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>19.2px.</p></div></div></div></section>
+
+<section class="s p12"><div class="hd"><span class="k">CSS 5B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><code>display:flex; justify-content:center; align-items:center; height:300px</code>.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p><code>@media (max-width:600px){.f{flex-direction:column}}</code>.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

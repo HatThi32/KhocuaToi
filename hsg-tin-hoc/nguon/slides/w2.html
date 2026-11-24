@@ -1,0 +1,232 @@
+<!-- HEAD -->
+<title>Web 2 · Biểu mẫu trong HTML</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p5"><div class="hd"><span class="k">TIN HỌC · WEB 2</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>BIỂU MẪU TRONG HTML</h1><p style="font-size:28px;line-height:1.5">form, action, method GET/POST, input và các kiểu, label for, name – id – value, radio và checkbox, select, textarea, required – readonly – disabled.</p><div><span class="chip">form</span><span class="chip">input</span><span class="chip">label</span><span class="chip">radio</span><span class="chip">select</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">form</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">input</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">label</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">radio</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">select</text></svg></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Viết biểu mẫu với <b>form, action, method</b>; phân biệt <b>GET và POST</b>.</li><li>Dùng các kiểu <b>input</b>: text, password, email, number, radio, checkbox, submit…</li><li>Hiểu <b>label for</b> liên kết với <b>id</b>; vai trò của <b>name</b>.</li><li>Dùng <b>select, option, textarea</b>.</li><li>Phân biệt <b>required, readonly, disabled</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>form, GET/POST</li><li>input</li><li>label, name, id</li><li>radio, checkbox, select</li><li>Thuộc tính trạng thái</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 1</span><h1>Biểu mẫu là gì?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thu thập dữ liệu từ người dùng</h3><p style="margin:0 0 8px"><b>Biểu mẫu (form)</b> cho người dùng <b>nhập dữ liệu</b> và <b>gửi</b> về máy chủ: đăng nhập, đăng kí, tìm kiếm, khảo sát.</p><p style="margin:0 0 8px">Thẻ <b>&lt;form&gt;</b> bao các điều khiển; <b>action</b>: địa chỉ nhận dữ liệu; <b>method</b>: cách gửi.</p><p style="margin:0 0 8px">Nút <b>submit</b> kích hoạt việc gửi.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;form action="/dangnhap" method="post"&gt;
+  &lt;input type="text" name="user"&gt;
+  &lt;input type="submit" value="Gửi"&gt;
+&lt;/form&gt;</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}form{font-family:sans-serif}label{display:inline-block;min-width:70px}input,select,textarea{margin:3px}&lt;/style&gt;&lt;form onsubmit=&quot;return false&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;user&quot; placeholder=&quot;Tên&quot;&gt; &lt;input type=&quot;submit&quot; value=&quot;Gửi&quot;&gt;&lt;/form&gt;" style="width:100%;height:90px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 1</span><h1>GET và POST</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Tiêu chí</th><th>GET</th><th>POST</th></tr><tr><td>Dữ liệu gửi</td><td><b>nối vào URL</b> (?ten=An&amp;lop=12)</td><td>nằm trong <b>thân yêu cầu</b>, <b>không hiện trên URL</b></td></tr><tr><td>Độ dài</td><td>bị giới hạn</td><td>lớn hơn</td></tr><tr><td>Bảo mật</td><td>hiện trên URL, lưu lịch sử</td><td>kín hơn (vẫn cần HTTPS)</td></tr><tr><td>Dùng cho</td><td>tìm kiếm, <b>lấy</b> dữ liệu</td><td>đăng nhập, đăng kí, <b>gửi</b> dữ liệu</td></tr><tr><td>Có thể đánh dấu trang</td><td>có</td><td>không</td></tr></table><div class="key">Phương thức <b>không đưa dữ liệu lên thanh địa chỉ</b> là <b>POST</b>. Mật khẩu không nên gửi bằng GET.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 2</span><h1>Thẻ input và thuộc tính type</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Một thẻ, nhiều kiểu</h3><p style="margin:0 0 8px"><b>&lt;input&gt;</b> là thẻ rỗng; <b>type</b> quyết định dạng ô nhập.</p><p style="margin:0 0 8px"><b>text</b>: chữ; <b>password</b>: che kí tự; <b>email</b>: kiểm tra có @; <b>number</b>: số; <b>date</b>: ngày.</p><p style="margin:0 0 8px"><b>submit</b>: nút gửi; <b>reset</b>: xoá nhập; <b>button</b>: nút thường.</p></div></div><div class="col"><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}form{font-family:sans-serif}label{display:inline-block;min-width:70px}input,select,textarea{margin:3px}&lt;/style&gt;&lt;table style=&quot;border-collapse:collapse&quot;&gt;&lt;tr&gt;&lt;td&gt;text&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;text&quot; value=&quot;An&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;password&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;password&quot; value=&quot;12345&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;email&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;email&quot; placeholder=&quot;a@b.com&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;number&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;number&quot; value=&quot;7&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;date&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;date&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="width:100%;height:210px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 2</span><h1>Bảng các kiểu input hay gặp</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>type</th><th>Mục đích</th><th>Ghi chú</th></tr><tr><td><code>text</code></td><td>văn bản một dòng</td><td>mặc định</td></tr><tr><td><code>password</code></td><td>mật khẩu</td><td>hiện dấu chấm</td></tr><tr><td><code>email</code></td><td>địa chỉ thư</td><td>kiểm tra có @</td></tr><tr><td><code>number</code></td><td>số</td><td>có min, max, step</td></tr><tr><td><code>radio</code></td><td><b>chọn một</b></td><td>cùng name</td></tr><tr><td><code>checkbox</code></td><td><b>chọn nhiều</b></td><td>ô vuông</td></tr><tr><td><code>submit</code></td><td>nút gửi</td><td>value là chữ trên nút</td></tr><tr><td><code>file</code></td><td>chọn tệp tải lên</td><td>POST</td></tr></table><div class="key">Ghép đúng: <b>password → mật khẩu</b>; <b>radio → chọn một</b>; <b>checkbox → chọn nhiều</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 3</span><h1>Thuộc tính name, id, value</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ba thuộc tính dễ nhầm</h3><p style="margin:0 0 8px"><b>name</b>: tên trường khi <b>gửi dữ liệu</b> (máy chủ nhận <code>ten=An</code>). <b>Không có name thì dữ liệu không được gửi</b>.</p><p style="margin:0 0 8px"><b>id</b>: định danh <b>duy nhất</b> trong trang, để CSS, JavaScript, <b>label for</b> tham chiếu.</p><p style="margin:0 0 8px"><b>value</b>: giá trị mặc định hoặc giá trị được gửi (radio, checkbox, submit).</p><p style="margin:0 0 8px"><b>placeholder</b>: chữ gợi ý mờ; không phải giá trị.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;input type="text"
+       id="hoten"
+       name="ten"
+       value="Lan"
+       placeholder="Họ tên"&gt;</pre><div class="key"><b>name</b> → để <b>gửi</b>; <b>id</b> → để <b>tham chiếu trong trang</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 3</span><h1>Thẻ label và thuộc tính for</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nhãn gắn với ô nhập</h3><p style="margin:0 0 8px"><b>&lt;label for="hoten"&gt;</b> liên kết nhãn với phần tử có <b>id="hoten"</b>.</p><p style="margin:0 0 8px">Bấm vào chữ nhãn thì <b>con trỏ nhảy vào ô nhập</b> (hoặc chọn radio/checkbox).</p><p style="margin:0 0 8px">Giúp <b>tăng vùng bấm</b> và hỗ trợ người đọc màn hình.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;label for="hoten"&gt;Họ tên:&lt;/label&gt;
+&lt;input type="text" id="hoten" name="ten"&gt;</pre><div class="res"><span class="lab">Bấm vào chữ “Họ tên” để thử</span><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}form{font-family:sans-serif}label{display:inline-block;min-width:70px}input,select,textarea{margin:3px}&lt;/style&gt;&lt;label for=&quot;hoten&quot;&gt;Họ tên:&lt;/label&gt; &lt;input type=&quot;text&quot; id=&quot;hoten&quot; name=&quot;ten&quot;&gt;" style="width:100%;height:70px;border:0;display:block;background:#fff"></iframe></div></div><div class="warn"><b>for</b> của label phải bằng <b>id</b> (không phải name) của input.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 4</span><h1>Nút radio: chọn một</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nhóm radio</h3><p style="margin:0 0 8px">Các radio <b>cùng name</b> tạo thành một nhóm; chỉ chọn <b>một</b>.</p><p style="margin:0 0 8px">Mỗi radio có <b>value</b> riêng; giá trị của radio được chọn sẽ gửi đi.</p><p style="margin:0 0 8px">Nếu <b>khác name</b> thì chọn được nhiều nút cùng lúc.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;input type="radio" name="gt" value="nam"&gt; Nam
+&lt;input type="radio" name="gt" value="nu"&gt; Nữ</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}form{font-family:sans-serif}label{display:inline-block;min-width:70px}input,select,textarea{margin:3px}&lt;/style&gt;&lt;input type=&quot;radio&quot; name=&quot;gt&quot; value=&quot;nam&quot; checked&gt; Nam &lt;input type=&quot;radio&quot; name=&quot;gt&quot; value=&quot;nu&quot;&gt; Nữ" style="width:100%;height:60px;border:0;display:block;background:#fff"></iframe></div><div class="key">Muốn radio chỉ chọn một: dùng <b>cùng name</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 4</span><h1>Hộp kiểm checkbox: chọn nhiều</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Checkbox</h3><p style="margin:0 0 8px">Mỗi checkbox độc lập, có thể chọn <b>nhiều</b> hoặc không chọn.</p><p style="margin:0 0 8px"><b>checked</b>: chọn sẵn.</p><p style="margin:0 0 8px">Các checkbox cùng nhóm thường dùng <b>cùng name</b>, khác <b>value</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;input type="checkbox" name="sothich" value="doc"&gt; Đọc
+&lt;input type="checkbox" name="sothich" value="game" checked&gt; Game</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}form{font-family:sans-serif}label{display:inline-block;min-width:70px}input,select,textarea{margin:3px}&lt;/style&gt;&lt;input type=&quot;checkbox&quot; name=&quot;s&quot; value=&quot;doc&quot;&gt; Đọc &lt;input type=&quot;checkbox&quot; name=&quot;s&quot; value=&quot;game&quot; checked&gt; Game &lt;input type=&quot;checkbox&quot; name=&quot;s&quot; value=&quot;nhac&quot;&gt; Nhạc" style="width:100%;height:60px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 4</span><h1>Danh sách thả xuống: select và option</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Chọn trong danh sách</h3><p style="margin:0 0 8px"><b>&lt;select name="tinh"&gt;</b> chứa nhiều <b>&lt;option value="…"&gt;</b>.</p><p style="margin:0 0 8px">Giá trị gửi đi là <b>value</b> của option được chọn; chữ hiển thị nằm giữa thẻ option.</p><p style="margin:0 0 8px"><b>selected</b>: chọn sẵn. <b>multiple</b>: cho chọn nhiều.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">&lt;select name="tinh"&gt;
+  &lt;option value="dn"&gt;Đà Nẵng&lt;/option&gt;
+  &lt;option value="hue"&gt;Huế&lt;/option&gt;
+&lt;/select&gt;</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}form{font-family:sans-serif}label{display:inline-block;min-width:70px}input,select,textarea{margin:3px}&lt;/style&gt;&lt;select name=&quot;tinh&quot;&gt;&lt;option value=&quot;dn&quot;&gt;Đà Nẵng&lt;/option&gt;&lt;option value=&quot;hue&quot;&gt;Huế&lt;/option&gt;&lt;option value=&quot;hn&quot;&gt;Hà Nội&lt;/option&gt;&lt;/select&gt;" style="width:100%;height:70px;border:0;display:block;background:#fff"></iframe></div><div class="key">Danh sách thả xuống = <b>select + option</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 4</span><h1>Ô nhập nhiều dòng: textarea</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>textarea</h3><p style="margin:0 0 8px"><b>&lt;textarea&gt;</b> nhập văn bản <b>nhiều dòng</b> (nhận xét, ghi chú).</p><p style="margin:0 0 8px">Có thẻ đóng; nội dung mặc định nằm giữa hai thẻ.</p><p style="margin:0 0 8px">Kích thước: <b>rows</b> (số dòng), <b>cols</b> (số cột).</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">&lt;textarea name="nx" rows="3" cols="30"&gt;
+Nhập nhận xét…
+&lt;/textarea&gt;</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}form{font-family:sans-serif}label{display:inline-block;min-width:70px}input,select,textarea{margin:3px}&lt;/style&gt;&lt;textarea name=&quot;nx&quot; rows=&quot;3&quot; cols=&quot;30&quot;&gt;Nhập nhận xét…&lt;/textarea&gt;" style="width:100%;height:100px;border:0;display:block;background:#fff"></iframe></div><div class="key"><b>input</b> chỉ một dòng; muốn nhiều dòng dùng <b>textarea</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 5</span><h1>required, readonly, disabled</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thuộc tính</th><th>Tác dụng</th><th>Dữ liệu có được gửi?</th></tr><tr><td><code>required</code></td><td><b>bắt buộc nhập</b> trước khi gửi (trình duyệt chặn nếu trống)</td><td>có (đã nhập)</td></tr><tr><td><code>readonly</code></td><td><b>không sửa được</b>, vẫn chọn/sao chép</td><td><b>có gửi</b></td></tr><tr><td><code>disabled</code></td><td>vô hiệu hoá hoàn toàn, chữ xám</td><td><b>không gửi</b></td></tr><tr><td><code>checked</code></td><td>chọn sẵn radio/checkbox</td><td>nếu còn chọn</td></tr><tr><td><code>maxlength</code></td><td>số kí tự tối đa</td><td>có</td></tr></table><div class="key"><b>readonly</b> vẫn gửi giá trị; <b>disabled</b> thì <b>không gửi</b>. Đây là điểm hay ra đề.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 5</span><h1>Biểu mẫu hoàn chỉnh</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ví dụ đăng kí</h3><pre class="code" style="font-size:calc(17px*var(--z,1))">&lt;form action="/dk" method="post"&gt;
+ &lt;label for="u"&gt;Tên&lt;/label&gt;
+ &lt;input type="text" id="u" name="ten" required&gt;
+ &lt;input type="radio" name="gt" value="nam"&gt; Nam
+ &lt;input type="radio" name="gt" value="nu"&gt; Nữ
+ &lt;select name="lop"&gt;
+  &lt;option&gt;12A1&lt;/option&gt;
+ &lt;/select&gt;
+ &lt;input type="submit" value="Gửi"&gt;
+&lt;/form&gt;</pre></div></div><div class="col"><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}form{font-family:sans-serif}label{display:inline-block;min-width:70px}input,select,textarea{margin:3px}&lt;/style&gt;&lt;form onsubmit=&quot;return false&quot;&gt;&lt;label for=&quot;u&quot;&gt;Tên&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;u&quot; name=&quot;ten&quot; required&gt; &lt;input type=&quot;radio&quot; name=&quot;gt&quot; value=&quot;nam&quot;&gt; Nam &lt;input type=&quot;radio&quot; name=&quot;gt&quot; value=&quot;nu&quot;&gt; Nữ &lt;select name=&quot;lop&quot;&gt;&lt;option&gt;12A1&lt;/option&gt;&lt;option&gt;12A2&lt;/option&gt;&lt;/select&gt; &lt;input type=&quot;submit&quot; value=&quot;Gửi&quot;&gt;&lt;/form&gt;" style="width:100%;height:110px;border:0;display:block;background:#fff"></iframe></div><div class="key">Để gửi được dữ liệu cần: <b>form + name trên mỗi trường + nút submit</b>.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 6</span><h1>Tự kiểm tra: label for</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Với đoạn mã dưới, khi nháy vào chữ “Họ tên” thì điều gì xảy ra? Nếu đổi id thành "ht" mà giữ for="hoten" thì sao?</p><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;label for="hoten"&gt;Họ tên:&lt;/label&gt;
+&lt;input type="text" id="hoten" name="ten"&gt;</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>for="hoten"</b> khớp <b>id="hoten"</b> → nháy vào nhãn sẽ <b>đưa con trỏ vào ô nhập</b>.</p><p style="margin:0 0 8px">Đổi id thành “ht” thì <b>for không còn khớp</b>: liên kết mất tác dụng.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 6</span><h1>Tự kiểm tra: readonly và disabled</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Hai ô nhập cùng có giá trị mặc định. Khi gửi form, dữ liệu của ô nào được gửi?</p><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;input name="a" value="1" readonly&gt;
+&lt;input name="b" value="2" disabled&gt;</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>readonly</b>: không sửa được nhưng <b>vẫn gửi</b> a=1.</p><p style="margin:0 0 8px"><b>disabled</b>: <b>không gửi</b> b.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · 6</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) required bắt buộc nhập. (b) Các radio cùng name chỉ chọn được một. (c) POST đưa dữ liệu lên thanh địa chỉ. (d) Ô có disabled vẫn gửi giá trị. (e) Máy chủ nhận dữ liệu theo name chứ không theo id.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Đúng</b>.</p><p style="margin:0 0 8px">(b) <b>Đúng</b>.</p><p style="margin:0 0 8px">(c) <b>Sai</b>: GET mới đưa lên URL.</p><p style="margin:0 0 8px">(d) <b>Sai</b>: disabled không gửi.</p><p style="margin:0 0 8px">(e) <b>Đúng</b>: trường không có name thì không được gửi.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>form</b> có <b>action</b>, <b>method</b> (GET lên URL, POST không).</li><li><b>input type</b>: text, password, email, number, radio, checkbox, submit…</li><li><b>name</b> để gửi; <b>id</b> để tham chiếu; <b>label for = id</b>.</li><li>Radio <b>cùng name</b> → chọn một; checkbox → chọn nhiều.</li><li><b>select + option</b>, <b>textarea</b> nhiều dòng.</li><li><b>required</b> bắt buộc; <b>readonly</b> gửi; <b>disabled</b> không gửi.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Chọn một</td><td>radio cùng name</td></tr><tr><td class="m">Danh sách thả</td><td>select + option</td></tr><tr><td class="m">Nhiều dòng</td><td>textarea</td></tr><tr><td class="m">Không sửa, vẫn gửi</td><td>readonly</td></tr></table><div class="warn">Radio khác name; label for không khớp id; thiếu name; nhầm readonly với disabled.</div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>placeholder</b> chỉ là chữ gợi ý.</li><li><b>type=email</b> kiểm tra có @.</li><li><b>method</b> mặc định là GET.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>pattern</b> kiểm tra bằng biểu thức chính quy.</li><li><b>fieldset/legend</b> nhóm trường.</li><li>Luôn kiểm tra lại dữ liệu <b>ở máy chủ</b>.</li></ul></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Thuộc tính bắt buộc nhập?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Hai radio cần gì để chỉ chọn một?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Kiểu input che mật khẩu?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Phương thức không hiện dữ liệu trên URL?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Thẻ tạo ô nhập nhiều dòng?</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>required</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>Cùng name</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>password</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>POST</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>textarea</b>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Viết form có ô Tên, ô Email và nút Gửi.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Thêm nhóm radio giới tính.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Thêm select chọn lớp và textarea nhận xét.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Gắn label for cho mọi ô.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Cho form có 4 ô với readonly, disabled, required, không name; liệt kê trường được gửi.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Giải thích vì sao mật khẩu không nên gửi bằng GET.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>form</code> + 2 <code>input</code> + <code>submit</code>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>Hai <code>radio</code> cùng <code>name</code>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>select/option</code>, <code>textarea</code>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>for</code> = <code>id</code>.</p></div></div></div></section>
+
+<section class="s p5"><div class="hd"><span class="k">WEB 2 · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Chỉ trường có name và không disabled được gửi.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Hiện trên URL, lưu lịch sử trình duyệt.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
