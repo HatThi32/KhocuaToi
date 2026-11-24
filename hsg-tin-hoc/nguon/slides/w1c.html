@@ -1,0 +1,235 @@
+<!-- HEAD -->
+<title>Web 1C · Liên kết, ảnh, âm thanh, video</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p3"><div class="hd"><span class="k">TIN HỌC · WEB 1C</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>LIÊN KẾT, HÌNH ẢNH<br>ÂM THANH, VIDEO, IFRAME</h1><p style="font-size:28px;line-height:1.5">Thẻ a và href, đường dẫn tương đối – tuyệt đối, liên kết nội trang #id, target, ảnh với alt, audio, video, source, iframe.</p><div><span class="chip">a href</span><span class="chip">đường dẫn</span><span class="chip">img alt</span><span class="chip">video</span><span class="chip">iframe</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">a href</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">đường dẫn</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">img alt</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">video</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">iframe</text></svg></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Tạo <b>liên kết</b> bằng thẻ a; chọn đúng <b>đường dẫn tương đối / tuyệt đối</b>.</li><li>Dùng <b>#id</b>, <b>target="_blank"</b>, liên kết trên <b>hình ảnh</b>.</li><li>Chèn <b>ảnh</b> đúng src, alt, width, height.</li><li>Dùng <b>audio, video, source, controls, poster, autoplay</b>.</li><li>Nhúng trang khác bằng <b>iframe</b>.</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Thẻ a</li><li>Đường dẫn</li><li>Ảnh</li><li>Audio, video</li><li>iframe, tự kiểm tra</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 1</span><h1>Thẻ a và thuộc tính href</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Siêu liên kết</h3><p style="margin:0 0 8px"><b>&lt;a&gt;</b> (anchor) tạo liên kết; thuộc tính <b>href</b> (hypertext reference) chứa <b>địa chỉ đích</b>.</p><p style="margin:0 0 8px">Nội dung giữa thẻ mở và đóng là chữ (hoặc hình) người dùng bấm vào.</p><p style="margin:0 0 8px">Không có <b>href</b> thì thẻ a không dẫn đi đâu.</p></div></div><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">&lt;a href="https://vnexpress.net"&gt;
+  Đọc tin
+&lt;/a&gt;</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}&lt;/style&gt;&lt;a href=&quot;#&quot;&gt;Đọc tin&lt;/a&gt;" style="width:100%;height:80px;border:0;display:block;background:#fff"></iframe></div><div class="key">Địa chỉ đích viết trong <b>href</b>; chữ hiển thị nằm <b>giữa hai thẻ</b>.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 1</span><h1>Đường dẫn tương đối và tuyệt đối</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Loại</th><th>Đặc điểm</th><th>Ví dụ</th></tr><tr><td><b>Tuyệt đối</b></td><td>đầy đủ <b>giao thức + tên miền</b>; dùng cho website <b>khác</b></td><td>https://vnexpress.net/the-thao.html</td></tr><tr><td><b>Tương đối</b></td><td>tính từ <b>vị trí tệp hiện tại</b>; dùng trong <b>cùng website</b></td><td>BT/bai1.html</td></tr><tr><td>Cùng thư mục</td><td>chỉ ghi tên tệp</td><td>gioithieu.html</td></tr><tr><td>Thư mục con</td><td>tênthưmục/tệp</td><td>BT/bai1.html</td></tr><tr><td>Lên thư mục cha</td><td><b>../</b> rồi tên tệp</td><td>../index.html</td></tr></table><div class="key">Liên kết <b>ra website khác</b> bắt buộc dùng <b>tuyệt đối</b>; trong cùng website nên dùng <b>tương đối</b> để chuyển thư mục không hỏng.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 1</span><h1>Ví dụ: tính đường dẫn tương đối</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cây thư mục</h3><pre class="code" style="font-size:calc(22px*var(--z,1))">web/
+├── index.html
+└── BT/
+    ├── bai1.html
+    └── bai2.html</pre><p style="margin:0 0 8px">Từ <b>index.html</b> tới <b>bai1.html</b>: <b>BT/bai1.html</b>.</p><p style="margin:0 0 8px">Từ <b>bai1.html</b> tới <b>index.html</b>: <b>../index.html</b>.</p><p style="margin:0 0 8px">Từ <b>bai1.html</b> tới <b>bai2.html</b>: <b>bai2.html</b> (cùng thư mục).</p></div></div><div class="col"><table><tr><th>Từ</th><th>Đến</th><th>href</th></tr><tr><td>index.html</td><td>BT/bai1.html</td><td><b>BT/bai1.html</b></td></tr><tr><td>bai1.html</td><td>index.html</td><td><b>../index.html</b></td></tr><tr><td>bai1.html</td><td>bai2.html</td><td><b>bai2.html</b></td></tr></table><div class="warn">Viết <code>BT.bai1.html</code> (dấu chấm thay /) hoặc <code>/bai1.html</code> (gốc website) đều <b>sai</b> với cấu trúc này.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 1</span><h1>Liên kết nội trang bằng #id</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Nhảy tới một vị trí</h3><p style="margin:0 0 8px">Đặt <b>id</b> cho phần tử đích; viết <b>href="#tênid"</b>.</p><p style="margin:0 0 8px">Dùng làm <b>mục lục</b> cho trang dài, hoặc nút “Về đầu trang”.</p><p style="margin:0 0 8px">Liên kết tới phần của <b>trang khác</b>: <code>trang.html#muc2</code>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(22px*var(--z,1))">&lt;a href="#cuoi"&gt;Xuống cuối&lt;/a&gt;
+...
+&lt;h2 id="cuoi"&gt;Phần cuối&lt;/h2&gt;</pre><div class="key"><b>#id</b> chỉ dùng <b>trong trang</b>; id phải khớp với phần tử đích.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 1</span><h1>target="_blank" và liên kết trên hình ảnh</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Mở tab mới và liên kết hình</h3><p style="margin:0 0 8px"><code>target="_blank"</code> mở liên kết trong <b>tab/cửa sổ mới</b>.</p><p style="margin:0 0 8px">Có thể đặt <b>&lt;img&gt;</b> bên trong <b>&lt;a&gt;</b>: bấm vào hình sẽ chuyển trang.</p><p style="margin:0 0 8px">Thẻ a <b>không</b> chỉ dành cho chữ.</p></div></div><div class="col"><pre class="code" style="font-size:calc(23px*var(--z,1))">&lt;a href="https://google.com"
+   target="_blank"&gt;
+  &lt;img src="logo.png" alt="Logo"&gt;
+&lt;/a&gt;</pre><div class="key">Liên kết bằng ảnh: <b>img đặt trong a</b>.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 1</span><h1>Các loại liên kết khác</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ngoài trang web</h3><p style="margin:0 0 8px"><code>href="mailto:abc@mail.com"</code>: mở thư gửi email.</p><p style="margin:0 0 8px"><code>href="tel:0123456789"</code>: gọi điện (trên điện thoại).</p><p style="margin:0 0 8px"><code>href="tai.pdf" download</code>: tải tệp về.</p></div></div><div class="col"><table><tr><th>Mục đích</th><th>href</th></tr><tr><td>trang khác</td><td>https://…</td></tr><tr><td>trong trang</td><td>#id</td></tr><tr><td>gửi thư</td><td>mailto:…</td></tr><tr><td>tải tệp</td><td>tệp + download</td></tr></table></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 2</span><h1>Chèn ảnh với img</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thẻ rỗng img</h3><p style="margin:0 0 8px"><b>src</b>: đường dẫn tới tệp ảnh. <b>alt</b>: <b>văn bản thay thế</b>.</p><p style="margin:0 0 8px"><b>width, height</b>: kích thước (tính bằng px).</p><p style="margin:0 0 8px"><b>alt</b> hiện khi <b>ảnh lỗi</b>, giúp người khiếm thị nghe mô tả và hỗ trợ tìm kiếm.</p><p style="margin:0 0 8px">Ảnh phổ biến: <b>jpg, png, gif, webp, svg</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(23px*var(--z,1))">&lt;img src="anh/cho.jpg"
+     alt="Chú chó con"
+     width="200"&gt;</pre><div class="key">Hai thuộc tính nên có: <b>src</b> và <b>alt</b>. <b>img</b> là thẻ rỗng.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 2</span><h1>Ảnh bị lỗi thì sao?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Vai trò của alt</h3><p style="margin:0 0 8px">Khi đường dẫn <b>src sai</b> hoặc tệp bị mất, trình duyệt hiển thị biểu tượng ảnh hỏng cùng <b>nội dung alt</b>.</p><p style="margin:0 0 8px">Vì vậy kiểm tra <b>đường dẫn</b> trước khi tìm lỗi khác.</p></div></div><div class="col"><div class="res"><span class="lab">src sai: hiện alt</span><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}&lt;/style&gt;&lt;img src=&quot;khong-co.jpg&quot; alt=&quot;Chú chó con&quot; width=&quot;160&quot;&gt;" style="width:100%;height:120px;border:0;display:block;background:#fff"></iframe></div></div><div class="key">Ảnh không hiện: kiểm tra <b>src</b> (sai tên, sai thư mục).</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 3</span><h1>Âm thanh với audio</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thẻ audio</h3><p style="margin:0 0 8px"><b>&lt;audio controls src="nhac.mp3"&gt;&lt;/audio&gt;</b>.</p><p style="margin:0 0 8px"><b>controls</b>: hiện thanh điều khiển phát/dừng, âm lượng.</p><p style="margin:0 0 8px"><b>autoplay</b>: tự phát (trình duyệt nhiều khi <b>chặn</b>); <b>loop</b>: lặp lại.</p><p style="margin:0 0 8px">Định dạng: <b>mp3, ogg, wav</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;audio controls&gt;
+  &lt;source src="nhac.mp3" type="audio/mpeg"&gt;
+  Trình duyệt không hỗ trợ.
+&lt;/audio&gt;</pre><div class="key">Muốn có nút phát/dừng chỉ cần thuộc tính <b>controls</b>, không cần button riêng.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 3</span><h1>Video với video</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Thẻ video</h3><p style="margin:0 0 8px">Giống audio, thêm <b>width, height</b> và <b>poster</b> (ảnh bìa trước khi phát).</p><p style="margin:0 0 8px">Định dạng: <b>mp4, webm</b>.</p><p style="margin:0 0 8px"><b>autoplay</b> thường cần kèm <b>muted</b> mới chạy.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;video controls width="320"
+       poster="bia.jpg"&gt;
+  &lt;source src="v.mp4" type="video/mp4"&gt;
+  &lt;source src="v.webm" type="video/webm"&gt;
+&lt;/video&gt;</pre><div class="key"><b>poster</b> chỉ có ở <b>video</b>, <b>audio không có</b>.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 3</span><h1>Thẻ source và các thuộc tính phương tiện</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thuộc tính / thẻ</th><th>Ý nghĩa</th><th>Áp dụng</th></tr><tr><td><code>controls</code></td><td>hiện bộ điều khiển</td><td>audio, video</td></tr><tr><td><code>autoplay</code></td><td>tự động phát</td><td>audio, video</td></tr><tr><td><code>loop</code></td><td>lặp lại</td><td>audio, video</td></tr><tr><td><code>muted</code></td><td>tắt tiếng</td><td>audio, video</td></tr><tr><td><code>poster</code></td><td>ảnh bìa</td><td><b>chỉ video</b></td></tr><tr><td><code>width, height</code></td><td>kích thước khung</td><td><b>video</b></td></tr><tr><td><code>&lt;source&gt;</code></td><td><b>nhiều định dạng</b> để trình duyệt chọn</td><td>audio, video</td></tr></table><div class="key">Thẻ <b>source</b> cho phép khai báo <b>nhiều định dạng</b>; trình duyệt chọn định dạng nó hỗ trợ.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 4</span><h1>Nhúng trang khác với iframe</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Khung nội tuyến</h3><p style="margin:0 0 8px"><b>&lt;iframe src="…"&gt;&lt;/iframe&gt;</b>: hiển thị <b>một trang web khác</b> trong một khung nằm trong trang.</p><p style="margin:0 0 8px">Thuộc tính: <b>src, width, height</b>, <b>title</b>.</p><p style="margin:0 0 8px">Dùng nhúng bản đồ, video YouTube, tài liệu.</p><p style="margin:0 0 8px"><b>Không</b> dùng iframe để phát nhạc mp3 (dùng audio).</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;iframe src="https://example.com"
+        width="400" height="250"
+        title="Trang mẫu"&gt;
+&lt;/iframe&gt;</pre><div class="key">iframe = <b>trang trong trang</b>; một số website cấm bị nhúng.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 5</span><h1>Tự kiểm tra: đường dẫn tương đối</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Trang index.html nằm cùng thư mục với thư mục con BT; trong BT có bai1.html. Giá trị href tương đối đúng từ index.html tới bai1.html?</p><pre class="code" style="font-size:calc(21px*var(--z,1))">web/
+├── index.html
+└── BT/
+    └── bai1.html</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Từ index.html đi <b>vào thư mục BT</b> rồi tới tệp: <b>href="BT/bai1.html"</b>.</p><p style="margin:0 0 8px">Dấu chấm (BT.bai1.html) không phải phân cách thư mục; <b>/bai1.html</b> tính từ gốc website; <b>https://BT/…</b> là tên miền sai.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 5</span><h1>Tự kiểm tra: thẻ video và audio</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Thuộc tính nào chỉ có ở video mà audio không có? Thẻ nào cho phép khai báo nhiều định dạng?</p><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;video controls poster="bia.jpg"&gt;
+  &lt;source src="v.mp4"&gt;
+  &lt;source src="v.webm"&gt;
+&lt;/video&gt;</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px"><b>poster</b> (ảnh bìa) và <b>width, height</b> chỉ có ở video.</p><p style="margin:0 0 8px"><b>&lt;source&gt;</b> khai báo nhiều định dạng, trình duyệt chọn định dạng phù hợp.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · 5</span><h1>Tự kiểm tra (HSG): đúng hay sai?</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">(a) alt là văn bản thay thế khi ảnh lỗi. (b) audio có poster. (c) iframe dùng để phát nhạc mp3. (d) Đặt img trong a tạo được liên kết trên ảnh. (e) Liên kết ra website khác bắt buộc dùng đường dẫn tương đối.</p></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">(a) <b>Đúng</b>.</p><p style="margin:0 0 8px">(b) <b>Sai</b>: poster chỉ ở video.</p><p style="margin:0 0 8px">(c) <b>Sai</b>: iframe nhúng trang web; nhạc dùng audio.</p><p style="margin:0 0 8px">(d) <b>Đúng</b>.</p><p style="margin:0 0 8px">(e) <b>Sai</b>: dùng đường dẫn tuyệt đối.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li>Thẻ <b>a href</b> tạo liên kết; ra ngoài dùng <b>tuyệt đối</b>, cùng website dùng <b>tương đối</b>.</li><li><b>#id</b> là liên kết nội trang; <b>../</b> lên thư mục cha.</li><li><b>img</b>: src, alt, width, height; <b>alt</b> khi ảnh lỗi.</li><li><b>audio/video</b>: controls, autoplay, loop, muted; <b>source</b> nhiều định dạng; <b>poster</b> chỉ ở video.</li><li><b>iframe</b> nhúng trang khác vào khung.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Neo trong trang</td><td>#id</td></tr><tr><td class="m">Mở tab mới</td><td>target="_blank"</td></tr><tr><td class="m">Ảnh bìa video</td><td>poster</td></tr><tr><td class="m">Nhiều định dạng</td><td>source</td></tr></table><div class="warn">Dùng dấu chấm thay cho / trong đường dẫn; quên alt; cho audio poster; dùng iframe phát mp3.</div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li><b>download</b> để tải tệp.</li><li><b>mailto:</b> mở thư.</li><li>Tên tệp phân biệt <b>hoa thường</b> trên máy chủ.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Ảnh responsive</b> max-width:100%.</li><li><b>figure/figcaption</b> cho ảnh có chú thích.</li><li><b>loading="lazy"</b>.</li></ul></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Thẻ tạo liên kết?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Thuộc tính chứa địa chỉ đích?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Thuộc tính văn bản thay thế của ảnh?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Thuộc tính hiện nút điều khiển media?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Thẻ nhúng trang web khác?</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>a</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>href</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>alt</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>controls</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>iframe</b>.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Tạo liên kết mở trang Google trong tab mới.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Chèn ảnh logo.png rộng 120px có alt.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Viết mục lục 3 liên kết nhảy tới 3 mục trong cùng trang.</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Chèn video có hai định dạng mp4, webm và poster.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Cây thư mục có a/x.html, a/b/y.html, z.html; viết href từ y.html tới x.html, z.html.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Giải thích vì sao ảnh không hiện dù đã viết img và cách kiểm tra.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>target="_blank"</code>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><code>&lt;img src="logo.png" alt="…" width="120"&gt;</code>.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>href="#m1"</code> … <code>id="m1"</code>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p>Hai <code>source</code> + <code>poster</code>.</p></div></div></div></section>
+
+<section class="s p3"><div class="hd"><span class="k">WEB 1C · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Từ y.html: <b>../x.html</b>, <b>../../z.html</b>.</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Sai src, sai hoa thường, tệp thiếu; xem alt.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>

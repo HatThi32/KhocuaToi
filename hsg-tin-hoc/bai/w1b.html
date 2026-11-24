@@ -1,0 +1,288 @@
+<!-- HEAD -->
+<title>Web 1B · Danh sách và bảng</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#FFF8E7;--ink:#0B2545;--ac:#0B2545;--ac2:#F2A900;--red:#C62828;--or:#E65100;--gr:#1B5E20;--card:#fff;--line:#0B2545;--code:#0F1B2D}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2433;font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;color:var(--ink);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#wrap{position:fixed;inset:0 0 52px 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.s{width:1280px;height:720px;position:absolute;left:50%;top:50%;background:var(--bg);padding:26px 44px 30px;display:none;flex-direction:column;transform-origin:center center;border-top:12px solid var(--ac2)}
+.s.on{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;border-bottom:4px solid var(--ac);padding-bottom:8px}
+.k{background:var(--ac);color:#fff;font-weight:800;font-size:22px;padding:2px 14px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+h1{margin:0;font-size:42px;line-height:1.1;text-transform:uppercase;font-weight:800;color:var(--ac);letter-spacing:.01em}
+.bd{flex:1;display:grid;gap:20px;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.15fr 1fr}.g12{grid-template-columns:1fr 1.15fr}.g1{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0}
+p,li,td,summary{font-size:calc(23px*var(--z,1));line-height:1.42;margin:0}
+ul,ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:6px}
+b,strong{color:var(--red);font-weight:800}
+.card{background:var(--card);border:3px solid var(--ac);border-radius:12px;padding:12px 16px}
+.card>h3,.cap{margin:-12px -16px 10px;padding:6px 16px;background:var(--ac);color:#fff;font-size:calc(22px*var(--z,1));text-transform:uppercase;letter-spacing:.04em;border-radius:8px 8px 0 0;font-weight:800}
+.key,.warn,.ok{font-size:calc(23px*var(--z,1));line-height:1.42}
+.key{background:#FFEBEE;border:3px solid var(--red);border-radius:12px;padding:10px 16px}.key:before{content:"CẦN NHỚ  ";font-weight:800;color:var(--red)}
+.warn{background:#FFF3E0;border:3px solid var(--or);border-radius:12px;padding:10px 16px}.warn:before{content:"LỖI THƯỜNG GẶP  ";font-weight:800;color:var(--or)}
+.ok{background:#E8F5E9;border:3px solid var(--gr);border-radius:12px;padding:10px 16px}
+table{border-collapse:collapse;width:100%;background:#fff}
+th{font-size:calc(21px*var(--z,1))}
+th,td{border:2px solid var(--ac);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--ac);color:#fff;text-transform:uppercase}
+td.m,code{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;font-size:calc(21px*var(--z,1))}
+code{background:#FFE9A8;padding:1px 6px;border-radius:5px;color:#0B2545}
+pre.code{margin:0;background:var(--code);color:#E8F1FF;font-family:'JetBrains Mono',Consolas,monospace;font-size:calc(21px*var(--z,1));line-height:1.5;padding:12px 16px;border-radius:10px;border-left:8px solid var(--ac2);white-space:pre-wrap;overflow:hidden;font-weight:500}
+.lab{font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;color:var(--ac)}
+.res{background:#fff;border:3px solid var(--gr);border-radius:10px;padding:8px 14px;min-height:60px}
+.res .lab{color:var(--gr);display:block;margin-bottom:4px}
+.q{background:#fff;border:3px solid var(--ac);border-radius:12px;padding:10px 16px;display:flex;gap:14px;align-items:flex-start}
+.q .n{background:var(--ac2);color:#0B2545;font-weight:800;font-size:26px;border-radius:50%;min-width:42px;height:42px;display:grid;place-items:center}
+.a{background:#E8F5E9;border:3px solid var(--gr)}.a .n{background:var(--gr);color:#fff}
+.tf{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--ac);border-radius:10px;padding:6px 12px}
+.tf .bg{font-weight:800;font-size:20px;color:#fff;padding:2px 10px;border-radius:6px;white-space:nowrap}
+.tf .bg.d{background:var(--gr)}.tf .bg.sa{background:var(--red)}
+.tf p{font-size:calc(21px*var(--z,1));line-height:1.35}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:'Be Vietnam Pro',Arial,sans-serif}
+svg .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.col>*{flex-shrink:0}
+#nav{position:fixed;left:0;right:0;bottom:0;height:52px;background:#0B2545;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}
+#nav button{font:700 18px 'Be Vietnam Pro',sans-serif;background:#F2A900;color:#0B2545;border:0;border-radius:8px;padding:6px 18px;cursor:pointer}
+#bar{flex:1;height:8px;background:#ffffff33;border-radius:4px}#bar i{display:block;height:100%;background:#F2A900;border-radius:4px}
+#cnt{font-weight:700;min-width:70px;text-align:center}
+.pg{position:absolute;right:30px;bottom:4px;font-size:20px;font-weight:700;color:#0B2545aa}
+.title-s{background:linear-gradient(135deg,#0B2545 0%,#13315c 60%,#1c4a85 100%);color:#fff}
+.title-s h1{color:#fff;font-size:68px;border:0}
+.title-s .hd{border:0}
+.chip{display:inline-block;background:#F2A900;color:#0B2545;font-weight:800;font-size:22px;padding:4px 14px;border-radius:20px;margin:4px 6px 4px 0}
+.p2{--ac:#00695C;--ac2:#FFB300}.p3{--ac:#4527A0;--ac2:#FFB300}.p4{--ac:#AD1457;--ac2:#FFB300}.p5{--ac:#BF360C;--ac2:#FFB300}.p6{--ac:#B71C1C;--ac2:#FFB300}.p7{--ac:#1565C0;--ac2:#FFB300}.p8{--ac:#00838F;--ac2:#FFB300}.p9{--ac:#558B2F;--ac2:#FFB300}.p10{--ac:#6A1B9A;--ac2:#FFB300}.p11{--ac:#D84315;--ac2:#FFB300}.p12{--ac:#283593;--ac2:#FFB300}
+.rt{width:auto;border-collapse:collapse;background:#fff}.rt td,.rt th{border:1px solid #000;padding:3px 12px;background:#fff;color:#000;text-transform:none;font-size:23px;font-weight:400;font-family:Georgia,serif;text-align:center}.rt th{font-weight:700}
+.res input,.res select,.res textarea,.res button{font-size:24px;font-family:Arial,sans-serif;margin:4px 2px;padding:3px 6px}.res input[type=radio],.res input[type=checkbox]{width:26px;height:26px;vertical-align:middle}.res label{font-family:Georgia,serif;font-size:26px}.res fieldset{font-family:Georgia,serif;font-size:25px;margin:4px 0;line-height:1.7}.res ol,.res ul{gap:0}.res li,.res dt,.res dd{font-family:Georgia,serif;font-size:25px;line-height:1.35}.res dl{margin:0}.res dt{font-weight:700}.res dd{margin-left:28px}
+.bwin{border:3px solid #455A64;border-radius:10px;overflow:hidden;background:#fff}
+.bwin .tab{background:#CFD8DC;padding:6px 14px;font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center}
+.bwin .tab span{background:#fff;padding:4px 14px;border-radius:8px 8px 0 0}
+.bwin .url{background:#ECEFF1;padding:6px 14px;font-size:20px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #B0BEC5}
+.bwin .page{padding:10px 16px}
+body.m{background:var(--bg)}
+body.m #wrap{position:static;display:block;overflow:visible}
+body.m .s{position:static;display:flex!important;width:auto;height:auto;transform:none!important;margin:0 0 14px;padding:16px 16px 24px;border-radius:0}
+body.m .bd{display:flex;flex-direction:column}
+body.m h1{font-size:28px}body.m .k{font-size:17px}
+body.m .s{--z:1!important}body.m p,body.m li,body.m td,body.m th{font-size:17px}
+body.m pre.code,body.m .mono,body.m td.m,body.m code{font-size:15px}
+body.m #nav{display:none}
+body.m .title-s h1{font-size:38px}
+body.m svg{min-width:0}
+body.m .wide{overflow-x:auto}
+/*THEME2*/
+.s{background:color-mix(in srgb,var(--ac) 5%,#FFFDF6);border-top:14px solid var(--ac2);background-image:linear-gradient(180deg,color-mix(in srgb,var(--ac) 9%,#fff) 0,color-mix(in srgb,var(--ac) 3%,#FFFDF6) 130px)}
+.hd{border-bottom:5px solid var(--ac);position:relative}
+.hd:after{content:"";position:absolute;left:0;bottom:-5px;width:180px;height:5px;background:var(--ac2)}
+.k{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 70%,#000));box-shadow:0 2px 0 var(--ac2)}
+h1{color:color-mix(in srgb,var(--ac) 88%,#000)}
+b,strong{color:#B3171B;background:linear-gradient(transparent 60%,#FFE27A 60%);padding:0 2px;border-radius:2px}
+th b,.cap b,h3 b,.k b,.title-s b,.chip b,.bg b{color:inherit;background:none;padding:0}
+.card{background:#fff;border:3px solid var(--ac);box-shadow:0 4px 0 color-mix(in srgb,var(--ac) 35%,transparent)}
+.card>h3,.cap{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 72%,#fff));border-radius:8px 8px 0 0}
+.key{background:linear-gradient(90deg,#FFE9EA,#FFF6F6);border:3px solid #C62828;border-left:14px solid #C62828;box-shadow:0 3px 0 #C6282855}
+.key:before{content:"★ CẦN NHỚ";display:inline-block;background:#C62828;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.warn{background:linear-gradient(90deg,#FFEFD6,#FFF8EC);border:3px solid #E65100;border-left:14px solid #E65100}
+.warn:before{content:"⚠ LỖI THƯỜNG GẶP";display:inline-block;background:#E65100;color:#fff;padding:1px 12px;border-radius:14px;font-size:.78em;margin-right:10px;letter-spacing:.05em}
+.ok{border-left:14px solid #1B5E20}
+td{background:#fff}tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 8%,#fff)}
+th{background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 75%,#000))}
+table{box-shadow:0 3px 0 color-mix(in srgb,var(--ac) 30%,transparent)}
+code{background:color-mix(in srgb,var(--ac2) 30%,#fff);color:color-mix(in srgb,var(--ac) 70%,#000)}
+pre.code{background:linear-gradient(160deg,#0E1A2E,#16253F);border-left:10px solid var(--ac2);box-shadow:0 4px 0 #0003}
+.res{border-left:12px solid var(--gr);background:#F6FFF7}
+.res .lab{display:inline-block;background:var(--gr);color:#fff;padding:0 12px;border-radius:12px;font-size:.85em}
+.q{border-left:12px solid var(--ac2)}
+.title-s{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 45%,#000) 0%,var(--ac) 65%,color-mix(in srgb,var(--ac) 65%,#fff) 100%);border-top:14px solid var(--ac2)}
+.title-s h1{color:#fff;text-shadow:0 3px 0 #0006}
+.chip{background:var(--ac2);color:#1b1b1b;box-shadow:0 2px 0 #0004}
+#nav{background:linear-gradient(90deg,#0B2545,#13315c)}
+</style>
+
+<div id="wrap">
+<section class="s title-s p8"><div class="hd"><span class="k">TIN HỌC · WEB 1B</span></div>
+<div class="bd g21" style="align-items:center"><div class="col" style="gap:22px"><h1>DANH SÁCH VÀ BẢNG<br>TRONG HTML</h1><p style="font-size:28px;line-height:1.5">ul – ol – li, danh sách lồng nhau, table – tr – th – td, caption, colspan và rowspan, cách đếm thẻ td, trình bày bảng bằng CSS.</p><div><span class="chip">ul</span><span class="chip">ol</span><span class="chip">table</span><span class="chip">colspan</span><span class="chip">rowspan</span></div></div><svg viewBox="0 0 520 420" style="width:100%"><rect x="6" y="6" width="508" height="408" rx="18" fill="#0E1A2E" stroke="#FFD54F" stroke-width="4"/><circle cx="40" cy="40" r="9" fill="#EF5350"/><circle cx="68" cy="40" r="9" fill="#FFCA28"/><circle cx="96" cy="40" r="9" fill="#66BB6A"/><line x1="6" y1="68" x2="514" y2="68" stroke="#ffffff33" stroke-width="2"/><text x="36" y="122" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">1</text><text x="84" y="122" font-size="34" font-weight="800" fill="#FFD54F" font-family="monospace">ul</text><text x="36" y="186" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">2</text><text x="84" y="186" font-size="34" font-weight="800" fill="#80DEEA" font-family="monospace">ol</text><text x="36" y="250" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">3</text><text x="84" y="250" font-size="34" font-weight="800" fill="#A5D6A7" font-family="monospace">table</text><text x="36" y="314" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">4</text><text x="84" y="314" font-size="34" font-weight="800" fill="#F48FB1" font-family="monospace">colspan</text><text x="36" y="378" font-size="30" font-weight="800" fill="#ffffff66" font-family="monospace">5</text><text x="84" y="378" font-size="34" font-weight="800" fill="#CE93D8" font-family="monospace">rowspan</text></svg></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B</span><h1>Mục tiêu và nội dung bài</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Sau bài học, em có thể</h3><ul style="gap:6px"><li>Viết <b>danh sách không thứ tự, có thứ tự, danh sách lồng nhau</b>.</li><li>Viết bảng đủ <b>table, tr, th, td, caption</b>.</li><li>Dùng <b>colspan</b> (gộp cột) và <b>rowspan</b> (gộp hàng).</li><li><b>Vẽ lưới</b> để đếm đúng số thẻ td mỗi hàng và kích thước bảng.</li><li>Định dạng bảng bằng <b>CSS</b> (viền, border-collapse, đệm).</li></ul></div></div><div class="col"><div class="card"><h3>Nội dung bộ slide</h3><ul style="gap:5px"><li>Danh sách</li><li>Bảng cơ bản</li><li>Ô gộp</li><li>Đếm thẻ td</li><li>Tự kiểm tra</li></ul></div><div class="key">Học theo thứ tự: <b>kiến thức</b> → <b>trọng tâm</b> → <b>bài tập củng cố</b> → <b>bài khó HSG</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 1</span><h1>Danh sách không thứ tự: ul – li</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Dấu chấm đầu dòng</h3><p style="margin:0 0 8px"><b>&lt;ul&gt;</b> (unordered list) chứa các mục <b>&lt;li&gt;</b> (list item).</p><p style="margin:0 0 8px">Dùng khi các mục <b>không cần xếp thứ tự</b> (danh sách đồ dùng, menu…).</p><p style="margin:0 0 8px">Mỗi mục là một <b>li</b>; <b>chỉ li</b> mới là con trực tiếp của ul.</p></div></div><div class="col"><pre class="code" style="font-size:calc(24px*var(--z,1))">&lt;ul&gt;
+  &lt;li&gt;Bàn phím&lt;/li&gt;
+  &lt;li&gt;Chuột&lt;/li&gt;
+  &lt;li&gt;Màn hình&lt;/li&gt;
+&lt;/ul&gt;</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}&lt;/style&gt;&lt;ul&gt;&lt;li&gt;Bàn phím&lt;/li&gt;&lt;li&gt;Chuột&lt;/li&gt;&lt;li&gt;Màn hình&lt;/li&gt;&lt;/ul&gt;" style="width:100%;height:140px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 1</span><h1>Danh sách có thứ tự: ol – li</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đánh số tự động</h3><p style="margin:0 0 8px"><b>&lt;ol&gt;</b> (ordered list): các mục đánh số <b>1, 2, 3…</b> tự động.</p><p style="margin:0 0 8px">Thuộc tính <b>type</b>: <code>1</code>, <code>a</code>, <code>A</code>, <code>i</code>, <code>I</code> đổi kiểu đánh số; <b>start</b> chọn số bắt đầu.</p><p style="margin:0 0 8px">Dùng khi <b>thứ tự quan trọng</b>; muốn chấm tròn dùng <b>ul</b>.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;ol&gt;
+  &lt;li&gt;Mở trình duyệt&lt;/li&gt;
+  &lt;li&gt;Nhập địa chỉ&lt;/li&gt;
+  &lt;li&gt;Nhấn Enter&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol type="a" start="3"&gt;
+  &lt;li&gt;mục c&lt;/li&gt;&lt;li&gt;mục d&lt;/li&gt;
+&lt;/ol&gt;</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}&lt;/style&gt;&lt;ol&gt;&lt;li&gt;Mở trình duyệt&lt;/li&gt;&lt;li&gt;Nhập địa chỉ&lt;/li&gt;&lt;li&gt;Nhấn Enter&lt;/li&gt;&lt;/ol&gt;&lt;ol type=&quot;a&quot; start=&quot;3&quot;&gt;&lt;li&gt;mục c&lt;/li&gt;&lt;li&gt;mục d&lt;/li&gt;&lt;/ol&gt;" style="width:100%;height:190px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 1</span><h1>Danh sách lồng nhau</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đặt danh sách con TRONG thẻ li</h3><p style="margin:0 0 8px">Muốn mục con, đặt <b>một ul/ol bên trong thẻ li</b> của mục cha (không đặt trực tiếp trong ul).</p><p style="margin:0 0 8px">Trình duyệt tự <b>thụt vào</b> và đổi kiểu dấu đầu dòng theo cấp.</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">&lt;ul&gt;
+  &lt;li&gt;Phần cứng
+    &lt;ul&gt;
+      &lt;li&gt;CPU&lt;/li&gt;
+      &lt;li&gt;RAM&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Phần mềm&lt;/li&gt;
+&lt;/ul&gt;</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}&lt;/style&gt;&lt;ul&gt;&lt;li&gt;Phần cứng&lt;ul&gt;&lt;li&gt;CPU&lt;/li&gt;&lt;li&gt;RAM&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Phần mềm&lt;/li&gt;&lt;/ul&gt;" style="width:100%;height:150px;border:0;display:block;background:#fff"></iframe></div><div class="warn">Đặt <code>&lt;ul&gt;</code> con <b>ngoài</b> thẻ li là sai cấu trúc.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 1</span><h1>Danh sách làm menu điều hướng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ứng dụng quan trọng</h3><p style="margin:0 0 8px">Menu website thường là <b>ul chứa các liên kết</b> bên trong li, rồi dùng CSS bỏ dấu chấm và xếp ngang.</p><p style="margin:0 0 8px">Cách làm này đúng ngữ nghĩa: menu là danh sách các liên kết.</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="a.html"&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="b.html"&gt;Giới thiệu&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</pre><div class="res"><span class="lab">Sau khi dùng CSS (bài sau)</span><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}&lt;/style&gt;&lt;nav&gt;&lt;ul style=&quot;list-style:none;display:flex;gap:18px;padding:0;margin:0;background:#BBDEFB;padding:8px 14px&quot;&gt;&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Giới thiệu&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Liên hệ&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/nav&gt;" style="width:100%;height:80px;border:0;display:block;background:#fff"></iframe></div></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 2</span><h1>Bảng: table, tr, th, td</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cấu trúc theo từng hàng</h3><p style="margin:0 0 8px"><b>table</b> bao toàn bộ; mỗi <b>hàng</b> là <b>tr</b> (table row).</p><p style="margin:0 0 8px">Trong hàng: <b>th</b> (ô <b>tiêu đề</b>, mặc định đậm, căn giữa) hoặc <b>td</b> (ô <b>dữ liệu</b>).</p><p style="margin:0 0 8px"><b>caption</b>: tiêu đề của bảng. Không có thẻ “cột”: cột là các ô cùng vị trí của các hàng.</p><p style="margin:0 0 8px">Số cột của bảng bằng số ô lưới của hàng nhiều nhất.</p></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;table border="1"&gt;
+  &lt;caption&gt;Điểm kiểm tra&lt;/caption&gt;
+  &lt;tr&gt;&lt;th&gt;Môn&lt;/th&gt;&lt;th&gt;Điểm&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Tin&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}&lt;/style&gt;&lt;table border=&quot;1&quot; style=&quot;border-collapse:collapse&quot;&gt;&lt;caption&gt;Điểm kiểm tra&lt;/caption&gt;&lt;tr&gt;&lt;th&gt;Môn&lt;/th&gt;&lt;th&gt;Điểm&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tin&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="width:100%;height:170px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 2</span><h1>Các thẻ của bảng</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th>Thẻ</th><th>Ý nghĩa</th><th>Ghi chú</th></tr><tr><td><code>&lt;table&gt;</code></td><td>bảng</td><td>thuộc tính border chỉ để minh hoạ</td></tr><tr><td><code>&lt;caption&gt;</code></td><td>tiêu đề của bảng</td><td>đặt ngay sau table</td></tr><tr><td><code>&lt;tr&gt;</code></td><td>một <b>hàng</b></td><td>chứa các th, td</td></tr><tr><td><code>&lt;th&gt;</code></td><td>ô <b>tiêu đề</b></td><td>đậm, căn giữa mặc định</td></tr><tr><td><code>&lt;td&gt;</code></td><td>ô <b>dữ liệu</b></td><td>nội dung của bảng</td></tr><tr><td><code>&lt;thead&gt; &lt;tbody&gt; &lt;tfoot&gt;</code></td><td>nhóm hàng đầu, thân, cuối</td><td>giúp cấu trúc rõ ràng</td></tr></table><div class="key">Ô <b>tiêu đề</b> dùng <b>th</b>; ô <b>dữ liệu</b> dùng <b>td</b>; <b>hàng</b> là <b>tr</b>; <b>tiêu đề bảng</b> là <b>caption</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 2</span><h1>Định dạng bảng bằng CSS</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Viền gọn và đệm</h3><p style="margin:0 0 8px"><code>border: 1px solid #888</code> cho <b>td, th</b>; <code>border-collapse: collapse</code> gộp viền kép thành một viền.</p><p style="margin:0 0 8px"><code>padding</code>: khoảng cách trong ô. <code>text-align</code>: căn lề chữ.</p><p style="margin:0 0 8px">Nên dùng CSS thay thuộc tính <b>border</b> của thẻ table (thuộc tính cũ).</p></div></div><div class="col"><pre class="code" style="font-size:calc(20px*var(--z,1))">table { border-collapse: collapse; }
+th, td {
+  border: 1px solid #1565C0;
+  padding: 6px 12px;
+}
+th { background: #BBDEFB; }</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}table{border-collapse:collapse}td,th{border:2px solid #1565C0;padding:5px 12px}th{background:#BBDEFB}&lt;/style&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;Môn&lt;/th&gt;&lt;th&gt;Điểm&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tin&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="width:100%;height:140px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 3</span><h1>colspan: gộp ô theo chiều ngang</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Một ô chiếm nhiều cột</h3><p style="margin:0 0 8px"><b>colspan="2"</b>: ô chiếm <b>2 cột</b> liên tiếp trên cùng hàng.</p><p style="margin:0 0 8px">Khi một ô chiếm 2 cột thì <b>hàng đó chỉ cần viết ít thẻ hơn</b> tương ứng.</p><p style="margin:0 0 8px">Ví dụ bảng 2 cột: hàng đầu chỉ cần <b>1</b> thẻ th với colspan="2".</p></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">&lt;table&gt;
+  &lt;tr&gt;&lt;th colspan="2"&gt;Điểm&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Tin&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}table{border-collapse:collapse}td,th{border:2px solid #1565C0;padding:5px 12px}th{background:#BBDEFB}&lt;/style&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan=&quot;2&quot;&gt;Điểm&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tin&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="width:100%;height:150px;border:0;display:block;background:#fff"></iframe></div><div class="key">Bảng này có <b>3 hàng, 2 cột</b>; ô tiêu đề “Điểm” chiếm cả 2 cột nên <b>không cần thêm td</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 3</span><h1>rowspan: gộp ô theo chiều dọc</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Một ô chiếm nhiều hàng</h3><p style="margin:0 0 8px"><b>rowspan="2"</b>: ô chiếm <b>2 hàng</b> liên tiếp.</p><p style="margin:0 0 8px">Ô đã chiếm chỗ ở hàng dưới, nên <b>hàng dưới viết ít thẻ hơn</b> (bỏ vị trí đã bị chiếm).</p><p style="margin:0 0 8px">Viết ô rowspan ở hàng <b>đầu tiên</b> mà nó xuất hiện.</p></div></div><div class="col"><pre class="code" style="font-size:calc(23px*var(--z,1))">&lt;table&gt;
+  &lt;tr&gt;&lt;td rowspan="2"&gt;A&lt;/td&gt;&lt;td&gt;B1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;B2&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}table{border-collapse:collapse}td,th{border:2px solid #1565C0;padding:5px 12px}th{background:#BBDEFB}&lt;/style&gt;&lt;table&gt;&lt;tr&gt;&lt;td rowspan=&quot;2&quot;&gt;A&lt;/td&gt;&lt;td&gt;B1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;B2&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="width:100%;height:130px;border:0;display:block;background:#fff"></iframe></div><div class="key">Hàng 2 chỉ có <b>1</b> thẻ td (B2) vì cột 1 đã bị ô “A” chiếm.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 3</span><h1>Bảng kết hợp rowspan và colspan</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Đọc đoạn mã</h3><pre class="code" style="font-size:calc(17px*var(--z,1))">&lt;table border="1"&gt;
+  &lt;tr&gt;&lt;th rowspan="2"&gt;Môn&lt;/th&gt;&lt;th colspan="2"&gt;Điểm&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;th&gt;GK&lt;/th&gt;&lt;th&gt;CK&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Tin&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre></div></div><div class="col"><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}table{border-collapse:collapse}td,th{border:2px solid #1565C0;padding:5px 12px}th{background:#BBDEFB}&lt;/style&gt;&lt;table border=&quot;1&quot;&gt;
+  &lt;tr&gt;&lt;th rowspan=&quot;2&quot;&gt;Môn&lt;/th&gt;&lt;th colspan=&quot;2&quot;&gt;Điểm&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;th&gt;GK&lt;/th&gt;&lt;th&gt;CK&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Tin&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;" style="width:100%;height:250px;border:0;display:block;background:#fff"></iframe></div><div class="key">Ô <b>“Môn”</b> gộp <b>2 hàng</b>; ô <b>“Điểm”</b> gộp <b>2 cột</b>.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 3</span><h1>Vẽ lưới để đếm: bảng trên là 3 cột × 4 hàng</h1></div>
+<div class="bd g1"><div class="col"><table><tr><th></th><th>cột 1</th><th>cột 2</th><th>cột 3</th></tr><tr><td><b>hàng 1</b></td><td><b>Môn</b> (rowspan 2)</td><td><b>Điểm</b> (colspan 2)</td><td>← (thuộc Điểm)</td></tr><tr><td><b>hàng 2</b></td><td>↑ (thuộc Môn)</td><td>GK</td><td>CK</td></tr><tr><td><b>hàng 3</b></td><td>Tin</td><td>9</td><td>8</td></tr><tr><td><b>hàng 4</b></td><td>Toán</td><td>7</td><td>8</td></tr></table><div class="key">Hàng 1 có <b>2</b> thẻ (Môn, Điểm); hàng 2 có <b>2</b> thẻ (GK, CK); hàng 3 và 4 có <b>3</b> thẻ td. Tổng diện tích = <b>12 ô lưới</b> = 3 × 4.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 3</span><h1>Cách đếm số thẻ td: ba bước</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Quy trình chắc chắn</h3><ol style="gap:6px"><li><b>Xác định số cột</b>: hàng có tổng (số ô + phần colspan) lớn nhất.</li><li><b>Vẽ lưới</b> hàng × cột, tô các ô bị <b>colspan / rowspan</b> chiếm.</li><li>Với <b>mỗi hàng</b>, số thẻ cần viết = số ô lưới <b>chưa bị chiếm</b> từ trái sang phải, trừ các ô gộp tính một thẻ.</li></ol><div class="warn">Đừng đếm số thẻ theo “số ô nhìn thấy”: ô gộp tính <b>một thẻ</b> nhưng chiếm nhiều ô lưới.</div></div></div><div class="col"><pre class="code" style="font-size:calc(17px*var(--z,1))">&lt;!-- Bảng 3 cột, 3 hàng --&gt;
+&lt;tr&gt;&lt;th colspan="3"&gt;Tiêu đề&lt;/th&gt;&lt;/tr&gt;      &lt;!-- 1 thẻ --&gt;
+&lt;tr&gt;&lt;td rowspan="2"&gt;A&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;C&lt;/td&gt;&lt;/tr&gt; &lt;!-- 3 thẻ --&gt;
+&lt;tr&gt;&lt;td&gt;D&lt;/td&gt;&lt;td&gt;E&lt;/td&gt;&lt;/tr&gt;              &lt;!-- 2 thẻ --&gt;</pre><div class="key">Hàng 3 chỉ cần <b>2</b> thẻ td vì cột 1 đã bị ô “A” (rowspan) chiếm.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 3</span><h1>Kết quả của bảng trên</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Hiển thị thật</h3><p style="margin:0 0 8px">Hàng 1: ô “Tiêu đề” trải cả 3 cột.</p><p style="margin:0 0 8px">Ô “A” trải hai hàng nên D, E nằm ở <b>cột 2 và 3</b> của hàng 3.</p></div></div><div class="col"><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}table{border-collapse:collapse}td,th{border:2px solid #1565C0;padding:5px 12px}th{background:#BBDEFB}&lt;/style&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan=&quot;3&quot;&gt;Tiêu đề&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td rowspan=&quot;2&quot;&gt;A&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;C&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;D&lt;/td&gt;&lt;td&gt;E&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="width:100%;height:190px;border:0;display:block;background:#fff"></iframe></div><div class="key">Số cột 3; hàng 1: <b>1</b> thẻ; hàng 2: <b>3</b> thẻ; hàng 3: <b>2</b> thẻ.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 3</span><h1>Bảng lịch học: ví dụ thực tế</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bảng phức hợp</h3><p style="margin:0 0 8px">Thời khoá biểu: ô “Sáng” gộp 2 hàng, ô “Tin học” gộp 2 cột.</p></div></div><div class="col"><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;table&gt;
+ &lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Thứ 2&lt;/th&gt;&lt;th&gt;Thứ 3&lt;/th&gt;&lt;/tr&gt;
+ &lt;tr&gt;&lt;th rowspan="2"&gt;Sáng&lt;/th&gt;
+     &lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;Văn&lt;/td&gt;&lt;/tr&gt;
+ &lt;tr&gt;&lt;td colspan="2"&gt;Tin học&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}table{border-collapse:collapse}td,th{border:2px solid #1565C0;padding:5px 12px}th{background:#BBDEFB}&lt;/style&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Thứ 2&lt;/th&gt;&lt;th&gt;Thứ 3&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th rowspan=&quot;2&quot;&gt;Sáng&lt;/th&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;Văn&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan=&quot;2&quot;&gt;Tin học&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="width:100%;height:160px;border:0;display:block;background:#fff"></iframe></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 3</span><h1>Các lỗi hay gặp với bảng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Cần tránh</h3><ul style="gap:7px"><li><b>Thiếu</b> thẻ đóng <code>&lt;/tr&gt;</code> hoặc <code>&lt;/td&gt;</code>.</li><li>Viết <b>td ngoài tr</b>.</li><li>Quên giảm số thẻ ở hàng dưới khi dùng <b>rowspan</b>.</li><li>Dùng bảng để <b>bố cục trang</b> (nên dùng CSS).</li><li>Quên <b>border-collapse</b> nên viền bị kép.</li></ul></div></div><div class="col"><pre class="code" style="font-size:calc(21px*var(--z,1))">&lt;table&gt;
+  &lt;tr&gt;&lt;td rowspan="2"&gt;A&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;C&lt;/td&gt;&lt;td&gt;D&lt;/td&gt;&lt;/tr&gt;  &lt;!-- dư 1 ô --&gt;
+&lt;/table&gt;</pre><div class="res"><span class="lab">Bảng bị lệch: thêm một cột ngoài ý muốn</span><div class="bwin"><div class="tab"><span>trang-mau.html</span></div><iframe sandbox srcdoc="&lt;!doctype html&gt;&lt;meta charset=utf-8&gt;&lt;style&gt;body{font:20px/1.4 &quot;Be Vietnam Pro&quot;,Arial,sans-serif;margin:10px 14px;color:#111}table{border-collapse:collapse}td,th{border:2px solid #1565C0;padding:5px 12px}th{background:#BBDEFB}&lt;/style&gt;&lt;table&gt;&lt;tr&gt;&lt;td rowspan=&quot;2&quot;&gt;A&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;C&lt;/td&gt;&lt;td&gt;D&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="width:100%;height:130px;border:0;display:block;background:#fff"></iframe></div></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 4</span><h1>Tự kiểm tra: số cột và số hàng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Bảng sau có bao nhiêu hàng, bao nhiêu cột? Ô tiêu đề “Điểm” chiếm mấy cột? Hàng đầu cần thêm td không?</p><pre class="code" style="font-size:calc(21px*var(--z,1))">&lt;table&gt;
+  &lt;tr&gt;&lt;th colspan="2"&gt;Điểm&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Tin&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Có <b>3</b> thẻ tr → <b>3 hàng</b>.</p><p style="margin:0 0 8px">Hàng 2 có 2 ô nên bảng có <b>2 cột</b> (không phải 3).</p><p style="margin:0 0 8px">“Điểm” có <code>colspan="2"</code> → chiếm <b>2 cột</b>; hàng đầu <b>không cần thêm td</b>.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 4</span><h1>Tự kiểm tra (HSG): rowspan – colspan</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Bảng dưới đây có cấu trúc lưới nào? Hàng thứ ba có mấy thẻ td? Tổng diện tích các ô?</p><pre class="code" style="font-size:calc(17px*var(--z,1))">&lt;table border="1"&gt;
+  &lt;tr&gt;&lt;th rowspan="2"&gt;Môn&lt;/th&gt;&lt;th colspan="2"&gt;Điểm&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;th&gt;GK&lt;/th&gt;&lt;th&gt;CK&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Tin&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Hàng 1: Môn (rowspan 2) + Điểm (colspan 2) → <b>3 cột</b>. Số hàng: 4 → lưới <b>3 cột × 4 hàng</b>.</p><p style="margin:0 0 8px">Hàng 3 (Tin): có <b>3 thẻ td</b> (Tin, 9, 8): ô “Môn” chỉ chiếm 2 hàng đầu.</p><p style="margin:0 0 8px">Tổng diện tích = 3 × 4 = <b>12 ô lưới</b> (Môn 2 + Điểm 2 + GK 1 + CK 1 + 6 ô dữ liệu).</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · 4</span><h1>Tự kiểm tra (HSG): rowspan và số thẻ ở hàng dưới</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Câu hỏi</h3><p style="margin:0 0 8px">Bảng 3 cột, 3 hàng. Hàng 1 có một ô colspan="3"; hàng 2 có ô cột 1 với rowspan="2". Hàng 1, hàng 2, hàng 3 lần lượt cần mấy thẻ td/th?</p><pre class="code" style="font-size:calc(19px*var(--z,1))">&lt;tr&gt;&lt;th colspan="3"&gt;T&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td rowspan="2"&gt;A&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;C&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;D&lt;/td&gt;&lt;td&gt;E&lt;/td&gt;&lt;/tr&gt;</pre></div></div><div class="col"><div class="card"><h3>Đáp án và giải thích từng bước</h3><p style="margin:0 0 8px">Hàng 1: một ô trải cả 3 cột → <b>1</b> thẻ.</p><p style="margin:0 0 8px">Hàng 2: A (rowspan 2), B, C → <b>3</b> thẻ.</p><p style="margin:0 0 8px">Hàng 3: cột 1 bị A chiếm → chỉ viết D, E → <b>2</b> thẻ.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">TRỌNG TÂM</span><h1>Những điều phải nhớ</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Ghi nhớ</h3><ul style="gap:6px"><li><b>ul</b>: chấm đầu dòng; <b>ol</b>: đánh số; mục là <b>li</b>; danh sách con đặt <b>trong li</b>.</li><li>Bảng: <b>table → tr → th / td</b>; <b>caption</b> là tiêu đề bảng.</li><li><b>colspan</b> gộp cột; <b>rowspan</b> gộp hàng.</li><li>Đếm thẻ: <b>vẽ lưới</b> rồi trừ các ô đã bị chiếm.</li><li>Định dạng bảng bằng <b>CSS</b>: border, border-collapse, padding.</li><li>Menu website thực chất là <b>ul chứa liên kết</b>.</li></ul></div></div><div class="col"><table><tr><th>Cần…</th><th>Dùng</th></tr><tr><td class="m">Đánh số 1, 2, 3</td><td>ol</td></tr><tr><td class="m">Ô tiêu đề</td><td>th</td></tr><tr><td class="m">Gộp 2 cột</td><td>colspan="2"</td></tr><tr><td class="m">Gộp 2 hàng</td><td>rowspan="2"</td></tr></table><div class="warn">Thiếu giảm số thẻ ở hàng dưới khi rowspan; td ngoài tr; ul con ngoài li.</div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">NÂNG CAO</span><h1>Điều dễ nhầm và mở rộng</h1></div>
+<div class="bd g2"><div class="col"><div class="card"><h3>Bẫy thường gặp</h3><ul style="gap:6px"><li>Cột <b>không có thẻ riêng</b>.</li><li><b>rowspan</b> làm hàng dưới ít thẻ hơn.</li><li>Ô gộp tính <b>1 thẻ</b> nhưng nhiều ô lưới.</li><li>Danh sách lồng: ul <b>trong</b> li.</li></ul></div></div><div class="col"><div class="card"><h3>Mở rộng</h3><ul style="gap:6px"><li><b>Bảng đáp ứng</b> (cuộn ngang trên điện thoại).</li><li><b>CSS Grid</b> thay bảng cho bố cục.</li><li><b>aria</b> cho bảng dễ tiếp cận.</li></ul></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · TẬP</span><h1>Bài tập củng cố</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Thẻ nào tạo ô tiêu đề?</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Thẻ nào tạo danh sách đánh số?</p></div></div><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Thẻ tạo tiêu đề của bảng?</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Thuộc tính gộp hai ô liên tiếp trên cùng một hàng?</p></div></div><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Bảng 3 cột, hàng 1 có ô colspan="3": hàng 1 cần mấy thẻ?</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · ĐÁP ÁN</span><h1>Đáp án chi tiết</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><b>th</b>.</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p><b>ol</b>.</p></div></div><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><b>caption</b>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><b>colspan</b>.</p></div></div><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p><b>1</b> thẻ.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · HSG</span><h1>Bài tập luyện HSG (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">1</div><div style="flex:1;min-width:0"><p>Mức 1. Viết danh sách các bước nấu mì (4 bước) bằng ol.</p></div></div><div class="q"><div class="n">2</div><div style="flex:1;min-width:0"><p>Mức 1. Viết bảng 3 hàng × 2 cột điểm Toán, Văn, Anh.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · HSG</span><h1>Bài tập luyện HSG (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">3</div><div style="flex:1;min-width:0"><p>Mức 2. Danh sách lồng: Phần cứng (CPU, RAM) và Phần mềm (Hệ điều hành, Ứng dụng).</p></div></div><div class="q"><div class="n">4</div><div style="flex:1;min-width:0"><p>Mức 2. Bảng thời khoá biểu 3 cột, có một ô colspan="3" làm tiêu đề.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · HSG</span><h1>Bài tập luyện HSG (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q"><div class="n">5</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Viết bảng 4 hàng × 3 cột có ô A rowspan="3" ở cột 1 và ô B colspan="2" ở hàng 4.</p></div></div><div class="q"><div class="n">6</div><div style="flex:1;min-width:0"><p>Mức 3 (HSG). Cho đoạn mã bảng cho trước, tính diện tích lưới và số thẻ mỗi hàng; chỉ ra thẻ td dư thừa.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (1)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">1</div><div style="flex:1;min-width:0"><p><code>&lt;ol&gt;&lt;li&gt;…&lt;/li&gt;&lt;/ol&gt;</code> (4 thẻ li).</p></div></div><div class="q a"><div class="n">2</div><div style="flex:1;min-width:0"><p>3 tr, mỗi tr 2 td.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (2)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">3</div><div style="flex:1;min-width:0"><p><code>ul &gt; li &gt; ul &gt; li</code>.</p></div></div><div class="q a"><div class="n">4</div><div style="flex:1;min-width:0"><p><code>&lt;tr&gt;&lt;th colspan="3"&gt;…&lt;/th&gt;&lt;/tr&gt;</code>.</p></div></div></div></section>
+
+<section class="s p8"><div class="hd"><span class="k">WEB 1B · HSG · ĐÁP ÁN</span><h1>Đáp án chi tiết (3)</h1></div>
+<div class="bd g1" style="gap:10px;align-content:start"><div class="q a"><div class="n">5</div><div style="flex:1;min-width:0"><p>Hàng 1: A + 2 ô; hàng 2, 3: 2 ô mỗi hàng; hàng 4: A đã chiếm nên chỉ viết B (colspan 2).</p></div></div><div class="q a"><div class="n">6</div><div style="flex:1;min-width:0"><p>Vẽ lưới 3 bước như slide “Cách đếm số thẻ td”.</p></div></div></div></section>
+</div>
+<div id="nav"><button id="pv">◀ Trước</button><div id="bar"><i style="width:0"></i></div><span id="cnt">1/1</span><button id="nx">Sau ▶</button></div>
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),i=0,wrap=document.getElementById('wrap');
+S.forEach(function(s,k){var p=document.createElement('div');p.className='pg';p.textContent=(k+1)+' / '+S.length;s.appendChild(p)});
+function mobile(){return innerWidth<900}
+function fit(){var m=mobile();document.body.classList.toggle('m',m);if(m){S.forEach(function(s){s.style.transform=''});return}
+var sc=Math.min(innerWidth/1280,(innerHeight-52)/720);S.forEach(function(s){s.style.transform='translate(-50%,-50%) scale('+sc+')'})}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('cnt').textContent=(i+1)+'/'+S.length;document.querySelector('#bar i').style.width=((i+1)/S.length*100)+'%';try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+document.getElementById('pv').onclick=function(){show(i-1)};document.getElementById('nx').onclick=function(){show(i+1)};
+addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1)});
+addEventListener('resize',fit);
+function over(s,bd){return bd.scrollHeight>bd.clientHeight+1||s.scrollHeight>s.clientHeight+1}
+function autofit(){if(mobile())return;S.forEach(function(s){if(s.classList.contains('title-s'))return;var bd=s.querySelector('.bd');s.classList.add('on');s.style.visibility='hidden';var z=1;s.style.setProperty('--z',z);
+ if(over(s,bd)){while(z>0.8&&over(s,bd)){z=Math.round((z-0.04)*100)/100;s.style.setProperty('--z',z)}}
+ else{while(z<1.45){var n=Math.round((z+0.04)*100)/100;s.style.setProperty('--z',n);if(over(s,bd)){s.style.setProperty('--z',z);break}z=n}}
+ s.style.visibility='';s.classList.remove('on')});show(i)}
+var h=parseInt((location.hash||'').replace('#s',''),10);fit();show(isNaN(h)?0:h-1);
+window.__show=show;(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(autofit);
+})();
+</script>
