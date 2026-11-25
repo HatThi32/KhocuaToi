@@ -482,7 +482,7 @@ function vUnit(){
  return root}
 
 /* ===== ĐĂNG NHẬP, ĐỒNG BỘ KẾT QUẢ, TRANG GIÁO VIÊN ===== */
-const SY={url:'https://script.google.com/macros/s/AKfycbx7pA6NPSf78cRAVkgDSU-hiFi46sEKvmPkylaNsLzofEqE5fBJGeo3nVtmDMUhFVZc/exec',user:LS.get('hsg.sy',null),adminOn:false,ap:'',dirty:false,timer:null,busy:false,status:'',tab:'login',err:'',info:'',list:null,sel:null,sort:{k:'t',d:-1},q:'',lop:'all'};
+const SY={url:'https://script.google.com/macros/s/AKfycbx7pA6NPSf78cRAVkgDSU-hiFi46sEKvmPkylaNsLzofEqE5fBJGeo3nVtmDMUhFVZc/exec',user:LS.get('hsg.sy',null),adminOn:false,adminView:'app',ap:'',dirty:false,timer:null,busy:false,status:'',tab:'login',err:'',info:'',list:null,sel:null,sort:{k:'t',d:-1},q:'',lop:'all'};
 if(!/^https:\/\//.test(SY.url))SY.url='';
 (function(){const st=document.createElement('style');st.textContent='.sy-box{max-width:460px;margin:30px auto}.sy-box label{display:block;font-weight:600;margin:12px 0 4px}.sy-box input,.sy-adm input,.sy-adm select,.sy-adm textarea{font:inherit;font-size:17px;width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);box-sizing:border-box}.sy-tabs{display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap}.sy-err{color:var(--bad);font-weight:600;margin-top:10px}.sy-ok{color:var(--ok);font-weight:600;margin-top:10px}.sy-chip{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--muted);flex-wrap:wrap}.sy-adm table{border-collapse:collapse;width:100%;font-size:16px}.sy-adm th,.sy-adm td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left}.sy-adm th{cursor:pointer;background:var(--surface2);white-space:nowrap}.sy-adm tr.sel td{background:var(--accent-soft)}.sy-adm tbody tr{cursor:pointer}.sy-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}.sy-kpi div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.sy-kpi b{display:block;font-size:26px}.sy-low{color:var(--bad);font-weight:700}.sy-hi{color:var(--ok);font-weight:700}';document.head.append(st)})();
 const lsKeep=()=>{try{return localStorage.getItem('hsg.sy')}catch(e){return null}};
@@ -527,19 +527,28 @@ function syAuth(kind,f){
  const body=kind==='login'?{a:'login',u:f.u,p:f.p}:{a:'register',u:f.u,p:f.p,name:f.name,lop:f.lop,code:f.code};
  syPost(body).then(r=>{SY.busy=false;
   if(!r||!r.ok){SY.err=(r&&r.error)||'Không kết nối được máy chủ';draw();return}
+  try{localStorage.setItem('hsg.lastu',f.u.trim().toLowerCase())}catch(e){}
+  try{if(window.PasswordCredential&&navigator.credentials&&navigator.credentials.store)navigator.credentials.store(new PasswordCredential({id:f.u.trim().toLowerCase(),password:f.p,name:r.name||''}))}catch(e){}
   SY.f={};SY.user={u:f.u.trim().toLowerCase(),t:r.token,name:r.name,lop:r.lop};LS.set('hsg.sy',SY.user);
   if(r.state)syLoadState(r.state);
   SY.dirty=true;syFlush(false);view='exam';draw()}).catch(()=>{SY.busy=false;SY.err='Không kết nối được máy chủ. Kiểm tra mạng rồi thử lại.';draw()})}
 function syGate(){
- SY.f=SY.f||{};const f=SY.f;const inp=(id,lab,type,ph)=>[h('label',{for:id,text:lab}),h('input',{id,type:type||'text',value:f[id]||'',placeholder:ph||'',autocomplete:id==='sp'||id==='sp2'?(SY.tab==='reg'?'new-password':'current-password'):'off',oninput:e=>{f[id]=e.target.value}})];
+ SY.f=SY.f||{};const f=SY.f;
+ if(f.su==null){try{f.su=localStorage.getItem('hsg.lastu')||''}catch(e){f.su=''}}
+ const NM={su:'username',sp:'password',sn:'name',sl:'class',sc:'code',sa:'adminpw'};
+ const inp=(id,lab,type,ph)=>{
+  const ac=id==='su'?'username':id==='sp'?(SY.tab==='reg'?'new-password':'current-password'):id==='sn'?'name':'off';
+  return [h('label',{for:id,text:lab}),h('input',{id,name:NM[id]||id,type:type||'text',value:f[id]||'',placeholder:ph||'',autocomplete:ac,autocapitalize:id==='su'?'none':null,spellcheck:(id==='su'||id==='sp')?'false':null,oninput:e=>{f[id]=e.target.value}})]};
  const val=id=>{const e=document.getElementById(id);return e?e.value:(f[id]||'')};
  const tab=(k,t)=>h('button',{type:'button',class:'btn sm'+(SY.tab===k?'':' sec'),text:t,onclick:()=>{SY.tab=k;SY.err='';draw()}});
- let form;
- if(SY.tab==='login')form=[inp('su','Tên đăng nhập'),inp('sp','Mật khẩu','password'),h('div',{style:'margin-top:16px'},h('button',{class:'btn',type:'button',disabled:SY.busy||null,text:SY.busy?'Đang đăng nhập…':'Đăng nhập',onclick:()=>syAuth('login',{u:val('su'),p:val('sp')})}))];
- else if(SY.tab==='reg')form=[inp('sn','Họ và tên'),inp('sl','Lớp','text','Ví dụ: 11A1'),inp('su','Tên đăng nhập (chữ không dấu, số)','text','ví dụ: nguyenvana'),inp('sp','Mật khẩu (tối thiểu 6 ký tự)','password'),inp('sc','Mã đội tuyển (giáo viên cung cấp)'),h('div',{style:'margin-top:16px'},h('button',{class:'btn',type:'button',disabled:SY.busy||null,text:SY.busy?'Đang tạo…':'Tạo tài khoản',onclick:()=>syAuth('reg',{u:val('su'),p:val('sp'),name:val('sn'),lop:val('sl'),code:val('sc')})}))];
- else form=[h('p',{class:'note',text:'Dành cho giáo viên: xem thống kê quá trình học của cả đội tuyển.'}),inp('sa','Mật khẩu giáo viên','password'),h('div',{style:'margin-top:16px'},h('button',{class:'btn',type:'button',disabled:SY.busy||null,text:'Vào trang giáo viên',onclick:()=>{SY.ap=val('sa');SY.err='';SY.busy=true;draw();syAdmin('admin_list').then(r=>{SY.busy=false;if(r&&r.ok){SY.adminOn=true;SY.list=r.list;draw()}else{SY.err=(r&&r.error)||'Không kết nối được';draw()}})}}))];
+ const sub=(t,busyT)=>h('div',{style:'margin-top:16px'},h('button',{class:'btn',type:'submit',disabled:SY.busy||null,text:SY.busy?busyT:t}));
+ let form,act;
+ if(SY.tab==='login'){form=[inp('su','Tên đăng nhập'),inp('sp','Mật khẩu','password'),h('p',{class:'note',text:'Đăng nhập một lần, máy sẽ nhớ cho đến khi em bấm Đăng xuất. Trình duyệt sẽ hỏi lưu mật khẩu: chọn Lưu để lần sau tự điền.'}),sub('Đăng nhập','Đang đăng nhập…')];act=()=>syAuth('login',{u:val('su'),p:val('sp')})}
+ else if(SY.tab==='reg'){form=[inp('sn','Họ và tên'),inp('sl','Lớp','text','Ví dụ: 11A1'),inp('su','Tên đăng nhập (chữ không dấu, số)','text','ví dụ: nguyenvana'),inp('sp','Mật khẩu (tối thiểu 6 ký tự)','password'),inp('sc','Mã đội tuyển (giáo viên cung cấp)'),sub('Tạo tài khoản','Đang tạo…')];act=()=>syAuth('reg',{u:val('su'),p:val('sp'),name:val('sn'),lop:val('sl'),code:val('sc')})}
+ else{form=[h('p',{class:'note',text:'Dành cho giáo viên: xem thống kê quá trình học của cả đội tuyển.'}),h('input',{type:'text',name:'username',value:'giaovien',autocomplete:'username',tabindex:'-1','aria-hidden':'true',style:'position:absolute;left:-9999px;opacity:0;height:0'}),inp('sa','Mật khẩu giáo viên','password'),sub('Vào trang giáo viên','Đang vào…')];act=()=>{SY.ap=val('sa');SY.err='';SY.busy=true;draw();syAdmin('admin_list').then(r=>{SY.busy=false;if(r&&r.ok){SY.adminOn=true;SY.adminView='app';SY.list=r.list;SY.f={};view='exam';draw()}else{SY.err=(r&&r.error)||'Không kết nối được';draw()}})}}
  form=form.flat();
- return h('div',{class:'sy-box'},h('div',{class:'card'},h('h2',{text:'Luyện HSG Tin học'}),h('p',{class:'lead',text:'Đăng nhập để mọi bài học, đề thi thử và bài luyện của em được lưu lại và giáo viên theo dõi được tiến bộ.'}),h('div',{class:'sy-tabs'},tab('login','Đăng nhập'),tab('reg','Tạo tài khoản'),tab('adm','Giáo viên')),form,SY.err?h('div',{class:'sy-err',role:'alert',text:SY.err}):null))}
+ const fm=h('form',{autocomplete:'on',onsubmit:e=>{e.preventDefault();if(!SY.busy)act()}},form);
+ return h('div',{class:'sy-box'},h('div',{class:'card'},h('h2',{text:'Luyện HSG Tin học'}),h('p',{class:'lead',text:'Đăng nhập để mọi bài học, đề thi thử và bài luyện của em được lưu lại và giáo viên theo dõi được tiến bộ.'}),h('div',{class:'sy-tabs'},tab('login','Đăng nhập'),tab('reg','Tạo tài khoản'),tab('adm','Giáo viên')),fm,SY.err?h('div',{class:'sy-err',role:'alert',text:SY.err}):null))}
 function syAdmin(a,extra){return syPost(Object.assign({a,ap:SY.ap},extra||{})).catch(()=>({ok:false,error:'Không kết nối được máy chủ'}))}
 /* ---- trang giáo viên ---- */
 const dayMs=864e5;
@@ -577,7 +586,7 @@ function syTeacher(){
  const lopSel=h('select',{style:'max-width:180px',onchange:e=>{SY.lop=e.target.value;draw()}},h('option',{value:'all',text:'Mọi lớp'}),lops.map(l=>h('option',{value:l,text:'Lớp '+l,selected:SY.lop===l||null})));
  const ta=h('textarea',{rows:4,placeholder:'Mỗi dòng một học sinh: tên đăng nhập, họ tên, lớp, mật khẩu\nvd: nguyenvana, Nguyễn Văn A, 11A1, 123456'});
  return h('div',null,
-  h('header',null,h('div',{class:'bar'},h('div',{class:'brand'},'Luyện HSG Tin học',h('small',{text:'Trang giáo viên · thống kê quá trình rèn luyện'})),h('div',{class:'sy-chip'},h('button',{class:'btn sec sm',type:'button',text:'Làm mới',onclick:syReload}),h('button',{class:'btn sec sm',type:'button',text:'Thoát',onclick:()=>{SY.adminOn=false;SY.ap='';SY.list=null;SY.sel=null;draw()}})))),
+  h('header',null,h('div',{class:'bar'},h('div',{class:'brand'},'Luyện HSG Tin học',h('small',{text:'Quản trị giáo viên · thống kê quá trình rèn luyện'})),h('div',{class:'sy-chip'},h('button',{class:'btn sec sm',type:'button',text:'Làm mới',onclick:syReload}),h('button',{class:'btn sm',type:'button',text:'← Về trang luyện tập',onclick:()=>{SY.adminView='app';draw()}}),h('button',{class:'btn sec sm',type:'button',text:'Đăng xuất',onclick:syTeacherOut})))),
   h('div',{class:'wrap sy-adm'},h('main',null,
    h('h2',{text:'Thống kê đội tuyển'}),
    SY.info?h('div',{class:'sy-ok',text:SY.info}):null,
@@ -586,14 +595,16 @@ function syTeacher(){
    h('div',{class:'tw'},h('table',null,h('thead',null,h('tr',null,th('name','Họ tên'),th('lop','Lớp'),th('n','Số câu'),th('pc','% đúng'),th('ex','Đề thi thử'),th('avg','Điểm đề TB'),th('t','Gần nhất'))),h('tbody',null,L.length?L.map(x=>h('tr',{class:SY.sel===x.u?'sel':'',onclick:()=>{SY.sel=SY.sel===x.u?null:x.u;SY.del=null;draw()}},h('td',{text:x.name}),h('td',{text:x.lop||'—'}),h('td',{text:String(x.n)}),h('td',{class:x.pc>=0&&x.pc<50?'sy-low':x.pc>=75?'sy-hi':'',text:x.pc<0?'—':x.pc+'%'}),h('td',{text:String(x.ex)}),h('td',{class:x.avg>=0&&x.avg<50?'sy-low':x.avg>=75?'sy-hi':'',text:x.avg<0?'—':x.avg+'%'}),h('td',{class:x.t&&Date.now()-x.t>7*dayMs?'sy-low':'',text:syAgo(x.t)}))):h('tr',null,h('td',{colspan:7,text:'Chưa có học sinh nào.'}))))),
    SY.sel?syDetail(L.find(x=>x.u===SY.sel)||all.find(x=>x.u===SY.sel)):null,
    h('div',{class:'card',style:'margin-top:18px'},h('h3',{text:'Thêm nhiều học sinh cùng lúc'}),h('p',{class:'note',text:'Dùng khi muốn tự tạo tài khoản cho các em (các em cũng có thể tự tạo bằng mã đội tuyển).'}),ta,h('div',{style:'margin-top:10px'},h('button',{class:'btn sm',type:'button',text:'Tạo tài khoản',onclick:()=>{const list=ta.value.split('\n').map(s=>s.split(',').map(x=>x.trim())).filter(a=>a[0]).map(a=>({u:a[0],name:a[1],lop:a[2],p:a[3]||'123456'}));if(!list.length)return;syAdmin('admin_add',{list}).then(r=>{SY.info=r.ok?'Đã xử lí '+r.done.length+' tài khoản':(r.error||'Lỗi');syReload()})}}))))))}
+function syTeacherOut(){SY.adminOn=false;SY.adminView='app';SY.ap='';SY.list=null;SY.sel=null;SY.tab='login';SY.err='';draw()}
 /* ---- ghép vào khung ứng dụng ---- */
 if(SY.url){
  const _draw=draw;
  draw=function(){
-  if(SY.adminOn){app.replaceChildren(syTeacher());return}
-  if(!SY.user){app.replaceChildren(h('div',{class:'wrap'},syGate()));return}
+  if(SY.adminOn&&SY.adminView==='admin'){app.replaceChildren(syTeacher());return}
+  if(!SY.user&&!SY.adminOn){app.replaceChildren(h('div',{class:'wrap'},syGate()));return}
   _draw();const bar=document.querySelector('header .bar');
-  if(bar)bar.append(h('div',{class:'sy-chip'},h('span',{text:'👤 '+SY.user.name+(SY.user.lop?' · '+SY.user.lop:'')}),h('span',{id:'sychip',text:SY.status}),h('button',{class:'btn sec sm',type:'button',text:'Đăng xuất',onclick:syLogout})))}
+  if(bar&&SY.adminOn)bar.append(h('div',{class:'sy-chip'},h('span',{text:'👨‍🏫 Giáo viên'}),h('button',{class:'btn sm',type:'button',text:'Quản trị lớp',onclick:()=>{SY.adminView='admin';SY.sel=null;syReload();draw()}}),h('button',{class:'btn sec sm',type:'button',text:'Đăng xuất',onclick:syTeacherOut})));
+  else if(bar&&SY.user)bar.append(h('div',{class:'sy-chip'},h('span',{text:'👤 '+SY.user.name+(SY.user.lop?' · '+SY.user.lop:'')}),h('span',{id:'sychip',text:SY.status}),h('button',{class:'btn sec sm',type:'button',text:'Đăng xuất',onclick:syLogout})))}
 }
 
 /* ---------- ĐỀ THI THỬ ---------- */
